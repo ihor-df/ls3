@@ -3,19 +3,11 @@
 import { cn } from "@/lib/utils";
 import { ComponentPropsWithoutRef, useState } from "react";
 
-type GlassInputProps = Omit<
-  ComponentPropsWithoutRef<"input">,
-  "className" | "onChange" | "value"
-> & {
+type GlassInputProps = Omit<ComponentPropsWithoutRef<"input">, "className" | "onChange" | "value"> & {
   className?: string;
 };
 
-const GlassInput = ({
-  className,
-  onBlur,
-  onFocus,
-  ...props
-}: GlassInputProps) => {
+const GlassInput = ({ className, onBlur, onFocus, ...props }: GlassInputProps) => {
   const [focused, setFocused] = useState(false);
   const [value, setValue] = useState("");
 

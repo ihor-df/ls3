@@ -13,7 +13,7 @@ export default function Page() {
 
         <div className="mt-20 flex flex-col gap-10">
           <SearchInput />
-          <GlassInput />
+          <GlassInput placeholder="Your email" />
           <GlassButton>Button</GlassButton>
           <Button header>Start for free</Button>
           <Button size="large">Button</Button>
