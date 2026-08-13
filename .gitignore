@@ -23,7 +23,6 @@
 # misc
 .DS_Store
 *.pem
-/.idea/
 
 # debug
 npm-debug.log*
@@ -41,5 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# vscode
+# ide
 .vscode
