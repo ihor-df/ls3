@@ -1,7 +1,6 @@
 import { Link } from "@/i18n/navigation";
-import { client } from "@/sanity/client";
+import { urlFor } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
-import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { PortableText, PortableTextComponents } from "next-sanity";
 import { Image } from "next-sanity/image";
 
@@ -39,15 +38,11 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
-const { projectId, dataset } = client.config();
-const urlFor = (source: SanityImageSource) =>
-  projectId && dataset ? createImageUrlBuilder({ projectId, dataset }).image(source) : null;
-
 const Article = ({ post }: ArticleProps) => {
-  const postImageUrl = post?.image ? urlFor(post.image)?.width(550).height(310).url() : null;
+  const postImageUrl = post?.image ? urlFor(post.image)?.url() : null;
 
   return (
-    <article className="mx-auto flex min-h-screen flex-col gap-4 py-32">
+    <article className="mx-auto flex min-h-screen max-w-3xl flex-col gap-4">
       <Link href="/blog" className="hover:underline">
         ← Back to posts
       </Link>

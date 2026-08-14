@@ -1,4 +1,6 @@
 import Container from "@/components/atoms/container";
+import Heading from "@/components/atoms/page-title";
+import SearchInput from "@/components/atoms/search-input";
 import Blog from "@/components/pages/blog";
 import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
@@ -13,8 +15,12 @@ const Page = async ({}: PageProps) => {
   });
 
   return (
-    <Container as="main" className="py-32">
-      <h1 className="mb-8 text-4xl font-bold">Articles</h1>
+    <Container as="main">
+      <div className="justify-between md:flex">
+        <Heading variant="page-sm">Blog</Heading>
+        <SearchInput className="max-md:hidden" />
+      </div>
+
       <Blog posts={posts} />
     </Container>
   );

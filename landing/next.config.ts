@@ -39,11 +39,11 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     qualities: [80, 100],
     remotePatterns: [
-      // {
-      //   protocol: "https",
-      //   hostname: "www.datocms-assets.com",
-      //   pathname: "**",
-      // },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io",
+        pathname: "**",
+      },
     ],
   },
   turbopack: {
@@ -57,9 +57,7 @@ const nextConfig: NextConfig = {
 
   webpack: (config) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const fileLoaderRule = config.module.rules.find((rule: any) =>
-      rule.test?.test?.(".svg"),
-    );
+    const fileLoaderRule = config.module.rules.find((rule: any) => rule.test?.test?.(".svg"));
     config.module.rules.push(
       {
         ...fileLoaderRule,

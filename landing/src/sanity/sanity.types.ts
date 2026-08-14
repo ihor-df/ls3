@@ -179,7 +179,24 @@ export type Geopoint = {
 
 export type AllSanitySchemaTypes = SanityImageAssetReference | Article | SanityImageCrop | SanityImageHotspot | Slug | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
-// Source: ../landing/src/app/[locale]/blog/[slug]/page.tsx
+// Source: ../landing/src/app/[locale]/blog/queries.ts
+// Variable: ARTICLES_QUERY
+// Query: *[_type == "article" && defined(slug.current)]|order(publishedAt desc)[0...12]{    _id,    title,    slug,    publishedAt,    image  }
+export type ARTICLES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  publishedAt: string | null;
+  image: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  } | null;
+}>;
+
+// Source: ../landing/src/app/[locale]/blog/queries.ts
 // Variable: ARTICLE_QUERY
 // Query: *[_type == "article" && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    image,    body  }
 export type ARTICLE_QUERY_RESULT = {
@@ -214,30 +231,20 @@ export type ARTICLE_QUERY_RESULT = {
   }> | null;
 } | null;
 
-// Source: ../landing/src/app/[locale]/blog/[slug]/page.tsx
-// Variable: POST_SLUGS_QUERY
+// Source: ../landing/src/app/[locale]/blog/queries.ts
+// Variable: ARTICLE_SLUGS_QUERY
 // Query: *[_type == "article" && defined(slug.current)]{    "slug": slug.current  }
-export type POST_SLUGS_QUERY_RESULT = Array<{
+export type ARTICLE_SLUGS_QUERY_RESULT = Array<{
   slug: string | null;
-}>;
-
-// Source: ../landing/src/app/[locale]/blog/page.tsx
-// Variable: POSTS_QUERY
-// Query: *[_type == "article" && defined(slug.current)]|order(publishedAt desc)[0...12]{    _id,    title,    slug,    publishedAt  }
-export type POSTS_QUERY_RESULT = Array<{
-  _id: string;
-  title: string | null;
-  slug: Slug | null;
-  publishedAt: string | null;
 }>;
 
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "\n  *[_type == \"article\" && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    image\n  }\n": ARTICLES_QUERY_RESULT;
     "\n  *[_type == \"article\" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    image,\n    body\n  }\n": ARTICLE_QUERY_RESULT;
-    "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }": POST_SLUGS_QUERY_RESULT;
-    "\n  *[_type == \"article\" && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    _id,\n    title,\n    slug,\n    publishedAt\n  }\n": POSTS_QUERY_RESULT;
+    "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }": ARTICLE_SLUGS_QUERY_RESULT;
   }
 }
 

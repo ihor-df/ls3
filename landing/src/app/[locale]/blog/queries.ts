@@ -5,7 +5,8 @@ export const ARTICLES_QUERY = defineQuery(`
     _id,
     title,
     slug,
-    publishedAt
+    publishedAt,
+    image
   }
 `);
 
