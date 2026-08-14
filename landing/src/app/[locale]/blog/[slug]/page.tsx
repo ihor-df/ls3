@@ -1,31 +1,33 @@
 import Container from "@/components/atoms/container";
 import Article from "@/components/pages/blog/article";
-import { client } from "@/sanity/client";
+import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
+import { sanityFetch } from "@/sanity/client";
 import { LocaleSlugParams } from "@/types/common";
-import { defineQuery } from "next-sanity";
 import { notFound } from "next/navigation";
+import { ARTICLE_QUERY, ARTICLE_SLUGS_QUERY } from "../queries";
 
-const options = { next: { revalidate: 60 } };
+export async function generateStaticParams() {
+  const post = await sanityFetch({
+    query: ARTICLE_SLUGS_QUERY,
+    perspective: "published",
+    stega: false, // important for metadata and generateStaticParams
+  });
 
-const ARTICLE_QUERY = defineQuery(`
-  *[_type == "article" && slug.current == $slug][0]{
-    _id,
-    title,
-    slug,
-    publishedAt,
-    image,
-    body
-  }
-`);
+  return post.map((post) => ({
+    slug: post.slug,
+  }));
+}
 
 const Page = async ({ params }: { params: LocaleSlugParams; searchParams: Promise<{ page?: string }> }) => {
-  // const { slug, locale } = await params;
+  const { slug, locale } = await params;
 
-  const post = await client.fetch(ARTICLE_QUERY, await params, options);
+  const post = await sanityFetch({
+    params: { slug, locale },
+    query: ARTICLE_QUERY,
+    revalidate: SANITY_REVALIDATE_TIME,
+  });
 
-  if (!post) {
-    notFound();
-  }
+  if (!post) notFound();
 
   return (
     <Container as="main">

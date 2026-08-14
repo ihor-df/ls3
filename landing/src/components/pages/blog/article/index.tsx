@@ -1,8 +1,9 @@
 import { Link } from "@/i18n/navigation";
 import { client } from "@/sanity/client";
-import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { PortableText, PortableTextComponents } from "next-sanity";
+import { Image } from "next-sanity/image";
 
 type ArticleProps = {
   post: NonNullable<ARTICLE_QUERY_RESULT>;
@@ -52,8 +53,7 @@ const Article = ({ post }: ArticleProps) => {
       </Link>
 
       {postImageUrl && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={postImageUrl} alt={post.title ?? ""} className="aspect-video rounded-xl" width="550" height="310" />
+        <Image src={postImageUrl} alt="Author photo" width="550" height="310" className="aspect-video rounded-xl" />
       )}
 
       <h1 className="mb-8 text-4xl font-bold">{post.title}</h1>

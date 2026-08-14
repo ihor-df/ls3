@@ -7,8 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "format": "npx prettier . --write",
-    "typegen": "sanity schemas extract --force && sanity typegen generate"
+    "format": "npx prettier . --write"
   },
   "dependencies": {
     "@sanity/image-url": "^2.1.1",

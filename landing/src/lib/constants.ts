@@ -1,0 +1,1 @@
+export const SANITY_REVALIDATE_TIME = 60;

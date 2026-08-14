@@ -214,6 +214,13 @@ export type ARTICLE_QUERY_RESULT = {
   }> | null;
 } | null;
 
+// Source: ../landing/src/app/[locale]/blog/[slug]/page.tsx
+// Variable: POST_SLUGS_QUERY
+// Query: *[_type == "article" && defined(slug.current)]{    "slug": slug.current  }
+export type POST_SLUGS_QUERY_RESULT = Array<{
+  slug: string | null;
+}>;
+
 // Source: ../landing/src/app/[locale]/blog/page.tsx
 // Variable: POSTS_QUERY
 // Query: *[_type == "article" && defined(slug.current)]|order(publishedAt desc)[0...12]{    _id,    title,    slug,    publishedAt  }
@@ -229,6 +236,7 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"article\" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    image,\n    body\n  }\n": ARTICLE_QUERY_RESULT;
+    "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }": POST_SLUGS_QUERY_RESULT;
     "\n  *[_type == \"article\" && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    _id,\n    title,\n    slug,\n    publishedAt\n  }\n": POSTS_QUERY_RESULT;
   }
 }
