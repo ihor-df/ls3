@@ -5,6 +5,12 @@ export default defineCliConfig({
     projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
     dataset: process.env.SANITY_STUDIO_DATASET!,
   },
+  typegen: {
+    path: '../landing/src/**/*.{ts,tsx}',
+    schema: 'schema.json',
+    generates: '../landing/src/sanity/sanity.types.ts',
+    overloadClientMethods: true,
+  },
   deployment: {
     appId: 'n3hh3chw5qp2aqspok9u5ysb',
     /**
@@ -14,3 +20,6 @@ export default defineCliConfig({
     autoUpdates: true,
   },
 })
+
+// npx sanity schemas extract --force - create schema
+// npx sanity typegen generate - create types for landing
