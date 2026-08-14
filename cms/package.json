@@ -11,7 +11,8 @@
     "dev": "sanity dev",
     "prod": "SANITY_ACTIVE_ENV=production sanity dev",
     "start": "sanity start",
-    "copy-prod": "npx sanity datasets copy production development"
+    "copy-prod": "npx sanity datasets copy production development",
+    "format": "npx prettier . --write"
   },
   "keywords": [
     "sanity"
@@ -28,7 +29,7 @@
     "@types/node": "^26.2.0",
     "@types/react": "^19.2.14",
     "eslint": "^9.28",
-    "prettier": "^3.5",
+    "prettier": "3.9.6",
     "typescript": "^5.8"
   },
   "prettier": {
