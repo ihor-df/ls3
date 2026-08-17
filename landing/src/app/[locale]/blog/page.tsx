@@ -4,13 +4,21 @@ import SearchInput from "@/components/atoms/search-input";
 import Blog from "@/components/pages/blog";
 import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
-import { ARTICLES_QUERY } from "./queries";
+import { LocaleParams } from "@/types/common";
+import { ARTICLES_QUERY, CATEGORIES_QUERY } from "./queries";
 
-type PageProps = {};
+const Page = async ({ params }: { params: LocaleParams; searchParams: Promise<{ page?: string }> }) => {
+  const { locale } = await params;
 
-const Page = async ({}: PageProps) => {
   const posts = await sanityFetch({
+    params: { locale },
     query: ARTICLES_QUERY,
+    revalidate: SANITY_REVALIDATE_TIME,
+  });
+
+  const categories = await sanityFetch({
+    params: { locale },
+    query: CATEGORIES_QUERY,
     revalidate: SANITY_REVALIDATE_TIME,
   });
 
@@ -21,7 +29,7 @@ const Page = async ({}: PageProps) => {
         <SearchInput className="max-md:hidden" />
       </div>
 
-      <Blog posts={posts} />
+      <Blog posts={posts} categories={categories} />
     </Container>
   );
 };
