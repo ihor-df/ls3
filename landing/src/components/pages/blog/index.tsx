@@ -1,11 +1,12 @@
 import PostCard from "@/components/molecules/post-card";
 import { Link } from "@/i18n/navigation";
-import { cn } from "@/lib/utils";
+import { cn, formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLES_QUERY_RESULT, CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
+import { Locale } from "next-intl";
 import { ReactNode } from "react";
 
-type BlogProps = { posts: ARTICLES_QUERY_RESULT; categories: CATEGORIES_QUERY_RESULT };
+type BlogProps = { posts: ARTICLES_QUERY_RESULT; categories: CATEGORIES_QUERY_RESULT; locale: Locale };
 
 const CategoryItem = ({ children, className, href }: { className?: string; children: ReactNode; href: string }) => {
   return (
@@ -20,7 +21,7 @@ const CategoryItem = ({ children, className, href }: { className?: string; child
   );
 };
 
-const Blog = ({ posts, categories }: BlogProps) => {
+const Blog = ({ posts, categories, locale }: BlogProps) => {
   return (
     <div className="mt-10">
       <ul className="flex flex-wrap gap-x-6 md:gap-x-8 md:gap-y-5">
@@ -41,7 +42,7 @@ const Blog = ({ posts, categories }: BlogProps) => {
               <li key={post._id}>
                 <Link href={`/blog/${post.slug?.current ?? ""}`}>
                   <PostCard
-                    date={post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : undefined}
+                    date={post.publishedAt ? formatDate(post.publishedAt, locale) : undefined}
                     description={post.title ?? ""}
                     imageSrc={postImageUrl ?? ""}
                     categories={post.categories ?? []}

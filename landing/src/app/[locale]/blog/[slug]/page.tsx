@@ -42,7 +42,7 @@ const Page = async ({ params }: { params: LocaleSlugParams; searchParams: Promis
     : undefined;
 
   return (
-    <Container className="mx-auto max-w-230">
+    <Container>
       <Article breadcrumbs={breadcrumbs} post={post} locale={locale} />
     </Container>
   );

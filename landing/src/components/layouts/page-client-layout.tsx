@@ -1,8 +1,8 @@
 "use client";
 
+import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
 import { usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import { BreadcrumbItemData, Breadcrumbs } from "@components/molecules/page-breadcrumbs";
 import { ReactNode } from "react";
 import Container from "../atoms/container";
 

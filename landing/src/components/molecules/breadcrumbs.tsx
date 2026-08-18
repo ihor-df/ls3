@@ -30,11 +30,12 @@ export function Breadcrumbs({ pathname, items }: BreadcrumbsProps) {
       <BreadcrumbList className="flex-nowrap">
         {crumbs.map((crumb, i) => {
           const isLast = i === crumbs.length - 1;
+
           return (
             <Fragment key={`${crumb.href ?? "current"}-${crumb.label}-${i}`}>
-              <BreadcrumbItem className={cn("tracking-[-0.01em]", isLast && "text-gray hover:text-gray min-w-0")}>
+              <BreadcrumbItem className={cn("tracking-[-0.01em]", isLast && "min-w-0 text-white/60")}>
                 {isLast || !crumb.href ? (
-                  <p className="truncate text-white/60">{crumb.label}</p>
+                  <p className="truncate">{crumb.label}</p>
                 ) : (
                   <Link href={crumb.href}>{crumb.label}</Link>
                 )}

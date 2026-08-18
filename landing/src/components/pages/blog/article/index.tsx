@@ -1,15 +1,20 @@
 "use client";
 
-import Tag from "@/components/atoms/tag";
-import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/page-breadcrumbs";
+import AvatarCard from "@/components/atoms/avatar-card";
+import ButtonRounded from "@/components/atoms/button-rounded";
+import Heading from "@/components/atoms/heading";
+import ArticleNav from "@/components/molecules/article-nav";
+import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
+import CategoryDate from "@/components/molecules/category-date";
 import { usePathname } from "@/i18n/navigation";
 import { formatDate } from "@/lib/utils";
-
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
+import Share from "@assets/icons/share.svg";
 import { Locale } from "next-intl";
-import { PortableText, PortableTextComponents } from "next-sanity";
+import { PortableText } from "next-sanity";
 import { Image } from "next-sanity/image";
+import { portableTextComponents } from "./components";
 
 type ArticleProps = {
   post: NonNullable<ARTICLE_QUERY_RESULT>;
@@ -17,69 +22,63 @@ type ArticleProps = {
   locale: Locale;
 };
 
-const portableTextComponents: PortableTextComponents = {
-  block: {
-    normal: ({ children }) => <p className="text-base leading-7 text-white/72">{children}</p>,
-    h2: ({ children }) => <h2 className="mt-10 text-3xl leading-tight font-bold text-white">{children}</h2>,
-    h3: ({ children }) => <h3 className="mt-8 text-2xl leading-tight font-bold text-white">{children}</h3>,
-  },
-  marks: {
-    link: ({ children, value }) => {
-      const href = value?.href || "#";
-      const isExternal = href.startsWith("http");
-
-      return (
-        <a
-          href={href}
-          target={isExternal ? "_blank" : undefined}
-          rel={isExternal ? "noreferrer noopener" : undefined}
-          className="text-white underline decoration-white/30 underline-offset-4 transition hover:decoration-white"
-        >
-          {children}
-        </a>
-      );
-    },
-    strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
-  },
-  list: {
-    bullet: ({ children }) => <ul className="my-6 list-disc space-y-2 pl-5 text-white/72">{children}</ul>,
-    number: ({ children }) => <ol className="my-6 list-decimal space-y-2 pl-5 text-white/72">{children}</ol>,
-  },
-};
-
 const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
-  const postImageUrl = post?.image ? urlFor(post.image)?.url() : null;
+  const { image, categories, publishedAt, title, body, author } = post;
+
+  const postImageUrl = image ? urlFor(image)?.url() : null;
   const pathname = usePathname();
+  const authorImageUrl = post.author?.avatar ? urlFor(post.author.avatar)?.width(48).height(48).url() : null;
 
   return (
-    <article className="flex min-h-screen flex-col gap-4">
-      {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
-      <div>
-        <ul className="flex gap-3">
-          {post.categories?.map((c) => (
-            <Tag as="li" key={c._id}>
-              {c.title}
-            </Tag>
-          ))}
-        </ul>
-      </div>
+    <>
+      <article className="mx-auto min-h-screen w-full max-w-3xl min-w-0">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
+        {(categories || publishedAt) && (
+          <CategoryDate
+            categories={categories ?? []}
+            date={publishedAt ? formatDate(publishedAt, locale) : undefined}
+            className="mt-10"
+          />
+        )}
 
-      {postImageUrl && (
-        <Image
-          src={postImageUrl}
-          alt="Author photo"
-          width="550"
-          height="310"
-          className="mt-10 aspect-350/197 w-full rounded-xl"
-          loading="eager"
+        <Heading variant="article" className="mt-5">
+          {title}
+        </Heading>
+
+        {postImageUrl && (
+          <Image
+            src={postImageUrl}
+            alt="Author photo"
+            width="550"
+            height="310"
+            className="mt-5 aspect-350/197 w-full rounded-[20px] border border-white/10 md:rounded-[40px]"
+            loading="eager"
+          />
+        )}
+
+        <div className="mt-5 flex items-center justify-between">
+          <AvatarCard
+            alt="Publisher avatar"
+            src={authorImageUrl ?? ""}
+            name={author?.name ?? ""}
+            role={author?.role ?? ""}
+          />
+
+          <ButtonRounded>
+            <Share className="size-5.5" />
+          </ButtonRounded>
+        </div>
+
+        <ArticleNav
+          content={[
+            { title: "In a nutshell: Is InboxDollars legit or a scam?", href: "" },
+            { title: "What is InboxDollars?", href: "" },
+          ]}
         />
-      )}
 
-      <h1 className="mb-8 text-4xl font-bold">{post.title}</h1>
-
-      {post.publishedAt && <p>Published: {formatDate(post.publishedAt, locale)}</p>}
-      {Array.isArray(post.body) && <PortableText value={post.body} components={portableTextComponents} />}
-    </article>
+        {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
+      </article>
+    </>
   );
 };
 

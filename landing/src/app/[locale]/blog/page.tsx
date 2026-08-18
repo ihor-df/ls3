@@ -1,5 +1,5 @@
 import Container from "@/components/atoms/container";
-import Heading from "@/components/atoms/page-title";
+import Heading from "@/components/atoms/heading";
 import SearchInput from "@/components/atoms/search-input";
 import Blog from "@/components/pages/blog";
 import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
@@ -29,7 +29,7 @@ const Page = async ({ params }: { params: LocaleParams; searchParams: Promise<{ 
         <SearchInput className="max-md:hidden" />
       </div>
 
-      <Blog posts={posts} categories={categories} />
+      <Blog locale={locale} posts={posts ?? []} categories={categories ?? []} />
     </Container>
   );
 };
