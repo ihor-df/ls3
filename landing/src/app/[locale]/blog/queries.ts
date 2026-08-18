@@ -26,7 +26,7 @@ export const ARTICLES_QUERY = defineQuery(`
       "title": coalesce(
         title[language == $locale][0].value,
         title[language == "en"][0].value
-  ),
+      ),
     "slug": slug.current
     }
   }
@@ -57,9 +57,11 @@ export const ARTICLE_QUERY = defineQuery(`
     },
     categories[]->{
       _id,
-      title,
-      slug,
-      avatar
+      "title": coalesce(
+        title[language == $locale][0].value,
+        title[language == "en"][0].value
+      ),
+      "slug": slug.current,
     }
   }
 `);

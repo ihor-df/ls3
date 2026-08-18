@@ -44,7 +44,7 @@ const Blog = ({ posts, categories }: BlogProps) => {
                     date={post.publishedAt ? new Date(post.publishedAt).toLocaleDateString() : undefined}
                     description={post.title ?? ""}
                     imageSrc={postImageUrl ?? ""}
-                    tags={["Crypto"]}
+                    categories={post.categories ?? []}
                   />
                 </Link>
               </li>

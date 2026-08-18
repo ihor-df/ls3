@@ -1,16 +1,18 @@
 import { cn } from "@/lib/utils";
+import { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { ComponentProps } from "react";
+import Tag from "../atoms/tag";
 
 type PostCardProps = ComponentProps<"div"> & {
   imageSrc: string | StaticImport;
   description: string;
   date?: string;
-  tags: string[];
+  categories: NonNullable<ARTICLES_QUERY_RESULT[number]["categories"]>;
 };
 
-const PostCard = ({ imageSrc, description, className, date, tags }: PostCardProps) => {
+const PostCard = ({ imageSrc, description, className, date, categories }: PostCardProps) => {
   return (
     <div className={cn(className)}>
       <Image
@@ -27,10 +29,10 @@ const PostCard = ({ imageSrc, description, className, date, tags }: PostCardProp
 
       <div className="mt-5 flex items-center gap-3 text-sm font-medium">
         <ul className="flex gap-3">
-          {tags.map((t) => (
-            <li className="rounded-full bg-white/10 px-3 py-2" key={t}>
-              {t}
-            </li>
+          {categories.map((c) => (
+            <Tag as="li" key={c._id}>
+              {c.title}
+            </Tag>
           ))}
         </ul>
 

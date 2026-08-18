@@ -29,9 +29,21 @@ const Page = async ({ params }: { params: LocaleSlugParams; searchParams: Promis
 
   if (!post) notFound();
 
+  const breadcrumbs = post
+    ? [
+        {
+          label: "Blog",
+          href: "/blog",
+        },
+        {
+          label: post?.title,
+        },
+      ]
+    : undefined;
+
   return (
-    <Container as="main">
-      <Article post={post} />
+    <Container className="mx-auto max-w-230">
+      <Article breadcrumbs={breadcrumbs} post={post} locale={locale} />
     </Container>
   );
 };

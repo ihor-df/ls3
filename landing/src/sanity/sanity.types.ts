@@ -276,7 +276,7 @@ export type CATEGORIES_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/queries.ts
 // Variable: ARTICLES_QUERY
-// Query: *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{    _id,    title,    slug,    publishedAt,    image {      asset->{_id, url},      alt,    },    categories[]->{      _id,      "title": coalesce(        title[language == $locale][0].value,        title[language == "en"][0].value  ),    "slug": slug.current    }  }
+// Query: *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{    _id,    title,    slug,    publishedAt,    image {      asset->{_id, url},      alt,    },    categories[]->{      _id,      "title": coalesce(        title[language == $locale][0].value,        title[language == "en"][0].value      ),    "slug": slug.current    }  }
 export type ARTICLES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -298,7 +298,7 @@ export type ARTICLES_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/queries.ts
 // Variable: ARTICLE_QUERY
-// Query: *[_type == "article" && language == $locale && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    body,    image {      asset->{_id, url},      alt,      caption,      hotspot,      crop    },    author->{      _id,      name,      "role": coalesce(        role[language == $locale][0].value,        role[language == "en"][0].value      ),      avatar    },    categories[]->{      _id,      title,      slug,      avatar    }  }
+// Query: *[_type == "article" && language == $locale && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    body,    image {      asset->{_id, url},      alt,      caption,      hotspot,      crop    },    author->{      _id,      name,      "role": coalesce(        role[language == $locale][0].value,        role[language == "en"][0].value      ),      avatar    },    categories[]->{      _id,       "title": coalesce(          title[language == $locale][0].value,          title[language == "en"][0].value        ),      "slug": slug.current,      avatar    }  }
 export type ARTICLE_QUERY_RESULT = {
   _id: string;
   title: string | null;
@@ -346,8 +346,8 @@ export type ARTICLE_QUERY_RESULT = {
   } | null;
   categories: Array<{
     _id: string;
-    title: InternationalizedArrayString | null;
-    slug: Slug | null;
+    title: string | null;
+    slug: string | null;
     avatar: null;
   }> | null;
 } | null;
@@ -364,8 +364,8 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n     \"slug\": slug.current\n  }|order(title asc)\n": CATEGORIES_QUERY_RESULT;
-    "\n  *[_type == \"article\" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    image {\n      asset->{_id, url},\n      alt,\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n  ),\n    \"slug\": slug.current\n    }\n  }\n": ARTICLES_QUERY_RESULT;
-    "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n      title,\n      slug,\n      avatar\n    }\n  }\n": ARTICLE_QUERY_RESULT;
+    "\n  *[_type == \"article\" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    image {\n      asset->{_id, url},\n      alt,\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n    \"slug\": slug.current\n    }\n  }\n": ARTICLES_QUERY_RESULT;
+    "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n       \"title\": coalesce(\n          title[language == $locale][0].value,\n          title[language == \"en\"][0].value\n        ),\n      \"slug\": slug.current,\n      avatar\n    }\n  }\n": ARTICLE_QUERY_RESULT;
     "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }": ARTICLE_SLUGS_QUERY_RESULT;
   }
 }

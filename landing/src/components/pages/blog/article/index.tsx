@@ -1,11 +1,20 @@
-import { Link } from "@/i18n/navigation";
+"use client";
+
+import Tag from "@/components/atoms/tag";
+import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/page-breadcrumbs";
+import { usePathname } from "@/i18n/navigation";
+import { formatDate } from "@/lib/utils";
+
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
+import { Locale } from "next-intl";
 import { PortableText, PortableTextComponents } from "next-sanity";
 import { Image } from "next-sanity/image";
 
 type ArticleProps = {
   post: NonNullable<ARTICLE_QUERY_RESULT>;
+  breadcrumbs?: BreadcrumbItemData[];
+  locale: Locale;
 };
 
 const portableTextComponents: PortableTextComponents = {
@@ -38,22 +47,37 @@ const portableTextComponents: PortableTextComponents = {
   },
 };
 
-const Article = ({ post }: ArticleProps) => {
+const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
   const postImageUrl = post?.image ? urlFor(post.image)?.url() : null;
+  const pathname = usePathname();
 
   return (
-    <article className="mx-auto flex min-h-screen max-w-3xl flex-col gap-4">
-      <Link href="/blog" className="hover:underline">
-        ← Back to posts
-      </Link>
+    <article className="flex min-h-screen flex-col gap-4">
+      {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
+      <div>
+        <ul className="flex gap-3">
+          {post.categories?.map((c) => (
+            <Tag as="li" key={c._id}>
+              {c.title}
+            </Tag>
+          ))}
+        </ul>
+      </div>
 
       {postImageUrl && (
-        <Image src={postImageUrl} alt="Author photo" width="550" height="310" className="aspect-video rounded-xl" />
+        <Image
+          src={postImageUrl}
+          alt="Author photo"
+          width="550"
+          height="310"
+          className="mt-10 aspect-350/197 w-full rounded-xl"
+          loading="eager"
+        />
       )}
 
       <h1 className="mb-8 text-4xl font-bold">{post.title}</h1>
 
-      {post.publishedAt && <p>Published: {new Date(post.publishedAt).toLocaleDateString()}</p>}
+      {post.publishedAt && <p>Published: {formatDate(post.publishedAt, locale)}</p>}
       {Array.isArray(post.body) && <PortableText value={post.body} components={portableTextComponents} />}
     </article>
   );
