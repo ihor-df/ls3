@@ -14,7 +14,7 @@ import Share from "@assets/icons/share.svg";
 import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
 import { Image } from "next-sanity/image";
-import { portableTextComponents } from "./components";
+import { getHeadingId, portableTextComponents } from "./components/portable-text";
 
 type ArticleProps = {
   post: NonNullable<ARTICLE_QUERY_RESULT>;
@@ -25,13 +25,19 @@ type ArticleProps = {
 const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
   const { image, categories, publishedAt, title, body, author } = post;
 
-  const postImageUrl = image ? urlFor(image)?.url() : null;
+  const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
   const pathname = usePathname();
   const authorImageUrl = post.author?.avatar ? urlFor(post.author.avatar)?.width(48).height(48).url() : null;
 
+  const tableOfContents =
+    post.tableOfContents?.map(({ _key, title }) => ({
+      title,
+      href: `#${getHeadingId(_key)}`,
+    })) ?? [];
+
   return (
     <>
-      <article className="mx-auto min-h-screen w-full max-w-3xl min-w-0">
+      <article className="mx-auto min-h-screen w-full min-w-0 leading-[1.4] text-[#C3C3C3] md:text-xl xl:max-w-3xl">
         {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
         {(categories || publishedAt) && (
           <CategoryDate
@@ -69,12 +75,7 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
           </ButtonRounded>
         </div>
 
-        <ArticleNav
-          content={[
-            { title: "In a nutshell: Is InboxDollars legit or a scam?", href: "" },
-            { title: "What is InboxDollars?", href: "" },
-          ]}
-        />
+        <ArticleNav content={tableOfContents} />
 
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
       </article>

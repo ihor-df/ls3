@@ -39,6 +39,10 @@ export const ARTICLE_QUERY = defineQuery(`
     slug,
     publishedAt,
     body,
+    "tableOfContents": body[_type == "block" && style == "h2"]{
+      _key,
+      "title": coalesce(pt::text(@), "")
+    },
     image {
       asset->{_id, url},
       alt,

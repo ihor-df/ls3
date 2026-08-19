@@ -19,10 +19,11 @@
   ],
   "dependencies": {
     "@sanity/document-internationalization": "^6.2.30",
-    "@sanity/vision": "^6.9.2",
+    "@sanity/language-filter": "^5.0.16",
+    "@sanity/vision": "^6.10.1",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "sanity": "^6.9.2",
+    "sanity": "^6.10.1",
     "sanity-plugin-internationalized-array": "^5.1.27",
     "styled-components": "^6.1.18"
   },

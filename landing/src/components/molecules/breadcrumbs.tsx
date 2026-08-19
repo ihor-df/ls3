@@ -33,11 +33,13 @@ export function Breadcrumbs({ pathname, items }: BreadcrumbsProps) {
 
           return (
             <Fragment key={`${crumb.href ?? "current"}-${crumb.label}-${i}`}>
-              <BreadcrumbItem className={cn("tracking-[-0.01em]", isLast && "min-w-0 text-white/60")}>
+              <BreadcrumbItem className={cn("tracking-[-0.01em]", isLast && "min-w-0")}>
                 {isLast || !crumb.href ? (
-                  <p className="truncate">{crumb.label}</p>
+                  <p className="truncate text-white/60">{crumb.label}</p>
                 ) : (
-                  <Link href={crumb.href}>{crumb.label}</Link>
+                  <Link href={crumb.href} className="text-white">
+                    {crumb.label}
+                  </Link>
                 )}
               </BreadcrumbItem>
 

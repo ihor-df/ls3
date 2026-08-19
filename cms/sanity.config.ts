@@ -42,4 +42,21 @@ export default defineConfig({
   schema: {
     types: schemaTypes,
   },
+
+  form: {
+    components: {
+      portableText: {
+        plugins: (props) =>
+          props.renderDefault({
+            ...props,
+            plugins: {
+              ...props.plugins,
+              table: {
+                enabled: true,
+              },
+            },
+          }),
+      },
+    },
+  },
 })

@@ -60,7 +60,32 @@ export const articleType = defineType({
     defineField({
       name: 'body',
       type: 'array',
-      of: [{type: 'block'}],
+      of: [
+        {
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'Heading 2', value: 'h2'},
+            {title: 'Heading 3', value: 'h3'},
+            {title: 'Heading 4', value: 'h4'},
+            {title: 'Heading 5', value: 'h5'},
+            {title: 'Heading 6', value: 'h6'},
+            // {title: 'Quote', value: 'blockquote'},
+          ],
+          // lists: [], // Bullet, Numbered
+          marks: {
+            decorators: [
+              {title: 'Strong', value: 'strong'},
+              {title: 'Emphasis', value: 'em'},
+              {title: 'Code', value: 'code'},
+              {title: 'Highlight', value: 'highlight'},
+            ],
+            // annotations: [], // ссылка и другие структурированные отметки
+          },
+        },
+        {type: 'articleBodyImage'},
+        {type: 'table'},
+      ],
     }),
     defineField({
       name: 'author',

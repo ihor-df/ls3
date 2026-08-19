@@ -15,6 +15,57 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type Table = {
+  _type: "table";
+  headerRows?: number;
+  rows?: Array<{
+    cells?: Array<{
+      value?: Array<{
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }>;
+      _type: "cell";
+      _key: string;
+    }>;
+    _type: "row";
+    _key: string;
+  }>;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+};
+
+export type ArticleBodyImage = {
+  _type: "articleBodyImage";
+  image?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  alt?: string;
+  caption?: string;
+};
+
 export type ArticleCategory = {
   _id: string;
   _type: "articleCategory";
@@ -68,13 +119,6 @@ export type InternationalizedArrayReferenceValue = {
   language?: string;
 };
 
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-};
-
 export type AuthorReference = {
   _ref: string;
   _type: "reference";
@@ -116,7 +160,7 @@ export type Article = {
       _type: "span";
       _key: string;
     }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
+    style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -126,7 +170,11 @@ export type Article = {
     level?: number;
     _type: "block";
     _key: string;
-  }>;
+  } | {
+    _key: string;
+  } & ArticleBodyImage | {
+    _key: string;
+  } & Table>;
   author?: AuthorReference;
   categories?: Array<{
     _key: string;
@@ -263,7 +311,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = ArticleCategory | Slug | InternationalizedArrayString | InternationalizedArrayStringValue | TranslationMetadata | InternationalizedArrayReference | ArticleReference | InternationalizedArrayReferenceValue | SanityImageAssetReference | AuthorReference | ArticleCategoryReference | Article | Author | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = Table | SanityImageAssetReference | ArticleBodyImage | ArticleCategory | Slug | InternationalizedArrayString | InternationalizedArrayStringValue | TranslationMetadata | InternationalizedArrayReference | ArticleReference | InternationalizedArrayReferenceValue | AuthorReference | ArticleCategoryReference | Article | Author | SanityImageCrop | SanityImageHotspot | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../landing/src/app/[locale]/blog/queries.ts
 // Variable: CATEGORIES_QUERY
@@ -298,20 +346,24 @@ export type ARTICLES_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/queries.ts
 // Variable: ARTICLE_QUERY
-// Query: *[_type == "article" && language == $locale && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    body,    image {      asset->{_id, url},      alt,      caption,      hotspot,      crop    },    author->{      _id,      name,      "role": coalesce(        role[language == $locale][0].value,        role[language == "en"][0].value      ),      avatar    },    categories[]->{      _id,       "title": coalesce(          title[language == $locale][0].value,          title[language == "en"][0].value        ),      "slug": slug.current,      avatar    }  }
+// Query: *[_type == "article" && language == $locale && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    body,    "tableOfContents": body[_type == "block" && style == "h2"]{      _key,      "title": coalesce(pt::text(@), "")    },    image {      asset->{_id, url},      alt,      caption,      hotspot,      crop    },    author->{      _id,      name,      "role": coalesce(        role[language == $locale][0].value,        role[language == "en"][0].value      ),      avatar    },    categories[]->{      _id,      "title": coalesce(        title[language == $locale][0].value,        title[language == "en"][0].value      ),      "slug": slug.current,    }  }
 export type ARTICLE_QUERY_RESULT = {
   _id: string;
   title: string | null;
   slug: Slug | null;
   publishedAt: string | null;
   body: Array<{
+    _key: string;
+  } & ArticleBodyImage | {
+    _key: string;
+  } & Table | {
     children?: Array<{
       marks?: Array<string>;
       text?: string;
       _type: "span";
       _key: string;
     }>;
-    style?: "blockquote" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+    style?: "blockquote" | "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
     listItem?: "bullet" | "number";
     markDefs?: Array<{
       href?: string;
@@ -321,6 +373,10 @@ export type ARTICLE_QUERY_RESULT = {
     level?: number;
     _type: "block";
     _key: string;
+  }> | null;
+  tableOfContents: Array<{
+    _key: string;
+    title: string;
   }> | null;
   image: {
     asset: {
@@ -348,7 +404,6 @@ export type ARTICLE_QUERY_RESULT = {
     _id: string;
     title: string | null;
     slug: string | null;
-    avatar: null;
   }> | null;
 } | null;
 
@@ -365,7 +420,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n     \"slug\": slug.current\n  }|order(title asc)\n": CATEGORIES_QUERY_RESULT;
     "\n  *[_type == \"article\" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    image {\n      asset->{_id, url},\n      alt,\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n    \"slug\": slug.current\n    }\n  }\n": ARTICLES_QUERY_RESULT;
-    "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n       \"title\": coalesce(\n          title[language == $locale][0].value,\n          title[language == \"en\"][0].value\n        ),\n      \"slug\": slug.current,\n      avatar\n    }\n  }\n": ARTICLE_QUERY_RESULT;
+    "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n      \"slug\": slug.current,\n    }\n  }\n": ARTICLE_QUERY_RESULT;
     "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }": ARTICLE_SLUGS_QUERY_RESULT;
   }
 }
