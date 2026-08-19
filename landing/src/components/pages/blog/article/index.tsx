@@ -3,6 +3,7 @@
 import AvatarCard from "@/components/atoms/avatar-card";
 import ButtonRounded from "@/components/atoms/button-rounded";
 import Heading from "@/components/atoms/heading";
+import Button from "@/components/atoms/main-button";
 import ArticleNav from "@/components/molecules/article-nav";
 import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
 import CategoryDate from "@/components/molecules/category-date";
@@ -11,9 +12,11 @@ import { formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
 import Share from "@assets/icons/share.svg";
+import logo from "@public/images/logo-sm@2x.png";
 import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
-import { Image } from "next-sanity/image";
+import { Image as SanityImage } from "next-sanity/image";
+import Image from "next/image";
 import { getHeadingId, portableTextComponents } from "./components/portable-text";
 
 type ArticleProps = {
@@ -52,7 +55,7 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         </Heading>
 
         {postImageUrl && (
-          <Image
+          <SanityImage
             src={postImageUrl}
             alt="Author photo"
             width="550"
@@ -76,6 +79,16 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         </div>
 
         <ArticleNav content={tableOfContents} />
+
+        <section className="items-center p-5 max-md:text-center md:flex md:gap-6 md:p-10">
+          <Image src={logo} alt="Linken Sphere logo" className="mx-auto" />
+
+          <strong className="text-[1.75rem] leading-[1.2] font-bold tracking-[-0.02em] max-md:mt-2 md:tracking-[-0.03em]">
+            Work anonymously with Linken Sphere
+          </strong>
+
+          <Button className="mx-auto text-nowrap max-md:mt-5 md:ml-auto">Start for free</Button>
+        </section>
 
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
       </article>
