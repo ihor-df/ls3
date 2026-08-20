@@ -66,7 +66,12 @@ export const ARTICLE_QUERY = defineQuery(`
         title[language == "en"][0].value
       ),
       "slug": slug.current,
-    }
+    },
+    faq[]{
+      "id":_key,
+      question,
+      answer
+    },
   }
 `);
 

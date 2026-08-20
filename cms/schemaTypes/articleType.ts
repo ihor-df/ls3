@@ -1,4 +1,4 @@
-import {defineField, defineType} from 'sanity'
+import {defineArrayMember, defineField, defineType} from 'sanity'
 import {isUniqueSlugByLanguage} from '../lib/isUniqueSlugByLanguage'
 
 export const articleType = defineType({
@@ -105,6 +105,12 @@ export const articleType = defineType({
         },
       ],
       validation: (rule) => rule.required().min(1),
+    }),
+    defineField({
+      name: 'faq',
+      title: 'FAQ',
+      type: 'array',
+      of: [defineArrayMember({type: 'faqItem'})],
     }),
   ],
 })

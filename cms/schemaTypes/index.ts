@@ -1,8 +1,10 @@
 import {articleCategoryType} from './articleCategoryType'
 import {articleType} from './articleType'
 import {authorType} from './authorType'
-import {articleBodyImageType} from './articleBodyImageType'
-import {tableType} from './tableType'
+
+import {articleBodyImageType} from './objects/articleBodyImageType'
+import {faqItemType} from './objects/faqType'
+import {tableType} from './objects/tableType'
 
 export const schemaTypes = [
   articleType,
@@ -10,4 +12,5 @@ export const schemaTypes = [
   authorType,
   articleBodyImageType,
   tableType,
+  faqItemType,
 ]

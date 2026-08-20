@@ -8,6 +8,7 @@ import ArticleNav from "@/components/molecules/article-nav";
 import AvatarCard from "@/components/molecules/avatar-card";
 import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
 import CategoryDate from "@/components/molecules/category-date";
+import FAQ from "@/components/organisms/faq";
 import { usePathname } from "@/i18n/navigation";
 import { formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
@@ -27,7 +28,7 @@ type ArticleProps = {
 };
 
 const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
-  const { image, categories, publishedAt, title, body, author } = post;
+  const { image, categories, publishedAt, title, body, author, faq } = post;
 
   const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
   const pathname = usePathname();
@@ -116,6 +117,8 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         </section>
 
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
+
+        {faq && <FAQ data={faq} />}
       </article>
     </>
   );

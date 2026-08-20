@@ -20,6 +20,3 @@ export default defineCliConfig({
     autoUpdates: true,
   },
 })
-
-// npx sanity schemas extract --force - create schema
-// npx sanity typegen generate - create types for landing

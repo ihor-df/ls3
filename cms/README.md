@@ -11,8 +11,9 @@ Now you can do the following things:
 ## Generate types
 
 Сначала изменяем схему в cms, потом запрос в defineQuery, после этого выполняем генерацию типов:
+(--enforce-required-fields typescript will trust to required sanity fields)
 
-- npx sanity schemas extract --force
+- npx sanity schemas extract --force --enforce-required-fields
 - npx sanity typegen generate
 
 ## После долгого перерыва между деплоями
