@@ -1,10 +1,11 @@
 "use client";
 
-import AvatarCard from "@/components/atoms/avatar-card";
 import ButtonRounded from "@/components/atoms/button-rounded";
 import Heading from "@/components/atoms/heading";
+import LocalVideoPlayer from "@/components/atoms/local-video-player";
 import Button from "@/components/atoms/main-button";
 import ArticleNav from "@/components/molecules/article-nav";
+import AvatarCard from "@/components/molecules/avatar-card";
 import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
 import CategoryDate from "@/components/molecules/category-date";
 import { usePathname } from "@/i18n/navigation";
@@ -17,7 +18,7 @@ import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
 import { Image as SanityImage } from "next-sanity/image";
 import Image from "next/image";
-import { getHeadingId, portableTextComponents } from "./components/portable-text";
+import { getHeadingId, portableTextComponents } from "./portable-text/components";
 
 type ArticleProps = {
   post: NonNullable<ARTICLE_QUERY_RESULT>;
@@ -80,14 +81,38 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
 
         <ArticleNav content={tableOfContents} />
 
-        <section className="items-center p-5 max-md:text-center md:flex md:gap-6 md:p-10">
-          <Image src={logo} alt="Linken Sphere logo" className="mx-auto" />
+        <section className="rounded-[40px] bg-[#19191A]">
+          <div className="relative overflow-hidden rounded-[40px]">
+            <LocalVideoPlayer
+              className="absolute inset-0 h-full w-full object-cover object-center"
+              controls={false}
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="metadata"
+              poster="/images/orange-clouds@2x.webp"
+              sources={[
+                { src: "/videos/orange_clouds_v2/orange_clouds-1200.webm", type: "video/webm" },
+                { src: "/videos/orange_clouds_v2/orange_clouds-1200.mp4", type: "video/mp4" },
+              ]}
+            />
+            <div className="relative z-10 h-full items-center justify-start p-5 max-md:text-center md:flex md:gap-6 md:p-10">
+              <Image src={logo} alt="Linken Sphere logo" className="size-18 max-md:mx-auto md:size-20" />
 
-          <strong className="text-[1.75rem] leading-[1.2] font-bold tracking-[-0.02em] max-md:mt-2 md:tracking-[-0.03em]">
-            Work anonymously with Linken Sphere
-          </strong>
+              <strong className="text-[1.75rem] leading-[1.2] font-bold tracking-[-0.02em] text-white max-md:mt-2 md:tracking-[-0.03em]">
+                Work anonymously with <span className="max-md:block">Linken Sphere</span>
+              </strong>
 
-          <Button className="mx-auto text-nowrap max-md:mt-5 md:ml-auto">Start for free</Button>
+              <Button className="w-auto text-nowrap max-md:mx-auto max-md:mt-5 md:ml-auto">Start for free</Button>
+            </div>
+          </div>
+
+          {/* discount */}
+          <p className="p-5 max-md:text-center md:p-10">
+            <span className="text-white max-md:block">Want to try Linken Sphere at a discount?</span> Use promo code
+            “LSBLOG” and get 30% off any subscription. Offer valid for new users only
+          </p>
         </section>
 
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
