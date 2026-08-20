@@ -2,31 +2,39 @@ import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
 
 type HeadingProps = ComponentProps<"h1"> & {
-  variant: "page-sm" | "article";
+  variant: "page" | "article" | "section";
+  as?: "h1" | "h2" | "h3";
 };
 
-const Heading = ({ className, children, variant }: HeadingProps) => {
+const Heading = ({ className, children, variant, as = "h1" }: HeadingProps) => {
+  const Tag = as;
+  const styles = "text-white font-bold leading-none";
+
   switch (variant) {
-    case "page-sm":
+    case "page":
+      // 40px/56px
       return (
-        <h1 className={cn("text-[2.5rem] leading-none font-bold tracking-[-0.01em] md:text-[3.5rem]", className)}>
-          {children}
-        </h1>
+        <Tag className={cn(styles, "text-[2.5rem] tracking-[-0.01em] md:text-[3.5rem]", className)}>{children}</Tag>
       );
     case "article":
+      // 28px/40px
       return (
-        <h1
-          className={cn(
-            "text-[1.75rem] leading-none font-bold tracking-[-0.02em] md:text-[2.5rem] md:tracking-[-0.03em]",
-            className,
-          )}
+        <Tag
+          className={cn(styles, "text-[1.75rem] tracking-[-0.02em] md:text-[2.5rem] md:tracking-[-0.03em]", className)}
         >
           {children}
-        </h1>
+        </Tag>
+      );
+    case "section":
+      // 36px/56px/72px
+      return (
+        <Tag className={cn(styles, "text-4xl tracking-[-0.02em] md:text-[3.5rem] md:tracking-[-0.01em]", className)}>
+          {children}
+        </Tag>
       );
 
     default:
-      return <h1 className={className}>{children}</h1>;
+      return <Tag className={className}>{children}</Tag>;
   }
 };
 

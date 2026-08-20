@@ -25,7 +25,7 @@ const Page = async ({ params }: { params: LocaleParams; searchParams: Promise<{ 
   return (
     <Container as="main">
       <div className="justify-between md:flex">
-        <Heading variant="page-sm">Blog</Heading>
+        <Heading variant="page">Blog</Heading>
         <SearchInput className="max-md:hidden" />
       </div>
 
