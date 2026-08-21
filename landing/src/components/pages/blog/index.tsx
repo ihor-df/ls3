@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLES_QUERY_RESULT, CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { Locale } from "next-intl";
-import { FilterItem } from "../../molecules/filter-item";
+import Filters from "./filters";
 
 type BlogProps = {
   posts: ARTICLES_QUERY_RESULT;
@@ -19,14 +19,7 @@ type BlogProps = {
 const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) => {
   return (
     <div className="mt-10 flex flex-col">
-      <ul className="flex flex-wrap gap-x-6 md:gap-x-8 md:gap-y-5">
-        <FilterItem href="/blog">All articles</FilterItem>
-        {categories.map((c) => (
-          <FilterItem href={`/blog/category/${c.slug}`} key={c._id}>
-            {c.title}
-          </FilterItem>
-        ))}
-      </ul>
+      <Filters categories={categories} />
 
       {!!posts?.length ? (
         <ul className="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-5 md:gap-y-16 xl:grid-cols-3">

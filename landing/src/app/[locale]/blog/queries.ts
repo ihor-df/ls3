@@ -27,6 +27,16 @@ const articleListProjection = /* groq */ `
   }
 `;
 
+export const getArticlesQuery = (limit: number) => {
+  return defineQuery(`
+    *[
+      ${articleListFilter}
+    ] | order(publishedAt desc, _id asc)[0...${limit}]{
+      ${articleListProjection}
+    }
+  `);
+};
+
 export const ARTICLE_SLUGS_QUERY = defineQuery(`
   *[_type == "article" && defined(slug.current)]{
     "slug": slug.current,
@@ -44,7 +54,6 @@ export const CATEGORIES_QUERY = defineQuery(`
   }|order(title asc)
 `);
 
-// unused
 export const CATEGORY_QUERY = defineQuery(`
   *[_type == "articleCategory" && slug.current == $slug][0]{
     _id,
@@ -67,20 +76,6 @@ export const ARTICLES_COUNT_QUERY = defineQuery(`
     ${articleListFilter}
   ])
 `);
-
-export const getArticlesQuery = (limit: number) => {
-  if (!Number.isSafeInteger(limit) || limit < 1) {
-    throw new RangeError("Article query limit must be a positive integer");
-  }
-
-  return defineQuery(`
-    *[
-      ${articleListFilter}
-    ] | order(publishedAt desc, _id asc)[0...${limit}]{
-      ${articleListProjection}
-    }
-  `);
-};
 
 export const ARTICLE_QUERY = defineQuery(`
   *[_type == "article" && language == $locale && slug.current == $slug][0]{

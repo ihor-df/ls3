@@ -27,8 +27,8 @@ type ArticleProps = {
 const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
   const { image, categories, publishedAt, title, body, author, faq } = post;
 
-  const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
   const pathname = usePathname();
+  const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
   const authorImageUrl = post.author?.avatar ? urlFor(post.author.avatar)?.width(48).height(48).url() : null;
 
   const tableOfContents =
@@ -38,8 +38,8 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
     })) ?? [];
 
   return (
-    <>
-      <article className="mx-auto min-h-screen w-full min-w-0 leading-[1.4] text-[#C3C3C3] md:text-xl xl:max-w-3xl">
+    <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
+      <div className="mx-auto w-full min-w-0 xl:max-w-3xl">
         {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
 
         {(categories || publishedAt) && (
@@ -80,9 +80,10 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
 
         {faq && <FAQ data={faq} className="mt-35 md:mt-40" />}
-        <Cta size="lg" className="mt-18 md:mt-40" />
-      </article>
-    </>
+      </div>
+
+      <Cta size="lg" className="mt-18 md:mt-40" />
+    </article>
   );
 };
 
