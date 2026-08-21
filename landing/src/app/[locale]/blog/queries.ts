@@ -1,5 +1,11 @@
 import { defineQuery } from "next-sanity";
 
+export const ARTICLE_SLUGS_QUERY = defineQuery(`
+  *[_type == "article" && defined(slug.current)]{
+    "slug": slug.current,
+    language
+  }`);
+
 export const CATEGORIES_QUERY = defineQuery(`
   *[_type == "articleCategory" && defined(slug.current)]{
     _id,
@@ -9,6 +15,52 @@ export const CATEGORIES_QUERY = defineQuery(`
     ),
      "slug": slug.current
   }|order(title asc)
+`);
+
+// unused
+export const CATEGORY_QUERY = defineQuery(`
+  *[_type == "articleCategory" && slug.current == $slug][0]{
+    _id,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "en"][0].value
+    ),
+    "slug": slug.current
+  }
+`);
+
+export const CATEGORY_WITH_ARTICLES_QUERY = defineQuery(`
+  *[_type == "articleCategory" && slug.current == $slug][0]{
+    _id,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "en"][0].value
+    ),
+    "slug": slug.current,
+    "articles": *[
+      _type == "article" &&
+      language == $locale &&
+      defined(slug.current) &&
+      references(^._id)
+    ] | order(publishedAt desc)[0...12]{
+      _id,
+      title,
+      slug,
+      publishedAt,
+      image {
+        asset->{_id, url},
+        alt
+      },
+      categories[]->{
+        _id,
+        "title": coalesce(
+          title[language == $locale][0].value,
+          title[language == "en"][0].value
+        ),
+        "slug": slug.current
+      }
+    }
+  }
 `);
 
 export const ARTICLES_QUERY = defineQuery(`
@@ -74,8 +126,3 @@ export const ARTICLE_QUERY = defineQuery(`
     },
   }
 `);
-
-export const ARTICLE_SLUGS_QUERY = defineQuery(`
-  *[_type == "article" && defined(slug.current)]{
-    "slug": slug.current
-  }`);

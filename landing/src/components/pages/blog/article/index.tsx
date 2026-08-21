@@ -5,7 +5,7 @@ import Heading from "@/components/atoms/heading";
 import ArticleNav from "@/components/molecules/article-nav";
 import AvatarCard from "@/components/molecules/avatar-card";
 import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
-import CategoryDate from "@/components/molecules/category-date";
+import CategoryAndDate from "@/components/molecules/category-date";
 import Cta from "@/components/organisms/cta";
 import FAQ from "@/components/organisms/faq";
 import { usePathname } from "@/i18n/navigation";
@@ -41,16 +41,20 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
     <>
       <article className="mx-auto min-h-screen w-full min-w-0 leading-[1.4] text-[#C3C3C3] md:text-xl xl:max-w-3xl">
         {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
+
         {(categories || publishedAt) && (
-          <CategoryDate
+          <CategoryAndDate
+            linked
             categories={categories ?? []}
             date={publishedAt ? formatDate(publishedAt, locale) : undefined}
             className="mt-10"
           />
         )}
+
         <Heading variant="article" className="mt-5">
           {title}
         </Heading>
+
         {postImageUrl && (
           <SanityImage
             src={postImageUrl}
