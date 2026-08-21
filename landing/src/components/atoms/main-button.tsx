@@ -23,7 +23,7 @@ const Button = ({
   return (
     <button
       className={cn(
-        "flex w-full cursor-pointer items-center justify-center rounded-full border border-transparent px-16 font-bold transition-colors disabled:pointer-events-none disabled:cursor-default disabled:opacity-50 md:w-auto md:max-w-max",
+        "flex w-full cursor-pointer items-center justify-center rounded-full border border-transparent px-16 font-bold transition-colors disabled:pointer-events-none disabled:cursor-default disabled:opacity-50 md:w-auto",
         size === "base" && "h-16.5 md:h-18 md:text-xl",
         size === "large" && "h-22 text-xl md:h-27 md:px-15 md:text-2xl",
         variant === "primary" &&

@@ -2,10 +2,15 @@ import Container from "@/components/atoms/container";
 import Heading from "@/components/atoms/heading";
 import SearchInput from "@/components/atoms/search-input";
 import Blog from "@/components/pages/blog";
+import { routing } from "@/i18n/routing";
 import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import { LocaleParams } from "@/types/common";
 import { ARTICLES_QUERY, CATEGORIES_QUERY } from "./queries";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 const Page = async ({ params }: { params: LocaleParams; searchParams: Promise<{ page?: string }> }) => {
   const { locale } = await params;
