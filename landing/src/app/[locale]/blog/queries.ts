@@ -1,5 +1,32 @@
 import { defineQuery } from "next-sanity";
 
+const articleListFilter = /* groq */ `
+  _type == "article" &&
+  language == $locale &&
+  defined(slug.current) &&
+  (!defined($search) || title match $search) &&
+  (!defined($categoryId) || references($categoryId))
+`;
+
+const articleListProjection = /* groq */ `
+  _id,
+  title,
+  slug,
+  publishedAt,
+  image {
+    asset->{_id, url},
+    alt,
+  },
+  categories[]->{
+    _id,
+    "title": coalesce(
+      title[language == $locale][0].value,
+      title[language == "en"][0].value
+    ),
+    "slug": slug.current
+  }
+`;
+
 export const ARTICLE_SLUGS_QUERY = defineQuery(`
   *[_type == "article" && defined(slug.current)]{
     "slug": slug.current,
@@ -29,60 +56,31 @@ export const CATEGORY_QUERY = defineQuery(`
   }
 `);
 
-export const CATEGORY_WITH_ARTICLES_QUERY = defineQuery(`
-  *[_type == "articleCategory" && slug.current == $slug][0]{
-    _id,
-    "title": coalesce(
-      title[language == $locale][0].value,
-      title[language == "en"][0].value
-    ),
-    "slug": slug.current,
-    "articles": *[
-      _type == "article" &&
-      language == $locale &&
-      defined(slug.current) &&
-      references(^._id)
-    ] | order(publishedAt desc)[0...12]{
-      _id,
-      title,
-      slug,
-      publishedAt,
-      image {
-        asset->{_id, url},
-        alt
-      },
-      categories[]->{
-        _id,
-        "title": coalesce(
-          title[language == $locale][0].value,
-          title[language == "en"][0].value
-        ),
-        "slug": slug.current
-      }
-    }
+export const ARTICLES_QUERY = defineQuery(`
+  *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{
+    ${articleListProjection}
   }
 `);
 
-export const ARTICLES_QUERY = defineQuery(`
-  *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{
-    _id,
-    title,
-    slug,
-    publishedAt,
-    image {
-      asset->{_id, url},
-      alt,
-    },
-    categories[]->{
-      _id,
-      "title": coalesce(
-        title[language == $locale][0].value,
-        title[language == "en"][0].value
-      ),
-    "slug": slug.current
-    }
-  }
+export const ARTICLES_COUNT_QUERY = defineQuery(`
+  count(*[
+    ${articleListFilter}
+  ])
 `);
+
+export const getArticlesQuery = (limit: number) => {
+  if (!Number.isSafeInteger(limit) || limit < 1) {
+    throw new RangeError("Article query limit must be a positive integer");
+  }
+
+  return defineQuery(`
+    *[
+      ${articleListFilter}
+    ] | order(publishedAt desc, _id asc)[0...${limit}]{
+      ${articleListProjection}
+    }
+  `);
+};
 
 export const ARTICLE_QUERY = defineQuery(`
   *[_type == "article" && language == $locale && slug.current == $slug][0]{

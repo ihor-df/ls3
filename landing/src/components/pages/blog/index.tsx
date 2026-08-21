@@ -1,4 +1,4 @@
-import Button from "@/components/atoms/main-button";
+import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
 import Cta from "@/components/organisms/cta";
 import { Link } from "@/i18n/navigation";
@@ -8,9 +8,15 @@ import type { ARTICLES_QUERY_RESULT, CATEGORIES_QUERY_RESULT } from "@/sanity/sa
 import { Locale } from "next-intl";
 import { FilterItem } from "../../molecules/filter-item";
 
-type BlogProps = { posts: ARTICLES_QUERY_RESULT; categories: CATEGORIES_QUERY_RESULT; locale: Locale };
+type BlogProps = {
+  posts: ARTICLES_QUERY_RESULT;
+  categories: CATEGORIES_QUERY_RESULT;
+  currentPage: number;
+  hasMore: boolean;
+  locale: Locale;
+};
 
-const Blog = ({ posts, categories, locale }: BlogProps) => {
+const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) => {
   return (
     <div className="mt-10 flex flex-col">
       <ul className="flex flex-wrap gap-x-6 md:gap-x-8 md:gap-y-5">
@@ -47,9 +53,7 @@ const Blog = ({ posts, categories, locale }: BlogProps) => {
         </div>
       )}
 
-      <Button className="mt-16 md:mt-40" size="large" variant="secondary">
-        Load more
-      </Button>
+      {hasMore && <LoadMoreButton currentPage={currentPage} />}
 
       <Cta size="lg" className="mt-35 md:mt-40" />
     </div>
