@@ -33,7 +33,7 @@ export default function FAQ({ className, data, ...props }: FAQProps) {
     <>
       <JsonLd data={faqScript} />
 
-      <section id="faq-section" className={cn("py-8", className)} {...props}>
+      <section id="faq-section" className={cn(className)} {...props}>
         <Heading as="h2" variant="section" className="text-center">
           {/* {t("title")} */}
           Popular Questions

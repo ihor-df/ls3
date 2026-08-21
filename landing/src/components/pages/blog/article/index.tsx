@@ -65,9 +65,9 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
             loading="eager"
           />
         )}
+
         <div className="mt-5 flex items-center justify-between">
           <AvatarCard alt="Publisher avatar" src={authorImageUrl ?? ""} name={author?.name} role={author?.role ?? ""} />
-
           <ButtonRounded>
             <Share className="size-5.5" />
           </ButtonRounded>
@@ -76,9 +76,10 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         <ArticleNav content={tableOfContents} />
         <Cta discount />
 
+        {/* Content */}
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
-        {faq && <FAQ data={faq} />}
 
+        {faq && <FAQ data={faq} className="mt-35 md:mt-40" />}
         <Cta size="lg" className="mt-18 md:mt-40" />
       </article>
     </>
