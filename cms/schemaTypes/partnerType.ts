@@ -1,10 +1,10 @@
-import {defineArrayMember, defineField, defineType} from 'sanity'
+import {defineField, defineType} from 'sanity'
 import {isUniqueSlugByLanguage} from '../lib/isUniqueSlugByLanguage'
 import {articleBodyField} from './objects/articleBodyField'
 
-export const articleType = defineType({
-  name: 'article',
-  title: 'Article',
+export const partnerType = defineType({
+  name: 'partner',
+  title: 'Partner',
   type: 'document',
   fields: [
     defineField({
@@ -59,11 +59,28 @@ export const articleType = defineType({
       type: 'boolean',
     }),
     defineField({
-      name: 'author',
-      title: 'Author',
-      type: 'reference',
-      to: [{type: 'author'}],
-      validation: (rule) => rule.required(),
+      name: 'body',
+      type: 'array',
+      of: [
+        {
+          type: 'block',
+          styles: [
+            {title: 'Normal', value: 'normal'},
+            {title: 'Heading 2', value: 'h2'},
+            {title: 'Heading 3', value: 'h3'},
+          ],
+          marks: {
+            decorators: [
+              {title: 'Strong', value: 'strong'},
+              {title: 'Emphasis', value: 'em'},
+              {title: 'Code', value: 'code'},
+              {title: 'Highlight', value: 'highlight'},
+            ],
+          },
+        },
+        {type: 'articleBodyImage'},
+        {type: 'table'},
+      ],
     }),
     defineField({
       name: 'categories',
@@ -72,16 +89,10 @@ export const articleType = defineType({
       of: [
         {
           type: 'reference',
-          to: [{type: 'articleCategory'}],
+          to: [{type: 'partnerCategory'}],
         },
       ],
       validation: (rule) => rule.required().min(1),
-    }),
-    defineField({
-      name: 'faq',
-      title: 'FAQ',
-      type: 'array',
-      of: [defineArrayMember({type: 'faqItem'})],
     }),
     articleBodyField,
   ],

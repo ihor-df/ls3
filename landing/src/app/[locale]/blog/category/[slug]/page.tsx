@@ -9,7 +9,7 @@ import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleSlugParams } from "@/types/common";
 import { notFound } from "next/navigation";
-import { ARTICLES_COUNT_QUERY, CATEGORIES_QUERY, CATEGORY_QUERY, getArticlesQuery } from "../../queries";
+import { ARTICLES_COUNT_QUERY, CATEGORIES_QUERY, CATEGORY_QUERY, getArticlesQuery } from "../../api";
 
 export async function generateStaticParams() {
   const categories = await sanityFetch({

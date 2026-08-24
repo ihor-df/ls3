@@ -70,14 +70,7 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         <div className="mt-5 flex items-center justify-between">
           <AvatarCard alt="Publisher avatar" src={authorImageUrl ?? ""} name={author?.name} role={author?.role ?? ""} />
 
-          <ShareSocial
-            url={selfUrl}
-            title={title}
-            description={
-              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores ipsam at assumenda earum blanditiis ratione quidem voluptas odio vitae harum modi quod iste, tempore dolor, saepe repellendus. Totam sequi molestiae adipisci nostrum amet quo aliquam voluptatem quia. Facere at ipsum aliquam nihil vitae, dolore fugit amet, error repellat doloremque quas."
-            }
-            imageUrl={postImageUrl ?? ""}
-          />
+          <ShareSocial url={selfUrl} title={title} imageUrl={postImageUrl ?? ""} />
         </div>
 
         <ArticleNav content={tableOfContents} />

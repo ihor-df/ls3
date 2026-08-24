@@ -7,7 +7,7 @@ import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleParams } from "@/types/common";
-import { ARTICLES_COUNT_QUERY, CATEGORIES_QUERY, getArticlesQuery } from "./queries";
+import { ARTICLES_COUNT_QUERY, CATEGORIES_QUERY, getArticlesQuery } from "./api";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

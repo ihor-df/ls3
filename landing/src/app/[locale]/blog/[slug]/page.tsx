@@ -5,7 +5,7 @@ import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import { LocaleSlugParams } from "@/types/common";
 import { notFound } from "next/navigation";
-import { ARTICLE_QUERY, ARTICLE_SLUGS_QUERY } from "../queries";
+import { ARTICLE_QUERY, ARTICLE_SLUGS_QUERY } from "../api";
 
 export async function generateStaticParams() {
   const posts = await sanityFetch({
