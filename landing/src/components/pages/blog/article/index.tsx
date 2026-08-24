@@ -1,18 +1,17 @@
 "use client";
 
-import ButtonRounded from "@/components/atoms/button-rounded";
 import Heading from "@/components/atoms/heading";
 import ArticleNav from "@/components/molecules/article-nav";
 import AvatarCard from "@/components/molecules/avatar-card";
 import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
 import CategoryAndDate from "@/components/molecules/category-date";
+import { ShareSocial } from "@/components/molecules/share-social";
 import Cta from "@/components/organisms/cta";
 import FAQ from "@/components/organisms/faq";
 import { usePathname } from "@/i18n/navigation";
-import { formatDate } from "@/lib/utils";
+import { buildAbsoluteUrl, formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
-import Share from "@assets/icons/share.svg";
 import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
 import { Image as SanityImage } from "next-sanity/image";
@@ -25,7 +24,7 @@ type ArticleProps = {
 };
 
 const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
-  const { image, categories, publishedAt, title, body, author, faq } = post;
+  const { image, categories, publishedAt, title, body, author, faq, slug } = post;
 
   const pathname = usePathname();
   const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
@@ -36,6 +35,8 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
       title,
       href: `#${getHeadingId(_key)}`,
     })) ?? [];
+
+  const selfUrl = buildAbsoluteUrl(locale, `/blog/${slug}`);
 
   return (
     <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
@@ -68,9 +69,15 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
 
         <div className="mt-5 flex items-center justify-between">
           <AvatarCard alt="Publisher avatar" src={authorImageUrl ?? ""} name={author?.name} role={author?.role ?? ""} />
-          <ButtonRounded>
-            <Share className="size-5.5" />
-          </ButtonRounded>
+
+          <ShareSocial
+            url={selfUrl}
+            title={title}
+            description={
+              "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores ipsam at assumenda earum blanditiis ratione quidem voluptas odio vitae harum modi quod iste, tempore dolor, saepe repellendus. Totam sequi molestiae adipisci nostrum amet quo aliquam voluptatem quia. Facere at ipsum aliquam nihil vitae, dolore fugit amet, error repellat doloremque quas."
+            }
+            imageUrl={postImageUrl ?? ""}
+          />
         </div>
 
         <ArticleNav content={tableOfContents} />
@@ -81,7 +88,6 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
 
         {faq && <FAQ data={faq} className="mt-35 md:mt-40" />}
       </div>
-
       <Cta size="lg" className="mt-18 md:mt-40" />
     </article>
   );
