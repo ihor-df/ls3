@@ -16,7 +16,7 @@ export const FilterItem = ({
   return (
     <li
       className={cn(
-        "leading-[1.2] font-medium tracking-[-0.01em] text-white/60 transition-colors hover:text-white hover:underline",
+        "leading-[1.6] font-medium tracking-[-0.01em] text-white/60 transition-colors hover:text-white hover:underline md:leading-[1.2]",
         current && "text-white underline",
         className,
       )}
