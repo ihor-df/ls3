@@ -59,30 +59,6 @@ export const partnerType = defineType({
       type: 'boolean',
     }),
     defineField({
-      name: 'body',
-      type: 'array',
-      of: [
-        {
-          type: 'block',
-          styles: [
-            {title: 'Normal', value: 'normal'},
-            {title: 'Heading 2', value: 'h2'},
-            {title: 'Heading 3', value: 'h3'},
-          ],
-          marks: {
-            decorators: [
-              {title: 'Strong', value: 'strong'},
-              {title: 'Emphasis', value: 'em'},
-              {title: 'Code', value: 'code'},
-              {title: 'Highlight', value: 'highlight'},
-            ],
-          },
-        },
-        {type: 'articleBodyImage'},
-        {type: 'table'},
-      ],
-    }),
-    defineField({
       name: 'categories',
       title: 'Categories',
       type: 'array',
