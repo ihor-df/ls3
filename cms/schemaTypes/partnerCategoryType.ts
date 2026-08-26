@@ -1,5 +1,15 @@
 import {defineField, defineType} from 'sanity'
 
+type LocalizedStringValue = {
+  language?: string
+  value?: string
+}
+
+const resolveLocalizedTitle = (title?: LocalizedStringValue[]) =>
+  title?.find((item) => item.language === 'en' && item.value?.trim())?.value ??
+  title?.find((item) => item.value?.trim())?.value ??
+  ''
+
 export const partnerCategoryType = defineType({
   name: 'partnerCategory',
   title: 'PartnerCategory',
@@ -15,7 +25,8 @@ export const partnerCategoryType = defineType({
       name: 'slug',
       type: 'slug',
       options: {
-        source: 'title',
+        source: (document) =>
+          resolveLocalizedTitle(document.title as LocalizedStringValue[] | undefined),
       },
       validation: (rule) => rule.required(),
     }),
@@ -26,10 +37,7 @@ export const partnerCategoryType = defineType({
       slug: 'slug.current',
     },
     prepare({title, slug}) {
-      const resolvedTitle =
-        title?.find((item: {language?: string; value?: string}) => item.language === 'en')?.value ??
-        title?.[0]?.value ??
-        'Untitled'
+      const resolvedTitle = resolveLocalizedTitle(title) || 'Untitled'
 
       return {
         title: resolvedTitle,

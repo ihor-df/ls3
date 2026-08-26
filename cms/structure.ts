@@ -26,4 +26,24 @@ export const structure: StructureResolver = (S) =>
         ),
 
       S.documentTypeListItem('author').title('Authors'),
+
+      S.listItem()
+        .title('Partners')
+        .child(
+          S.documentList()
+            .title('Partners')
+            .schemaType('partner')
+            .filter('_type == "partner"')
+            .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
+        ),
+
+      S.listItem()
+        .title('Partner Categories')
+        .child(
+          S.documentList()
+            .title('Partner Categories')
+            .schemaType('partnerCategory')
+            .filter('_type == "partnerCategory"')
+            .defaultOrdering([{field: 'slug.current', direction: 'asc'}]),
+        ),
     ])
