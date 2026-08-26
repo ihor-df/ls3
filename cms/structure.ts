@@ -33,7 +33,8 @@ export const structure: StructureResolver = (S) =>
           S.documentList()
             .title('Partners')
             .schemaType('partner')
-            .filter('_type == "partner"')
+            .filter('_type == "partner" && language == $language')
+            .params({language: 'en'})
             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
         ),
 

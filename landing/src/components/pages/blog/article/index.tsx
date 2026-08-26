@@ -5,6 +5,7 @@ import ArticleNav from "@/components/molecules/article-nav";
 import AvatarCard from "@/components/molecules/avatar-card";
 import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
 import CategoryAndDate from "@/components/molecules/category-date";
+import { getHeadingId, portableTextComponents } from "@/components/molecules/portable-text/components";
 import { ShareSocial } from "@/components/molecules/share-social";
 import Cta from "@/components/organisms/cta";
 import FAQ from "@/components/organisms/faq";
@@ -15,7 +16,6 @@ import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
 import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
 import { Image as SanityImage } from "next-sanity/image";
-import { getHeadingId, portableTextComponents } from "./portable-text/components";
 
 type ArticleProps = {
   post: NonNullable<ARTICLE_QUERY_RESULT>;
@@ -45,6 +45,7 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
 
         {(categories || publishedAt) && (
           <CategoryAndDate
+            page="blog"
             linked
             categories={categories ?? []}
             date={publishedAt ? formatDate(publishedAt, locale) : undefined}
@@ -69,7 +70,6 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
 
         <div className="mt-5 flex items-center justify-between">
           <AvatarCard alt="Publisher avatar" src={authorImageUrl ?? ""} name={author?.name} role={author?.role ?? ""} />
-
           <ShareSocial url={selfUrl} title={title} imageUrl={postImageUrl ?? ""} />
         </div>
 

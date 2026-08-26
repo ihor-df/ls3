@@ -15,6 +15,28 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
+export type PartnerCategory = {
+  _id: string;
+  _type: "partnerCategory";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title: InternationalizedArrayString;
+  slug: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
+};
+
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
+
 export type FaqItem = {
   _type: "faqItem";
   question: string;
@@ -82,18 +104,6 @@ export type ArticleCategory = {
   slug: Slug;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
-export type InternationalizedArrayString = Array<
-  {
-    _key: string;
-  } & InternationalizedArrayStringValue
->;
-
 export type InternationalizedArrayStringValue = {
   _type: "internationalizedArrayStringValue";
   value?: string;
@@ -123,10 +133,96 @@ export type ArticleReference = {
   [internalGroqTypeReferenceTo]?: "article";
 };
 
+export type PartnerReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "partner";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
-  value?: ArticleReference;
+  value?: ArticleReference | PartnerReference;
   language: string;
+};
+
+export type PartnerCategoryReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "partnerCategory";
+};
+
+export type Partner = {
+  _id: string;
+  _type: "partner";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  categories: Array<
+    {
+      _key: string;
+    } & PartnerCategoryReference
+  >;
+  title: string;
+  slug: Slug;
+  description?: string;
+  discountPercent?: number;
+  discountText?: string;
+  promoCode?: string;
+  url?: string;
+  publishedAt: string;
+  logo: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & ArticleBodyImage)
+    | ({
+        _key: string;
+      } & Table)
+  >;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type AuthorReference = {
@@ -163,6 +259,17 @@ export type Article = {
     _type: "image";
   };
   recommended?: boolean;
+  author: AuthorReference;
+  categories: Array<
+    {
+      _key: string;
+    } & ArticleCategoryReference
+  >;
+  faq?: Array<
+    {
+      _key: string;
+    } & FaqItem
+  >;
   body?: Array<
     | {
         children?: Array<{
@@ -171,7 +278,7 @@ export type Article = {
           _type: "span";
           _key: string;
         }>;
-        style?: "normal" | "h2" | "h3" | "h4" | "h5" | "h6";
+        style?: "normal" | "h2" | "h3";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -188,17 +295,6 @@ export type Article = {
     | ({
         _key: string;
       } & Table)
-  >;
-  author: AuthorReference;
-  categories: Array<
-    {
-      _key: string;
-    } & ArticleCategoryReference
-  >;
-  faq?: Array<
-    {
-      _key: string;
-    } & FaqItem
   >;
 };
 
@@ -217,22 +313,6 @@ export type Author = {
     crop?: SanityImageCrop;
     _type: "image";
   };
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
 };
 
 export type SanityImagePaletteSwatch = {
@@ -333,24 +413,28 @@ export type Geopoint = {
 };
 
 export type AllSanitySchemaTypes =
+  | PartnerCategory
+  | Slug
+  | InternationalizedArrayString
   | FaqItem
   | Table
   | SanityImageAssetReference
   | ArticleBodyImage
   | ArticleCategory
-  | Slug
-  | InternationalizedArrayString
   | InternationalizedArrayStringValue
   | TranslationMetadata
   | InternationalizedArrayReference
   | ArticleReference
+  | PartnerReference
   | InternationalizedArrayReferenceValue
+  | PartnerCategoryReference
+  | Partner
+  | SanityImageCrop
+  | SanityImageHotspot
   | AuthorReference
   | ArticleCategoryReference
   | Article
   | Author
-  | SanityImageCrop
-  | SanityImageHotspot
   | SanityImagePaletteSwatch
   | SanityImagePalette
   | SanityImageDimensions
@@ -360,7 +444,7 @@ export type AllSanitySchemaTypes =
   | SanityImageAsset
   | Geopoint;
 
-// Source: ../landing/src/app/[locale]/blog/queries.ts
+// Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLE_SLUGS_QUERY
 // Query: *[_type == "article" && defined(slug.current)]{    "slug": slug.current,    language  }
 export type ARTICLE_SLUGS_QUERY_RESULT = Array<{
@@ -368,25 +452,25 @@ export type ARTICLE_SLUGS_QUERY_RESULT = Array<{
   language: string | null;
 }>;
 
-// Source: ../landing/src/app/[locale]/blog/queries.ts
-// Variable: CATEGORIES_QUERY
+// Source: ../landing/src/app/[locale]/blog/api.ts
+// Variable: ARTICLE_CATEGORIES_QUERY
 // Query: *[_type == "articleCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),     "slug": slug.current  }|order(title asc)
-export type CATEGORIES_QUERY_RESULT = Array<{
+export type ARTICLE_CATEGORIES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
   slug: string;
 }>;
 
-// Source: ../landing/src/app/[locale]/blog/queries.ts
-// Variable: CATEGORY_QUERY
+// Source: ../landing/src/app/[locale]/blog/api.ts
+// Variable: ARTICLE_CATEGORY_QUERY
 // Query: *[_type == "articleCategory" && slug.current == $slug][0]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }
-export type CATEGORY_QUERY_RESULT = {
+export type ARTICLE_CATEGORY_QUERY_RESULT = {
   _id: string;
   title: string | null;
   slug: string;
 } | null;
 
-// Source: ../landing/src/app/[locale]/blog/queries.ts
+// Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLES_QUERY
 // Query: *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{      _id,  title,  slug,  publishedAt,  image {    asset->{_id, url},    alt,  },  categories[]->{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }  }
 export type ARTICLES_QUERY_RESULT = Array<{
@@ -408,12 +492,12 @@ export type ARTICLES_QUERY_RESULT = Array<{
   }>;
 }>;
 
-// Source: ../landing/src/app/[locale]/blog/queries.ts
+// Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLES_COUNT_QUERY
 // Query: count(*[      _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search) &&  (!defined($categoryId) || references($categoryId))  ])
 export type ARTICLES_COUNT_QUERY_RESULT = number;
 
-// Source: ../landing/src/app/[locale]/blog/queries.ts
+// Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLE_QUERY
 // Query: *[_type == "article" && language == $locale && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    body,    "tableOfContents": body[_type == "block" && style == "h2"]{      _key,      "title": coalesce(pt::text(@), "")    },    image {      asset->{_id, url},      alt,      caption,      hotspot,      crop    },    author->{      _id,      name,      "role": coalesce(        role[language == $locale][0].value,        role[language == "en"][0].value      ),      avatar    },    categories[]->{      _id,      "title": coalesce(        title[language == $locale][0].value,        title[language == "en"][0].value      ),      "slug": slug.current,    },    faq[]{      "id":_key,      question,      answer    },  }
 export type ARTICLE_QUERY_RESULT = {
@@ -435,7 +519,7 @@ export type ARTICLE_QUERY_RESULT = {
           _type: "span";
           _key: string;
         }>;
-        style?: "h2" | "h3" | "h4" | "h5" | "h6" | "normal";
+        style?: "h2" | "h3" | "normal";
         listItem?: "bullet" | "number";
         markDefs?: Array<{
           href?: string;
@@ -485,15 +569,134 @@ export type ARTICLE_QUERY_RESULT = {
   }> | null;
 } | null;
 
+// Source: ../landing/src/app/[locale]/partners/api.ts
+// Variable: PARTNER_CATEGORIES_QUERY
+// Query: *[_type == "partnerCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  } | order(title asc)
+export type PARTNER_CATEGORIES_QUERY_RESULT = Array<{
+  _id: string;
+  title: string | null;
+  slug: string;
+}>;
+
+// Source: ../landing/src/app/[locale]/partners/api.ts
+// Variable: PARTNER_CATEGORY_QUERY
+// Query: *[_type == "partnerCategory" && slug.current == $slug][0]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }
+export type PARTNER_CATEGORY_QUERY_RESULT = {
+  _id: string;
+  title: string | null;
+  slug: string;
+} | null;
+
+// Source: ../landing/src/app/[locale]/partners/api.ts
+// Variable: PARTNERS_QUERY
+// Query: *[_type == "partner" && language == $locale && defined(slug.current)]    | order(publishedAt desc, _id asc)[0...12]{        _id,  title,  description,  slug,  publishedAt,  logo {    asset->{_id, url},    alt,  },  categories[]->{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }    }
+export type PARTNERS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  description: string | null;
+  slug: Slug;
+  publishedAt: string;
+  logo: {
+    asset: {
+      _id: string;
+      url: string;
+    } | null;
+    alt: string;
+  };
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: string;
+  }>;
+}>;
+
+// Source: ../landing/src/app/[locale]/partners/api.ts
+// Variable: PARTNER_SLUGS_QUERY
+// Query: *[_type == "partner" && defined(slug.current)]{    "slug": slug.current,    language  }
+export type PARTNER_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+  language: string | null;
+}>;
+
+// Source: ../landing/src/app/[locale]/partners/api.ts
+// Variable: PARTNER_QUERY
+// Query: *[    _type == "partner" &&    language == $locale &&    slug.current == $slug  ][0]{    _id,    title,    description,    slug,    discountPercent,    discountText,    promoCode,    url,    publishedAt,    body,    "tableOfContents": body[_type == "block" && style == "h2"]{      _key,      "title": coalesce(pt::text(@), "")    },    logo {      asset->{_id, url},      alt,      hotspot,      crop    },    categories[]->{      _id,      "title": coalesce(        title[language == $locale][0].value,        title[language == "en"][0].value      ),      "slug": slug.current    }  }
+export type PARTNER_QUERY_RESULT = {
+  _id: string;
+  title: string;
+  description: string | null;
+  slug: Slug;
+  discountPercent: number | null;
+  discountText: string | null;
+  promoCode: string | null;
+  url: string | null;
+  publishedAt: string;
+  body: Array<
+    | ({
+        _key: string;
+      } & ArticleBodyImage)
+    | ({
+        _key: string;
+      } & Table)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "h2" | "h3" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+  > | null;
+  tableOfContents: Array<{
+    _key: string;
+    title: string;
+  }> | null;
+  logo: {
+    asset: {
+      _id: string;
+      url: string;
+    } | null;
+    alt: string;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+  };
+  categories: Array<{
+    _id: string;
+    title: string | null;
+    slug: string;
+  }>;
+} | null;
+
+// Source: ../landing/src/app/[locale]/partners/api.ts
+// Variable: PARTNERS_COUNT_QUERY
+// Query: count(*[      _type == "partner" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search) &&  (!defined($categoryId) || references($categoryId))  ])
+export type PARTNERS_COUNT_QUERY_RESULT = number;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "article" && defined(slug.current)]{\n    "slug": slug.current,\n    language\n  }': ARTICLE_SLUGS_QUERY_RESULT;
-    '\n  *[_type == "articleCategory" && defined(slug.current)]{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n     "slug": slug.current\n  }|order(title asc)\n': CATEGORIES_QUERY_RESULT;
-    '\n  *[_type == "articleCategory" && slug.current == $slug][0]{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n    "slug": slug.current\n  }\n': CATEGORY_QUERY_RESULT;
+    '\n  *[_type == "articleCategory" && defined(slug.current)]{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n     "slug": slug.current\n  }|order(title asc)\n': ARTICLE_CATEGORIES_QUERY_RESULT;
+    '\n  *[_type == "articleCategory" && slug.current == $slug][0]{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n    "slug": slug.current\n  }\n': ARTICLE_CATEGORY_QUERY_RESULT;
     '\n  *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n    "slug": slug.current\n  }\n\n  }\n': ARTICLES_QUERY_RESULT;
     '\n  count(*[\n    \n  _type == "article" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n': ARTICLES_COUNT_QUERY_RESULT;
     '\n  *[_type == "article" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    "tableOfContents": body[_type == "block" && style == "h2"]{\n      _key,\n      "title": coalesce(pt::text(@), "")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      "role": coalesce(\n        role[language == $locale][0].value,\n        role[language == "en"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n      "title": coalesce(\n        title[language == $locale][0].value,\n        title[language == "en"][0].value\n      ),\n      "slug": slug.current,\n    },\n    faq[]{\n      "id":_key,\n      question,\n      answer\n    },\n  }\n': ARTICLE_QUERY_RESULT;
+    '\n  *[_type == "partnerCategory" && defined(slug.current)]{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n    "slug": slug.current\n  } | order(title asc)\n': PARTNER_CATEGORIES_QUERY_RESULT;
+    '\n  *[_type == "partnerCategory" && slug.current == $slug][0]{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n    "slug": slug.current\n  }\n': PARTNER_CATEGORY_QUERY_RESULT;
+    '\n  *[_type == "partner" && language == $locale && defined(slug.current)]\n    | order(publishedAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  description,\n  slug,\n  publishedAt,\n  logo {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    "title": coalesce(\n      title[language == $locale][0].value,\n      title[language == "en"][0].value\n    ),\n    "slug": slug.current\n  }\n\n    }\n': PARTNERS_QUERY_RESULT;
+    '\n  *[_type == "partner" && defined(slug.current)]{\n    "slug": slug.current,\n    language\n  }': PARTNER_SLUGS_QUERY_RESULT;
+    '\n  *[\n    _type == "partner" &&\n    language == $locale &&\n    slug.current == $slug\n  ][0]{\n    _id,\n    title,\n    description,\n    slug,\n    discountPercent,\n    discountText,\n    promoCode,\n    url,\n    publishedAt,\n    body,\n    "tableOfContents": body[_type == "block" && style == "h2"]{\n      _key,\n      "title": coalesce(pt::text(@), "")\n    },\n    logo {\n      asset->{_id, url},\n      alt,\n      hotspot,\n      crop\n    },\n    categories[]->{\n      _id,\n      "title": coalesce(\n        title[language == $locale][0].value,\n        title[language == "en"][0].value\n      ),\n      "slug": slug.current\n    }\n  }\n': PARTNER_QUERY_RESULT;
+    '\n  count(*[\n    \n  _type == "partner" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n': PARTNERS_COUNT_QUERY_RESULT;
   }
 }

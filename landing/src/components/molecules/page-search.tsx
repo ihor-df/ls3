@@ -3,12 +3,12 @@
 import SearchInput from "@/components/atoms/search-input";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-type BlogSearchProps = {
+type PageSearchProps = {
   className?: string;
   initialValue?: string;
 };
 
-const BlogSearch = ({ className, initialValue = "" }: BlogSearchProps) => {
+const PageSearch = ({ className, initialValue = "" }: PageSearchProps) => {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -32,4 +32,4 @@ const BlogSearch = ({ className, initialValue = "" }: BlogSearchProps) => {
   return <SearchInput className={className} initialValue={initialValue} onSearch={handleSearch} />;
 };
 
-export default BlogSearch;
+export default PageSearch;

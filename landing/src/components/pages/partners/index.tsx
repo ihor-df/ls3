@@ -2,40 +2,39 @@ import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
 import Cta from "@/components/organisms/cta";
 import { Link } from "@/i18n/navigation";
-import { formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
-import type { ARTICLES_QUERY_RESULT, ARTICLE_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
+import type { PARTNER_CATEGORIES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { Locale } from "next-intl";
 import CategoryFilters from "../../molecules/category-filters";
 
-type BlogProps = {
-  posts: ARTICLES_QUERY_RESULT;
-  categories: ARTICLE_CATEGORIES_QUERY_RESULT;
+type PartnersProps = {
+  partners: PARTNERS_QUERY_RESULT;
+  categories: PARTNER_CATEGORIES_QUERY_RESULT;
   currentPage: number;
   hasMore: boolean;
   locale: Locale;
 };
 
-const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) => {
+const Partners = ({ partners, categories, currentPage, hasMore }: PartnersProps) => {
   return (
     <div className="mt-10 flex flex-col">
-      <CategoryFilters page="blog" categories={categories} />
+      <CategoryFilters page="partners" categories={categories} />
 
-      {!!posts?.length ? (
+      {!!partners?.length ? (
         <ul className="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-5 md:gap-y-16 xl:grid-cols-3">
-          {posts.map((post) => {
-            const postImageUrl = post?.image ? urlFor(post.image)?.width(413).height(232).url() : null;
+          {partners.map((partner) => {
+            const partnerLogoUrl = partner.logo ? urlFor(partner.logo)?.width(413).height(232).url() : null;
 
             return (
-              <li key={post._id}>
-                <Link href={`/blog/${post.slug?.current}`}>
+              <li key={partner._id}>
+                <Link href={`/partners/${partner.slug?.current}`}>
                   <PostCard
-                    page="blog"
-                    date={post.publishedAt ? formatDate(post.publishedAt, locale) : undefined}
-                    title={post.title}
-                    imageSrc={postImageUrl ?? ""}
-                    categories={post.categories}
-                    alt={post.image.alt}
+                    page="partners"
+                    title={partner.title}
+                    description={partner.description ?? ""}
+                    imageSrc={partnerLogoUrl ?? ""}
+                    categories={partner.categories}
+                    alt={partner.logo.alt}
                   />
                 </Link>
               </li>
@@ -44,7 +43,7 @@ const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) =>
         </ul>
       ) : (
         <div className="flex h-100 items-center justify-center text-lg text-[#C3C3C3]">
-          <p>No articles :(</p>
+          <p>No partners :(</p>
         </div>
       )}
 
@@ -55,4 +54,4 @@ const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) =>
   );
 };
 
-export default Blog;
+export default Partners;

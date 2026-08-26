@@ -1,21 +1,22 @@
 import { cn } from "@/lib/utils";
-import { CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
+import { ARTICLE_CATEGORIES_QUERY_RESULT, PARTNER_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
 import Tag from "../atoms/tag";
 
 type CategoryAndDateProps = {
-  categories: CATEGORIES_QUERY_RESULT;
+  categories: ARTICLE_CATEGORIES_QUERY_RESULT | PARTNER_CATEGORIES_QUERY_RESULT;
   date?: string;
   className?: string;
   linked?: boolean;
+  page: "blog" | "partners";
 };
 
-const CategoryAndDate = ({ categories, date, className, linked }: CategoryAndDateProps) => {
+const CategoryAndDate = ({ categories, date, className, linked, page }: CategoryAndDateProps) => {
   return (
     <div className={cn("flex items-center gap-3 text-sm", className)}>
       <ul className="flex gap-3">
         {categories?.map((c) => (
           <li key={c._id}>
-            <Tag href={linked ? `/blog/category/${c.slug}` : undefined}>{c.title}</Tag>
+            <Tag href={linked ? `/${page}/category/${c.slug}` : undefined}>{c.title}</Tag>
           </li>
         ))}
       </ul>

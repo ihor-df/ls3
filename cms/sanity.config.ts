@@ -30,7 +30,7 @@ export default defineConfig({
     visionTool(),
     documentInternationalization({
       supportedLanguages: languages,
-      schemaTypes: ['article'],
+      schemaTypes: ['article', 'partner'],
     }),
     internationalizedArray({
       languages,

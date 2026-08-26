@@ -1,19 +1,18 @@
 import Container from "@/components/atoms/container";
 import Heading from "@/components/atoms/heading";
-import BlogSearch from "@/components/molecules/page-search";
-import Category from "@/components/pages/blog";
-import { sanityFetch } from "@/sanity/client";
-
+import PageSearch from "@/components/molecules/page-search";
+import Category from "@/components/pages/partners";
 import { routing } from "@/i18n/routing";
-import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
-import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
+import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
+import { sanityFetch } from "@/sanity/client";
+import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleSlugParams } from "@/types/common";
 import { notFound } from "next/navigation";
-import { ARTICLE_CATEGORIES_QUERY, ARTICLE_CATEGORY_QUERY, getArticlesQuery } from "../../api";
+import { getPartnersQuery, PARTNER_CATEGORIES_QUERY, PARTNER_CATEGORY_QUERY } from "../../api";
 
 export async function generateStaticParams() {
   const categories = await sanityFetch({
-    query: ARTICLE_CATEGORIES_QUERY,
+    query: PARTNER_CATEGORIES_QUERY,
     params: { locale: "en" },
     perspective: "published",
     stega: false,
@@ -39,17 +38,17 @@ const Page = async ({ params, searchParams }: PageProps) => {
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
   const page = Number.isSafeInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
-  const limit = page * ARTICLES_PER_PAGE;
+  const limit = page * PARTNERS_PER_PAGE;
 
   const [category, categories] = await Promise.all([
     sanityFetch({
       params: { slug, locale },
-      query: ARTICLE_CATEGORY_QUERY,
+      query: PARTNER_CATEGORY_QUERY,
       revalidate: SANITY_REVALIDATE_TIME,
     }),
     sanityFetch({
       params: { locale },
-      query: ARTICLE_CATEGORIES_QUERY,
+      query: PARTNER_CATEGORIES_QUERY,
       revalidate: SANITY_REVALIDATE_TIME,
     }),
   ]);
@@ -58,30 +57,30 @@ const Page = async ({ params, searchParams }: PageProps) => {
     notFound();
   }
 
-  const articleParams = {
+  const partnerParams = {
     locale,
     search: search ? `*${search}*` : null,
     categoryId: category._id,
   };
 
-  const postsWithExtra = (await sanityFetch({
-    params: articleParams,
-    query: getArticlesQuery(limit + 1),
+  const partnersWithExtra = (await sanityFetch({
+    params: partnerParams,
+    query: getPartnersQuery(limit + 1),
     revalidate: SANITY_REVALIDATE_TIME,
-  })) as ARTICLES_QUERY_RESULT;
-  const hasMore = postsWithExtra.length > limit;
-  const posts = postsWithExtra.slice(0, limit);
+  })) as PARTNERS_QUERY_RESULT;
+  const hasMore = partnersWithExtra.length > limit;
+  const partners = partnersWithExtra.slice(0, limit);
 
   return (
     <Container as="main">
       <div className="justify-between md:flex">
-        <Heading variant="page">Blog</Heading>
-        <BlogSearch className="max-md:hidden" initialValue={search} />
+        <Heading variant="page">Partners</Heading>
+        <PageSearch className="max-md:hidden" initialValue={search} />
       </div>
 
       <Category
         locale={locale}
-        posts={posts ?? []}
+        partners={partners}
         categories={categories ?? []}
         currentPage={page}
         hasMore={hasMore}

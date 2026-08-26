@@ -1,13 +1,13 @@
 import Container from "@/components/atoms/container";
 import Heading from "@/components/atoms/heading";
-import BlogSearch from "@/components/molecules/blog-search";
+import PageSearch from "@/components/molecules/page-search";
 import Blog from "@/components/pages/blog";
 import { routing } from "@/i18n/routing";
 import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleParams } from "@/types/common";
-import { ARTICLES_COUNT_QUERY, CATEGORIES_QUERY, getArticlesQuery } from "./api";
+import { ARTICLE_CATEGORIES_QUERY, getArticlesQuery } from "./api";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -32,38 +32,30 @@ const Page = async ({ params, searchParams }: PageProps) => {
     categoryId: null,
   };
 
-  const [posts, totalArticles, categories] = await Promise.all([
+  const [postsWithExtra, categories] = await Promise.all([
     sanityFetch({
       params: articleParams,
-      query: getArticlesQuery(limit),
+      query: getArticlesQuery(limit + 1),
       revalidate: SANITY_REVALIDATE_TIME,
     }) as Promise<ARTICLES_QUERY_RESULT>,
     sanityFetch({
-      params: articleParams,
-      query: ARTICLES_COUNT_QUERY,
-      revalidate: SANITY_REVALIDATE_TIME,
-    }),
-    sanityFetch({
       params: { locale },
-      query: CATEGORIES_QUERY,
+      query: ARTICLE_CATEGORIES_QUERY,
       revalidate: SANITY_REVALIDATE_TIME,
     }),
   ]);
+
+  const hasMore = postsWithExtra.length > limit;
+  const posts = postsWithExtra.slice(0, limit);
 
   return (
     <Container as="main">
       <div className="justify-between md:flex">
         <Heading variant="page">Blog</Heading>
-        <BlogSearch className="max-md:hidden" initialValue={search} />
+        <PageSearch className="max-md:hidden" initialValue={search} />
       </div>
 
-      <Blog
-        locale={locale}
-        posts={posts ?? []}
-        categories={categories ?? []}
-        currentPage={page}
-        hasMore={posts.length < totalArticles}
-      />
+      <Blog locale={locale} posts={posts ?? []} categories={categories ?? []} currentPage={page} hasMore={hasMore} />
     </Container>
   );
 };

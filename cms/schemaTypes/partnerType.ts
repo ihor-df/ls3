@@ -14,6 +14,18 @@ export const partnerType = defineType({
       hidden: true,
     }),
     defineField({
+      name: 'categories',
+      title: 'Categories',
+      type: 'array',
+      of: [
+        {
+          type: 'reference',
+          to: [{type: 'partnerCategory'}],
+        },
+      ],
+      validation: (rule) => rule.required().min(1),
+    }),
+    defineField({
       name: 'title',
       type: 'string',
       validation: (rule) => rule.required(),
@@ -28,13 +40,34 @@ export const partnerType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'description',
+      type: 'text',
+    }),
+    defineField({
+      name: 'discountPercent',
+      type: 'number',
+      validation: (rule) => rule.min(1).max(99),
+    }),
+    defineField({
+      name: 'discountText',
+      type: 'string',
+    }),
+    defineField({
+      name: 'promoCode',
+      type: 'string',
+    }),
+    defineField({
+      name: 'url',
+      type: 'string',
+    }),
+    defineField({
       name: 'publishedAt',
       type: 'datetime',
       initialValue: () => new Date().toISOString(),
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().min('1'),
     }),
     defineField({
-      name: 'image',
+      name: 'logo',
       type: 'image',
       options: {
         hotspot: true,
@@ -46,29 +79,8 @@ export const partnerType = defineType({
           type: 'string',
           validation: (rule) => rule.required().warning('Alt text is important for SEO'),
         }),
-        defineField({
-          name: 'caption',
-          title: 'Caption',
-          type: 'string',
-        }),
       ],
       validation: (rule) => rule.required(),
-    }),
-    defineField({
-      name: 'recommended',
-      type: 'boolean',
-    }),
-    defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{type: 'partnerCategory'}],
-        },
-      ],
-      validation: (rule) => rule.required().min(1),
     }),
     articleBodyField,
   ],

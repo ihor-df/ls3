@@ -4,7 +4,7 @@ export const isUniqueSlugByLanguage: SlugIsUniqueValidator = async (slug, contex
   const {document, getClient} = context
 
   const id = document?._id.replace(/^drafts\./, '')
-  const language = document?.language
+  const language = document?.language ?? null
 
   const params = {
     draft: `drafts.${id}`,
@@ -18,7 +18,7 @@ export const isUniqueSlugByLanguage: SlugIsUniqueValidator = async (slug, contex
     !defined(*[
       _type == $type &&
       slug.current == $slug &&
-      language == $language &&
+      (!defined($language) || language == $language) &&
       !(_id in [$draft, $published])
     ][0]._id)
   `

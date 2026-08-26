@@ -11,7 +11,7 @@ type TagProps = {
 
 const Tag = ({ as = "span", children, className, href }: TagProps) => {
   const El = as;
-  const styles = "py-2 px-3 rounded-full bg-white/10";
+  const styles = "inline-block text-nowrap py-2 px-3 rounded-full bg-white/10";
 
   return !href ? (
     <El className={cn(styles, className)}>{children}</El>
