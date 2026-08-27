@@ -11,7 +11,7 @@ const Container = ({ className, children, as = "div" }: ContainerProps) => {
   return (
     <Tag
       className={cn(
-        "mx-auto flex h-full w-full max-w-[1600px] flex-1 flex-col px-5 py-37 md:px-10 md:py-40 xl:px-20",
+        "mx-auto flex h-full w-full max-w-380 flex-1 flex-col px-5 py-37 md:px-10 md:py-40 xl:px-20",
         className,
       )}
     >

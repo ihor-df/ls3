@@ -1,10 +1,13 @@
 "use client";
 
+import GlassButton from "@/components/atoms/glass-button";
 import Heading from "@/components/atoms/heading";
+
 import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcrumbs";
 import CategoryAndDate from "@/components/molecules/category-date";
 import { portableTextComponents } from "@/components/molecules/portable-text/components";
-import Cta from "@/components/organisms/cta";
+
+import CtaLg from "@/components/organisms/cta-lg";
 import { usePathname } from "@/i18n/navigation";
 import { buildAbsoluteUrl } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
@@ -13,6 +16,7 @@ import orange from "@public/images/orange-cloud-bg.webp";
 import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
 import { Image as SanityImage } from "next-sanity/image";
+import DiscountBanner from "./partner-discount";
 
 type ArticleProps = {
   post: NonNullable<PARTNER_QUERY_RESULT>;
@@ -21,7 +25,19 @@ type ArticleProps = {
 };
 
 const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
-  const { logo, categories, publishedAt, title, body, slug } = post;
+  const {
+    logo,
+    categories,
+    publishedAt,
+    title,
+    body,
+    slug,
+    description,
+    discountPercent,
+    discountText,
+    promoCode,
+    url,
+  } = post;
 
   const pathname = usePathname();
   const postImageUrl = logo ? urlFor(logo)?.width(820).height(462).url() : null;
@@ -53,11 +69,31 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
           )}
         </div>
 
+        <p className="mt-5 md:mt-9">{description}</p>
+
+        {discountPercent && discountText && (
+          <DiscountBanner percent={discountPercent} text={discountText} promo={promoCode} />
+        )}
+
         {/* Content */}
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
+
+        {url && (
+          <GlassButton
+            linkProps={{
+              href: url,
+              target: "_blank",
+              rel: "noopener",
+            }}
+            className="mt-5 md:mt-10"
+          >
+            Go to {title}
+          </GlassButton>
+        )}
       </div>
 
-      <Cta size="lg" className="mt-18 md:mt-40" />
+      <hr className="my-18 border-white/10 md:my-20" />
+      <CtaLg variant="get-started" />
     </article>
   );
 };

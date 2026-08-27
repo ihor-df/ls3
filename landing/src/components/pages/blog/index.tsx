@@ -1,6 +1,6 @@
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
-import Cta from "@/components/organisms/cta";
+import CtaLg from "@/components/organisms/cta-lg";
 import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
@@ -50,7 +50,7 @@ const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) =>
 
       {hasMore && <LoadMoreButton currentPage={currentPage} />}
 
-      <Cta size="lg" className="mt-35 md:mt-40" />
+      <CtaLg variant="get-started" className="mt-35 md:mt-40" />
     </div>
   );
 };

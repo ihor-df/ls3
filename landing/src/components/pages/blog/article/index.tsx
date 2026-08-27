@@ -7,7 +7,8 @@ import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcru
 import CategoryAndDate from "@/components/molecules/category-date";
 import { getHeadingId, portableTextComponents } from "@/components/molecules/portable-text/components";
 import { ShareSocial } from "@/components/molecules/share-social";
-import Cta from "@/components/organisms/cta";
+import CtaLg from "@/components/organisms/cta-lg";
+import CtaSm from "@/components/organisms/cta-sm";
 import FAQ from "@/components/organisms/faq";
 import { usePathname } from "@/i18n/navigation";
 import { buildAbsoluteUrl, formatDate } from "@/lib/utils";
@@ -74,14 +75,16 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         </div>
 
         <ArticleNav content={tableOfContents} />
-        <Cta discount />
+        <CtaSm hasDiscount />
 
         {/* Content */}
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
 
         {faq && <FAQ data={faq} className="mt-35 md:mt-40" />}
       </div>
-      <Cta size="lg" className="mt-18 md:mt-40" />
+
+      <hr className="my-18 border-white/10 md:my-40" />
+      <CtaLg variant="get-started" />
     </article>
   );
 };

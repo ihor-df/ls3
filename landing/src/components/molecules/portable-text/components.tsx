@@ -37,14 +37,14 @@ export const portableTextComponents: PortableTextComponents = {
     },
     strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
     highlight: ({ children }) => (
-      <span className="my-5 block rounded-[20px] bg-[#19191A] p-5 md:my-6 md:p-7">
+      <span className="rounded-small my-5 block bg-[#19191A] p-5 md:my-6 md:p-7">
         <mark className="bg-transparent text-[#C3C3C3]">{children}</mark>
       </span>
     ),
   },
   list: {
-    bullet: ({ children }) => <ul className="mb-5 ml-2 list-disc space-y-2 pl-5 md:mb-6">{children}</ul>,
-    number: ({ children }) => <ol className="mb-5 ml-2 list-decimal space-y-2 pl-5 md:mb-6">{children}</ol>,
+    bullet: ({ children }) => <ul className="my-5 ml-2 list-disc space-y-2 pl-5 md:my-6">{children}</ul>,
+    numyer: ({ children }) => <ol className="my-5 ml-2 list-decimal space-y-2 pl-5 md:my-6">{children}</ol>,
   },
   types: {
     articleBodyImage: ArticleBodyImage,

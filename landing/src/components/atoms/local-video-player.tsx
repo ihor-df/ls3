@@ -1,6 +1,6 @@
 "use client";
 
-import { ComponentProps, useMemo } from "react";
+import { ComponentProps, useEffect, useMemo, useRef } from "react";
 
 // How to use:
 // <LocalVideoPlayer
@@ -28,6 +28,7 @@ type LocalVideoPlayerProps = ComponentProps<"video"> & {
   muted?: boolean;
   playsInline?: boolean;
   preload?: "none" | "metadata" | "auto";
+  playbackRate?: number;
 };
 
 export default function LocalVideoPlayer({
@@ -40,9 +41,18 @@ export default function LocalVideoPlayer({
   muted = false,
   playsInline = true,
   preload = "none",
+  playbackRate = 1,
   ...props
 }: LocalVideoPlayerProps) {
+  const videoRef = useRef<HTMLVideoElement>(null);
   const normalizedSources = useMemo(() => sources.filter((item) => !!item.src?.trim()), [sources]);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    videoRef.current.defaultPlaybackRate = playbackRate;
+    videoRef.current.playbackRate = playbackRate;
+  }, [playbackRate]);
 
   if (!normalizedSources.length) return null;
 
@@ -58,6 +68,7 @@ export default function LocalVideoPlayer({
       playsInline={playsInline}
       preload={preload}
       {...props}
+      ref={videoRef}
     >
       {normalizedSources.map((source) => (
         <source key={source.src} src={source.src} type={source.type} />

@@ -1,6 +1,6 @@
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
-import Cta from "@/components/organisms/cta";
+import CtaLg from "@/components/organisms/cta-lg";
 import { Link } from "@/i18n/navigation";
 import { urlFor } from "@/sanity/helpers";
 import type { PARTNER_CATEGORIES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
@@ -49,7 +49,13 @@ const Partners = ({ partners, categories, currentPage, hasMore }: PartnersProps)
 
       {hasMore && <LoadMoreButton currentPage={currentPage} />}
 
-      <Cta size="lg" className="mt-35 md:mt-40" />
+      <div className="mt-35 grid grid-cols-1 gap-5 md:mt-40 md:gap-10 xl:grid-cols-2">
+        <CtaLg
+          className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]"
+          variant="become-partner"
+        />
+        <CtaLg className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]" variant="get-started" />
+      </div>
     </div>
   );
 };
