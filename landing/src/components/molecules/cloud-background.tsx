@@ -10,20 +10,20 @@ type CloudBackgroundProps = {
   className?: string;
 };
 
+const orangePoster = "/images/orange-clouds@2x.webp";
+const orangeWebM = "/videos/orange_clouds_v2/orange_clouds-1200.webm";
+const orangeMp4 = "/videos/orange_clouds_v2/orange_clouds-1200.mp4";
+
+const bluePoster = "/images/blue-clouds@2x.webp";
+const blueWebM = "/videos/blue_clouds_1440/blue_clouds_1440.webm";
+const blueMp4 = "/videos/blue_clouds_1440/blue_clouds_1440.mp4";
+
+const CLOUDS_MAPPER: Record<Color, CloudObj> = {
+  orange: { poster: orangePoster, webM: orangeWebM, mp4: orangeMp4 },
+  blue: { poster: bluePoster, webM: blueWebM, mp4: blueMp4 },
+};
+
 const CloudBackground = ({ color, playSpeed, className }: CloudBackgroundProps) => {
-  const orangePoster = "/images/orange-clouds@2x.webp";
-  const orangeWebM = "/videos/orange_clouds_v2/orange_clouds-1200.webm";
-  const orangeMp4 = "/videos/orange_clouds_v2/orange_clouds-1200.mp4";
-
-  const bluePoster = "/images/blue-clouds@2x.webp";
-  const blueWebM = "/videos/blue_clouds_1440/blue_clouds_1440.webm";
-  const blueMp4 = "/videos/blue_clouds_1440/blue_clouds_1440.mp4";
-
-  const CLOUDS_MAPPER: Record<Color, CloudObj> = {
-    orange: { poster: orangePoster, webM: orangeWebM, mp4: orangeMp4 },
-    blue: { poster: bluePoster, webM: blueWebM, mp4: blueMp4 },
-  };
-
   return (
     <LocalVideoPlayer
       className={cn("absolute inset-0 h-full w-full object-cover object-center", className)}

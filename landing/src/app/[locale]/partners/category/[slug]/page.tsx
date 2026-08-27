@@ -7,6 +7,7 @@ import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleSlugParams } from "@/types/common";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPartnersQuery, PARTNER_CATEGORIES_QUERY, PARTNER_CATEGORY_QUERY } from "../../api";
 
@@ -34,6 +35,7 @@ type PageProps = {
 const Page = async ({ params, searchParams }: PageProps) => {
   const { slug, locale } = await params;
   const { q, page: pageParam } = await searchParams;
+  const t = await getTranslations("partners");
 
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
@@ -68,13 +70,14 @@ const Page = async ({ params, searchParams }: PageProps) => {
     query: getPartnersQuery(limit + 1),
     revalidate: SANITY_REVALIDATE_TIME,
   })) as PARTNERS_QUERY_RESULT;
+
   const hasMore = partnersWithExtra.length > limit;
   const partners = partnersWithExtra.slice(0, limit);
 
   return (
     <Container as="main">
       <div className="justify-between md:flex">
-        <Heading variant="page">Partners</Heading>
+        <Heading variant="page">{t("title")}</Heading>
         <PageSearch className="max-md:hidden" initialValue={search} />
       </div>
 

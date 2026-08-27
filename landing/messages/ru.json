@@ -1,8 +1,16 @@
 {
-  "common": {
-    "articleNav": {
-      "title": "Содержание"
-    },
-    "blog": {}
+  "common": {},
+  "faq": { "title": "Часто задаваемые вопросы" },
+  "blog": {
+    "title": "Блог",
+    "article": {
+      "content": "Содержание"
+    }
+  },
+  "partners": {
+    "title": "Партнёры",
+    "article": {
+      "goToButton": "Перейти к"
+    }
   }
 }

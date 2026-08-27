@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing";
 import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleSlugParams } from "@/types/common";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ARTICLE_CATEGORIES_QUERY, ARTICLE_CATEGORY_QUERY, getArticlesQuery } from "../../api";
 
@@ -35,6 +36,7 @@ type PageProps = {
 const Page = async ({ params, searchParams }: PageProps) => {
   const { slug, locale } = await params;
   const { q, page: pageParam } = await searchParams;
+  const t = await getTranslations("blog");
 
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
@@ -69,13 +71,14 @@ const Page = async ({ params, searchParams }: PageProps) => {
     query: getArticlesQuery(limit + 1),
     revalidate: SANITY_REVALIDATE_TIME,
   })) as ARTICLES_QUERY_RESULT;
+
   const hasMore = postsWithExtra.length > limit;
   const posts = postsWithExtra.slice(0, limit);
 
   return (
     <Container as="main">
       <div className="justify-between md:flex">
-        <Heading variant="page">Blog</Heading>
+        <Heading variant="page">{t("title")}</Heading>
         <BlogSearch className="max-md:hidden" initialValue={search} />
       </div>
 

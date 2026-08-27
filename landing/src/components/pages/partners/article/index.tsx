@@ -1,5 +1,3 @@
-"use client";
-
 import GlassButton from "@/components/atoms/glass-button";
 import Heading from "@/components/atoms/heading";
 
@@ -8,12 +6,10 @@ import CategoryAndDate from "@/components/molecules/category-date";
 import { portableTextComponents } from "@/components/molecules/portable-text/components";
 
 import CtaLg from "@/components/organisms/cta-lg";
-import { usePathname } from "@/i18n/navigation";
-import { buildAbsoluteUrl } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { PARTNER_QUERY_RESULT } from "@/sanity/sanity.types";
 import orange from "@public/images/orange-cloud-bg.webp";
-import { Locale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { PortableText } from "next-sanity";
 import { Image as SanityImage } from "next-sanity/image";
 import DiscountBanner from "./partner-discount";
@@ -21,33 +17,20 @@ import DiscountBanner from "./partner-discount";
 type ArticleProps = {
   post: NonNullable<PARTNER_QUERY_RESULT>;
   breadcrumbs?: BreadcrumbItemData[];
-  locale: Locale;
 };
 
-const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
-  const {
-    logo,
-    categories,
-    publishedAt,
-    title,
-    body,
-    slug,
-    description,
-    discountPercent,
-    discountText,
-    promoCode,
-    url,
-  } = post;
+const Article = async ({ post, breadcrumbs }: ArticleProps) => {
+  const { logo, categories, publishedAt, title, body, description, discountPercent, discountText, promoCode, url } =
+    post;
 
-  const pathname = usePathname();
+  const t = await getTranslations("partners.article");
+
   const postImageUrl = logo ? urlFor(logo)?.width(820).height(462).url() : null;
-
-  const selfUrl = buildAbsoluteUrl(locale, `/partners/${slug}`);
 
   return (
     <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
       <div className="mx-auto w-full min-w-0 xl:max-w-3xl">
-        {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
 
         {postImageUrl && (
           <SanityImage
@@ -87,7 +70,7 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
             }}
             className="mt-5 md:mt-10"
           >
-            Go to {title}
+            {t("goToButton")} {title}
           </GlassButton>
         )}
       </div>

@@ -1,8 +1,16 @@
 {
-  "common": {
-    "articleNav": {
-      "title": "Content"
+  "common": {},
+  "faq": { "title": "" },
+  "blog": {
+    "title": "",
+    "article": {
+      "content": ""
     }
   },
-  "blog": {}
+  "partners": {
+    "title": "",
+    "article": {
+      "goToButton": ""
+    }
+  }
 }

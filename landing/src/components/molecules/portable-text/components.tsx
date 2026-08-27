@@ -1,3 +1,4 @@
+import { Link } from "@/i18n/navigation";
 import { PortableTextComponents } from "next-sanity";
 import { ArticleBodyImage } from "./article-body-image";
 import { ArticleTable } from "./table";
@@ -25,14 +26,14 @@ export const portableTextComponents: PortableTextComponents = {
       const isExternal = href.startsWith("http");
 
       return (
-        <a
+        <Link
           href={href}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noreferrer noopener" : undefined}
           className="text-white underline decoration-white underline-offset-4 transition hover:decoration-white"
         >
           {children}
-        </a>
+        </Link>
       );
     },
     strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,

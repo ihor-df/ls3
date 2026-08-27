@@ -10,7 +10,6 @@ import { ShareSocial } from "@/components/molecules/share-social";
 import CtaLg from "@/components/organisms/cta-lg";
 import CtaSm from "@/components/organisms/cta-sm";
 import FAQ from "@/components/organisms/faq";
-import { usePathname } from "@/i18n/navigation";
 import { buildAbsoluteUrl, formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
@@ -27,7 +26,6 @@ type ArticleProps = {
 const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
   const { image, categories, publishedAt, title, body, author, faq, slug } = post;
 
-  const pathname = usePathname();
   const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
   const authorImageUrl = post.author?.avatar ? urlFor(post.author.avatar)?.width(48).height(48).url() : null;
 
@@ -42,7 +40,7 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
   return (
     <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
       <div className="mx-auto w-full min-w-0 xl:max-w-3xl">
-        {breadcrumbs && <Breadcrumbs items={breadcrumbs} pathname={pathname} />}
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
 
         {(categories || publishedAt) && (
           <CategoryAndDate

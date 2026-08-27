@@ -8,6 +8,7 @@ import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleParams } from "@/types/common";
+import { getTranslations } from "next-intl/server";
 import { getPartnersQuery, PARTNER_CATEGORIES_QUERY } from "./api";
 
 export function generateStaticParams() {
@@ -22,6 +23,7 @@ type PageProps = {
 const Page = async ({ params, searchParams }: PageProps) => {
   const { locale } = await params;
   const { q, page: pageParam } = await searchParams;
+  const t = await getTranslations("partners");
 
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
@@ -52,7 +54,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
   return (
     <Container as="main">
       <div className="justify-between md:flex">
-        <Heading variant="page">Partners</Heading>
+        <Heading variant="page">{t("title")}</Heading>
         <PageSearch className="max-md:hidden" initialValue={search} />
       </div>
 

@@ -4,6 +4,7 @@ import { routing } from "@/i18n/routing";
 import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import { LocaleSlugParams } from "@/types/common";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ARTICLE_QUERY, ARTICLE_SLUGS_QUERY } from "../api";
 
@@ -28,6 +29,7 @@ type PageProps = {
 
 const Page = async ({ params }: PageProps) => {
   const { slug, locale } = await params;
+  const t = await getTranslations("blog");
 
   const post = await sanityFetch({
     params: { slug, locale },
@@ -40,7 +42,7 @@ const Page = async ({ params }: PageProps) => {
   const breadcrumbs = post
     ? [
         {
-          label: "Blog",
+          label: t("title"),
           href: "/blog",
         },
         {

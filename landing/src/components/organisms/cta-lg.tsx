@@ -4,13 +4,33 @@ import logo from "@public/images/logo-sm@2x.png";
 import news from "@public/images/news@2x.png";
 import Image from "next/image";
 
+import { ReactNode } from "react";
 import GlassButton from "../atoms/glass-button";
 import Button from "../atoms/main-button";
 import CloudBackground from "../molecules/cloud-background";
 
+type Variant = "get-started" | "become-partner";
+
+type CloudObj = { title: ReactNode; description: ReactNode };
+
 type CtaProps = {
   className?: string;
-  variant: "get-started" | "become-partner";
+  variant: Variant;
+};
+
+const CONTENT_MAPPER: Record<Variant, CloudObj> = {
+  "get-started": {
+    title: (
+      <>
+        Get started with <span>Linken Sphere</span>
+      </>
+    ),
+    description: "Get everything you need for secure work, with support always available when you need it",
+  },
+  "become-partner": {
+    title: "Become our partner",
+    description: "Together, we will create an even more powerful and profitable ecosystem for professionals",
+  },
 };
 
 const Cta = ({ variant, className }: CtaProps) => {
@@ -36,20 +56,10 @@ const Cta = ({ variant, className }: CtaProps) => {
             "mt-2 text-center text-[1.75rem] leading-none font-bold tracking-[-0.02em] md:text-[3.5rem] md:tracking-[-0.01em]",
           )}
         >
-          {becomePartner ? (
-            "Become our partner"
-          ) : (
-            <>
-              Get started with <span>Linken Sphere</span>
-            </>
-          )}
+          {CONTENT_MAPPER[variant].title}
         </strong>
 
-        <p className="mt-5 tracking-[-0.01] md:mt-6 md:text-base">
-          {becomePartner
-            ? "Together, we will create an even more powerful and profitable ecosystem for professionals"
-            : "Get everything you need for secure work, with support always available when you need it"}
-        </p>
+        <p className="mt-5 tracking-[-0.01] md:mt-6 md:text-base">{CONTENT_MAPPER[variant].description}</p>
 
         <div className="mt-auto">
           {becomePartner ? (

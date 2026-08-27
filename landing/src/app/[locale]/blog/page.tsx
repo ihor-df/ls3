@@ -7,6 +7,7 @@ import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleParams } from "@/types/common";
+import { getTranslations } from "next-intl/server";
 import { ARTICLE_CATEGORIES_QUERY, getArticlesQuery } from "./api";
 
 export function generateStaticParams() {
@@ -19,6 +20,7 @@ type PageProps = {
 };
 
 const Page = async ({ params, searchParams }: PageProps) => {
+  const t = await getTranslations("blog");
   const { locale } = await params;
   const { q, page: pageParam } = await searchParams;
 
@@ -51,7 +53,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
   return (
     <Container as="main">
       <div className="justify-between md:flex">
-        <Heading variant="page">Blog</Heading>
+        <Heading variant="page">{t("title")}</Heading>
         <PageSearch className="max-md:hidden" initialValue={search} />
       </div>
 

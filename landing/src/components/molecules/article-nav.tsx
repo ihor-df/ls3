@@ -1,3 +1,5 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 
@@ -11,7 +13,7 @@ const ArticleNav = ({ content, className }: ArticleNavProps) => {
 
   return (
     <nav className={cn("my-12 md:my-16", className)}>
-      <h2 className="text-2xl leading-none font-bold md:text-4xl xl:text-[2rem]">{t("common.articleNav.title")}</h2>
+      <h2 className="text-2xl leading-none font-bold md:text-4xl xl:text-[2rem]">{t("blog.article.content")}</h2>
 
       <ul className="mt-5 list-disc pl-5 leading-[1.4] text-[#C3C3C3] md:mt-9 md:text-xl">
         {content.map(({ title, href }) => {

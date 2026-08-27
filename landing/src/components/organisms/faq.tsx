@@ -3,6 +3,7 @@
 import ArrowIcon from "@assets/icons/arrow.svg";
 import JsonLd from "@components/system/json-ld";
 import { cn } from "@lib/utils";
+import { useTranslations } from "next-intl";
 import { ComponentProps, useState } from "react";
 import { FAQPage } from "schema-dts";
 import Heading from "../atoms/heading";
@@ -18,7 +19,7 @@ type FAQProps = ComponentProps<"section"> & {
 export default function FAQ({ className, data, ...props }: FAQProps) {
   const [openItem, setOpenItem] = useState(0);
 
-  // const t = useTranslations("pages.home.faq");
+  const t = useTranslations("faq");
 
   const faqScript: FAQPage = {
     "@type": "FAQPage",
@@ -35,8 +36,7 @@ export default function FAQ({ className, data, ...props }: FAQProps) {
 
       <section id="faq-section" className={cn(className)} {...props}>
         <Heading as="h2" variant="section" className="text-center">
-          {/* {t("title")} */}
-          Popular Questions
+          {t("title")}
         </Heading>
 
         <ul className="mt-10 flex w-full flex-col gap-3 md:mt-16 md:gap-5">

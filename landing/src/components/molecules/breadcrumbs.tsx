@@ -1,5 +1,7 @@
+"use client";
+
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
-import { Link } from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { Fragment } from "react/jsx-runtime";
 
@@ -9,11 +11,12 @@ export type BreadcrumbItemData = {
 };
 
 type BreadcrumbsProps = {
-  pathname?: string;
   items?: BreadcrumbItemData[];
 };
 
-export function Breadcrumbs({ pathname, items }: BreadcrumbsProps) {
+export function Breadcrumbs({ items }: BreadcrumbsProps) {
+  const pathname = usePathname();
+
   const crumbs: BreadcrumbItemData[] =
     items && items.length
       ? items
