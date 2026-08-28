@@ -1,16 +1,37 @@
 {
-  "common": {},
-  "faq": { "title": "" },
+  "common": {
+    "faq": { "title": "常见问题" },
+    "cta": {
+      "workAnon": {
+        "main": "使用 Linken\u00A0Sphere 匿名工作",
+        "button": "免费开始使用",
+        "discount": {
+          "1": "想以优惠价格体验 Linken\u00A0Sphere？",
+          "2": "使用优惠码“LSBLOG”，任意订阅均可享受 7 折优惠。仅限新用户。"
+        }
+      },
+      "getStarted": {
+        "title": "开始使用 Linken\u00A0Sphere",
+        "description": "安全工作所需的一切功能，以及随时响应的支持服务",
+        "button": "免费开始使用"
+      },
+      "becomePartner": {
+        "title": "成为我们的合作伙伴",
+        "description": "携手为专业人士打造更强大、更具商业价值的生态系统",
+        "button": "提交申请"
+      }
+    }
+  },
   "blog": {
-    "title": "",
+    "title": "博客",
     "article": {
-      "content": ""
+      "content": "目录"
     }
   },
   "partners": {
-    "title": "",
+    "title": "合作伙伴",
     "article": {
-      "goToButton": ""
+      "goToButton": "前往"
     }
   }
 }

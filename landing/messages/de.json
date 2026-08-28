@@ -1,16 +1,37 @@
 {
-  "common": {},
-  "faq": { "title": "" },
+  "common": {
+    "faq": { "title": "Häufig gestellte Fragen" },
+    "cta": {
+      "workAnon": {
+        "main": "Arbeiten Sie anonym mit Linken\u00A0Sphere",
+        "button": "Kostenlos starten",
+        "discount": {
+          "1": "Möchten Sie Linken\u00A0Sphere mit Rabatt testen?",
+          "2": "Nutzen Sie den Aktionscode „LSBLOG“ und erhalten Sie 30 % Rabatt auf jedes Abonnement. Das Angebot gilt nur für Neukunden."
+        }
+      },
+      "getStarted": {
+        "title": "Mit Linken\u00A0Sphere loslegen",
+        "description": "Alles, was Sie für sicheres Arbeiten brauchen – mit Support, der jederzeit für Sie da ist",
+        "button": "Kostenlos starten"
+      },
+      "becomePartner": {
+        "title": "Werden Sie unser Partner",
+        "description": "Gemeinsam schaffen wir ein noch leistungsstärkeres und profitableres Ökosystem für Profis",
+        "button": "Anfrage senden"
+      }
+    }
+  },
   "blog": {
-    "title": "",
+    "title": "Blog",
     "article": {
-      "content": ""
+      "content": "Inhalt"
     }
   },
   "partners": {
-    "title": "",
+    "title": "Partner",
     "article": {
-      "goToButton": ""
+      "goToButton": "Weiter zu"
     }
   }
 }

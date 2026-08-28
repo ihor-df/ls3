@@ -1,16 +1,37 @@
 {
-  "common": {},
-  "faq": { "title": "" },
+  "common": {
+    "faq": { "title": "Preguntas frecuentes" },
+    "cta": {
+      "workAnon": {
+        "main": "Trabaja de forma anónima con Linken\u00A0Sphere",
+        "button": "Empieza gratis",
+        "discount": {
+          "1": "¿Quieres probar Linken\u00A0Sphere con descuento?",
+          "2": "Usa el código promocional «LSBLOG» y obtén un 30% de descuento en cualquier suscripción. Oferta válida solo para nuevos usuarios."
+        }
+      },
+      "getStarted": {
+        "title": "Empieza con Linken\u00A0Sphere",
+        "description": "Todo lo que necesitas para trabajar de forma segura, con soporte siempre disponible cuando lo necesites",
+        "button": "Empieza gratis"
+      },
+      "becomePartner": {
+        "title": "Conviértete en nuestro socio",
+        "description": "Juntos crearemos un ecosistema aún más potente y rentable para profesionales",
+        "button": "Enviar solicitud"
+      }
+    }
+  },
   "blog": {
-    "title": "",
+    "title": "Blog",
     "article": {
-      "content": ""
+      "content": "Contenido"
     }
   },
   "partners": {
-    "title": "",
+    "title": "Socios",
     "article": {
-      "goToButton": ""
+      "goToButton": "Ir a"
     }
   }
 }

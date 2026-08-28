@@ -1,16 +1,37 @@
 {
-  "common": {},
-  "faq": { "title": "" },
+  "common": {
+    "faq": { "title": "Sık Sorulan Sorular" },
+    "cta": {
+      "workAnon": {
+        "main": "Linken\u00A0Sphere ile anonim çalışın",
+        "button": "Ücretsiz başlayın",
+        "discount": {
+          "1": "Linken\u00A0Sphere’i indirimli denemek ister misiniz?",
+          "2": "“LSBLOG” promosyon kodunu kullanın ve tüm aboneliklerde %30 indirim kazanın. Teklif yalnızca yeni kullanıcılar için geçerlidir."
+        }
+      },
+      "getStarted": {
+        "title": "Linken\u00A0Sphere ile hemen başlayın",
+        "description": "Güvenli çalışma için ihtiyacınız olan her şeye ve ihtiyaç duyduğunuz anda ulaşabileceğiniz desteğe sahip olun",
+        "button": "Ücretsiz başlayın"
+      },
+      "becomePartner": {
+        "title": "İş ortağımız olun",
+        "description": "Birlikte profesyoneller için daha güçlü ve daha kârlı bir ekosistem oluşturalım",
+        "button": "Başvuru yapın"
+      }
+    }
+  },
   "blog": {
-    "title": "",
+    "title": "Blog",
     "article": {
-      "content": "Content"
+      "content": "İçindekiler"
     }
   },
   "partners": {
-    "title": "",
+    "title": "İş Ortakları",
     "article": {
-      "goToButton": ""
+      "goToButton": "Ziyaret et:"
     }
   }
 }

@@ -1,16 +1,14 @@
 import { cn } from "@/lib/utils";
-
 import logo from "@public/images/logo-sm@2x.png";
 import news from "@public/images/news@2x.png";
+import { useTranslations } from "next-intl";
 import Image from "next/image";
-
 import { ReactNode } from "react";
 import GlassButton from "../atoms/glass-button";
 import Button from "../atoms/main-button";
 import CloudBackground from "../molecules/cloud-background";
 
 type Variant = "get-started" | "become-partner";
-
 type CloudObj = { title: ReactNode; description: ReactNode };
 
 type CtaProps = {
@@ -18,23 +16,20 @@ type CtaProps = {
   variant: Variant;
 };
 
-const CONTENT_MAPPER: Record<Variant, CloudObj> = {
-  "get-started": {
-    title: (
-      <>
-        Get started with <span>Linken Sphere</span>
-      </>
-    ),
-    description: "Get everything you need for secure work, with support always available when you need it",
-  },
-  "become-partner": {
-    title: "Become our partner",
-    description: "Together, we will create an even more powerful and profitable ecosystem for professionals",
-  },
-};
-
 const Cta = ({ variant, className }: CtaProps) => {
+  const t = useTranslations("common.cta");
   const becomePartner = variant === "become-partner";
+
+  const CONTENT_MAPPER: Record<Variant, CloudObj> = {
+    "get-started": {
+      title: t("getStarted.title"),
+      description: t("getStarted.description"),
+    },
+    "become-partner": {
+      title: t("becomePartner.title"),
+      description: t("becomePartner.description"),
+    },
+  };
 
   return (
     <section className={cn("rounded-large relative overflow-hidden", className)}>
@@ -48,7 +43,7 @@ const Cta = ({ variant, className }: CtaProps) => {
         <Image
           src={becomePartner ? news : logo}
           alt="Linken Sphere logo"
-          className={cn("h-auto w-18 max-md:mx-auto md:size-37")}
+          className={cn("h-auto w-18 max-md:mx-auto md:w-37.5", becomePartner && "md:w-37")}
         />
 
         <strong
@@ -63,9 +58,9 @@ const Cta = ({ variant, className }: CtaProps) => {
 
         <div className="mt-auto">
           {becomePartner ? (
-            <GlassButton className="mx-auto w-auto max-md:mt-5 md:mt-10">Submit a request</GlassButton>
+            <GlassButton className="mx-auto w-auto max-md:mt-5 md:mt-10">{t("becomePartner.button")}</GlassButton>
           ) : (
-            <Button className={cn("mx-auto w-auto text-nowrap max-md:mt-5 md:mt-10")}>Start for free</Button>
+            <Button className={cn("mx-auto w-auto text-nowrap max-md:mt-5 md:mt-10")}>{t("getStarted.button")}</Button>
           )}
         </div>
       </div>

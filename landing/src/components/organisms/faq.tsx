@@ -19,7 +19,7 @@ type FAQProps = ComponentProps<"section"> & {
 export default function FAQ({ className, data, ...props }: FAQProps) {
   const [openItem, setOpenItem] = useState(0);
 
-  const t = useTranslations("faq");
+  const t = useTranslations("common.faq");
 
   const faqScript: FAQPage = {
     "@type": "FAQPage",

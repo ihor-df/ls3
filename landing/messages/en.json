@@ -1,6 +1,27 @@
 {
-  "common": {},
-  "faq": { "title": "Popular Questions" },
+  "common": {
+    "faq": { "title": "Popular Questions" },
+    "cta": {
+      "workAnon": {
+        "main": "Work anonymously with Linken\u00A0Sphere",
+        "button": "Start for free",
+        "discount": {
+          "1": "Want to try Linken\u00A0Sphere at a discount?",
+          "2": "Use promo code “LSBLOG” and get 30% off any subscription. Offer valid for new users only"
+        }
+      },
+      "getStarted": {
+        "title": "Get started with Linken\u00A0Sphere",
+        "description": "Get everything you need for secure work, with support always available when you need it",
+        "button": "Start for free"
+      },
+      "becomePartner": {
+        "title": "Become our partner",
+        "description": "Together, we will create an even more powerful and profitable ecosystem for professionals",
+        "button": "Submit a request"
+      }
+    }
+  },
   "blog": {
     "title": "Blog",
     "article": {
