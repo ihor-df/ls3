@@ -1,3 +1,4 @@
+import Header from "@/components/layouts/header/index.tsx";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import localFont from "next/font/local";
@@ -42,7 +43,10 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   return (
     <html lang={locale} className={`${abcDiatype.variable} font-diatype h-full antialiased`}>
       <body className="flex min-h-full flex-col">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          <Header />
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );
