@@ -126,10 +126,7 @@ const Header = ({}: HeaderProps) => {
 
         {/* menu body */}
         <div
-          className={cn(
-            "grid transition-[grid-template-rows] duration-300",
-            isOpen ? "grid-rows-[1fr] p-3 pt-5" : "grid-rows-[0fr]",
-          )}
+          className={cn("grid transition-all duration-300", isOpen ? "grid-rows-[1fr] p-3 pt-5" : "grid-rows-[0fr]")}
         >
           <ul className="grid grid-cols-3 gap-x-10 gap-y-1" id="platform-submenu" hidden={activeMenu !== "platform"}>
             {SOLUTIONS.map(({ href, label, icon }) => {
