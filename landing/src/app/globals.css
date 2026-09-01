@@ -34,6 +34,17 @@
   select {
     font: inherit;
   }
+
+  ::selection {
+    background-color: rgba(220, 124, 67, 0.7);
+    /* color: #ffffff; */
+  }
+
+  /* Older Firefox support */
+  ::-moz-selection {
+    background-color: rgba(220, 124, 67, 0.7);
+    /* color: #ffffff; */
+  }
 }
 
 .article-table-scroll {
