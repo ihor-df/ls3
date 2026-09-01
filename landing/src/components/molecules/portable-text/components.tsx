@@ -30,7 +30,7 @@ export const portableTextComponents: PortableTextComponents = {
           href={href}
           target={isExternal ? "_blank" : undefined}
           rel={isExternal ? "noreferrer noopener" : undefined}
-          className="text-white underline decoration-white underline-offset-4 transition hover:decoration-white"
+          className="hover:text-accent-orange text-white underline underline-offset-4 transition-colors"
         >
           {children}
         </Link>

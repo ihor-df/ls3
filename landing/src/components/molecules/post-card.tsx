@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { ARTICLES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import orange from "@public/images/orange-cloud-bg.webp";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
@@ -24,7 +25,7 @@ const PostCard = ({ imageSrc, title, description, className, categories, page, a
   const isPartners = page === "partners";
 
   return (
-    <div className={className}>
+    <div className={cn("transition-opacity duration-300 hover:opacity-70", className)}>
       <Image
         style={{ backgroundImage: isPartners ? `url(${orange.src})` : undefined }}
         className="rounded-small aspect-413/232 h-auto w-full border border-white/10 bg-cover bg-center"

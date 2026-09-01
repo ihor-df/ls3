@@ -12,6 +12,7 @@
   --font-diatype: var(--font-abc-diatype);
   --radius-small: 1.25rem;
   --radius-large: 2.5rem;
+  --color-accent-orange: #ff9556;
 }
 
 @layer base {

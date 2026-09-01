@@ -9,21 +9,21 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import ButtonRounded from "../../atoms/button-rounded";
 import Button from "../../atoms/main-button";
-import SecondLevelMenuItem from "./components";
+import { FirstLevelMenuItem, SecondLevelMenuItem } from "./components";
 import { LOCALES_DATA, RESOURCES, SOLUTIONS, USE_CASES } from "./constants";
 
-type HeaderProps = {};
-type MenuCategory = "platform" | "use-cases" | "resources" | "language";
+export type MenuCategory = "platform" | "use-cases" | "resources" | "language";
 
-const Header = ({}: HeaderProps) => {
+const Header = () => {
   const [activeMenu, setActiveMenu] = useState<MenuCategory>();
 
-  const locale = useLocale();
-  const router = useRouter();
   const pathname = usePathname();
+  const router = useRouter();
+  const locale = useLocale();
+
   const isOpen = activeMenu !== undefined;
 
-  const menuCategoryClick = (category: MenuCategory) => {
+  const handleSecondMenuOpen = (category: MenuCategory) => {
     if (category === activeMenu) {
       setActiveMenu(undefined);
     } else {
@@ -48,63 +48,58 @@ const Header = ({}: HeaderProps) => {
       <nav
         aria-label="main navigation"
         className={cn(
-          "glass-border rounded-large pointer-events-auto mx-auto max-w-max overflow-hidden bg-white/10 backdrop-blur-xl", // bg-[#3B3B3B]/20
-          "transition-[padding,border-radius] duration-300 ease-out",
-          isOpen ? "p-1" : "rounded-full p-0",
+          "glass-border rounded-large pointer-events-auto mx-auto max-w-max overflow-hidden backdrop-blur-xl",
+          "transition-[padding,border-radius,colors] duration-300 ease-out",
+          isOpen ? "bg-black/10 p-1" : "rounded-full p-0",
         )}
       >
         <div
           className={cn(
-            "flex h-19 items-center gap-10 rounded-full border border-transparent px-3 py-2 transition-colors",
-            isOpen && "border-white/10 bg-white/10",
+            "flex h-19 items-center gap-10 rounded-full border border-transparent bg-white/10 px-3 py-2 transition-colors",
+            isOpen && "border-white/10",
           )}
         >
           <Link className="max-h-max" href="/" aria-label="Linken Sphere — homepage">
-            <Image src={logo} alt="Linken Sphere logo" className="h-auto w-16 rounded-full" />
+            <Image
+              src={logo}
+              alt="Linken Sphere logo"
+              className="transition-scale h-auto w-16 scale-[1.1] rounded-full duration-300 hover:scale-[1.2]"
+            />
           </Link>
 
           <ul className="flex h-full items-center gap-7 text-nowrap [&>li]:h-full [&>li>*]:h-full">
-            <li>
-              <button
-                type="button"
-                className="cursor-pointer"
-                aria-expanded={activeMenu === "platform"}
-                aria-controls="platform-submenu"
-                onClick={() => menuCategoryClick("platform")}
-              >
-                Platform
-              </button>
-            </li>
+            <FirstLevelMenuItem
+              label="Platform"
+              menuName="platform"
+              relativeTo="platform-submenu"
+              handleClick={handleSecondMenuOpen}
+              activeMenu={activeMenu}
+            />
+
+            <FirstLevelMenuItem
+              label="Use cases"
+              menuName="use-cases"
+              relativeTo="use-cases-submenu"
+              handleClick={handleSecondMenuOpen}
+              activeMenu={activeMenu}
+            />
 
             <li>
-              <button
-                type="button"
-                className="cursor-pointer"
-                aria-expanded={activeMenu === "use-cases"}
-                aria-controls="use-cases-submenu"
-                onClick={() => menuCategoryClick("use-cases")}
+              <Link
+                className="flex items-center underline decoration-transparent transition-colors hover:decoration-white"
+                href="/pricing"
               >
-                Use cases
-              </button>
-            </li>
-
-            <li>
-              <Link className="flex items-center" href="/pricing">
                 Pricing
               </Link>
             </li>
 
-            <li>
-              <button
-                type="button"
-                className="cursor-pointer"
-                aria-expanded={activeMenu === "resources"}
-                aria-controls="resources-submenu"
-                onClick={() => menuCategoryClick("resources")}
-              >
-                Resources
-              </button>
-            </li>
+            <FirstLevelMenuItem
+              label="Resources"
+              menuName="resources"
+              relativeTo="resources-submenu"
+              handleClick={handleSecondMenuOpen}
+              activeMenu={activeMenu}
+            />
           </ul>
 
           <div className="flex items-center gap-2">
@@ -114,7 +109,7 @@ const Header = ({}: HeaderProps) => {
                 "aria-expanded": activeMenu === "language",
                 "aria-label": `Change language, current language ${locale}`,
                 "aria-controls": "language-submenu",
-                onClick: () => menuCategoryClick("language"),
+                onClick: () => handleSecondMenuOpen("language"),
               }}
             >
               {locale}
@@ -127,7 +122,7 @@ const Header = ({}: HeaderProps) => {
         {/* menu body */}
         <div
           className={cn(
-            "grid transition-all duration-500 ease-in-out",
+            "grid transition-all duration-400 ease-in-out",
             isOpen ? "grid-rows-[1fr] p-3 pt-5" : "grid-rows-[0fr]",
           )}
         >

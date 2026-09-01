@@ -40,7 +40,7 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
                 {isLast || !crumb.href ? (
                   <p className="truncate text-white/60">{crumb.label}</p>
                 ) : (
-                  <Link href={crumb.href} className="text-white">
+                  <Link href={crumb.href} className="text-white transition-colors hover:text-white/60">
                     {crumb.label}
                   </Link>
                 )}

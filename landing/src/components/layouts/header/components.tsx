@@ -1,15 +1,51 @@
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import Arrow from "@assets/icons/arrow.svg";
 import { ComponentProps } from "react";
+import { MenuCategory } from "./index.tsx";
+
+type FirstLevelMenuItemProps = ComponentProps<"li"> & {
+  label: string;
+  handleClick: (menuItem: MenuCategory) => void;
+  menuName: MenuCategory;
+  relativeTo: string;
+  activeMenu: MenuCategory | undefined;
+};
+
+export const FirstLevelMenuItem = ({
+  label,
+  className,
+  handleClick,
+  menuName,
+  relativeTo,
+  activeMenu,
+}: FirstLevelMenuItemProps) => {
+  const isActive = activeMenu === menuName;
+
+  return (
+    <li className={cn(className)}>
+      <button
+        type="button"
+        className="flex cursor-pointer items-center gap-1.5 underline decoration-transparent transition-colors hover:decoration-white"
+        aria-expanded={isActive}
+        aria-controls={relativeTo}
+        onClick={() => handleClick(menuName)}
+      >
+        {label}
+        <Arrow className={cn("h-auto w-3 transition-transform", isActive && "rotate-180")} />
+      </button>
+    </li>
+  );
+};
 
 type SecondLevelMenuItemProps = ComponentProps<"li"> & {
   label: string;
-  href: string;
   icon: any;
+  href: string;
   active?: boolean;
 };
 
-const SecondLevelMenuItem = ({ href, icon, label, className, active }: SecondLevelMenuItemProps) => {
+export const SecondLevelMenuItem = ({ href, icon, label, className, active }: SecondLevelMenuItemProps) => {
   const Icon = icon;
 
   return (
@@ -33,5 +69,3 @@ const SecondLevelMenuItem = ({ href, icon, label, className, active }: SecondLev
     </li>
   );
 };
-
-export default SecondLevelMenuItem;
