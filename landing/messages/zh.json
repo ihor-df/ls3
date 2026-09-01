@@ -31,7 +31,8 @@
   "partners": {
     "title": "合作伙伴",
     "article": {
-      "goToButton": "前往"
+      "goToButton": "前往",
+      "copied": "已复制！"
     }
   }
 }

@@ -31,7 +31,8 @@
   "partners": {
     "title": "İş Ortakları",
     "article": {
-      "goToButton": "Ziyaret et:"
+      "goToButton": "Ziyaret et:",
+      "copied": "Kopyalandı!"
     }
   }
 }

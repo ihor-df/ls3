@@ -31,7 +31,8 @@
   "partners": {
     "title": "Parceiros",
     "article": {
-      "goToButton": "Ir para"
+      "goToButton": "Ir para",
+      "copied": "Copiado!"
     }
   }
 }

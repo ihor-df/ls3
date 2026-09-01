@@ -31,7 +31,8 @@
   "partners": {
     "title": "Партнери",
     "article": {
-      "goToButton": "Перейти до"
+      "goToButton": "Перейти до",
+      "copied": "Скопійовано!"
     }
   }
 }
