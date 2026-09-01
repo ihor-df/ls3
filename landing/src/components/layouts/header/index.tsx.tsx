@@ -6,7 +6,7 @@ import logo from "@public/images/logo-sm@2x.png";
 import { Locale, useLocale } from "next-intl";
 import Image from "next/image";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ButtonRounded from "../../atoms/button-rounded";
 import Button from "../../atoms/main-button";
 import { FirstLevelMenuItem, SecondLevelMenuItem } from "./components";
@@ -16,6 +16,8 @@ export type MenuCategory = "platform" | "use-cases" | "resources" | "language";
 
 const Header = () => {
   const [activeMenu, setActiveMenu] = useState<MenuCategory>();
+  const [clickedMenu, setClickedMenu] = useState<MenuCategory>();
+  const navRef = useRef<HTMLElement>(null);
 
   const pathname = usePathname();
   const router = useRouter();
@@ -23,13 +25,21 @@ const Header = () => {
 
   const isOpen = activeMenu !== undefined;
 
-  const handleSecondMenuOpen = (category: MenuCategory) => {
-    if (category === activeMenu) {
-      setActiveMenu(undefined);
-    } else {
-      setActiveMenu(category);
-    }
+  const handleSecondMenuClick = (category: MenuCategory) => {
+    const nextMenu = clickedMenu === category ? undefined : category;
+
+    setClickedMenu(nextMenu);
+    setActiveMenu(nextMenu);
   };
+
+  const handleSecondMenuHover = (category: MenuCategory) => {
+    setActiveMenu(category);
+  };
+
+  const closeSecondMenu = useCallback(() => {
+    setActiveMenu(undefined);
+    setClickedMenu(undefined);
+  }, []);
 
   const isPrivacyPages = pathname.includes("privacy") || pathname.includes("license");
   const availableLocales = isPrivacyPages ? LOCALES_DATA.filter((locale) => locale.code === "en") : LOCALES_DATA;
@@ -40,13 +50,29 @@ const Header = () => {
   };
 
   useEffect(() => {
-    setActiveMenu(undefined);
-  }, [pathname]);
+    closeSecondMenu();
+  }, [pathname, closeSecondMenu]);
+
+  useEffect(() => {
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!navRef.current?.contains(event.target as Node)) {
+        closeSecondMenu();
+      }
+    };
+
+    document.addEventListener("pointerdown", handlePointerDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+    };
+  }, [closeSecondMenu]);
 
   return (
     <header className="pointer-events-none fixed top-5 left-0 z-50 w-full">
       <nav
+        ref={navRef}
         aria-label="main navigation"
+        onMouseLeave={() => setActiveMenu(clickedMenu)}
         className={cn(
           "glass-border rounded-large pointer-events-auto mx-auto max-w-max overflow-hidden backdrop-blur-xl",
           "transition-[padding,border-radius,colors] duration-300 ease-out",
@@ -72,7 +98,8 @@ const Header = () => {
               label="Platform"
               menuName="platform"
               relativeTo="platform-submenu"
-              handleClick={handleSecondMenuOpen}
+              handleClick={handleSecondMenuClick}
+              handleMouseEnter={handleSecondMenuHover}
               activeMenu={activeMenu}
             />
 
@@ -80,7 +107,8 @@ const Header = () => {
               label="Use cases"
               menuName="use-cases"
               relativeTo="use-cases-submenu"
-              handleClick={handleSecondMenuOpen}
+              handleClick={handleSecondMenuClick}
+              handleMouseEnter={handleSecondMenuHover}
               activeMenu={activeMenu}
             />
 
@@ -97,7 +125,8 @@ const Header = () => {
               label="Resources"
               menuName="resources"
               relativeTo="resources-submenu"
-              handleClick={handleSecondMenuOpen}
+              handleClick={handleSecondMenuClick}
+              handleMouseEnter={handleSecondMenuHover}
               activeMenu={activeMenu}
             />
           </ul>
@@ -109,7 +138,8 @@ const Header = () => {
                 "aria-expanded": activeMenu === "language",
                 "aria-label": `Change language, current language ${locale}`,
                 "aria-controls": "language-submenu",
-                onClick: () => handleSecondMenuOpen("language"),
+                onClick: () => handleSecondMenuClick("language"),
+                onMouseEnter: () => handleSecondMenuHover("language"),
               }}
             >
               {locale}

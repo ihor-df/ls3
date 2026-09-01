@@ -7,6 +7,7 @@ import { MenuCategory } from "./index.tsx";
 type FirstLevelMenuItemProps = ComponentProps<"li"> & {
   label: string;
   handleClick: (menuItem: MenuCategory) => void;
+  handleMouseEnter: (menuItem: MenuCategory) => void;
   menuName: MenuCategory;
   relativeTo: string;
   activeMenu: MenuCategory | undefined;
@@ -16,6 +17,7 @@ export const FirstLevelMenuItem = ({
   label,
   className,
   handleClick,
+  handleMouseEnter,
   menuName,
   relativeTo,
   activeMenu,
@@ -23,7 +25,7 @@ export const FirstLevelMenuItem = ({
   const isActive = activeMenu === menuName;
 
   return (
-    <li className={cn(className)}>
+    <li className={cn(className)} onMouseEnter={() => handleMouseEnter(menuName)}>
       <button
         type="button"
         className="flex cursor-pointer items-center gap-1.5 underline decoration-transparent transition-colors hover:decoration-white"
