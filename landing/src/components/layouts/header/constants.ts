@@ -33,133 +33,151 @@ import TrafficArbitrage from "@assets/icons/header/use-cases/traffic-arbitrage.s
 import WebScraping from "@assets/icons/header/use-cases/web-scraping.svg";
 import { Locale } from "next-intl";
 
-export const RESOURCES: {
-  label: string;
+export type NavigationLabel =
+  | "aboutUs"
+  | "affiliateMarketing"
+  | "agencies"
+  | "betting"
+  | "blog"
+  | "contact"
+  | "cryptocurrency"
+  | "documentation"
+  | "dropshipping"
+  | "faq"
+  | "fingerprint"
+  | "guideVideos"
+  | "mobileBrowser"
+  | "multiAccount"
+  | "partners"
+  | "publications"
+  | "referralProgram"
+  | "scraping"
+  | "teamwork"
+  | "traffic"
+  | "versionHistory"
+  | "webAutomation";
+
+type NavigationItem = {
+  label: NavigationLabel;
   href: string;
   icon: any;
-}[] = [
+};
+
+export const RESOURCES: NavigationItem[] = [
   {
-    label: "Documentation",
+    label: "documentation",
     icon: Documentation,
     href: "/docs",
   },
   {
-    label: "Guide videos",
+    label: "guideVideos",
     icon: GuideVideos,
     href: "/guide-videos",
   },
   {
-    label: "Version history",
+    label: "versionHistory",
     icon: VersionHistory,
     href: "/version-history",
   },
 
   {
-    label: "Blog",
+    label: "blog",
     icon: Blog,
     href: "/blog",
   },
   {
-    label: "Partners",
+    label: "partners",
     icon: Partners,
     href: "/partners",
   },
   {
-    label: "Publications",
+    label: "publications",
     icon: Publications,
     href: "/publications",
   },
   {
-    label: "Referral program",
+    label: "referralProgram",
     icon: ReferralProgram,
     href: "/referral-program",
   },
   {
-    label: "Contact us",
+    label: "contact",
     icon: Contacts,
     href: "/contact",
   },
   {
-    label: "About us",
+    label: "aboutUs",
     icon: About,
     href: "/about",
   },
   {
-    label: "FAQ",
+    label: "faq",
     icon: FAQ,
     href: "/faq",
   },
 ];
 
-export const USE_CASES: {
-  label: string;
-  href: string;
-  icon: any;
-}[] = [
+export const USE_CASES: NavigationItem[] = [
   {
-    label: "Multi-account",
+    label: "multiAccount",
     icon: MultiAccount,
     href: "/multi-account-management",
   },
   {
-    label: "Traffic arbitrage",
+    label: "traffic",
     icon: TrafficArbitrage,
     href: "/traffic",
   },
   {
-    label: "Cryptocurrency",
+    label: "cryptocurrency",
     icon: Cryptocurrency,
     href: "/crypto",
   },
   {
-    label: "Affiliate marketing",
+    label: "affiliateMarketing",
     icon: AffiliateMarketing,
     href: "/affiliate-marketing",
   },
   {
-    label: "Web scraping",
+    label: "scraping",
     icon: WebScraping,
     href: "/web-scraping",
   },
   {
-    label: "Betting",
+    label: "betting",
     icon: Betting,
     href: "/betting",
   },
   {
-    label: "Dropshipping & E-commerce",
+    label: "dropshipping",
     icon: Dropshipping,
     href: "/dropshipping-and-ecommerce",
   },
   {
-    label: "Digital agencies",
+    label: "agencies",
     icon: DigitalAgencies,
     href: "/digital-agencies",
   },
 ];
 
-export const SOLUTIONS: {
-  label: string;
-  href: string;
-  icon: any;
-}[] = [
+export const SOLUTIONS: NavigationItem[] = [
   {
-    label: "Mobile antidetect Browser",
+    label: "mobileBrowser",
     icon: Mobile,
     href: "/mobile-antidetect-browser",
   },
   {
-    label: "Web automation",
+    label: "webAutomation",
     icon: WebAutomation,
     href: "/web-automation",
   },
   {
-    label: "Fingerprint management",
+    label: "fingerprint",
     icon: Fingerprint,
     href: "/fingerprint-management",
   },
   {
-    label: "Teamwork",
+    label: "teamwork",
     icon: MultiAccount,
     href: "/teamwork",
   },

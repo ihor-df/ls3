@@ -2,7 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Arrow from "@assets/icons/arrow.svg";
 import { ComponentProps } from "react";
-import { MenuCategory } from "./index.tsx";
+import type { MenuCategory } from "./index";
 
 type FirstLevelMenuItemProps = ComponentProps<"li"> & {
   label: string;
@@ -21,11 +21,12 @@ export const FirstLevelMenuItem = ({
   menuName,
   relativeTo,
   activeMenu,
+  ...props
 }: FirstLevelMenuItemProps) => {
   const isActive = activeMenu === menuName;
 
   return (
-    <li className={cn(className)} onMouseEnter={() => handleMouseEnter(menuName)}>
+    <li {...props} className={cn(className)} onMouseEnter={() => handleMouseEnter(menuName)}>
       <button
         type="button"
         className="flex cursor-pointer items-center gap-1.5 underline decoration-transparent transition-colors hover:decoration-white"
@@ -34,8 +35,37 @@ export const FirstLevelMenuItem = ({
         onClick={() => handleClick(menuName)}
       >
         {label}
-        <Arrow className={cn("h-auto w-3 transition-transform", isActive && "rotate-180")} />
+        <Arrow className={cn("h-auto w-3 transition-[rotate]", isActive && "rotate-180")} />
       </button>
+    </li>
+  );
+};
+
+type SecondLevelMenuProps = ComponentProps<"li"> & {
+  activeMenu: MenuCategory | undefined;
+  renderedMenu: MenuCategory | undefined;
+  menuName: MenuCategory;
+  relativeTo: string;
+};
+
+export const SecondLevelMenu = ({
+  activeMenu,
+  children,
+  relativeTo,
+  menuName,
+  renderedMenu,
+  ...props
+}: SecondLevelMenuProps) => {
+  return (
+    <li {...props} className={cn("grid", renderedMenu === menuName ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
+      <ul
+        className="grid min-h-0 grid-cols-3 gap-x-10 gap-y-1 overflow-hidden"
+        id={relativeTo}
+        aria-hidden={activeMenu !== menuName}
+        inert={activeMenu !== menuName}
+      >
+        {children}
+      </ul>
     </li>
   );
 };
@@ -47,18 +77,23 @@ type SecondLevelMenuItemProps = ComponentProps<"li"> & {
   active?: boolean;
 };
 
-export const SecondLevelMenuItem = ({ href, icon, label, className, active }: SecondLevelMenuItemProps) => {
+export const SecondLevelMenuItem = ({ href, icon, label, className, active, ...props }: SecondLevelMenuItemProps) => {
   const Icon = icon;
 
   return (
     <li
+      {...props}
       className={cn(
         "rounded-small transition-colors duration-300 hover:bg-white/10",
         active && "bg-white/10",
         className,
       )}
     >
-      <Link className="flex max-w-52 items-center gap-4 p-3 leading-[1.1] tracking-[-0.01em]" href={href}>
+      <Link
+        className="flex max-w-52 items-center gap-4 p-3 leading-[1.1] tracking-[-0.01em]"
+        href={href}
+        aria-current={active ? "location" : undefined}
+      >
         <span
           className={cn(
             "flex size-10 min-w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-100",
