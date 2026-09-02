@@ -23,7 +23,8 @@ const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const locale = useLocale();
-  const t = useTranslations("Navigation");
+  const t = useTranslations("navigation");
+  const tPages = useTranslations("navigation.pages");
   const tCta = useTranslations("common.cta.getStarted");
 
   const isOpen = activeMenu !== undefined;
@@ -114,7 +115,7 @@ const Header = () => {
           <Link
             className="max-h-max"
             href="/"
-            aria-label={t("homepage")}
+            aria-label={tPages("homepage")}
             aria-current={pathname === "/" ? "page" : undefined}
           >
             <Image src={logo} alt="Linken Sphere logo" className="h-auto w-16 scale-[1.1] rounded-full duration-300" />
@@ -145,7 +146,7 @@ const Header = () => {
                 href="/pricing"
                 aria-current={isPathActive("/pricing") ? "page" : undefined}
               >
-                {t("pricing")}
+                {tPages("pricing")}
               </Link>
             </li>
 
@@ -199,7 +200,7 @@ const Header = () => {
                     <SecondLevelMenuItem
                       active={isPathActive(href)}
                       key={href}
-                      label={t(label)}
+                      label={tPages(label)}
                       href={href}
                       icon={icon}
                     />
@@ -218,7 +219,7 @@ const Header = () => {
                     <SecondLevelMenuItem
                       active={isPathActive(href)}
                       key={href}
-                      label={t(label)}
+                      label={tPages(label)}
                       href={href}
                       icon={icon}
                     />
@@ -237,7 +238,7 @@ const Header = () => {
                     <SecondLevelMenuItem
                       active={isPathActive(href)}
                       key={href}
-                      label={t(label)}
+                      label={tPages(label)}
                       href={href}
                       icon={icon}
                     />

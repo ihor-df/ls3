@@ -33,7 +33,7 @@ import TrafficArbitrage from "@assets/icons/header/use-cases/traffic-arbitrage.s
 import WebScraping from "@assets/icons/header/use-cases/web-scraping.svg";
 import { Locale } from "next-intl";
 
-export type NavigationLabel =
+export type NavigationPageLabel =
   | "aboutUs"
   | "affiliateMarketing"
   | "agencies"
@@ -58,7 +58,7 @@ export type NavigationLabel =
   | "webAutomation";
 
 type NavigationItem = {
-  label: NavigationLabel;
+  label: NavigationPageLabel;
   href: string;
   icon: any;
 };

@@ -90,7 +90,7 @@ export const SecondLevelMenuItem = ({ href, icon, label, className, active, ...p
       )}
     >
       <Link
-        className="flex max-w-52 items-center gap-4 p-3 leading-[1.1] tracking-[-0.01em]"
+        className="flex h-full max-w-54 items-center gap-4 p-3 leading-[1.1] tracking-[-0.01em]"
         href={href}
         aria-current={active ? "location" : undefined}
       >
