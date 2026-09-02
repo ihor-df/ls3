@@ -42,7 +42,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
 
   return (
     <html lang={locale} className={`${abcDiatype.variable} font-diatype h-full antialiased`}>
-      <body className="flex min-h-full flex-col">
+      <body className="relative flex min-h-full flex-col">
         <NextIntlClientProvider>
           <Header />
           {children}

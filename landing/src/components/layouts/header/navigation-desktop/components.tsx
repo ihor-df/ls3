@@ -2,7 +2,7 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Arrow from "@assets/icons/arrow.svg";
 import { ComponentProps } from "react";
-import type { MenuCategory } from "./index";
+import { MenuCategory } from "../types";
 
 type FirstLevelMenuItemProps = ComponentProps<"li"> & {
   label: string;
