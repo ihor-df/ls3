@@ -1,16 +1,22 @@
 import ButtonRounded from "@/components/atoms/button-rounded";
+import useScrollLock from "@/hooks/useScrollLock";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
-import Menu from "@assets/icons/menu.svg";
-import logo from "@public/images/logo-sm@2x.png";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MenuCategory, MobileSlide } from "../types";
 
-type NavigationMobileProps = {};
+import Menu from "@assets/icons/menu.svg";
+import logo from "@public/images/logo-sm@2x.png";
+import MenuBody from "./menu-body";
 
-const NavigationMobile = ({}: NavigationMobileProps) => {
+type NavigationMobileProps = {
+  isPathActive: (href: string) => boolean;
+  changeLocale: (locale: string) => void;
+};
+
+const NavigationMobile = ({ isPathActive }: NavigationMobileProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MobileSlide>("root");
 
@@ -18,6 +24,8 @@ const NavigationMobile = ({}: NavigationMobileProps) => {
   const pathname = usePathname();
   const t = useTranslations("navigation");
   const tPages = useTranslations("navigation.pages");
+
+  useScrollLock(isMenuOpen);
 
   const openMobileMenu = () => {
     setActiveMenu("root");
@@ -28,11 +36,7 @@ const NavigationMobile = ({}: NavigationMobileProps) => {
     setIsMenuOpen(false);
   };
 
-  const openMobileSlide = (category: MenuCategory) => {
-    setActiveMenu(category);
-  };
-
-  const openSubmenu = (menu: MenuCategory) => {
+  const openSecondLevelMenu = (menu: MenuCategory) => {
     setActiveMenu(menu);
   };
 
@@ -40,7 +44,7 @@ const NavigationMobile = ({}: NavigationMobileProps) => {
     setActiveMenu("root");
   };
 
-  //   Если при закрытии drawer нельзя сразу возвращать корневой слайд, сбрасывай его после завершения анимации:
+  // reset menu to root after closing
   const handleMobileMenuTransitionEnd = (event: React.TransitionEvent<HTMLElement>) => {
     if (event.target !== event.currentTarget) return;
     if (!isMenuOpen) {
@@ -48,33 +52,50 @@ const NavigationMobile = ({}: NavigationMobileProps) => {
     }
   };
 
+  // close menu on change screen size to > lg
+  useEffect(() => {
+    if (!isMenuOpen) return;
+    const desktop = window.matchMedia("(min-width: 64rem)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setIsMenuOpen(false);
+    };
+    closeOnDesktop();
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => {
+      desktop.removeEventListener("change", closeOnDesktop);
+    };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    closeMobileMenu();
+  }, [pathname]);
+
   return (
-    <nav
-      aria-label={t("mainNavigation")}
-      className={cn(
-        "glass-border pointer-events-auto h-16 w-full rounded-full bg-white/10 p-2 backdrop-blur-xl lg:hidden",
-      )}
-    >
-      <div className="flex items-center justify-between">
+    <nav aria-label={t("mainNavigation")} className="pointer-events-auto lg:hidden">
+      <div
+        className={cn(
+          "glass-border relative z-10 flex h-16 w-full items-center justify-between rounded-full bg-white/10 p-2 backdrop-blur-xl",
+        )}
+      >
         <ButtonRounded
           className="size-12 font-bold uppercase"
           buttonProps={{
             "aria-expanded": activeMenu === "language",
             "aria-label": t("changeLanguage", { language: locale.toUpperCase() }),
             "aria-controls": "language-submenu",
-            onClick: () => openSubmenu("language"),
+            // onClick: () => openSecondLevelMenu("language"),
           }}
         >
           {locale}
         </ButtonRounded>
 
         <Link
-          className="max-h-max"
+          className="h-full"
           href="/"
           aria-label={tPages("homepage")}
           aria-current={pathname === "/" ? "page" : undefined}
         >
-          <Image src={logo} alt="Linken Sphere logo" className="h-auto w-14 scale-[1.2] rounded-full duration-300" />
+          <Image src={logo} alt="Linken Sphere logo" className="h-full w-auto scale-[1.2] rounded-full duration-300" />
         </Link>
 
         <ButtonRounded
@@ -90,15 +111,28 @@ const NavigationMobile = ({}: NavigationMobileProps) => {
         </ButtonRounded>
       </div>
 
-      {/* menu body */}
+      {/* Backdrop */}
       <div
-        id="mobile-menu"
-        inert={!isMenuOpen}
-        aria-hidden={!isMenuOpen}
-        onTransitionEnd={handleMobileMenuTransitionEnd}
-      >
-        {/* слайды */}
-      </div>
+        className={cn(
+          "pointer-events-none fixed inset-0 z-10 transition-colors",
+          isMenuOpen && "pointer-events-auto bg-black/30",
+        )}
+        onClick={(e) => {
+          if (e.target !== e.currentTarget) return;
+          closeMobileMenu();
+        }}
+      />
+
+      {/* menu body */}
+      <MenuBody
+        isMenuOpen={isMenuOpen}
+        activeMenu={activeMenu}
+        handleMobileMenuTransitionEnd={handleMobileMenuTransitionEnd}
+        goBack={goBack}
+        isPathActive={isPathActive}
+        openSecondLevelMenu={openSecondLevelMenu}
+        closeMobileMenu={closeMobileMenu}
+      />
     </nav>
   );
 };

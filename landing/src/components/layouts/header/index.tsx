@@ -23,7 +23,7 @@ const Header = () => {
 
   return (
     <header className="pointer-events-none fixed top-5 left-0 z-50 w-full max-lg:px-5">
-      <NavigationMobile />
+      <NavigationMobile isPathActive={isPathActive} changeLocale={changeLocale} />
       <NavigationDesktop isPathActive={isPathActive} changeLocale={changeLocale} />
     </header>
   );

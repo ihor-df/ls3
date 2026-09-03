@@ -7,6 +7,10 @@
 }
 
 @theme inline {
+  --breakpoint-xxxs: 320px;
+  --breakpoint-xxs: 390px;
+  --breakpoint-xs: 480px;
+  --breakpoint-3xl: 1680px;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-diatype: var(--font-abc-diatype);

@@ -2,22 +2,20 @@ import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Arrow from "@assets/icons/arrow.svg";
 import { ComponentProps } from "react";
-import { MenuCategory } from "../types";
+import { MenuCategory, MobileSlide } from "../types";
 
 type FirstLevelMenuItemProps = ComponentProps<"li"> & {
   label: string;
   handleClick: (menuItem: MenuCategory) => void;
-  handleMouseEnter: (menuItem: MenuCategory) => void;
   menuName: MenuCategory;
   relativeTo: string;
-  activeMenu: MenuCategory | undefined;
+  activeMenu: MobileSlide | undefined;
 };
 
 export const FirstLevelMenuItem = ({
   label,
   className,
   handleClick,
-  handleMouseEnter,
   menuName,
   relativeTo,
   activeMenu,
@@ -26,43 +24,46 @@ export const FirstLevelMenuItem = ({
   const isActive = activeMenu === menuName;
 
   return (
-    <li {...props} className={cn(className)} onMouseEnter={() => handleMouseEnter(menuName)}>
+    <li {...props} className={className}>
       <button
         type="button"
-        className="flex cursor-pointer items-center gap-1.5 underline decoration-transparent transition-colors hover:decoration-white"
+        onClick={() => handleClick(menuName)}
+        className="flex w-full items-center justify-between text-start text-2xl leading-[1.2] font-bold"
         aria-expanded={isActive}
         aria-controls={relativeTo}
-        onClick={() => handleClick(menuName)}
       >
         {label}
-        <Arrow className={cn("h-auto w-3 transition-[rotate]", isActive && "rotate-180")} />
+        <Arrow className="size-4 -rotate-90" />
       </button>
     </li>
   );
 };
 
 type SecondLevelMenuProps = ComponentProps<"li"> & {
-  activeMenu: MenuCategory | undefined;
-  renderedMenu: MenuCategory | undefined;
-  menuName: MenuCategory;
+  activeMenu: MobileSlide;
+  menuName: MobileSlide;
   relativeTo: string;
+  label?: string;
 };
 
 export const SecondLevelMenu = ({
   activeMenu,
-  children,
-  relativeTo,
   menuName,
-  renderedMenu,
+  relativeTo,
+  label,
+  children,
   ...props
 }: SecondLevelMenuProps) => {
   return (
-    <li {...props} className={cn("grid", renderedMenu === menuName ? "grid-rows-[1fr]" : "grid-rows-[0fr]")}>
-      <ul
-        className="grid min-h-0 grid-cols-3 gap-x-10 gap-y-1 overflow-hidden"
-        inert={activeMenu !== menuName}
-        id={relativeTo}
-      >
+    <li
+      {...props}
+      className={cn(
+        "absolute inset-0 -translate-x-full overflow-y-auto px-7 pb-23 transition-transform duration-300",
+        activeMenu === menuName && "translate-x-0",
+      )}
+    >
+      {label && <h2 className="font-bold tracking-[-0.01em] text-white/60">{label}</h2>}
+      <ul id={relativeTo} inert={activeMenu !== menuName} className="mt-5 flex flex-col gap-4">
         {children}
       </ul>
     </li>
@@ -83,19 +84,20 @@ export const SecondLevelMenuItem = ({ href, icon, label, className, active, ...p
     <li
       {...props}
       className={cn(
-        "rounded-small transition-colors duration-300 hover:bg-white/10",
-        active && "bg-white/10",
+        "pr-2.5 transition-colors duration-300 hover:bg-white/10",
+        // active && "rounded-lg bg-white/10",
         className,
       )}
     >
       <Link
-        className="flex h-full max-w-54 items-center gap-4 p-3 leading-[1.1] font-bold tracking-[-0.01em]"
+        className="flex h-full items-center gap-4 text-xl leading-[1.1] font-bold tracking-[-0.01em]"
         href={href}
         aria-current={active ? "location" : undefined}
       >
         <span
           className={cn(
             "flex size-10 min-w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-100",
+            // active && "bg-transparent",
           )}
         >
           <Icon className="size-5" />

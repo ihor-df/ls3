@@ -171,7 +171,6 @@ const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProp
 
       {/* menu body */}
       <div
-        aria-hidden={!isMenuOpen}
         inert={!isMenuOpen}
         className={cn(
           "grid transition-[grid-template-rows] duration-300 ease-out",
