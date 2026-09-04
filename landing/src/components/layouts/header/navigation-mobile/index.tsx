@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { MenuCategory, MobileSlide } from "../types";
+import { MobileSlide } from "../types";
 
 import Menu from "@assets/icons/menu.svg";
 import logo from "@public/images/logo-sm@2x.png";
@@ -36,20 +36,8 @@ const NavigationMobile = ({ isPathActive }: NavigationMobileProps) => {
     setIsMenuOpen(false);
   };
 
-  const openSecondLevelMenu = (menu: MenuCategory) => {
+  const changeActiveMenu = (menu: MobileSlide) => {
     setActiveMenu(menu);
-  };
-
-  const goBack = () => {
-    setActiveMenu("root");
-  };
-
-  // reset menu to root after closing
-  const handleMobileMenuTransitionEnd = (event: React.TransitionEvent<HTMLElement>) => {
-    if (event.target !== event.currentTarget) return;
-    if (!isMenuOpen) {
-      setActiveMenu("root");
-    }
   };
 
   // close menu on change screen size to > lg
@@ -127,10 +115,8 @@ const NavigationMobile = ({ isPathActive }: NavigationMobileProps) => {
       <MenuBody
         isMenuOpen={isMenuOpen}
         activeMenu={activeMenu}
-        handleMobileMenuTransitionEnd={handleMobileMenuTransitionEnd}
-        goBack={goBack}
         isPathActive={isPathActive}
-        openSecondLevelMenu={openSecondLevelMenu}
+        changeActiveMenu={changeActiveMenu}
         closeMobileMenu={closeMobileMenu}
       />
     </nav>

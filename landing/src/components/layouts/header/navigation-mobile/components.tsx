@@ -97,7 +97,7 @@ export const SecondLevelMenuItem = ({ href, icon, label, className, active, ...p
         <span
           className={cn(
             "flex size-10 min-w-10 items-center justify-center rounded-lg bg-white/10 transition-all duration-100",
-            // active && "bg-transparent",
+            active && "bg-accent-orange",
           )}
         >
           <Icon className="size-5" />

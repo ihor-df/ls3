@@ -7,33 +7,34 @@ import LS from "@assets/icons/linken-sphere.svg";
 import logo from "@public/images/logo-sm@2x.png";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import { TransitionEvent } from "react";
 import { RESOURCES, SOLUTIONS, USE_CASES } from "../constants";
-import { MenuCategory, MobileSlide } from "../types";
+import { MobileSlide } from "../types";
 import { FirstLevelMenuItem, SecondLevelMenu, SecondLevelMenuItem } from "./components";
 
 type MenuBodyProps = {
   isMenuOpen: boolean;
   activeMenu: MobileSlide;
-  handleMobileMenuTransitionEnd: (event: TransitionEvent<HTMLElement>) => void;
-  goBack: () => void;
   isPathActive: (href: string) => boolean;
-  openSecondLevelMenu: (menu: MenuCategory) => void;
+  changeActiveMenu: (menu: MobileSlide) => void;
   closeMobileMenu: () => void;
 };
 
-const MenuBody = ({
-  isMenuOpen,
-  activeMenu,
-  handleMobileMenuTransitionEnd,
-  goBack,
-  isPathActive,
-  openSecondLevelMenu,
-  closeMobileMenu,
-}: MenuBodyProps) => {
+const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, closeMobileMenu }: MenuBodyProps) => {
   const pathname = usePathname();
   const t = useTranslations("navigation");
   const tPages = useTranslations("navigation.pages");
+
+  // reset menu to root after closing
+  const handleMobileMenuTransitionEnd = (event: React.TransitionEvent<HTMLElement>) => {
+    if (event.target !== event.currentTarget) return;
+    if (!isMenuOpen) {
+      changeActiveMenu("root");
+    }
+  };
+
+  const resources1 = RESOURCES.slice(0, 4);
+  const resources2 = RESOURCES.slice(4, 7);
+  const resources3 = RESOURCES.slice(7);
 
   return (
     <div
@@ -49,7 +50,11 @@ const MenuBody = ({
       {/* header */}
       <div className="flex shrink-0 items-center justify-between p-7 pb-5">
         {activeMenu !== "root" ? (
-          <button type="button" onClick={() => goBack()} className="flex size-9 items-center justify-center">
+          <button
+            type="button"
+            onClick={() => changeActiveMenu("root")}
+            className="flex size-9 items-center justify-center"
+          >
             <Arrow className="size-5 rotate-90" />
           </button>
         ) : (
@@ -86,7 +91,7 @@ const MenuBody = ({
         >
           <FirstLevelMenuItem
             activeMenu={activeMenu}
-            handleClick={openSecondLevelMenu}
+            handleClick={changeActiveMenu}
             menuName="platform"
             relativeTo="platform-submenu"
             label={t("platform")}
@@ -94,7 +99,7 @@ const MenuBody = ({
 
           <FirstLevelMenuItem
             activeMenu={activeMenu}
-            handleClick={openSecondLevelMenu}
+            handleClick={changeActiveMenu}
             menuName="use-cases"
             relativeTo="use-cases-submenu"
             label={t("useCases")}
@@ -112,7 +117,7 @@ const MenuBody = ({
 
           <FirstLevelMenuItem
             activeMenu={activeMenu}
-            handleClick={openSecondLevelMenu}
+            handleClick={changeActiveMenu}
             menuName="resources"
             relativeTo="resources-submenu"
             label={t("resources")}
@@ -148,7 +153,15 @@ const MenuBody = ({
           relativeTo="resources-submenu"
           label={t("resources")}
         >
-          {RESOURCES.map(({ href, label, icon }) => (
+          {resources1.map(({ href, label, icon }) => (
+            <SecondLevelMenuItem active={isPathActive(href)} key={href} label={tPages(label)} href={href} icon={icon} />
+          ))}
+          <hr className="border-white/10" />
+          {resources2.map(({ href, label, icon }) => (
+            <SecondLevelMenuItem active={isPathActive(href)} key={href} label={tPages(label)} href={href} icon={icon} />
+          ))}
+          <hr className="border-white/10" />
+          {resources3.map(({ href, label, icon }) => (
             <SecondLevelMenuItem active={isPathActive(href)} key={href} label={tPages(label)} href={href} icon={icon} />
           ))}
         </SecondLevelMenu>

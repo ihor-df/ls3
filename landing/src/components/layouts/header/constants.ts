@@ -79,7 +79,11 @@ export const RESOURCES: NavigationItem[] = [
     icon: VersionHistory,
     href: "/version-history",
   },
-
+  {
+    label: "faq",
+    icon: FAQ,
+    href: "/faq",
+  },
   {
     label: "blog",
     icon: Blog,
@@ -109,11 +113,6 @@ export const RESOURCES: NavigationItem[] = [
     label: "aboutUs",
     icon: About,
     href: "/about",
-  },
-  {
-    label: "faq",
-    icon: FAQ,
-    href: "/faq",
   },
 ];
 
