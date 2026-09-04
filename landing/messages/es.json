@@ -2,6 +2,9 @@
   "navigation": {
     "mainNavigation": "Navegación principal",
     "changeLanguage": "Cambiar idioma, idioma actual: {language}",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "back": "Volver",
     "platform": "Funciones",
     "useCases": "Soluciones",
     "resources": "Recursos",

@@ -29,7 +29,7 @@ const Article = async ({ post, breadcrumbs }: ArticleProps) => {
 
   return (
     <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
-      <div className="mx-auto w-full min-w-0 xl:max-w-3xl">
+      <div className="mx-auto w-full max-w-3xl min-w-0">
         {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
 
         {postImageUrl && (

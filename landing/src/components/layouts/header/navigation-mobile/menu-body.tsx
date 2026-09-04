@@ -53,9 +53,10 @@ const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, clos
           <button
             type="button"
             onClick={() => changeActiveMenu("root")}
+            aria-label={t("back")}
             className="flex size-9 items-center justify-center"
           >
-            <Arrow className="size-5 rotate-90" />
+            <Arrow aria-hidden="true" className="size-5 rotate-90" />
           </button>
         ) : (
           <Link
@@ -65,18 +66,18 @@ const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, clos
             aria-current={pathname === "/" ? "page" : undefined}
           >
             <Image src={logo} alt="Linken Sphere logo" className="h-12 w-auto scale-[1.2] rounded-full duration-300" />
-            <LS className="max-xxxs:hidden h-8 w-auto" />
+            <LS aria-hidden="true" className="max-xxxs:hidden h-8 w-auto" />
           </Link>
         )}
 
         <ButtonRounded
           className="size-12 uppercase"
           buttonProps={{
-            "aria-label": "Close mobile menu",
+            "aria-label": t("closeMenu"),
             onClick: closeMobileMenu,
           }}
         >
-          <Cross className="size-5" />
+          <Cross aria-hidden="true" className="size-5" />
         </ButtonRounded>
       </div>
 

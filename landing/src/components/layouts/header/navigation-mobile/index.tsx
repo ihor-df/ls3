@@ -90,12 +90,12 @@ const NavigationMobile = ({ isPathActive }: NavigationMobileProps) => {
           className="size-12 uppercase"
           buttonProps={{
             "aria-expanded": isMenuOpen,
-            "aria-label": "Open mobile menu",
+            "aria-label": t("openMenu"),
             "aria-controls": "root-submenu",
             onClick: openMobileMenu,
           }}
         >
-          <Menu className="size-5" />
+          <Menu aria-hidden="true" className="size-5" />
         </ButtonRounded>
       </div>
 

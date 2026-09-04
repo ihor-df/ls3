@@ -2,6 +2,9 @@
   "navigation": {
     "mainNavigation": "Основная навигация",
     "changeLanguage": "Сменить язык, текущий язык: {language}",
+    "openMenu": "Открыть меню",
+    "closeMenu": "Закрыть меню",
+    "back": "Назад",
     "platform": "Функции",
     "useCases": "Решения",
     "resources": "Ресурсы",

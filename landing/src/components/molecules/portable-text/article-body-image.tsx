@@ -13,7 +13,7 @@ export const ArticleBodyImage = ({ value }: { value: ArticleBodyImageValue }) =>
         alt={value.alt ?? ""}
         width={760}
         height={428}
-        className="aspect-350/197 w-full rounded-[20px] border border-white/10 md:rounded-[40px]"
+        className="rounded-small md:rounded-large aspect-350/197 w-full border border-white/10"
       />
 
       {value.caption && (

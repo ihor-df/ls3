@@ -2,6 +2,9 @@
   "navigation": {
     "mainNavigation": "主导航",
     "changeLanguage": "切换语言，当前语言：{language}",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "back": "返回",
     "platform": "功能",
     "useCases": "解决方案",
     "resources": "资源",

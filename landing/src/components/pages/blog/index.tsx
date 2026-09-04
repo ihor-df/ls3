@@ -24,7 +24,7 @@ const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) =>
       {!!posts?.length ? (
         <ul className="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-5 md:gap-y-16 xl:grid-cols-3">
           {posts.map((post) => {
-            const postImageUrl = post?.image ? urlFor(post.image)?.width(413).height(232).url() : null;
+            const postImageUrl = post?.image ? urlFor(post.image)?.width(820).height(462).url() : null;
 
             return (
               <li key={post._id}>

@@ -48,8 +48,8 @@ export const ArticleTable = ({ value }: { value: unknown }) => {
   );
 
   return (
-    <div className="my-5 overflow-hidden rounded-[20px] border border-white/10 md:my-6">
-      <div className="article-table-scroll overflow-x-auto">
+    <div className="rounded-small my-5 overflow-hidden border border-white/10 md:my-6">
+      <div className="custom-scrollbar overflow-x-auto">
         <table className="w-full min-w-190 border-collapse text-sm">
           {headerRows > 0 && (
             <thead>

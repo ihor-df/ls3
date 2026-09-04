@@ -33,7 +33,7 @@ export const FirstLevelMenuItem = ({
         aria-controls={relativeTo}
       >
         {label}
-        <Arrow className="size-4 -rotate-90" />
+        <Arrow aria-hidden="true" className="size-4 -rotate-90" />
       </button>
     </li>
   );
@@ -57,13 +57,14 @@ export const SecondLevelMenu = ({
   return (
     <li
       {...props}
+      inert={activeMenu !== menuName}
       className={cn(
-        "absolute inset-0 -translate-x-full overflow-y-auto px-7 pb-23 transition-transform duration-300",
+        "custom-scrollbar absolute inset-0 -translate-x-full overflow-y-auto px-7 pb-23 transition-transform duration-300",
         activeMenu === menuName && "translate-x-0",
       )}
     >
       {label && <h2 className="font-bold tracking-[-0.01em] text-white/60">{label}</h2>}
-      <ul id={relativeTo} inert={activeMenu !== menuName} className="mt-5 flex flex-col gap-4">
+      <ul id={relativeTo} className="mt-5 flex flex-col gap-4">
         {children}
       </ul>
     </li>
@@ -100,7 +101,7 @@ export const SecondLevelMenuItem = ({ href, icon, label, className, active, ...p
             active && "bg-accent-orange",
           )}
         >
-          <Icon className="size-5" />
+          <Icon aria-hidden="true" className="size-5" />
         </span>
         {label}
       </Link>
