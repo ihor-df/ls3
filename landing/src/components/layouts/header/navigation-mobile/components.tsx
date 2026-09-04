@@ -1,15 +1,17 @@
+import ButtonRounded from "@/components/atoms/button-rounded";
 import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Arrow from "@assets/icons/arrow.svg";
+import Cross from "@assets/icons/cross.svg";
 import { ComponentProps } from "react";
-import { MenuCategory, MobileSlide } from "../types";
+import { MobileMenuCategory } from "../types";
 
 type FirstLevelMenuItemProps = ComponentProps<"li"> & {
   label: string;
-  handleClick: (menuItem: MenuCategory) => void;
-  menuName: MenuCategory;
+  handleClick: (menuItem: MobileMenuCategory) => void;
+  menuName: MobileMenuCategory;
   relativeTo: string;
-  activeMenu: MobileSlide | undefined;
+  activeMenu: MobileMenuCategory | undefined;
 };
 
 export const FirstLevelMenuItem = ({
@@ -39,27 +41,20 @@ export const FirstLevelMenuItem = ({
   );
 };
 
-type SecondLevelMenuProps = ComponentProps<"li"> & {
-  activeMenu: MobileSlide;
-  menuName: MobileSlide;
+type MenuListItemProps = ComponentProps<"li"> & {
+  activeMenu: MobileMenuCategory;
+  menuName: MobileMenuCategory;
   relativeTo: string;
   label?: string;
 };
 
-export const SecondLevelMenu = ({
-  activeMenu,
-  menuName,
-  relativeTo,
-  label,
-  children,
-  ...props
-}: SecondLevelMenuProps) => {
+export const MenuListItem = ({ activeMenu, menuName, relativeTo, label, children, ...props }: MenuListItemProps) => {
   return (
     <li
       {...props}
       inert={activeMenu !== menuName}
       className={cn(
-        "custom-scrollbar absolute inset-0 -translate-x-full overflow-y-auto px-7 pb-23 transition-transform duration-300",
+        "custom-scrollbar absolute inset-0 -translate-x-full overflow-y-auto px-7 pb-20 transition-transform duration-300",
         activeMenu === menuName && "translate-x-0",
       )}
     >
@@ -82,14 +77,7 @@ export const SecondLevelMenuItem = ({ href, icon, label, className, active, ...p
   const Icon = icon;
 
   return (
-    <li
-      {...props}
-      className={cn(
-        "pr-2.5 transition-colors duration-300 hover:bg-white/10",
-        // active && "rounded-lg bg-white/10",
-        className,
-      )}
-    >
+    <li {...props} className={cn("pr-2.5 transition-colors duration-300 hover:bg-white/10", className)}>
       <Link
         className="flex h-full items-center gap-4 text-xl leading-[1.1] font-bold tracking-[-0.01em]"
         href={href}
@@ -106,5 +94,19 @@ export const SecondLevelMenuItem = ({ href, icon, label, className, active, ...p
         {label}
       </Link>
     </li>
+  );
+};
+
+export const CloseButton = ({ ariaLabel, onClick }: { ariaLabel: string; onClick: () => void }) => {
+  return (
+    <ButtonRounded
+      className="size-12 uppercase"
+      buttonProps={{
+        "aria-label": ariaLabel,
+        onClick: onClick,
+      }}
+    >
+      <Cross aria-hidden="true" className="size-5" />
+    </ButtonRounded>
   );
 };

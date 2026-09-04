@@ -1,5 +1,7 @@
 import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
+
+import { LangSwitcherItem } from "../components";
 import { LOCALES_DATA, RESOURCES, SOLUTIONS, USE_CASES } from "../constants";
 import { MenuCategory } from "../types";
 import { SecondLevelMenu, SecondLevelMenuItem } from "./components";
@@ -31,7 +33,7 @@ const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLo
         <ul className="p-3 pt-5">
           <SecondLevelMenu
             renderedMenu={renderedMenu}
-            relativeTo="platform-submenu"
+            relativeTo="desktop-platform-submenu"
             menuName="platform"
             activeMenu={activeMenu}
           >
@@ -50,7 +52,7 @@ const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLo
 
           <SecondLevelMenu
             renderedMenu={renderedMenu}
-            relativeTo="use-cases-submenu"
+            relativeTo="desktop-use-cases-submenu"
             menuName="use-cases"
             activeMenu={activeMenu}
           >
@@ -69,7 +71,7 @@ const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLo
 
           <SecondLevelMenu
             renderedMenu={renderedMenu}
-            relativeTo="resources-submenu"
+            relativeTo="desktop-resources-submenu"
             menuName="resources"
             activeMenu={activeMenu}
           >
@@ -89,32 +91,12 @@ const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLo
           {/* Locale switcher */}
           <SecondLevelMenu
             renderedMenu={renderedMenu}
-            relativeTo="language-submenu"
+            relativeTo="desktop-language-menu"
             menuName="language"
             activeMenu={activeMenu}
           >
-            {LOCALES_DATA.map(({ code, label, icon }) => {
-              const Icon = icon;
-              return (
-                <li
-                  key={code}
-                  className={cn(
-                    "rounded-full transition-colors duration-300 hover:bg-white/10",
-                    locale === code && "bg-white/10",
-                  )}
-                >
-                  <button
-                    onClick={() => changeLocale(code)}
-                    aria-pressed={locale === code}
-                    className="flex w-full cursor-pointer items-center gap-4 p-3 leading-[1.1] tracking-[-0.01em]"
-                  >
-                    <span className="flex size-10 min-w-10 items-center justify-center rounded-full bg-white/10">
-                      <Icon className="size-5" />
-                    </span>
-                    {label}
-                  </button>
-                </li>
-              );
+            {LOCALES_DATA.map((data) => {
+              return <LangSwitcherItem key={data.code} {...data} changeLocale={changeLocale} locale={locale} />;
             })}
           </SecondLevelMenu>
         </ul>

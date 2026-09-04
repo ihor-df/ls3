@@ -60,7 +60,7 @@ const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProp
 
   const handleMenuKeyDown = (event: KeyboardEvent<HTMLElement>) => {
     if (event.key !== "Escape" || !activeMenu) return;
-    const trigger = navRef.current?.querySelector<HTMLButtonElement>(`button[aria-controls="${activeMenu}-submenu"]`);
+    const trigger = navRef.current?.querySelector<HTMLButtonElement>('button[aria-expanded="true"]');
 
     event.preventDefault();
     closeSecondMenu();
@@ -115,7 +115,7 @@ const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProp
           <FirstLevelMenuItem
             label={t("platform")}
             menuName="platform"
-            relativeTo="platform-submenu"
+            relativeTo="desktop-platform-submenu"
             handleClick={handleSecondMenuClick}
             handleMouseEnter={handleSecondMenuHover}
             activeMenu={activeMenu}
@@ -124,7 +124,7 @@ const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProp
           <FirstLevelMenuItem
             label={t("useCases")}
             menuName="use-cases"
-            relativeTo="use-cases-submenu"
+            relativeTo="desktop-use-cases-submenu"
             handleClick={handleSecondMenuClick}
             handleMouseEnter={handleSecondMenuHover}
             activeMenu={activeMenu}
@@ -143,7 +143,7 @@ const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProp
           <FirstLevelMenuItem
             label={t("resources")}
             menuName="resources"
-            relativeTo="resources-submenu"
+            relativeTo="desktop-resources-submenu"
             handleClick={handleSecondMenuClick}
             handleMouseEnter={handleSecondMenuHover}
             activeMenu={activeMenu}
@@ -156,7 +156,7 @@ const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProp
             buttonProps={{
               "aria-expanded": activeMenu === "language",
               "aria-label": t("changeLanguage", { language: locale.toUpperCase() }),
-              "aria-controls": "language-submenu",
+              "aria-controls": "desktop-language-menu",
               onClick: () => handleSecondMenuClick("language"),
               onMouseEnter: () => handleSecondMenuHover("language"),
             }}

@@ -1,21 +1,19 @@
-import ButtonRounded from "@/components/atoms/button-rounded";
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Arrow from "@assets/icons/arrow.svg";
-import Cross from "@assets/icons/cross.svg";
 import LS from "@assets/icons/linken-sphere.svg";
 import logo from "@public/images/logo-sm@2x.png";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { RESOURCES, SOLUTIONS, USE_CASES } from "../constants";
-import { MobileSlide } from "../types";
-import { FirstLevelMenuItem, SecondLevelMenu, SecondLevelMenuItem } from "./components";
+import { MobileMenuCategory } from "../types";
+import { CloseButton, FirstLevelMenuItem, MenuListItem, SecondLevelMenuItem } from "./components";
 
 type MenuBodyProps = {
   isMenuOpen: boolean;
-  activeMenu: MobileSlide;
+  activeMenu: MobileMenuCategory;
   isPathActive: (href: string) => boolean;
-  changeActiveMenu: (menu: MobileSlide) => void;
+  changeActiveMenu: (menu: MobileMenuCategory) => void;
   closeMobileMenu: () => void;
 };
 
@@ -70,31 +68,23 @@ const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, clos
           </Link>
         )}
 
-        <ButtonRounded
-          className="size-12 uppercase"
-          buttonProps={{
-            "aria-label": t("closeMenu"),
-            onClick: closeMobileMenu,
-          }}
-        >
-          <Cross aria-hidden="true" className="size-5" />
-        </ButtonRounded>
+        <CloseButton ariaLabel={t("closeMenu")} onClick={closeMobileMenu} />
       </div>
 
       {/* menu slides */}
       <ul className="relative mt-10 min-h-0 flex-1 overflow-hidden">
         {/* first level menu */}
-        <SecondLevelMenu
+        <MenuListItem
           className="[&>ul]:mt-0 [&>ul]:gap-6"
           menuName="root"
-          relativeTo="root-submenu"
+          relativeTo="mobile-root-submenu"
           activeMenu={activeMenu}
         >
           <FirstLevelMenuItem
             activeMenu={activeMenu}
             handleClick={changeActiveMenu}
             menuName="platform"
-            relativeTo="platform-submenu"
+            relativeTo="mobile-platform-submenu"
             label={t("platform")}
           />
 
@@ -102,7 +92,7 @@ const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, clos
             activeMenu={activeMenu}
             handleClick={changeActiveMenu}
             menuName="use-cases"
-            relativeTo="use-cases-submenu"
+            relativeTo="mobile-use-cases-submenu"
             label={t("useCases")}
           />
 
@@ -120,38 +110,38 @@ const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, clos
             activeMenu={activeMenu}
             handleClick={changeActiveMenu}
             menuName="resources"
-            relativeTo="resources-submenu"
+            relativeTo="mobile-resources-submenu"
             label={t("resources")}
           />
-        </SecondLevelMenu>
+        </MenuListItem>
 
         {/* second level menu */}
-        <SecondLevelMenu
+        <MenuListItem
           activeMenu={activeMenu}
           menuName="platform"
-          relativeTo="platform-submenu"
+          relativeTo="mobile-platform-submenu"
           label={t("platform")}
         >
           {SOLUTIONS.map(({ href, label, icon }) => (
             <SecondLevelMenuItem active={isPathActive(href)} key={href} label={tPages(label)} href={href} icon={icon} />
           ))}
-        </SecondLevelMenu>
+        </MenuListItem>
 
-        <SecondLevelMenu
+        <MenuListItem
           activeMenu={activeMenu}
           menuName="use-cases"
-          relativeTo="use-cases-submenu"
+          relativeTo="mobile-use-cases-submenu"
           label={t("useCases")}
         >
           {USE_CASES.map(({ href, label, icon }) => (
             <SecondLevelMenuItem active={isPathActive(href)} key={href} label={tPages(label)} href={href} icon={icon} />
           ))}
-        </SecondLevelMenu>
+        </MenuListItem>
 
-        <SecondLevelMenu
+        <MenuListItem
           activeMenu={activeMenu}
           menuName="resources"
-          relativeTo="resources-submenu"
+          relativeTo="mobile-resources-submenu"
           label={t("resources")}
         >
           {resources1.map(({ href, label, icon }) => (
@@ -165,7 +155,7 @@ const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, clos
           {resources3.map(({ href, label, icon }) => (
             <SecondLevelMenuItem active={isPathActive(href)} key={href} label={tPages(label)} href={href} icon={icon} />
           ))}
-        </SecondLevelMenu>
+        </MenuListItem>
       </ul>
     </div>
   );
