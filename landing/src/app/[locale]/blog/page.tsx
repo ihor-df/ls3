@@ -1,6 +1,5 @@
+import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
-import Heading from "@/components/atoms/heading";
-import PageSearch from "@/components/molecules/page-search";
 import Blog from "@/components/pages/blog";
 import { routing } from "@/i18n/routing";
 import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
@@ -28,6 +27,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
   const parsedPage = Number(pageParam ?? "1");
   const page = Number.isSafeInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
   const limit = page * ARTICLES_PER_PAGE;
+
   const articleParams = {
     locale,
     search: search ? `*${search}*` : null,
@@ -52,10 +52,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
 
   return (
     <Container as="main">
-      <div className="justify-between md:flex">
-        <Heading variant="page">{t("title")}</Heading>
-        <PageSearch className="max-md:hidden" initialValue={search} />
-      </div>
+      <CollectionPageHeader title={t("title")} initSearchValue={search} />
 
       <Blog locale={locale} posts={posts ?? []} categories={categories ?? []} currentPage={page} hasMore={hasMore} />
     </Container>

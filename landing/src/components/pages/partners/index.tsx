@@ -1,3 +1,4 @@
+import CollectionPageList from "@/components/molecules/collection-page-list";
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
 import CtaLg from "@/components/organisms/cta-lg";
@@ -20,8 +21,8 @@ const Partners = ({ partners, categories, currentPage, hasMore }: PartnersProps)
     <div className="mt-10 flex flex-col">
       <CategoryFilters page="partners" categories={categories} />
 
-      {!!partners?.length ? (
-        <ul className="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-5 md:gap-y-16 xl:grid-cols-3">
+      {!!partners?.length && (
+        <CollectionPageList>
           {partners.map((partner) => {
             const partnerLogoUrl = partner.logo ? urlFor(partner.logo)?.width(413).height(232).url() : null;
 
@@ -40,11 +41,7 @@ const Partners = ({ partners, categories, currentPage, hasMore }: PartnersProps)
               </li>
             );
           })}
-        </ul>
-      ) : (
-        <div className="flex h-100 items-center justify-center text-lg text-[#C3C3C3]">
-          <p>No partners :(</p>
-        </div>
+        </CollectionPageList>
       )}
 
       {hasMore && <LoadMoreButton currentPage={currentPage} />}

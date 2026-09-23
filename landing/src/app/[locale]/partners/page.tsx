@@ -1,8 +1,7 @@
 import Container from "@/components/atoms/container";
-import Heading from "@/components/atoms/heading";
-import PageSearch from "@/components/molecules/page-search";
 import Partners from "@/components/pages/partners";
 
+import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import { routing } from "@/i18n/routing";
 import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
@@ -53,10 +52,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
 
   return (
     <Container as="main">
-      <div className="justify-between md:flex">
-        <Heading variant="page">{t("title")}</Heading>
-        <PageSearch className="max-md:hidden" initialValue={search} />
-      </div>
+      <CollectionPageHeader title={t("title")} initSearchValue={search} />
 
       <Partners
         locale={locale}

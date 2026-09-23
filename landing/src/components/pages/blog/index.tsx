@@ -1,3 +1,4 @@
+import CollectionPageList from "@/components/molecules/collection-page-list";
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
 import CtaLg from "@/components/organisms/cta-lg";
@@ -21,8 +22,8 @@ const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) =>
     <div className="mt-10 flex flex-col">
       <CategoryFilters page="blog" categories={categories} />
 
-      {!!posts?.length ? (
-        <ul className="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2 md:gap-x-5 md:gap-y-16 xl:grid-cols-3">
+      {!!posts?.length && (
+        <CollectionPageList>
           {posts.map((post) => {
             const postImageUrl = post?.image ? urlFor(post.image)?.width(820).height(462).url() : null;
 
@@ -41,11 +42,7 @@ const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) =>
               </li>
             );
           })}
-        </ul>
-      ) : (
-        <div className="flex h-100 items-center justify-center text-lg text-[#C3C3C3]">
-          <p>No articles :(</p>
-        </div>
+        </CollectionPageList>
       )}
 
       {hasMore && <LoadMoreButton currentPage={currentPage} />}
