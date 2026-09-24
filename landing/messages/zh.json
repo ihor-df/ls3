@@ -9,7 +9,7 @@
     "useCases": "解决方案",
     "resources": "资源",
     "pages": {
-      "homepage": "Linken\u00A0Sphere 主页",
+      "homepage": "Linken Sphere 主页",
       "mobileBrowser": "移动反检测浏览器",
       "webAutomation": "常规任务自动化",
       "teamwork": "团队协作",
@@ -36,18 +36,20 @@
     }
   },
   "common": {
-    "faq": { "title": "常见问题" },
+    "faq": {
+      "title": "常见问题"
+    },
     "cta": {
       "workAnon": {
-        "main": "使用 Linken\u00A0Sphere 匿名工作",
+        "main": "使用 Linken Sphere 匿名工作",
         "button": "免费开始使用",
         "discount": {
-          "1": "想以优惠价格体验 Linken\u00A0Sphere？",
+          "1": "想以优惠价格体验 Linken Sphere？",
           "2": "使用优惠码“LSBLOG”，任意订阅均可享受 7 折优惠。仅限新用户。"
         }
       },
       "getStarted": {
-        "title": "开始使用 Linken\u00A0Sphere",
+        "title": "开始使用 Linken Sphere",
         "description": "安全工作所需的一切功能，以及随时响应的支持服务",
         "button": "免费开始使用"
       },
@@ -69,6 +71,127 @@
     "article": {
       "goToButton": "前往",
       "copied": "已复制！"
+    }
+  },
+  "faq": {
+    "allQuestions": "全部问题",
+    "topics": {
+      "common-questions": "常见问题",
+      "payment": "付款",
+      "license": "许可",
+      "problem-solving": "问题解决"
+    },
+    "common-questions": {
+      "what-is-antidetect-hybrid-mode": {
+        "name": "什么是反探测混合模式？",
+        "description": "混合模式是一种创新的反检测技术，可让您将会话参数的唯一性调整为实际使用的设备，从而在不使用传统帆布和WebGL噪声的情况下提供了足够的唯一性。\n\n\n使用混合动力车时自动安装的配置不会使用噪声，而是根据智能依赖项系统替换视频卡和其他参数，因此用户获得了完全真实的打印。\n\n\n如果不可能使用传统噪声使用站点，那么与使用便携式浏览器相比，混合模式将显着提高性能，原因有两个：\n\n\n - 与传统的使用浏览器或cookie和单个代理连接复制文件夹的方法不同，所有这些过程都是自动化的，这要归功于Cookie和Storage Data的基于云的同步以及便捷的管理系统。\n\n\n - 所有会话都使用本机帆布/WebGL指纹，但在其他配置参数上有所不同，而这些参数则与真实的参数相对应，并且不能被安全系统抹黑。\n\n\n因此，混合模式使用本机指纹而不添加噪声，但会自动将其他配置参数调整为实际的计算机硬件。\n\n\n这相当于使用数百台具有相似但不同图形卡的不同计算机以及不同的RAM和CPU核心选项。"
+      },
+      "are-fingerprints-preserved-when-transferring-sessions": {
+        "name": "转移会话时是否保留指纹？",
+        "description": "指纹取决于硬件 - 如果硬件在传输过程中有所不同，则最终的指纹将有所不同。\n\n\n指纹不包括在配置中，在创建会话时会生成它们。\n\n* canvas，音频，clientRects*  - 不包含在配置中，而是生成\n\n* WebGl，字体，插件*  - 包含在配置中\n\n\n*如果需要在转移期间有相同的指纹，也就是说，3个选项：*\n\n\n - 使用相同的虚拟机\n\n - 从版本9开始，已经添加了同时使用一个帐户工作的能力。\n服务器通过RDP，然后硬件将相同，以及传输过程中的打印\n\n - 一批具有相同硬件的计算机。\n纯粹的个人选择。\n\n\n如果在不同计算机上对AF系统使用混合模式\n\n并从其他位置推出。"
+      },
+      "what-data-is-the-browser-sending": {
+        "name": "浏览器发送了什么数据？",
+        "description": "默认情况下，我们发送数据以检查许可证的有效性并更新接口中的会话数据结构（其状态，代理集，描述等）。\n如果启用了会话数据同步，则如果禁用了云同步，我们也不会发送与会话存储相关的数据（cookie and cookie和本地存储）。所选类型的同步，元数据，元数据，名称，设置的代理，描述和设置是contron.contron contron.chromied contron。\n未执行针对基于铬的浏览器的盒装版本的API。"
+      },
+      "can-my-session-data-be-stored-locally": {
+        "name": "我的会话数据可以在本地存储吗？",
+        "description": "是的，我们已经照顾了用户安全，并实施了本地数据存储系统。\n此外，所有存储在本地的数据都已加密，以避免在计算机上发生恶意软件的情况下可能泄漏。 \nCookies and storage synchronization is disabled by default to speed up the process of starting and stopping sessions, as well as to increase the level of security.At the same time, the metadata of the sessions themselves (their name and the basic information contained in them) are stored in the cloud, which allows access to them (but not to data, when cloud synchronization is disabled) when using the account on different computers."
+      },
+      "is-my-data-safe": {
+        "name": "我的数据安全吗？",
+        "description": "鉴于在交易所和加密货币等领域大量使用反探测器，数据安全问题非常重要（尤其是在市场上流行参与者中敏感数据泄漏的新闻背景）。\n\n\n我们能提供什么？\n\n\n在上市的6年以上，成千上万的人成为Linken Sphere的使用者，对于许多人来说，原则上，Sphere已成为第一个使用的方法。\n在此期间，没有一个确认的泄漏或用户数据妥协的情况。\n这不是偶然的。\n信任很重要，对我们来说，数据安全一直是提供服务质量的主要标准之一。\n加密，高质量存储和负责任的方法使我们能够确保高性能。\n\n\n所有最佳产品都保留在新一代产品中 -  Linken Sphere Evolution是如今的唯一现代解决方案，不仅提供了局部数据存储数据的可能性，而且还提供了磁盘上的加密，以及在服务器上发送和存储时（同步），这使我们可以将其称为现有反向图最安全的。\n\n\n同时，我们始终打电话并继续呼吁负责我们自己的安全。\n切勿在工作环境中使用敏感数据，仅使用从官方站点下载的组件，切勿将数据从您的帐户传输到第三方。\n\n\n如果您采用负责任且聪明的方法来确保工作环境，则可以确保使用Linken Sphere完全安全。"
+      },
+      "what-if-socks-doesnt-have-its-own-dns": {
+        "name": "如果袜子没有自己的DNS怎么办？",
+        "description": "如果Sox或Tunnel没有自己的DNS，或者使用Google DNS上的DNS不稳定，则有可能将真实IP赠送给Google Services。\n\n\n来自各种服务的替代DN列表，可能适用：\n\n\nCisco Opendns，LLC\n\n208.67.220.220\n\n208.67.222.222\n\n\nNeustar安全服务\n\n199.85.127.10\n\n199.85.126.10\n\n\nNeustar安全服务\n\n64.6.65.6\n\n64.6.64.6\n\n\nConstant Company，LLC\n\n8.26.56.26\n\n8.20.247.20\n\n\n级别3\n\n209.244.0.3\n\n209.244.0.4\n\n4.2.2.1\n\n4.2.2.2\n\n4.2.2.3\n\n4.2.2.4\n\n\nOracle Corporation\n\n216.146.35.35\n\n216.146.36.36\n\n\nOVH SAS\n\n5.135.183.146\n\n\n恒定公司\n\n195.46.39.39\n\n\nAmazon.com，Inc。\n\n54.174.40.213\n\n52.3.100.184\n\n\n3级Communications，Inc。\n\n54.229.171.243\n\n\nAmazon.com，Inc。\n\n54.183.15.10\n\n\n亚马逊技术公司\n\n185.37.37.37\n\n\nCloudflare\n\n82.196.13.196\n\n\n强大的技术有限责任公司\n\n64.145.73.2\n\n209.107.219.3\n\n\n软层\n\n成熟\n\n185.52.1.146\n\n\n亚马逊技术公司\n\n128.199.248.157\n\n185.135.8.197"
+      },
+      "how-and-where-can-i-check-my-session-fingerprints": {
+        "name": "如何以及在哪里可以检查我的会话指纹？",
+        "description": "要查看会话指纹和可能的泄漏，我们建议与2023年相关的匿名检查器：\n\n\nvision[http://f.vision/]\nbrowserleaks[https://browserleaks.com/]\npixelscan[https://pixelscan.net/]\nCreepjs[https://abrahamjuliot.github.io/creepjs/]\nWebgl_report[https://webglreport.com/?v=1]\nBrowserize[https://privacycheck.sec.lrz.de/]\nDevice_Info[https://www.deviceinfo.me/]\nCanvas_spoof_detection[https://arkenfox.github.io/TZP/tests/canvasspoof.html]\nCover_Your_Tracks[https://firstpartysimulator.net/]\nCanvasblocker_test[https://canvasblocker.kkapsner.de/test/]\nIphey[https://iphey.com/]\nLeaksradar[https://leaksradar.com/]\nThesafety[https://thesafety.us/check-ip]\nWhoer[http://whoer.net/]\nNetworktest[https://networktest.twilio.com/]\nIpbinding[https://ipbinding.online/index.html]\nTZP[https://arkenfox.github.io/TZP/tzp.html]"
+      },
+      "is-it-necessary-to-install-additional-software-for-the-browser-to-work": {
+        "name": "是否有必要安装其他软件供浏览器工作？",
+        "description": "不，什么都不需要。\n您可以安装软件并开始开箱即用。\n您需要工作的所有组件已经包含在程序中。"
+      },
+      "how-to-learn-about-all-the-intricacies-and-features-of-the-browser": {
+        "name": "如何了解浏览器的所有复杂性和功能？",
+        "description": "为了使您使用此软件的工作尽可能舒适和安全，请仔细阅读文档，并在“知识库”部分中观看简短的视频。\n您也可以始终询问有关支持程序功能的问题。"
+      },
+      "can-i-use-multiple-copies-of-the-software-at-the-same-time": {
+        "name": "我可以同时使用该软件的多个副本吗？",
+        "description": "是的，自程序的第9版以来，可以使用一个帐户同时使用大量用户。\n在团队的背景下，这是非常有用的，当需要在所使用的会话的整个生命周期中保持相同的指纹。\n这可以通过在远程服务器上安装应用程序一起工作来实现。"
+      },
+      "can-i-use-different-connection-types-at-the-same-time": {
+        "name": "我可以同时使用不同的连接类型吗？",
+        "description": "是的，您可以将不同类型的连接组合在大量平行流中。\n在这种情况下，最大多线程将取决于工作计算机的功能。\n无需其他设置 - 内置的代理商将确保同时进行此类连接的稳定操作，而不会泄漏。"
+      }
+    },
+    "payment": {
+      "how-do-i-pay-for-the-service": {
+        "name": "我该如何支付服务？",
+        "description": "您可以使用一系列具有不同程度匿名的加密货币来支付许可证。\n要查看所有选项，请在浏览器中创建付款，然后单击“加密货币选择”下拉。\n\n非常重要！\n我们永远不会通过直接提供即时信使或私人消息的钱包来接受付款。如果您可以通过个人对话购买许可证，他们想欺骗您。"
+      },
+      "do-i-need-to-contact-support-after-making-a-payment": {
+        "name": "付款后，我需要联系支持吗？",
+        "description": "不，所有付款都是自动处理的。\n如果已经进行了部分付款，则许可管理菜单将指示除选定的关税外需要支付的金额。\n在与付款过程有关的任何困难时，请写信以支持。"
+      },
+      "what-happens-after-the-license-expires": {
+        "name": "许可证到期后会发生什么？",
+        "description": "在许可证结束时，用户将无法与订阅期间创建的会话一起工作。\n因此，如果使用了300次会议的关税，则在切换到包括100个关税后，只有最后一个创建的会话将仍然可用。\n当您续订更高级的计划时，将自动删除该块。"
+      },
+      "what-should-i-do-if-i-made-a-payment-but-it-didnt-arrive": {
+        "name": "如果我付款但没有到达该怎么办？",
+        "description": "如果进行部分付款，则许可管理菜单将显示有关所选关税需要支付的金额。\n如果付款正确，但由于某些原因没有在付款列表中显示，请联系支持以解决此问题。"
+      }
+    },
+    "license": {
+      "what-is-the-license-duration": {
+        "name": "许可证持续时间是多少？",
+        "description": "介绍的浏览器是为其领域专业人士创建的私人开发项目。\n我们希望特殊类别的人使用长期工作和智能解决方案的结果，而不是在公共领域中使用。\n为此，我们使用保护系统避免其未经授权的使用。购买许可证为您打开了本软件的所有功能，提供了及时的支持和更新。"
+      },
+      "can-i-lose-my-license": {
+        "name": "我可以失去许可证吗？",
+        "description": "是的，根据用户协议的规则，这是可能的。\n如果有系统地尝试违反规则，则您的帐户将被阻止，而无需退款。\n请仔细阅读用户协议，以避免此类先例。"
+      },
+      "what-should-i-do-if-the-program-doesnt-meet-my-expectations": {
+        "name": "如果该计划不符合我的期望，该怎么办？",
+        "description": "如用户协议中所述，提供了“按原样”提供该程序，并且只能在使用之前返回。\n我们试图尽可能详细地描述浏览器的功能和功能，以便用户在购买之前可以形成他的印象。\n此外，我们建议您在专业网站上遵循我们的主题。\n购买并启动软件是不可退还的。"
+      },
+      "can-i-recover-my-lost-password": {
+        "name": "我可以恢复丢失的密码吗？",
+        "description": "是的，从程序的第9版开始，用户可以在自动模式下恢复密码。\n要恢复密码，您必须可以访问该帐户注册的邮件。\n如果您丢失了对邮件的访问，则不可能密码恢复。"
+      }
+    },
+    "problem-solving": {
+      "whats-the-best-way-to-contact-support": {
+        "name": "联系支持的最佳方法是什么？",
+        "description": "从产品的第9版开始，我们建议仅使用并仅使用程序中内置的聊天功能与支持服务进行通信。\n这样可以确保您真正与支持代表进行沟通，并且不会成为欺诈的受害者。\n近年来，诈骗者学会了假装为支持代表的高质量，这会导致定期骗局。即使对话对您来说更可取，例如，在Telegram上，通过内置的聊天来启动UID，这将大大降低风险并帮助您快速地解决问题，并有助于解决问题。\n请注意，我们从来都不是第一个写作的人，真正的支持人员不会通过在私人消息中发送钱包来提供付款。"
+      },
+      "is-the-program-supported-on-windows7": {
+        "name": "该程序在Windows7上支持吗？",
+        "description": "从产品的第9版开始，我们致力于相对于铬的原始版本的及时更新策略。\n但是，从Chromium版本109开始，旧版本的Windows不再得到开发人员的支持，因此不能在Linken Sphere中使用。"
+      },
+      "does-the-program-work-on-virtual-machines": {
+        "name": "该程序在虚拟机上有效吗？",
+        "description": "是的，该程序已优化用于在虚拟和弱PC上运行。\n但是，应注意的是，功能的实际质量（尤其是质量功能）直接取决于计算机的功能，因此您应该为您的需求分配足够的虚拟机资源。\n这将使接口保持平稳，快速，并减少与计划外应用终止相关的潜在问题的数量。"
+      },
+      "what-to-do-if-the-antivirus-reacts-to-the-software": {
+        "name": "如果防病毒对软件有反应该怎么办？",
+        "description": "该软件具有已安装的开发人员证书签名，该证书保证没有任何潜在威胁。\n但是，有时由于不寻常的网络活动（例如，在导入或验证大量代理或启动大量会话时），防病毒程序可能会将软件视为威胁。\n如果您的防病毒对应用程序的活动有反应，我们建议将程序添加到例外。\n此外，即使将软件添加到异常列表中，防病毒程序也可以阻止单个组件，这可能会影响程序的性能。\n在这种情况下，最好的解决方案将是在没有个人和敏感数据的情况下，不使用反病毒程序，在孤立的清洁工作环境中使用该软件。"
+      },
+      "what-to-do-if-you-find-a-bug-or-problem": {
+        "name": "如果发现错误或问题该怎么办？",
+        "description": "如果您在软件中遇到可重复的问题，请联系支持并用详细信息描述问题，以重新创建它。\n正确描述的错误将在下一个更新中固定，我们保证有助于改善程序的奖励。"
+      },
+      "what-to-do-if-you-need-additional-functionality": {
+        "name": "如果您需要其他功能该怎么办？",
+        "description": "如果您的工作具有您想要添加的一些特定功能，请联系Support以获取自定义解决方案。\n我们有信心我们可以帮助您完善软件以获得所需的结果。"
+      },
+      "can-i-make-suggestions-for-improving-the-software": {
+        "name": "我可以提出改进软件的建议吗？",
+        "description": "是的，我们非常注意所有建议和愿望，我们将很高兴对新想法感到高兴。"
+      }
     }
   }
 }

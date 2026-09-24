@@ -1,5 +1,6 @@
 "use client";
 
+import { usePathname } from "@/i18n/navigation";
 import ArrowIcon from "@assets/icons/arrow.svg";
 import JsonLd from "@components/system/json-ld";
 import { cn } from "@lib/utils";
@@ -9,37 +10,45 @@ import { FAQPage } from "schema-dts";
 import Heading from "../atoms/heading";
 
 type FAQProps = ComponentProps<"section"> & {
-  data: {
-    id: string;
-    question: string;
-    answer: string;
-  }[];
+  data: FAQItem[];
+  schemaData?: FAQItem[];
 };
 
-export default function FAQ({ className, data, ...props }: FAQProps) {
+type FAQItem = {
+  id: string;
+  question: string;
+  answer: string;
+};
+
+export default function FAQ({ className, data, schemaData = data, ...props }: FAQProps) {
   const [openItem, setOpenItem] = useState(0);
 
   const t = useTranslations("common.faq");
+  const pathname = usePathname();
 
   const faqScript: FAQPage = {
     "@type": "FAQPage",
-    mainEntity: data?.map((q) => ({
+    mainEntity: schemaData.map((q) => ({
       "@type": "Question",
       name: q.question,
       acceptedAnswer: { "@type": "Answer", text: q.answer },
     })),
   };
 
+  const isFAQPage = pathname.startsWith("/faq");
+
   return (
     <>
       <JsonLd data={faqScript} />
 
       <section id="faq-section" className={cn(className)} {...props}>
-        <Heading as="h2" variant="section" className="text-center">
-          {t("title")}
-        </Heading>
+        {!isFAQPage && (
+          <Heading as="h2" variant="section" className="mb-10 text-center md:mb-16">
+            {t("title")}
+          </Heading>
+        )}
 
-        <ul className="mt-10 flex w-full flex-col gap-3 md:mt-16 md:gap-5">
+        <ul className="flex w-full flex-col gap-3 md:gap-5">
           {data.map(({ id, question, answer }, idx) => {
             const isOpen = idx === openItem;
 
@@ -49,7 +58,7 @@ export default function FAQ({ className, data, ...props }: FAQProps) {
                   type="button"
                   aria-expanded={isOpen}
                   className={cn(
-                    "rounded-small grid bg-[#19191A] p-5 text-left md:px-7 md:py-8",
+                    "rounded-small grid w-full bg-[#19191A] p-5 text-left md:px-7 md:py-8",
                     !isOpen && "cursor-pointer",
                   )}
                   onClick={() => setOpenItem(idx)}

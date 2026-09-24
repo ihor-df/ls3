@@ -15,25 +15,6 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type Publications = {
-  _id: string;
-  _type: "publications";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  language?: string;
-  title: string;
-  slug: Slug;
-  url?: string;
-  publishedAt: string;
-};
-
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
 export type PartnerCategory = {
   _id: string;
   _type: "partnerCategory";
@@ -42,6 +23,12 @@ export type PartnerCategory = {
   _rev: string;
   title: InternationalizedArrayString;
   slug: Slug;
+};
+
+export type Slug = {
+  _type: "slug";
+  current: string;
+  source?: string;
 };
 
 export type InternationalizedArrayString = Array<{
@@ -149,10 +136,54 @@ export type PartnerReference = {
   [internalGroqTypeReferenceTo]?: "partner";
 };
 
+export type PublicationReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "publication";
+};
+
 export type InternationalizedArrayReferenceValue = {
   _type: "internationalizedArrayReferenceValue";
-  value?: ArticleReference | PartnerReference;
+  value?: ArticleReference | PartnerReference | PublicationReference;
   language: string;
+};
+
+export type Publication = {
+  _id: string;
+  _type: "publication";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+  title: string;
+  slug: Slug;
+  url: string;
+  cover: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt: string;
+    _type: "image";
+  };
+  publishedAt: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
 };
 
 export type PartnerCategoryReference = {
@@ -210,22 +241,6 @@ export type Partner = {
   } & ArticleBodyImage | {
     _key: string;
   } & Table>;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
-
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
 };
 
 export type AuthorReference = {
@@ -407,7 +422,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = Publications | Slug | PartnerCategory | InternationalizedArrayString | FaqItem | Table | SanityImageAssetReference | ArticleBodyImage | ArticleCategory | InternationalizedArrayStringValue | TranslationMetadata | InternationalizedArrayReference | ArticleReference | PartnerReference | InternationalizedArrayReferenceValue | PartnerCategoryReference | Partner | SanityImageCrop | SanityImageHotspot | AuthorReference | ArticleCategoryReference | Article | Author | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = PartnerCategory | Slug | InternationalizedArrayString | FaqItem | Table | SanityImageAssetReference | ArticleBodyImage | ArticleCategory | InternationalizedArrayStringValue | TranslationMetadata | InternationalizedArrayReference | ArticleReference | PartnerReference | PublicationReference | InternationalizedArrayReferenceValue | Publication | SanityImageCrop | SanityImageHotspot | PartnerCategoryReference | Partner | AuthorReference | ArticleCategoryReference | Article | Author | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLE_SLUGS_QUERY
@@ -639,6 +654,34 @@ export type PARTNER_QUERY_RESULT = {
 // Query: count(*[      _type == "partner" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search) &&  (!defined($categoryId) || references($categoryId))  ])
 export type PARTNERS_COUNT_QUERY_RESULT = number;
 
+// Source: ../landing/src/app/[locale]/publications/api.ts
+// Variable: PUBLICATIONS_QUERY
+// Query: *[_type == "publication" && language == $locale && defined(slug.current)]    | order(publishedAt desc, _id asc)[0...12]{        _id,  title,  slug,  publishedAt,  url,  cover {   asset->{_id, url},   alt,   hotspot,   crop  },    }
+export type PUBLICATIONS_QUERY_RESULT = Array<{
+  _id: string;
+  title: string;
+  slug: Slug;
+  publishedAt: string;
+  url: string;
+  cover: {
+    asset: {
+      _id: string;
+      url: string;
+    } | null;
+    alt: string;
+    hotspot: SanityImageHotspot | null;
+    crop: SanityImageCrop | null;
+  };
+}>;
+
+// Source: ../landing/src/app/[locale]/publications/api.ts
+// Variable: PUBLICATION_SLUGS_QUERY
+// Query: *[_type == "publication" && defined(slug.current)]{    "slug": slug.current,    language  }
+export type PUBLICATION_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+  language: string | null;
+}>;
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
@@ -655,6 +698,8 @@ declare module "@sanity/client" {
     "\n  *[_type == \"partner\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": PARTNER_SLUGS_QUERY_RESULT;
     "\n  *[\n    _type == \"partner\" &&\n    language == $locale &&\n    slug.current == $slug\n  ][0]{\n    _id,\n    title,\n    description,\n    slug,\n    discountPercent,\n    discountText,\n    promoCode,\n    url,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    logo {\n      asset->{_id, url},\n      alt,\n      hotspot,\n      crop\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n      \"slug\": slug.current\n    }\n  }\n": PARTNER_QUERY_RESULT;
     "\n  count(*[\n    \n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": PARTNERS_COUNT_QUERY_RESULT;
+    "\n  *[_type == \"publication\" && language == $locale && defined(slug.current)]\n    | order(publishedAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  url,\n  cover {\n   asset->{_id, url},\n   alt,\n   hotspot,\n   crop\n  },\n\n    }\n": PUBLICATIONS_QUERY_RESULT;
+    "\n  *[_type == \"publication\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": PUBLICATION_SLUGS_QUERY_RESULT;
   }
 }
 

@@ -9,7 +9,7 @@
     "useCases": "Çözümler",
     "resources": "Kaynaklar",
     "pages": {
-      "homepage": "Linken\u00A0Sphere ana sayfası",
+      "homepage": "Linken Sphere ana sayfası",
       "mobileBrowser": "Mobil Antidetect Tarayıcı",
       "webAutomation": "Rutin görevlerin otomasyonu",
       "teamwork": "Takım çalışması",
@@ -36,18 +36,20 @@
     }
   },
   "common": {
-    "faq": { "title": "Sık Sorulan Sorular" },
+    "faq": {
+      "title": "Sık Sorulan Sorular"
+    },
     "cta": {
       "workAnon": {
-        "main": "Linken\u00A0Sphere ile anonim çalışın",
+        "main": "Linken Sphere ile anonim çalışın",
         "button": "Ücretsiz başlayın",
         "discount": {
-          "1": "Linken\u00A0Sphere’i indirimli denemek ister misiniz?",
+          "1": "Linken Sphere’i indirimli denemek ister misiniz?",
           "2": "“LSBLOG” promosyon kodunu kullanın ve tüm aboneliklerde %30 indirim kazanın. Teklif yalnızca yeni kullanıcılar için geçerlidir."
         }
       },
       "getStarted": {
-        "title": "Linken\u00A0Sphere ile hemen başlayın",
+        "title": "Linken Sphere ile hemen başlayın",
         "description": "Güvenli çalışma için ihtiyacınız olan her şeye ve ihtiyaç duyduğunuz anda ulaşabileceğiniz desteğe sahip olun",
         "button": "Ücretsiz başlayın"
       },
@@ -69,6 +71,127 @@
     "article": {
       "goToButton": "Ziyaret et:",
       "copied": "Kopyalandı!"
+    }
+  },
+  "faq": {
+    "allQuestions": "Tüm sorular",
+    "topics": {
+      "common-questions": "Genel sorular",
+      "payment": "Ödeme",
+      "license": "Lisans",
+      "problem-solving": "Sorun giderme"
+    },
+    "common-questions": {
+      "what-is-antidetect-hybrid-mode": {
+        "name": "Antidetect hibrid modu nedir?",
+        "description": "Hibrid Mode, oturum parametrelerinin benzersizliğini gerçekte kullanılan ekipmana ayarlamanızı sağlayan yenilikçi bir anti-tespit teknolojisidir ve geleneksel tuval ve WebGL gürültüsü kullanmadan oturumlar arasında yeterli benzersizlik sağlar.\n\n\nBir hibrid kullanılırken otomatik olarak yüklenen yapılandırma gürültü kullanmaz, ancak video kartını ve diğer parametreleri akıllı bir bağımlılık sistemine göre değiştirir, böylece kullanıcı tamamen gerçek bir baskı alır.\n\n\nGeleneksel gürültü kullanan bir site ile çalışmanın imkansız olduğu durumlarda, hibrid mod, taşınabilir tarayıcıların iki nedenden dolayı kullanılmasına kıyasla performansı önemli ölçüde artıracaktır:\n\n\n- Klasörleri tarayıcılar veya çerezler ve bireysel proxy bağlantıları ile kopyalamanın geleneksel yöntemlerinden farklı olarak, çerez ve depolama verilerinin bulut tabanlı senkronizasyonu ve uygun bir yönetim sistemi sayesinde tüm bu işlemler otomatiktir.\n\n\n- Tüm oturumlar, yerel tuval/webgl parmak izleri kullanmasına rağmen, diğer yapılandırma parametrelerinde farklılık gösterirken, bu parametreler gerçek olanlara karşılık gelir ve güvenlik sistemleri tarafından gözden düşemez.\n\n\nBöylece, hibrid modu gürültü eklemeden yerel parmak izlerini kullanır, ancak diğer yapılandırma parametrelerini gerçek bilgisayar donanımına otomatik olarak ayarlar.\n\n\nBu, benzer ancak farklı grafik kartlarına ve değişen RAM ve CPU çekirdek seçeneklerine sahip yüzlerce farklı bilgisayarla çalışmakla eşittir."
+      },
+      "are-fingerprints-preserved-when-transferring-sessions": {
+        "name": "Seanslar aktarılırken parmak izleri korunuyor mu?",
+        "description": "Parmak izleri donanıma bağlıdır - aktarım sırasında donanım farklıysa, son parmak izleri farklı olacaktır.\n\n\nParmak izleri yapılandırmaya dahil edilmez, oturum oluşturulduğunda oluşturulur.\n\n* Canvas, Audio, ClientRects* - yapılandırmaya dahil edilmez, ancak oluşturulur\n\n* WebGL, Fonts, Eklentiler* - Yapılandırmaya dahildir\n\n\n*Transfer sırasında aynı parmak izleri olması gerekiyorsa, yani 3 seçenek:*\n\n\n-Aynı sanal makineleri kullanın\n\n-Sürüm 9'dan başlayarak, bir hesap kullanarak aynı anda çalışma yeteneği eklendi. \nRDP aracılığıyla sunucu, sonra donanım aynı olacak ve aktarım sırasında baskılar\n\n-Aynı donanımlı bir bilgisayar grubu. \nTamamen bireysel bir seçenek.\n\n\nAF sistemleri için farklı bilgisayarlarda hibrid modu kullanma durumunda, taşınabilir tarayıcı kopyalanmış gibi görünecektir.\n\nve farklı bir yerden başlatıldı."
+      },
+      "what-data-is-the-browser-sending": {
+        "name": "Tarayıcı hangi verileri gönderiyor?",
+        "description": "Varsayılan olarak, lisansın geçerliliğini kontrol etmek ve arayüzdeki oturum veri yapısını güncellemek için veri gönderiyoruz (durumları, vekilleri seti, açıklama vb.). \nOturum verileri senkronizasyonu etkinleştirilirse, depolama verileri (çerezler ve yerel depolama) da senkronize edilirse, bulut senkronizasyonu devre dışı bırakılırsa, oturum depolama (çerezler ve yerel depolama) ile ilgili veri göndermiyoruz. \nKrom bazlı tarayıcıların kutulu sürümlerine özgü API yürütülmez."
+      },
+      "can-my-session-data-be-stored-locally": {
+        "name": "Oturum verilerim yerel olarak saklanabilir mi?",
+        "description": "Evet, kullanıcı güvenliğine baktık ve yerel bir veri depolama sistemi uyguladık. \nAyrıca, bilgisayardaki kötü amaçlı yazılım durumunda olası sızıntıları önlemek için yerel olarak saklanan tüm veriler şifrelenir. \nÇerezler ve depolama senkronizasyonu, oturumları başlatma ve durdurma işlemini hızlandırmak ve güvenlik seviyesini arttırmak için varsayılan olarak devre dışı bırakılır. Aynı zamanda, oturumların kendilerinin meta verileri (adları ve içinde bulunan temel bilgiler), farklı bilgisayarlarda hesap kullanıldığında bulut senkronizasyonu devrelleştirildiğinde verilere erişim sağlar (ancak verilere değil)."
+      },
+      "is-my-data-safe": {
+        "name": "Verilerim güvenli mi?",
+        "description": "Borsalar ve kripto para birimleri gibi alanlarda antidetects'in büyük kullanımı ışığında, veri güvenliği sorunu çok önemlidir (özellikle piyasadaki popüler oyuncular arasında hassas veri sızıntıları haberlerinin arka planına karşı).\n\n\nNe sunabiliriz?\n\n\nPiyasada olmak için 6 yıldan fazla bir süredir, on binlerce insan Linken Spherenin kullanıcıları haline geldi ve birçoğu için küre prensip olarak kullanılan ilk antidetect haline geldi. \nBu süre zarfında, kullanıcılarımızın verilerinden tek bir teyit edilen sızıntı veya uzlaşma vakası yoktu. \nBu bir kaza değil. \nGüven önemlidir ve bizim için veri güvenliği her zaman sağlanan hizmetin kalitesi için ana kriterlerden biri olmuştur. \nŞifreleme, yüksek kaliteli depolama ve sorumlu bir yaklaşım, yüksek performans sağlamamızı sağladı.\n\n\nEn iyileri ürünün yeni nesilinde korunmuştur - Linken Sphere Evolution, bugün sadece veri depolama olasılığını sunan değil, aynı zamanda diskte şifreleme sağlayan ve sunucuda (senkronizasyonda), mevcut antikacıların en güvenliini çağırmamızı sağlayan tek modern çözümdür.\n\n\nAynı zamanda, her zaman kendi güvenliğimizin sorumlu sunulmasını aradık ve çağırmaya devam ettik. \nHassas verilere sahip bir çalışma ortamında şüpheli programları asla kullanmayın, yalnızca resmi siteden indirilen montajları kullanmayın, hesabınızdan veri aktarmayın.\n\n\nÇalışma ortamınızı güvence altına almak için sorumlu ve akıllı bir yaklaşım benimsiyorsanız, Linken Sphereni kullanarak tamamen güvenli olduğunuzdan emin olabilirsiniz."
+      },
+      "what-if-socks-doesnt-have-its-own-dns": {
+        "name": "Ya çorapların kendi DN'leri yoksa?",
+        "description": "Sox veya tünelin kendi DNS'si yoksa veya Sistemdeki Google'ın DNS'lerini kullanarak kararsızsa, gerçek IP'nizi Google Hizmetlerine verme riskini taşırsınız.\n\n\nGeçerli olabilecek çeşitli hizmetlerden DNS'nin alternatif listesi:\n\n\nCisco Opendns, LLC\n\n208.67.220.220\n\n208.67.222.222\n\n\nNeustar Güvenlik Hizmetleri\n\n199.85.127.10\n\n199.85.126.10\n\n\nNeustar Güvenlik Hizmetleri\n\n64.6.65.6\n\n64.6.64.6\n\n\nConstant Company, LLC\n\n8.26.56.26\n\n8.20.247.20\n\n\nSeviye3\n\n209.244.0.3\n\n209.244.0.4\n\n4.2.2.1\n\n4.2.2.2\n\n4.2.2.3\n\n4.2.2.4\n\n\nOracle Corporation\n\n216.146.35.35\n\n216.146.36.36\n\n\nOvh sas\n\n5.135.183.146\n\n\nSürekli Şirket\n\n195.46.39.39\n\n\nAmazon.com, Inc.\n\n54.174.40.213\n\n52.3.100.184\n\n\nSeviye 3 Communications, Inc.\n\n54.229.171.243\n\n\nAmazon.com, Inc.\n\n54.183.15.10\n\n\nAmazon Technologies Inc.\n\n185.37.37.37\n\n\nBulutflare\n\n82.196.13.196\n\n\nStrong Technology, LLC\n\n64.145.73.2\n\n209.107.219.3\n\n\nYumuşak tabakalı\n\nOlgun\n\n185.52.1.146\n\n\nAmazon Technologies Inc.\n\n128.199.248.157\n\n185.135.8.197"
+      },
+      "how-and-where-can-i-check-my-session-fingerprints": {
+        "name": "Seans parmak izlerimi nasıl ve nerede kontrol edebilirim?",
+        "description": "Oturum parmak izlerini ve olası sızıntıları kontrol etmek için 2023 için ilgili anonimlik denetçilerini öneririz:\n\n\nvision[http://f.vision/]\nbrowserleaks[https://browserleaks.com/]\npixelscan[https://pixelscan.net/]\nCreepjs[https://abrahamjuliot.github.io/creepjs/]\nWebgl_report[https://webglreport.com/?v=1]\nBrowserize[https://privacycheck.sec.lrz.de/]\nDevice_Info[https://www.deviceinfo.me/]\nCanvas_spoof_detection[https://arkenfox.github.io/TZP/tests/canvasspoof.html]\nCover_Your_Tracks[https://firstpartysimulator.net/]\nCanvasblocker_test[https://canvasblocker.kkapsner.de/test/]\nIphey[https://iphey.com/]\nLeaksradar[https://leaksradar.com/]\nThesafety[https://thesafety.us/check-ip]\nWhoer[http://whoer.net/]\nNetworktest[https://networktest.twilio.com/]\nIpbinding[https://ipbinding.online/index.html]\nTZP[https://arkenfox.github.io/TZP/tzp.html]"
+      },
+      "is-it-necessary-to-install-additional-software-for-the-browser-to-work": {
+        "name": "Tarayıcının çalışması için ek yazılım yüklemek gerekli mi?",
+        "description": "Hayır, hiçbir şey gerekmez. \nYazılımı yükleyebilir ve kutudan çıkmaya başlayabilirsiniz. \nÇalışmanız gereken tüm bileşenler zaten programa dahil edilmiştir."
+      },
+      "how-to-learn-about-all-the-intricacies-and-features-of-the-browser": {
+        "name": "Tarayıcının tüm incelikleri ve özellikleri hakkında nasıl öğrenilir?",
+        "description": "Bu yazılımla çalışmanızın mümkün olduğunca rahat ve güvenli olması için, başlangıç kılavuzundan geçin, belgeleri dikkatlice okuyun ve bilgi tabanı bölümünde kısa videolar izleyin. \nAyrıca, programın işlevselliği hakkında her zaman bir soru sorabilirsiniz."
+      },
+      "can-i-use-multiple-copies-of-the-software-at-the-same-time": {
+        "name": "Yazılımın birden çok kopyasını aynı anda kullanabilir miyim?",
+        "description": "Evet, programın 9 sürümünden bu yana, bir hesap kullanarak aynı anda çalışan çok sayıda kullanıcının olması mümkündür. \nBu, kullanılan seansların tüm yaşam döngüsü boyunca aynı parmak izlerini korumak gerektiğinde ekipler bağlamında çok yararlıdır. \nBu, uygulamayı uzak bir sunucuya yükleyerek birlikte çalışarak elde edilebilir."
+      },
+      "can-i-use-different-connection-types-at-the-same-time": {
+        "name": "Aynı anda farklı bağlantı türlerini kullanabilir miyim?",
+        "description": "Evet, farklı bağlantı türlerini çok sayıda paralel akışta birleştirebilirsiniz. \nBu durumda maksimum çoklu işleme, çalışan bilgisayarın gücüne bağlı olacaktır. \nEk ayar gerekmez - yerleşik proxifier, trafik sızıntısı olmadan bu tür bağlantıların eşzamanlı olarak çalışmasını sağlayacaktır."
+      }
+    },
+    "payment": {
+      "how-do-i-pay-for-the-service": {
+        "name": "Hizmet için nasıl ödeme yaparım?",
+        "description": "Lisans için ödeme yapmak için değişen derecelerde anonimlik ile bir dizi farklı kripto para kullanabilirsiniz. \nTüm seçenekleri görmek için tarayıcınızda bir ödeme oluşturun ve kripto para birimi seçimi açılır menüsüne tıklayın.\n\nÇok önemli! \nAnında haberciler veya özel mesajlarda cüzdan sağlayarak ödemeyi asla kabul etmiyoruz. Kişisel diyalogda lisans almanız teklif edilirse, sizi aldatmak istiyorlar."
+      },
+      "do-i-need-to-contact-support-after-making-a-payment": {
+        "name": "Ödeme yaptıktan sonra destekle iletişime geçmem gerekiyor mu?",
+        "description": "Hayır, tüm ödemeler otomatik olarak işlenir. \nKısmi bir ödeme yapıldıysa, lisans yönetimi menüsü, seçilen tarife ek olarak ödemeniz gereken tutarı gösterecektir. \nÖdeme süreciyle ilgili zorluklar olması durumunda destek için yazın."
+      },
+      "what-happens-after-the-license-expires": {
+        "name": "Lisans sona erdikten sonra ne olur?",
+        "description": "Lisansın sonunda, kullanıcı abonelik döneminde oluşturulan oturumlarla çalışamayacaktır. \nBöylece, 300 oturum için bir tarife kullanıldıysa, örneğin 100 gibi bir tarife geçtikten sonra, yalnızca son oluşturulan oturumlar devam edecektir. \nDaha gelişmiş bir planı yenilediğinizde, blok otomatik olarak kaldırılır."
+      },
+      "what-should-i-do-if-i-made-a-payment-but-it-didnt-arrive": {
+        "name": "Ödeme yapsaydım ne yapmalıyım ama gelmediler?",
+        "description": "Kısmi bir ödeme yapılırsa, lisans yönetimi menüsü, seçilen tarife ile ilgili olarak ödenmesi gereken tutarı gösterecektir. \nÖdeme doğru bir şekilde yapıldıysa, ancak bir nedenden ötürü ödeme listesinde görüntülenmediyse, lütfen bu sorunu çözmek için destekle iletişime geçin."
+      }
+    },
+    "license": {
+      "what-is-the-license-duration": {
+        "name": "Lisans süresi nedir?",
+        "description": "Sunulan tarayıcı, alanlarındaki profesyoneller için oluşturulan özel bir geliştirmedir. \nUzun vadeli çalışmaların ve akıllı çözümlerin sonucunun özel bir insan kategorisi tarafından kullanılmasını ve kamusal alanda olmamasını istiyoruz. \nBunu yapmak için, yetkisiz kullanımından kaçınmak için bir koruma sistemi kullanıyoruz. Bir lisans satın almak sizin için bu yazılımın tüm özelliklerini tam olarak açar, zamanında destek ve güncellemeler sağlar."
+      },
+      "can-i-lose-my-license": {
+        "name": "Lisansımı kaybedebilir miyim?",
+        "description": "Evet, kullanıcı sözleşmesinin kurallarına göre mümkündür. \nKuralları ihlal etmek için sistematik girişimler olması durumunda, hesabınız ücretli fonların iadesi olmadan engellenecektir. \nBu tür emsallerden kaçınmak için lütfen kullanıcı sözleşmesini dikkatlice okuyun."
+      },
+      "what-should-i-do-if-the-program-doesnt-meet-my-expectations": {
+        "name": "Program beklentilerimi karşılamıyorsa ne yapmalıyım?",
+        "description": "Kullanıcı Sözleşmesinde belirtildiği gibi, program «olduğu gibi» sağlanır ve yalnızca kullanılmadan önce döndürülebilir. \nKullanıcının satın almadan önce izlenimini oluşturabilmesi için tarayıcının özelliklerini ve özelliklerini mümkün olduğunca ayrıntılı olarak tanımlamaya çalıştık. \nAyrıca, konularımızı özel sitelerde takip etmenizi öneririz. \nSatın alınan ve bir kez başlatılan yazılım iade edilemez."
+      },
+      "can-i-recover-my-lost-password": {
+        "name": "Kayıp şifremi kurtarabilir miyim?",
+        "description": "Evet, programın 9 sürümünden başlayarak, kullanıcı şifreyi otomatik modda kurtarabilir. \nParolayı kurtarmak için, hesabın kaydedildiği postaya erişmeniz gerekir. \nPostaya erişimi kaybederseniz, şifre kurtarma imkansızdır."
+      }
+    },
+    "problem-solving": {
+      "whats-the-best-way-to-contact-support": {
+        "name": "Destek ile iletişime geçmenin en iyi yolu nedir?",
+        "description": "Ürünün 9 sürümünden başlayarak, destek hizmeti ile iletişim kurmak için programda yerleşik olan yalnızca sohbet işlevini kullanmanızı ve yalnızca kullanmanızı öneririz. \nBu, destek temsilcisi ile gerçekten iletişim kurmanızı ve sahtekarlığın kurbanı olmamanızı sağlar. \nSon yıllarda, dolandırıcılar, düzenli aldatmaca isteklerine yol açan destek temsilcileri gibi davranarak yüksek kaliteli yapmayı öğrendiler. Örneğin, telgrafta bir diyalog sizin için daha fazla tercih edilirse bile, yerleşik sohbet yoluyla bir UID elde ederek başlayacak. \nLütfen asla ilk yazan olmadığımızı ve gerçek bir destek kişinin özel mesajlarda bir cüzdan göndererek ödeme yapmayı teklif etmeyeceğini lütfen unutmayın."
+      },
+      "is-the-program-supported-on-windows7": {
+        "name": "Program Windows7'de destekleniyor mu?",
+        "description": "Ürünün 9 sürümünden başlayarak, Chromium'un orijinal sürümlerine göre zamanında motor güncellemeleri politikasına kararlıyız. \nBununla birlikte, Chromium sürüm 109'dan başlayarak, Windows'un eski sürümleri artık geliştirici tarafından desteklenmemektedir ve bu nedenle Linken Spherende kullanılamaz."
+      },
+      "does-the-program-work-on-virtual-machines": {
+        "name": "Program sanal makinelerde çalışıyor mu?",
+        "description": "Evet, program sanal ve zayıf PC'lerde çalışmak için optimize edilmiştir. \nBununla birlikte, gerçek işlevsellik kalitesinin (özellikle kütle işlevleri) doğrudan bilgisayarın gücüne bağlı olduğuna dikkat edilmelidir, bu nedenle gereksinimleriniz için yeterli sanal makine kaynağı tahsis etmelisiniz. \nBu, arayüzü pürüzsüz ve hızlı tutacak ve planlanmamış uygulama sonlandırmasıyla ilişkili potansiyel sorunların sayısını azaltacaktır."
+      },
+      "what-to-do-if-the-antivirus-reacts-to-the-software": {
+        "name": "Antivirüs yazılıma tepki verirse ne yapmalı?",
+        "description": "Yazılım, potansiyel tehditlerin olmamasını garanti eden yüklü bir geliştirici sertifikasıyla imzalanır. \nBununla birlikte, bazen olağandışı ağ etkinliği sonucunda (örneğin, çok sayıda vekil içe aktarma veya doğrularken veya çok sayıda oturum başlatırken), antivirüs programları yazılımı bir tehdit olarak algılayabilir. \nAntivirüsünüz uygulamanın etkinliğine tepki veriyorsa, programı istisnalara eklemenizi öneririz. \nBuna ek olarak, istisnalar listesine yazılım eklerken bile, antivirüs programları, programın performansını etkileyebilecek tek tek bileşenleri engelleyebilir. \nBu durumda en iyi çözüm, anti-virüs programları kullanmadan kişisel ve hassas veriler olmadan izole temiz bir çalışma ortamında yazılımı kullanmak olacaktır."
+      },
+      "what-to-do-if-you-find-a-bug-or-problem": {
+        "name": "Bir hata veya sorun bulursanız ne yapmalı?",
+        "description": "Yazılımda tekrarlanabilir bir sorunla karşılaşırsanız, lütfen destekle iletişime geçin ve yeniden oluşturmak için sorunu ayrıntılarla açıklayın. \nDoğru tarif edilen hatalar bir sonraki güncellemelerde düzeltilecek, bizim tarafımızdan, programları geliştirmeye yardımcı olduğu için bir ödül garanti ediyoruz."
+      },
+      "what-to-do-if-you-need-additional-functionality": {
+        "name": "Ek işlevselliğe ihtiyacınız varsa ne yapmalı?",
+        "description": "Çalışmanızın eklemek istediğiniz bazı özel özellikleri olması durumunda, özelleştirilmiş bir çözüm için lütfen destekle iletişime geçin. \nİstenen sonuçları elde etmek için yazılımı hassaslaştırmanıza yardımcı olabileceğimizden eminiz."
+      },
+      "can-i-make-suggestions-for-improving-the-software": {
+        "name": "Yazılımı geliştirmek için önerilerde bulunabilir miyim?",
+        "description": "Evet, tüm önerilere ve dileklere çok dikkat ediyoruz ve yeni fikirlerden memnun olacağız."
+      }
     }
   }
 }

@@ -25,7 +25,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
 
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
-  const page = Number.isSafeInteger(parsedPage) && parsedPage > 0 ? parsedPage : 1;
+  const page = parsedPage > 0 ? parsedPage : 1;
   const limit = page * ARTICLES_PER_PAGE;
 
   const articleParams = {

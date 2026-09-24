@@ -5,8 +5,8 @@ import CtaLg from "@/components/organisms/cta-lg";
 import { Link } from "@/i18n/navigation";
 import { urlFor } from "@/sanity/helpers";
 import type { PARTNER_CATEGORIES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
+import CategoryFilters from "@components/molecules/category-filters";
 import { Locale } from "next-intl";
-import CategoryFilters from "../../molecules/category-filters";
 
 type PartnersProps = {
   partners: PARTNERS_QUERY_RESULT;

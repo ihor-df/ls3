@@ -6,8 +6,8 @@ import { Link } from "@/i18n/navigation";
 import { formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLES_QUERY_RESULT, ARTICLE_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
+import CategoryFilters from "@components/molecules/category-filters";
 import { Locale } from "next-intl";
-import CategoryFilters from "../../molecules/category-filters";
 
 type BlogProps = {
   posts: ARTICLES_QUERY_RESULT;

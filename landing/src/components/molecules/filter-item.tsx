@@ -7,11 +7,13 @@ export const FilterItem = ({
   className,
   href,
   current,
+  onClick,
 }: {
   className?: string;
   children: ReactNode;
-  href: string;
+  href?: string;
   current?: boolean;
+  onClick?: () => void;
 }) => {
   return (
     <li
@@ -21,7 +23,15 @@ export const FilterItem = ({
         className,
       )}
     >
-      <Link href={href}>{children}</Link>
+      {href ? (
+        <Link href={href} aria-current={current ? "page" : undefined}>
+          {children}
+        </Link>
+      ) : (
+        <button type="button" aria-pressed={current} className="cursor-pointer" onClick={onClick}>
+          {children}
+        </button>
+      )}
     </li>
   );
 };

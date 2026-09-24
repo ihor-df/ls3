@@ -16,7 +16,7 @@ type PostCardProps = ComponentProps<"div"> & {
   title: string;
   description?: string;
   date?: string;
-  categories: Categories;
+  categories?: Categories;
   page: "blog" | "partners" | "publications";
   alt?: string;
 };
@@ -42,7 +42,9 @@ const PostCard = ({ imageSrc, title, description, className, categories, page, a
         <p className="mt-5 line-clamp-4 leading-[1.2] tracking-[-0.01em] text-[#C3C3C3]">{description}</p>
       )}
 
-      {page !== "publications" && <CategoryAndDate page={page} categories={categories} className="mt-5" />}
+      {page !== "publications" && categories && (
+        <CategoryAndDate page={page} categories={categories} className="mt-5" />
+      )}
     </div>
   );
 };

@@ -9,7 +9,7 @@
     "useCases": "Use Cases",
     "resources": "Resources",
     "pages": {
-      "homepage": "Linken\u00A0Sphere homepage",
+      "homepage": "Linken Sphere homepage",
       "mobileBrowser": "Mobile Antidetect Browser",
       "webAutomation": "Web Automation",
       "teamwork": "Teamwork",
@@ -36,18 +36,20 @@
     }
   },
   "common": {
-    "faq": { "title": "Popular Questions" },
+    "faq": {
+      "title": "Popular Questions"
+    },
     "cta": {
       "workAnon": {
-        "main": "Work anonymously with Linken\u00A0Sphere",
+        "main": "Work anonymously with Linken Sphere",
         "button": "Start for free",
         "discount": {
-          "1": "Want to try Linken\u00A0Sphere at a discount?",
+          "1": "Want to try Linken Sphere at a discount?",
           "2": "Use promo code “LSBLOG” and get 30% off any subscription. Offer valid for new users only"
         }
       },
       "getStarted": {
-        "title": "Get started with Linken\u00A0Sphere",
+        "title": "Get started with Linken Sphere",
         "description": "Get everything you need for secure work, with support always available when you need it",
         "button": "Start for free"
       },
@@ -69,6 +71,127 @@
     "article": {
       "goToButton": "Go to",
       "copied": "Copied!"
+    }
+  },
+  "faq": {
+    "allQuestions": "All questions",
+    "topics": {
+      "common-questions": "Common Questions",
+      "payment": "Payment",
+      "license": "License",
+      "problem-solving": "Problem Solving"
+    },
+    "common-questions": {
+      "what-is-antidetect-hybrid-mode": {
+        "name": "What is antidetect hybrid mode?",
+        "description": "Hybrid mode is an innovative anti-detection technology that allows you to adjust the uniqueness of session parameters to the equipment actually used, providing sufficient uniqueness between sessions without the use of traditional Canvas and WebGL noise.\n\nThe configuration that is automatically installed when using a hybrid does not use noise, but replaces the video card and other parameters in accordance with a smart dependency system, so the user gets a completely real print.\n\nIn cases where working with a site using traditional noise is impossible, the hybrid mode will significantly improve performance compared to using portable browsers for two reasons:\n\n- Unlike traditional methods of copying folders with browsers or cookies and individual proxy connections, all these processes are automated thanks to cloud-based synchronization of cookie and storage data and a convenient management system.\n\n- All sessions, although they use native Canvas/WebGL fingerprints, differ in other configuration parameters, while these parameters correspond to real ones and cannot be discredited by security systems.\n\nThus, hybrid mode uses native fingerprints without adding noise, but automatically adjusts other configuration parameters to the actual computer hardware.\n\nThis equates to working with hundreds of different computers with similar but different graphics cards and varying RAM and CPU core options."
+      },
+      "are-fingerprints-preserved-when-transferring-sessions": {
+        "name": "Are fingerprints preserved when transferring sessions?",
+        "description": "Fingerprints depend on the hardware - if the hardware is different during the transfer, then the final fingerprints will be different.\n\nFingerprints are not included in the config, they are generated when the session is created.\n*Canvas, Audio, clientRects* - are not included in the config, but are generated\n*WebGL, Fonts, Plugins* - are included in the config\n\n*If it is required that during transfer there were the same fingerprints, that is, 3 options:*\n\n-Use the same virtual machines\n-Starting from version 9, the ability to work simultaneously using one account has been added. server via RDP, then the hardware will be the same, as well as the prints during the transfer\n-A batch of computers with identical hardware. A purely individual option.\n\nIn the case of using hybrid mode on different computers for AF systems it will look the same as if the portable browser had been copied\nand launched from a different location."
+      },
+      "what-data-is-the-browser-sending": {
+        "name": "What data is the browser sending?",
+        "description": "By default, we send data to check the validity of the license and update the session data structure in the interface (their status, proxies set, description, etc.). If session data synchronization is enabled, storage data (cookies and local storage) is also synchronized If cloud synchronization is disabled, we do not send data related to session storage (cookies and local storage).Regardless of the selected type of synchronization, the metadata (name, set proxy, description and settings) of the sessions are synchronized and stored on the server.The program lacks standard tools Google tracking, so requests to the Chrome API that are specific to boxed versions of Chromium-based browsers are not executed."
+      },
+      "can-my-session-data-be-stored-locally": {
+        "name": "Can my session data be stored locally?",
+        "description": "Yes, we have taken care of user security and implemented a local data storage system. In addition, all data stored locally is encrypted to avoid possible leaks in case of malware on the computer. Cookies and storage synchronization is disabled by default to speed up the process of starting and stopping sessions, as well as to increase the level of security.At the same time, the metadata of the sessions themselves (their name and the basic information contained in them) are stored in the cloud, which allows access to them (but not to data, when cloud synchronization is disabled) when using the account on different computers."
+      },
+      "is-my-data-safe": {
+        "name": "Is my data safe?",
+        "description": "In light of the massive use of antidetects in areas such as exchanges and cryptocurrencies, the issue of data security is very important (especially against the backdrop of news of sensitive data leaks among popular players on the market).\n\nWhat can we offer?\n\nFor more than 6 years of being on the market, tens of thousands of people have become users of Linken Sphere, and for many, the Sphere has become, in principle, the first antidetect used. During this time, there was not a single confirmed case of leakage or compromise of our users' data. This is not an accident. Trust is important, and for us, data security has always been one of the main criteria for the quality of the service provided. Encryption, high-quality storage and a responsible approach have allowed us to ensure high performance.\n\nAll the best has been preserved in the new generation of the product – Linken Sphere Evolution is today the only modern solution that offers not only the possibility of local storage of data, but also provides encryption on disk, and at the time of sending and storing on the server (in synchronization), which allows us to call it the safest of the existing antidetects.\n\nAt the same time, we have always called and continue to call for the responsible provision of our own security. Never use dubious programs in a working environment with sensitive data, use only assemblies downloaded from the official site, never transfer data from your account to third parties.\n\nIf you take a responsible and smart approach to securing your work environment, you can be sure that you are completely safe using Linken Sphere."
+      },
+      "what-if-socks-doesnt-have-its-own-dns": {
+        "name": "What if socks doesn't have its own DNS?",
+        "description": "If the Sox or Tunnel does not have its own DNS, or it is unstable using Google's DNS on the system, you run the risk of giving away your real IP to Google services.\n\nAlternate list of DNS from various services that may apply:\n\nCisco OpenDNS, LLC\n208.67.220.220\n208.67.222.222\n\nNeustar Security Services\n199.85.127.10\n199.85.126.10\n\nNeustar Security Services\n64.6.65.6\n64.6.64.6\n\nThe Constant Company, LLC\n8.26.56.26\n8.20.247.20\n\nLevel3\n209.244.0.3\n209.244.0.4\n4.2.2.1\n4.2.2.2\n4.2.2.3\n4.2.2.4\n\nOracle Corporation\n216.146.35.35\n216.146.36.36\n\nOVH SAS\n5.135.183.146\n\nThe Constant Company\n195.46.39.39\n\nAmazon.com, Inc.\n54.174.40.213\n52.3.100.184\n\nLevel 3 Communications, Inc.\n54.229.171.243\n\nAmazon.com, Inc.\n54.183.15.10\n\nAmazon Technologies Inc.\n185.37.37.37\n\nCloudflare\n82.196.13.196\n\nStrong Technology, LLC\n64.145.73.2\n209.107.219.3\n\nSoftLayer\nRipe\n185.52.1.146\n\nAmazon Technologies Inc.\n128.199.248.157\n185.135.8.197"
+      },
+      "how-and-where-can-i-check-my-session-fingerprints": {
+        "name": "How and where can I check my session fingerprints?",
+        "description": "To check session fingerprints and possible leaks, we recommend anonymity checkers relevant for 2023:\n\nvision[http://f.vision/]\nbrowserleaks[https://browserleaks.com/]\npixelscan[https://pixelscan.net/]\nCreepjs[https://abrahamjuliot.github.io/creepjs/]\nWebgl_report[https://webglreport.com/?v=1]\nBrowserize[https://privacycheck.sec.lrz.de/]\nDevice_Info[https://www.deviceinfo.me/]\nCanvas_spoof_detection[https://arkenfox.github.io/TZP/tests/canvasspoof.html]\nCover_Your_Tracks[https://firstpartysimulator.net/]\nCanvasblocker_test[https://canvasblocker.kkapsner.de/test/]\nIphey[https://iphey.com/]\nLeaksradar[https://leaksradar.com/]\nThesafety[https://thesafety.us/check-ip]\nWhoer[http://whoer.net/]\nNetworktest[https://networktest.twilio.com/]\nIpbinding[https://ipbinding.online/index.html]\nTZP[https://arkenfox.github.io/TZP/tzp.html]"
+      },
+      "is-it-necessary-to-install-additional-software-for-the-browser-to-work": {
+        "name": "Is it necessary to install additional software for the browser to work?",
+        "description": "No, nothing is required. You can install the software and start working out of the box. All the components you need to work are already included in the program."
+      },
+      "how-to-learn-about-all-the-intricacies-and-features-of-the-browser": {
+        "name": "How to learn about all the intricacies and features of the browser?",
+        "description": "In order for your work with this software to be as comfortable and safe as possible, go through the start guide, carefully read the documentation and watch short videos in the Knowledge Base section. You can also always ask a question about the functionality of the program in support."
+      },
+      "can-i-use-multiple-copies-of-the-software-at-the-same-time": {
+        "name": "Can I use multiple copies of the software at the same time?",
+        "description": "Yes, since release 9 of the program, it is possible to have a large number of users working simultaneously using one account. This is very useful in the context of teams, when it is required to maintain the same fingerprints during the entire life cycle of the sessions used. This can be achieved by working together by installing the app on a remote server."
+      },
+      "can-i-use-different-connection-types-at-the-same-time": {
+        "name": "Can I use different connection types at the same time?",
+        "description": "Yes, you can combine different types of connections in a large number of parallel streams. The maximum multithreading in this case will depend on the power of the working computer. No additional settings are required - the built-in proxifier will ensure stable simultaneous operation of such connections without traffic leakage."
+      }
+    },
+    "payment": {
+      "how-do-i-pay-for-the-service": {
+        "name": "How do I pay for the service?",
+        "description": "You can use a range of different cryptocurrencies with varying degrees of anonymity to pay for the license. To see all the options, create a payment in your browser and click on the cryptocurrency selection dropdown.\nVery important! We NEVER accept payment by direct providing wallets in instant messengers or private messages.If you are offered to buy a license in a personal dialogue, they want to deceive you."
+      },
+      "do-i-need-to-contact-support-after-making-a-payment": {
+        "name": "Do I need to contact support after making a payment?",
+        "description": "No, all payments are processed automatically. If a partial payment has been made, then the license management menu will indicate the amount that you need to pay in addition to the selected tariff. Write to support in case of any difficulties related to the payment process."
+      },
+      "what-happens-after-the-license-expires": {
+        "name": "What happens after the license expires?",
+        "description": "At the end of the license, the user will not be able to work with sessions created during the subscription period. Thus, if a tariff for 300 sessions was used, after switching to a tariff that includes, for example, 100, only the last created sessions will remain available. When you renew a more advanced plan, the block will be removed automatically."
+      },
+      "what-should-i-do-if-i-made-a-payment-but-it-didnt-arrive": {
+        "name": "What should I do if I made a payment but it didn't arrive?",
+        "description": "If a partial payment was made, then the license management menu will show the amount that needs to be paid in relation to the selected tariff. If the payment was made correctly, but for some reason was not displayed in the list of payments Please contact support to resolve this issue."
+      }
+    },
+    "license": {
+      "what-is-the-license-duration": {
+        "name": "What is the license duration?",
+        "description": "The presented browser is a private development created for professionals in their field. We want the result of long-term work and intelligent solutions to be used by a special category of people and not be in the public domain. To do this, we use a protection system to avoid its unauthorized use .Purchasing a license opens for you all the features of this software in full, provides timely support and updates."
+      },
+      "can-i-lose-my-license": {
+        "name": "Can I lose my license?",
+        "description": "Yes, according to the rules of the user agreement, it is possible. In case of systematic attempts to violate the rules, your account will be blocked without a refund of the paid funds. Please read the user agreement carefully to avoid such precedents."
+      },
+      "what-should-i-do-if-the-program-doesnt-meet-my-expectations": {
+        "name": "What should I do if the program doesn't meet my expectations?",
+        "description": "As stated in the user agreement, the program is provided «as is», and can only be returned before it is used. We have tried to describe the features and features of the browser in as much detail as possible so that the user can form his impression before buying it. In addition In addition, we recommend that you follow our topics on specialized sites. Purchased and once launched software is non-refundable."
+      },
+      "can-i-recover-my-lost-password": {
+        "name": "Can I recover my lost password?",
+        "description": "Yes, starting from version 9 of the program, the user can recover the password in automatic mode. To recover the password, you must have access to the mail from which the account was registered. If you lose access to the mail, password recovery is impossible."
+      }
+    },
+    "problem-solving": {
+      "whats-the-best-way-to-contact-support": {
+        "name": "What's the best way to contact support?",
+        "description": "Starting from version 9 of the product, we recommend using only and exclusively the chat functionality built into the program to communicate with the support service. This ensures that you really communicate with the support representative and do not become a victim of fraud. In recent years, scammers have learned to give out high-quality pretending to be support representatives, which leads to regular scam requests.Even if a dialogue is more preferable for you, for example, in telegram, initiate it by obtaining a uid through the built-in chat.This will significantly reduce the risks and help you resolve your issue quickly and efficiently. Please note that we are never the first to write, and a real support person will not offer to pay by sending a wallet in private messages."
+      },
+      "is-the-program-supported-on-windows7": {
+        "name": "Is the program supported on Windows7?",
+        "description": "Starting from version 9 of the product, we are committed to a policy of timely engine updates relative to the original versions of Chromium. However, starting from Chromium version 109, older versions of Windows are no longer supported by the developer, and therefore cannot be used in Linken Sphere."
+      },
+      "does-the-program-work-on-virtual-machines": {
+        "name": "Does the program work on virtual machines?",
+        "description": "Yes, the program is optimized for running on virtual and weak PCs. However, it should be noted that the actual quality of functionality (especially mass functions) directly depends on the power of the computer, so you should allocate enough virtual machine resources for your requirements. This will keep the interface smooth and fast, and reduce the number of potential problems associated with unplanned application termination."
+      },
+      "what-to-do-if-the-antivirus-reacts-to-the-software": {
+        "name": "What to do if the antivirus reacts to the software?",
+        "description": "The software is signed with an installed developer's certificate, which guarantees the absence of any potential threats. However, sometimes as a result of unusual network activity (for example, when importing or validating a large number of proxies or starting a large number of sessions), antivirus programs may perceive the software as a threat. If your antivirus reacts to the activity of the application, we recommend adding the program to the exceptions. In addition, even when adding software to the list of exceptions, antivirus programs can block individual components, which may affect the performance of the program. The best solution in this case will be using the software in an isolated clean working environment without personal and sensitive data without using anti-virus programs."
+      },
+      "what-to-do-if-you-find-a-bug-or-problem": {
+        "name": "What to do if you find a bug or problem?",
+        "description": "If you encounter a reproducible problem in the software, please contact support and describe the problem with details in order to recreate it. Correctly described bugs will be fixed in the next updates, for our part, we guarantee a reward for helping to improve programs."
+      },
+      "what-to-do-if-you-need-additional-functionality": {
+        "name": "What to do if you need additional functionality?",
+        "description": "In case your work has some specific features that you would like to add, please contact support for a customized solution. We are confident that we can help you refine the software to achieve the desired results."
+      },
+      "can-i-make-suggestions-for-improving-the-software": {
+        "name": "Can I make suggestions for improving the software?",
+        "description": "Yes, we are very attentive to all suggestions and wishes, and we will be glad to new ideas."
+      }
     }
   }
 }

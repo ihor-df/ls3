@@ -9,7 +9,7 @@
     "useCases": "Soluções",
     "resources": "Recursos",
     "pages": {
-      "homepage": "Página inicial da Linken\u00A0Sphere",
+      "homepage": "Página inicial da Linken Sphere",
       "mobileBrowser": "Navegador móvel antidetecção",
       "webAutomation": "Automatização de tarefas rotineiras",
       "teamwork": "Trabalho em equipa",
@@ -36,18 +36,20 @@
     }
   },
   "common": {
-    "faq": { "title": "Perguntas frequentes" },
+    "faq": {
+      "title": "Perguntas frequentes"
+    },
     "cta": {
       "workAnon": {
-        "main": "Trabalhe anonimamente com o Linken\u00A0Sphere",
+        "main": "Trabalhe anonimamente com o Linken Sphere",
         "button": "Começar grátis",
         "discount": {
-          "1": "Quer experimentar o Linken\u00A0Sphere com desconto?",
+          "1": "Quer experimentar o Linken Sphere com desconto?",
           "2": "Use o código promocional “LSBLOG” e ganhe 30% de desconto em qualquer assinatura. Oferta válida apenas para novos clientes."
         }
       },
       "getStarted": {
-        "title": "Comece a usar o Linken\u00A0Sphere",
+        "title": "Comece a usar o Linken Sphere",
         "description": "Tenha tudo o que precisa para trabalhar com segurança, com suporte sempre disponível quando necessário",
         "button": "Começar grátis"
       },
@@ -69,6 +71,127 @@
     "article": {
       "goToButton": "Ir para",
       "copied": "Copiado!"
+    }
+  },
+  "faq": {
+    "allQuestions": "Todas as perguntas",
+    "topics": {
+      "common-questions": "Questões comuns",
+      "payment": "Pagamento",
+      "license": "Licença",
+      "problem-solving": "Resolução de problemas"
+    },
+    "common-questions": {
+      "what-is-antidetect-hybrid-mode": {
+        "name": "O que é o modo híbrido antidetecto?",
+        "description": "O modo híbrido é uma tecnologia inovadora anti-detecção que permite ajustar a singularidade dos parâmetros de sessão para o equipamento realmente usado, fornecendo singularidade suficiente entre as sessões sem o uso de tela tradicional e ruído WebGL.\n\n\nA configuração que é instalada automaticamente ao usar um híbrido não usa ruído, mas substitui a placa de vídeo e outros parâmetros de acordo com um sistema de dependência inteligente, para que o usuário receba uma impressão completamente real.\n\n\nNos casos em que o trabalho com um site usando ruído tradicional é impossível, o modo híbrido melhorará significativamente o desempenho em comparação com o uso de navegadores portáteis por dois motivos:\n\n\n- Diferentemente dos métodos tradicionais de copiar pastas com navegadores ou cookies e conexões de proxy individuais, todos esses processos são automatizados graças à sincronização baseada em nuvem de dados de cookies e armazenamento e um sistema de gerenciamento conveniente.\n\n\n- Todas as sessões, embora usem impressões digitais de lona/webgl nativas, diferem em outros parâmetros de configuração, enquanto esses parâmetros correspondem aos reais e não podem ser desacreditados por sistemas de segurança.\n\n\nAssim, o modo híbrido usa impressões digitais nativas sem adicionar ruído, mas ajusta automaticamente outros parâmetros de configuração ao hardware real do computador.\n\n\nIsso equivale a trabalhar com centenas de computadores diferentes com placas gráficas semelhantes, mas diferentes, e opções variadas de RAM e CPU."
+      },
+      "are-fingerprints-preserved-when-transferring-sessions": {
+        "name": "As impressões digitais são preservadas ao transferir sessões?",
+        "description": "As impressões digitais dependem do hardware - se o hardware for diferente durante a transferência, as impressões digitais finais serão diferentes.\n\n\nAs impressões digitais não estão incluídas na configuração, elas são geradas quando a sessão é criada.\n\n* Tela, áudio, clientrects* - não estão incluídos na configuração, mas são gerados\n\n* Webgl, fontes, plugins* - estão incluídos na configuração\n\n\n*Se for necessário que, durante a transferência, houve as mesmas impressões digitais, ou seja, 3 opções:*\n\n\n-Use as mesmas máquinas virtuais\n\n-Marting da versão 9, a capacidade de trabalhar simultaneamente usando uma conta foi adicionada. \nServidor via RDP, então o hardware será o mesmo, assim como as impressões durante a transferência\n\n-Um lote de computadores com hardware idêntico. \nUma opção puramente individual.\n\n\nNo caso de usar o modo híbrido em diferentes computadores para sistemas AF, ele parecerá o mesmo que se o navegador portátil tivesse sido copiado\n\ne lançado a partir de um local diferente."
+      },
+      "what-data-is-the-browser-sending": {
+        "name": "Quais dados o navegador está enviando?",
+        "description": "Por padrão, enviamos dados para verificar a validade da licença e atualizar a estrutura de dados da sessão na interface (seu status, conjunto de proxies, descrição etc.). \nIf session data synchronization is enabled, storage data (cookies and local storage) is also synchronized If cloud synchronization is disabled, we do not send data related to session storage (cookies and local storage).Regardless of the selected type of synchronization, the metadata (name, set proxy, description and settings) of the sessions are synchronized and stored on the server.The program lacks standard tools Google tracking, so requests to the \nA API do Chrome, específica para versões em caixa dos navegadores à base de cromo, não são executados."
+      },
+      "can-my-session-data-be-stored-locally": {
+        "name": "Os dados da minha sessão podem ser armazenados localmente?",
+        "description": "Sim, cuidamos da segurança do usuário e implementamos um sistema de armazenamento de dados local. \nAlém disso, todos os dados armazenados localmente são criptografados para evitar possíveis vazamentos em caso de malware no computador. \nOs cookies e a sincronização de armazenamento são desativados por padrão para acelerar o processo de iniciar e interromper as sessões, bem como aumentar o nível de segurança. Ao mesmo tempo, os metadados das próprias sessões (seu nome e as informações básicas contidas neles) são armazenadas na nuvem, que lhes permite acesso (não para dados, quando a sincronização em nuvem é desativada) quando a nuvem permite que o acesso a os dados, mas não os dados."
+      },
+      "is-my-data-safe": {
+        "name": "Meus dados são seguros?",
+        "description": "À luz do uso maciço de antidetectos em áreas como trocas e criptomoedas, a questão da segurança dos dados é muito importante (especialmente no contexto de notícias de vazamentos sensíveis de dados entre os players populares no mercado).\n\n\nO que podemos oferecer?\n\n\nPor mais de 6 anos de estar no mercado, dezenas de milhares de pessoas se tornaram usuários de Linken Sphere e, para muitos, a sphere se tornou, em princípio, o primeiro antidetecto usado. \nDurante esse período, não houve um único caso confirmado de vazamento ou compromisso dos dados de nossos usuários. \nIsso não é um acidente. \nA confiança é importante e, para nós, a segurança dos dados sempre foi um dos principais critérios para a qualidade do serviço prestado. \nA criptografia, o armazenamento de alta qualidade e uma abordagem responsável nos permitiram garantir alto desempenho.\n\n\nTudo de bom foi preservado na nova geração do produto - a evolução da sphere de Linken é hoje a única solução moderna que oferece não apenas a possibilidade de armazenamento local de dados, mas também fornece criptografia no disco e no momento de enviar e armazenar o servidor (em sincronização), o que nos permite chamá-lo de mais seguro dos antidettos existentes.\n\n\nAo mesmo tempo, sempre chamamos e continuamos pedindo a provisão responsável de nossa própria segurança. \nNunca use programas duvidosos em um ambiente de trabalho com dados confidenciais, use apenas assemblies baixados do site oficial, nunca transfira dados da sua conta para terceiros.\n\n\nSe você adotar uma abordagem responsável e inteligente para proteger seu ambiente de trabalho, poderá ter certeza de que está completamente seguro usando o Linken Sphere."
+      },
+      "what-if-socks-doesnt-have-its-own-dns": {
+        "name": "E se as meias não tiverem seu próprio DNS?",
+        "description": "Se o Sox ou o túnel não tiver seu próprio DNS, ou for instável usando o DNS do Google no sistema, você corre o risco de distribuir seu IP real aos serviços do Google.\n\n\nLista alternativa de DNS de vários serviços que podem se aplicar:\n\n\nCisco Opendns, LLC\n\n208.67.220.220\n\n208.67.222.222\n\n\nNeustar Security Services\n\n199.85.127.10\n\n199.85.126.10\n\n\nNeustar Security Services\n\n64.6.65.6\n\n64.6.64.6\n\n\nThe Constant Company, LLC\n\n8.26.56.26\n\n8.20.247.20\n\n\nNível3\n\n209.244.0.3\n\n209.244.0.4\n\n4.2.2.1\n\n4.2.2.2\n\n4.2.2.3\n\n4.2.2.4\n\n\nOracle Corporation\n\n216.146.35.35\n\n216.146.36.36\n\n\nOVH SAS\n\n5.135.183.146\n\n\nA empresa constante\n\n195.46.39.39\n\n\nAmazon.com, Inc.\n\n54.174.40.213\n\n52.3.100.184\n\n\nNível 3 Communications, Inc.\n\n54.229.171.243\n\n\nAmazon.com, Inc.\n\n54.183.15.10\n\n\nAmazon Technologies Inc.\n\n185.37.37.37\n\n\nCloudflare\n\n82.196.13.196\n\n\nStrong Technology, LLC\n\n64.145.73.2\n\n209.107.219.3\n\n\nSoftlayer\n\nMaduro\n\n185.52.1.146\n\n\nAmazon Technologies Inc.\n\n128.199.248.157\n\n185.135.8.197"
+      },
+      "how-and-where-can-i-check-my-session-fingerprints": {
+        "name": "Como e onde posso verificar minhas impressões digitais de sessão?",
+        "description": "Para verificar as impressões digitais da sessão e possíveis vazamentos, recomendamos os verificadores de anonimato relevantes para 2023:\n\nvision[http://f.vision/]\nbrowserleaks[https://browserleaks.com/]\npixelscan[https://pixelscan.net/]\nCreepjs[https://abrahamjuliot.github.io/creepjs/]\nWebgl_report[https://webglreport.com/?v=1]\nBrowserize[https://privacycheck.sec.lrz.de/]\nDevice_Info[https://www.deviceinfo.me/]\nCanvas_spoof_detection[https://arkenfox.github.io/TZP/tests/canvasspoof.html]\nCover_Your_Tracks[https://firstpartysimulator.net/]\nCanvasblocker_test[https://canvasblocker.kkapsner.de/test/]\nIphey[https://iphey.com/]\nLeaksradar[https://leaksradar.com/]\nThesafety[https://thesafety.us/check-ip]\nWhoer[http://whoer.net/]\nNetworktest[https://networktest.twilio.com/]\nIpbinding[https://ipbinding.online/index.html]\nTZP[https://arkenfox.github.io/TZP/tzp.html]"
+      },
+      "is-it-necessary-to-install-additional-software-for-the-browser-to-work": {
+        "name": "É necessário instalar software adicional para o navegador funcionar?",
+        "description": "Não, nada é necessário. \nVocê pode instalar o software e começar a trabalhar fora da caixa. \nTodos os componentes que você precisa trabalhar já estão incluídos no programa."
+      },
+      "how-to-learn-about-all-the-intricacies-and-features-of-the-browser": {
+        "name": "Como aprender sobre todos os meandros e características do navegador?",
+        "description": "Para que seu trabalho com este software seja o mais confortável e seguro possível, passe pelo Guia de Iniciar, leia cuidadosamente a documentação e assista a vídeos curtos na seção base de conhecimento. \nVocê também pode sempre fazer uma pergunta sobre a funcionalidade do programa em suporte."
+      },
+      "can-i-use-multiple-copies-of-the-software-at-the-same-time": {
+        "name": "Posso usar várias cópias do software ao mesmo tempo?",
+        "description": "Sim, desde a versão 9 do programa, é possível ter um grande número de usuários trabalhando simultaneamente usando uma conta. \nIsso é muito útil no contexto das equipes, quando é necessário manter as mesmas impressões digitais durante todo o ciclo de vida das sessões usadas. \nIsso pode ser alcançado trabalhando juntos instalando o aplicativo em um servidor remoto."
+      },
+      "can-i-use-different-connection-types-at-the-same-time": {
+        "name": "Posso usar diferentes tipos de conexão ao mesmo tempo?",
+        "description": "Sim, você pode combinar diferentes tipos de conexões em um grande número de fluxos paralelos. \nO multithreading máximo nesse caso dependerá do poder do computador que está funcionando. \nNenhuma configuração adicional é necessária - o procurador interno garantirá a operação simultânea estável de tais conexões sem vazamento de tráfego."
+      }
+    },
+    "payment": {
+      "how-do-i-pay-for-the-service": {
+        "name": "Como faço para pagar pelo serviço?",
+        "description": "Você pode usar uma variedade de criptomoedas diferentes com graus variados de anonimato para pagar pela licença. \nPara ver todas as opções, crie um pagamento no seu navegador e clique no suspensão da seleção de criptomoedas.\n\nMuito importante! \nNunca aceitamos o pagamento com o fornecimento direto de carteiras em mensageiros instantâneos ou mensagens privadas. Se você é oferecido para comprar uma licença em um diálogo pessoal, eles querem enganá-lo."
+      },
+      "do-i-need-to-contact-support-after-making-a-payment": {
+        "name": "Preciso entrar em contato com o suporte depois de fazer um pagamento?",
+        "description": "Não, todos os pagamentos são processados automaticamente. \nSe um pagamento parcial foi feito, o menu de gerenciamento de licenças indicará o valor que você precisa pagar além da tarifa selecionada. \nEscreva para suporte em caso de quaisquer dificuldades relacionadas ao processo de pagamento."
+      },
+      "what-happens-after-the-license-expires": {
+        "name": "O que acontece depois que a licença expirar?",
+        "description": "No final da licença, o usuário não poderá trabalhar com sessões criadas durante o período de assinatura. \nAssim, se uma tarifa para 300 sessões foi usada, depois de mudar para uma tarifa que inclua, por exemplo, 100, apenas as últimas sessões criadas permanecerão disponíveis. \nQuando você renova um plano mais avançado, o bloco será removido automaticamente."
+      },
+      "what-should-i-do-if-i-made-a-payment-but-it-didnt-arrive": {
+        "name": "O que devo fazer se fizesse um pagamento, mas não chegou?",
+        "description": "Se um pagamento parcial foi feito, o menu de gerenciamento de licenças mostrará o valor que precisa ser pago em relação à tarifa selecionada. \nSe o pagamento foi feito corretamente, mas por algum motivo não foi exibido na lista de pagamentos, entre em contato com o suporte para resolver esse problema."
+      }
+    },
+    "license": {
+      "what-is-the-license-duration": {
+        "name": "Qual é a duração da licença?",
+        "description": "O navegador apresentado é um desenvolvimento privado criado para profissionais em seu campo. \nQueremos que o resultado de trabalhos de longo prazo e soluções inteligentes sejam usadas por uma categoria especial de pessoas e não sejam de domínio público. \nPara fazer isso, usamos um sistema de proteção para evitar seu uso não autorizado. A compra de uma licença é aberta para todos os recursos deste software na íntegra, fornece suporte e atualizações oportunas."
+      },
+      "can-i-lose-my-license": {
+        "name": "Posso perder minha licença?",
+        "description": "Sim, de acordo com as regras do Contrato do Usuário, é possível. \nEm caso de tentativas sistemáticas de violar as regras, sua conta será bloqueada sem um reembolso dos fundos pagos. \nLeia o contrato do usuário com cuidado para evitar esses precedentes."
+      },
+      "what-should-i-do-if-the-program-doesnt-meet-my-expectations": {
+        "name": "O que devo fazer se o programa não atender às minhas expectativas?",
+        "description": "Conforme declarado no contrato do usuário, o programa é fornecido «como está» e só pode ser retornado antes de ser usado. \nTentamos descrever os recursos e os recursos do navegador com o máximo de detalhes possível para que o usuário possa formar sua impressão antes de comprá-lo. \nAlém disso, recomendamos que você siga nossos tópicos em sites especializados. \nO software comprado e lançado uma vez lançado não é reembolsável."
+      },
+      "can-i-recover-my-lost-password": {
+        "name": "Posso recuperar minha senha perdida?",
+        "description": "Sim, a partir da versão 9 do programa, o usuário pode recuperar a senha no modo automático. \nPara recuperar a senha, você deve ter acesso ao e-mail do qual a conta foi registrada. \nSe você perder o acesso ao email, a recuperação de senha será impossível."
+      }
+    },
+    "problem-solving": {
+      "whats-the-best-way-to-contact-support": {
+        "name": "Qual é a melhor maneira de entrar em contato com o suporte?",
+        "description": "A partir da versão 9 do produto, recomendamos usar apenas e exclusivamente a funcionalidade de bate-papo incorporada ao programa para se comunicar com o serviço de suporte. \nIsso garante que você realmente se comunique com o representante de apoio e não se torne vítima de fraude. \nNos últimos anos, os golpistas aprenderam a dar a alta qualidade que fingem ser representantes de apoio, o que leva a solicitações regulares de fraude. Mesmo que um diálogo seja mais preferível para você, por exemplo, no telegrama, iniciá-lo, obtendo um UID através do bate-papo interno. Isso reduzirá significativamente os riscos e ajudará a resolver seu problema de maneira rápida e eficiente. \nObserve que nunca somos os primeiros a escrever, e uma pessoa de apoio real não oferecerá pagar enviando uma carteira em mensagens privadas."
+      },
+      "is-the-program-supported-on-windows7": {
+        "name": "O programa é suportado no Windows7?",
+        "description": "A partir da versão 9 do produto, estamos comprometidos com uma política de atualizações oportunas do mecanismo em relação às versões originais do cromo. \nNo entanto, a partir da versão 109 do Chromium, as versões mais antigas do Windows não são mais suportadas pelo desenvolvedor e, portanto, não podem ser usadas na sphere do Linken."
+      },
+      "does-the-program-work-on-virtual-machines": {
+        "name": "O programa funciona em máquinas virtuais?",
+        "description": "Sim, o programa é otimizado para executar em PCs virtuais e fracos. \nNo entanto, deve-se notar que a qualidade real da funcionalidade (especialmente as funções de massa) depende diretamente do poder do computador; portanto, você deve alocar recursos de máquina virtual suficientes para seus requisitos. \nIsso manterá a interface suave e rápida e reduzirá o número de problemas em potencial associados ao término não planejado do aplicativo."
+      },
+      "what-to-do-if-the-antivirus-reacts-to-the-software": {
+        "name": "O que fazer se o antivírus reagir ao software?",
+        "description": "O software é assinado com o certificado de desenvolvedor instalado, que garante a ausência de quaisquer ameaças em potencial. \nNo entanto, às vezes como resultado da atividade de rede incomum (por exemplo, ao importar ou validar um grande número de proxies ou iniciar um grande número de sessões), os programas antivírus podem perceber o software como uma ameaça. \nSe o seu antivírus reagir à atividade do aplicativo, recomendamos adicionar o programa às exceções. \nAlém disso, mesmo ao adicionar software à lista de exceções, os programas antivírus podem bloquear componentes individuais, o que pode Thesafetyr o desempenho do programa. \nA melhor solução neste caso será usar o software em um ambiente de trabalho limpo isolado, sem dados pessoais e sensíveis, sem usar programas antivírus."
+      },
+      "what-to-do-if-you-find-a-bug-or-problem": {
+        "name": "O que fazer se você encontrar um bug ou problema?",
+        "description": "Se você encontrar um problema reproduzível no software, entre em contato com o suporte e descreva o problema com detalhes para recriá-lo. \nOs bugs descritos corretamente serão corrigidos nas próximas atualizações, por nossa parte, garantimos uma recompensa para ajudar a melhorar os programas."
+      },
+      "what-to-do-if-you-need-additional-functionality": {
+        "name": "O que fazer se você precisar de funcionalidade adicional?",
+        "description": "Caso seu trabalho tenha alguns recursos específicos que você deseja adicionar, entre em contato com o suporte para uma solução personalizada. \nEstamos confiantes de que podemos ajudá-lo a refinar o software para alcançar os resultados desejados."
+      },
+      "can-i-make-suggestions-for-improving-the-software": {
+        "name": "Posso fazer sugestões para melhorar o software?",
+        "description": "Sim, estamos muito atentos a todas as sugestões e desejos, e ficaremos felizes com novas idéias."
+      }
     }
   }
 }
