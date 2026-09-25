@@ -1,11 +1,20 @@
-import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
 import FAQPage from "@/components/pages/faq";
+import { routing } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
-import { FAQ_CATEGORIES, FAQ_CATEGORY_SLUGS, FAQ_ITEMS_BY_CATEGORY, FAQItemsByCategory } from "./constants";
+import {
+  FAQ_CATEGORIES,
+  FAQ_CATEGORY_SLUGS,
+  FAQ_ITEMS_BY_CATEGORY,
+  type FAQCategorySlug,
+  type FAQItemsByCategory,
+} from "./constants";
+
+export function generateStaticParams() {
+  return routing.locales.map((locale) => ({ locale }));
+}
 
 const Page = async () => {
-  const tCommon = await getTranslations("common.faq");
   const tFAQ = await getTranslations("faq");
 
   const categories = FAQ_CATEGORIES.map((category) => ({
@@ -13,22 +22,27 @@ const Page = async () => {
     title: tFAQ(`topics.${category.slug}`),
   }));
 
-  const itemsByCategory = Object.fromEntries(
-    FAQ_CATEGORY_SLUGS.map((categorySlug) => [
-      categorySlug,
-      (FAQ_ITEMS_BY_CATEGORY[categorySlug] as readonly string[]).map((id) => ({
-        id,
-        question: tFAQ(`${categorySlug}.${id}.name`),
-        answer: tFAQ(`${categorySlug}.${id}.description`),
-      })),
-    ]),
-  ) as FAQItemsByCategory;
+  const getCategoryItems = (categorySlug: FAQCategorySlug) => {
+    const itemIds: readonly string[] = FAQ_ITEMS_BY_CATEGORY[categorySlug];
+
+    return itemIds.map((id) => ({
+      id,
+      question: tFAQ(`${categorySlug}.${id}.name`),
+      answer: tFAQ(`${categorySlug}.${id}.description`),
+    }));
+  };
+
+  const itemsByCategory = {} as FAQItemsByCategory;
+  let totalQuestionsAmount = 0;
+
+  for (const categorySlug of FAQ_CATEGORY_SLUGS) {
+    itemsByCategory[categorySlug] = getCategoryItems(categorySlug);
+    totalQuestionsAmount += itemsByCategory[categorySlug].length;
+  }
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={tCommon("title")} />
-
-      <FAQPage categories={categories} allLabel={tFAQ("allQuestions")} itemsByCategory={itemsByCategory} />
+      <FAQPage categories={categories} itemsByCategory={itemsByCategory} totalQuestionsAmount={totalQuestionsAmount} />
     </Container>
   );
 };

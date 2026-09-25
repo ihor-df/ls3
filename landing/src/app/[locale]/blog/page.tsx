@@ -1,6 +1,6 @@
 import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
-import Blog from "@/components/pages/blog";
+import BlogPage from "@/components/pages/blog";
 import { routing } from "@/i18n/routing";
 import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
@@ -54,7 +54,13 @@ const Page = async ({ params, searchParams }: PageProps) => {
     <Container as="main">
       <CollectionPageHeader title={t("title")} initSearchValue={search} />
 
-      <Blog locale={locale} posts={posts ?? []} categories={categories ?? []} currentPage={page} hasMore={hasMore} />
+      <BlogPage
+        locale={locale}
+        posts={posts ?? []}
+        categories={categories ?? []}
+        currentPage={page}
+        hasMore={hasMore}
+      />
     </Container>
   );
 };

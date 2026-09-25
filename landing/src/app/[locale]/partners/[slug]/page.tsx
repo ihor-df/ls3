@@ -1,5 +1,5 @@
 import Container from "@/components/atoms/container";
-import Article from "@/components/pages/partners/article";
+import PartnerArticle from "@/components/pages/partners/article";
 import { routing } from "@/i18n/routing";
 import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
@@ -53,7 +53,7 @@ const Page = async ({ params }: PageProps) => {
 
   return (
     <Container>
-      <Article breadcrumbs={breadcrumbs} post={post} />
+      <PartnerArticle breadcrumbs={breadcrumbs} post={post} />
     </Container>
   );
 };

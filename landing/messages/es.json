@@ -36,9 +36,6 @@
     }
   },
   "common": {
-    "faq": {
-      "title": "Preguntas frecuentes"
-    },
     "cta": {
       "workAnon": {
         "main": "Trabaja de forma anónima con Linken Sphere",
@@ -62,18 +59,21 @@
   },
   "blog": {
     "title": "Blog",
+    "allLabel": "Todos los artículos",
     "article": {
       "content": "Contenido"
     }
   },
   "partners": {
     "title": "Socios",
+    "allLabel": "Todos los socios",
     "article": {
       "goToButton": "Ir a",
       "copied": "¡Copiado!"
     }
   },
   "faq": {
+    "title": "Preguntas frecuentes",
     "allQuestions": "Todas las preguntas",
     "common-questions": {
       "are-fingerprints-preserved-when-transferring-sessions": {

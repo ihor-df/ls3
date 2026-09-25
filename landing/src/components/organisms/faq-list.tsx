@@ -9,9 +9,11 @@ import { ComponentProps, useState } from "react";
 import { FAQPage } from "schema-dts";
 import Heading from "../atoms/heading";
 
-type FAQProps = ComponentProps<"section"> & {
+type FAQListProps = ComponentProps<"div"> & {
   data: FAQItem[];
   schemaData?: FAQItem[];
+  renderJsonLd?: boolean;
+  defaultOpenItem?: number | null;
 };
 
 type FAQItem = {
@@ -20,10 +22,17 @@ type FAQItem = {
   answer: string;
 };
 
-export default function FAQ({ className, data, schemaData = data, ...props }: FAQProps) {
-  const [openItem, setOpenItem] = useState(0);
+export default function FAQList({
+  className,
+  data,
+  schemaData = data,
+  renderJsonLd = true,
+  defaultOpenItem = 0,
+  ...props
+}: FAQListProps) {
+  const [openItem, setOpenItem] = useState<number | null>(defaultOpenItem);
 
-  const t = useTranslations("common.faq");
+  const t = useTranslations("faq");
   const pathname = usePathname();
 
   const faqScript: FAQPage = {
@@ -39,9 +48,9 @@ export default function FAQ({ className, data, schemaData = data, ...props }: FA
 
   return (
     <>
-      <JsonLd data={faqScript} />
+      {renderJsonLd && <JsonLd data={faqScript} />}
 
-      <section id="faq-section" className={cn(className)} {...props}>
+      <div id="faq-section" className={cn(className)} {...props}>
         {!isFAQPage && (
           <Heading as="h2" variant="section" className="mb-10 text-center md:mb-16">
             {t("title")}
@@ -58,8 +67,8 @@ export default function FAQ({ className, data, schemaData = data, ...props }: FA
                   type="button"
                   aria-expanded={isOpen}
                   className={cn(
-                    "rounded-small grid w-full bg-[#19191A] p-5 text-left md:px-7 md:py-8",
-                    !isOpen && "cursor-pointer",
+                    "rounded-small grid w-full bg-[#19191A] p-5 text-left transition-colors md:px-7 md:py-8",
+                    !isOpen && "cursor-pointer hover:bg-[#252526]",
                   )}
                   onClick={() => setOpenItem(idx)}
                 >
@@ -88,7 +97,7 @@ export default function FAQ({ className, data, schemaData = data, ...props }: FA
             );
           })}
         </ul>
-      </section>
+      </div>
     </>
   );
 }

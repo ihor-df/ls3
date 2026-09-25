@@ -9,7 +9,7 @@ import { getHeadingId, portableTextComponents } from "@/components/molecules/por
 import { ShareSocial } from "@/components/molecules/share-social";
 import CtaLg from "@/components/organisms/cta-lg";
 import CtaSm from "@/components/organisms/cta-sm";
-import FAQ from "@/components/organisms/faq";
+import FAQList from "@/components/organisms/faq-list";
 import { buildAbsoluteUrl, formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
@@ -17,13 +17,13 @@ import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
 import { Image as SanityImage } from "next-sanity/image";
 
-type ArticleProps = {
+type BlogArticleProps = {
   post: NonNullable<ARTICLE_QUERY_RESULT>;
   breadcrumbs?: BreadcrumbItemData[];
   locale: Locale;
 };
 
-const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
+const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
   const { image, categories, publishedAt, title, body, author, faq, slug } = post;
 
   const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
@@ -78,7 +78,7 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
         {/* Content */}
         {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
 
-        {faq && <FAQ data={faq} className="mt-35 md:mt-40" />}
+        {faq && <FAQList data={faq} className="mt-35 md:mt-40" />}
       </div>
 
       <hr className="my-18 border-white/10 md:my-40" />
@@ -87,4 +87,4 @@ const Article = ({ post, breadcrumbs, locale }: ArticleProps) => {
   );
 };
 
-export default Article;
+export default BlogArticle;

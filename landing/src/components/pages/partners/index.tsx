@@ -7,8 +7,9 @@ import { urlFor } from "@/sanity/helpers";
 import type { PARTNER_CATEGORIES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import CategoryFilters from "@components/molecules/category-filters";
 import { Locale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-type PartnersProps = {
+type PartnersPageProps = {
   partners: PARTNERS_QUERY_RESULT;
   categories: PARTNER_CATEGORIES_QUERY_RESULT;
   currentPage: number;
@@ -16,10 +17,12 @@ type PartnersProps = {
   locale: Locale;
 };
 
-const Partners = ({ partners, categories, currentPage, hasMore }: PartnersProps) => {
+const PartnersPage = async ({ partners, categories, currentPage, hasMore }: PartnersPageProps) => {
+  const t = await getTranslations("partners");
+
   return (
     <div className="mt-10 flex flex-col">
-      <CategoryFilters page="partners" categories={categories} />
+      <CategoryFilters allLabel={t("allLabel")} page="partners" categories={categories} />
 
       {!!partners?.length && (
         <CollectionPageList>
@@ -57,4 +60,4 @@ const Partners = ({ partners, categories, currentPage, hasMore }: PartnersProps)
   );
 };
 
-export default Partners;
+export default PartnersPage;

@@ -1,7 +1,7 @@
 import Container from "@/components/atoms/container";
 import Heading from "@/components/atoms/heading";
 import BlogSearch from "@/components/molecules/page-search";
-import Category from "@/components/pages/blog";
+import CategoryPage from "@/components/pages/blog";
 import { sanityFetch } from "@/sanity/client";
 
 import { routing } from "@/i18n/routing";
@@ -82,7 +82,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
         <BlogSearch className="max-md:hidden" initialValue={search} />
       </div>
 
-      <Category
+      <CategoryPage
         locale={locale}
         posts={posts ?? []}
         categories={categories ?? []}

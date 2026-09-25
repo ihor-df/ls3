@@ -36,9 +36,6 @@
     }
   },
   "common": {
-    "faq": {
-      "title": "Häufig gestellte Fragen"
-    },
     "cta": {
       "workAnon": {
         "main": "Arbeiten Sie anonym mit Linken Sphere",
@@ -62,18 +59,21 @@
   },
   "blog": {
     "title": "Blog",
+    "allLabel": "Alle Artikel",
     "article": {
       "content": "Inhalt"
     }
   },
   "partners": {
     "title": "Partner",
+    "allLabel": "Alle Partner",
     "article": {
       "goToButton": "Weiter zu",
       "copied": "Kopiert!"
     }
   },
   "faq": {
+    "title": "Häufig gestellte Fragen",
     "allQuestions": "Alle Fragen",
     "topics": {
       "common-questions": "Allgemeine Fragen",

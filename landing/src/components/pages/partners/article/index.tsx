@@ -14,12 +14,12 @@ import { PortableText } from "next-sanity";
 import { Image as SanityImage } from "next-sanity/image";
 import DiscountBanner from "./partner-discount";
 
-type ArticleProps = {
+type PartnerArticleProps = {
   post: NonNullable<PARTNER_QUERY_RESULT>;
   breadcrumbs?: BreadcrumbItemData[];
 };
 
-const Article = async ({ post, breadcrumbs }: ArticleProps) => {
+const PartnerArticle = async ({ post, breadcrumbs }: PartnerArticleProps) => {
   const { logo, categories, publishedAt, title, body, description, discountPercent, discountText, promoCode, url } =
     post;
 
@@ -81,4 +81,4 @@ const Article = async ({ post, breadcrumbs }: ArticleProps) => {
   );
 };
 
-export default Article;
+export default PartnerArticle;

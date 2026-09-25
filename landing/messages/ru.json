@@ -36,9 +36,6 @@
     }
   },
   "common": {
-    "faq": {
-      "title": "Часто задаваемые вопросы"
-    },
     "cta": {
       "workAnon": {
         "main": "Работайте анонимно с Linken Sphere",
@@ -62,18 +59,21 @@
   },
   "blog": {
     "title": "Блог",
+    "allLabel": "Все статьи",
     "article": {
       "content": "Содержание"
     }
   },
   "partners": {
     "title": "Партнёры",
+    "allLabel": "Все партнёры",
     "article": {
       "goToButton": "Перейти к",
       "copied": "Скопировано!"
     }
   },
   "faq": {
+    "title": "Часто задаваемые вопросы",
     "allQuestions": "Все вопросы",
     "topics": {
       "common-questions": "Общие вопросы",

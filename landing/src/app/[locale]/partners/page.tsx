@@ -1,5 +1,5 @@
 import Container from "@/components/atoms/container";
-import Partners from "@/components/pages/partners";
+import PartnersPage from "@/components/pages/partners";
 
 import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import { routing } from "@/i18n/routing";
@@ -54,7 +54,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
     <Container as="main">
       <CollectionPageHeader title={t("title")} initSearchValue={search} />
 
-      <Partners
+      <PartnersPage
         locale={locale}
         partners={partners ?? []}
         categories={categories ?? []}

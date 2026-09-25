@@ -36,9 +36,6 @@
     }
   },
   "common": {
-    "faq": {
-      "title": "Questions fréquentes"
-    },
     "cta": {
       "workAnon": {
         "main": "Travaillez anonymement avec Linken Sphere",
@@ -62,18 +59,21 @@
   },
   "blog": {
     "title": "Blog",
+    "allLabel": "Tous les articles",
     "article": {
       "content": "Sommaire"
     }
   },
   "partners": {
     "title": "Partenaires",
+    "allLabel": "Tous les partenaires",
     "article": {
       "goToButton": "Accéder à",
       "copied": "Copié !"
     }
   },
   "faq": {
+    "title": "Questions fréquentes",
     "allQuestions": "Toutes les questions",
     "topics": {
       "common-questions": "Questions courantes",

@@ -41,7 +41,11 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
   const { locale } = await params;
 
   return (
-    <html lang={locale} className={`${abcDiatype.variable} font-diatype h-full antialiased`}>
+    <html
+      lang={locale}
+      data-scroll-behavior="smooth"
+      className={`${abcDiatype.variable} font-diatype h-full antialiased`}
+    >
       <body className="relative flex min-h-full flex-col">
         <NextIntlClientProvider>
           <Header />

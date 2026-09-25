@@ -28,7 +28,12 @@ export const FilterItem = ({
           {children}
         </Link>
       ) : (
-        <button type="button" aria-pressed={current} className="cursor-pointer" onClick={onClick}>
+        <button
+          type="button"
+          aria-pressed={current}
+          className={cn("cursor-pointer hover:underline", current && "underline")}
+          onClick={onClick}
+        >
           {children}
         </button>
       )}

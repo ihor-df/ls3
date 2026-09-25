@@ -12,7 +12,7 @@ type CategoryFiltersProps = {
   }[];
   page: string;
   className?: string;
-  allLabel?: string;
+  allLabel: string;
   categoryPath?: string;
   activeCategory?: string | null;
   onCategoryChange?: (slug: string | null) => void;
@@ -22,7 +22,7 @@ const CategoryFilters = ({
   categories,
   page,
   className,
-  allLabel = "All articles",
+  allLabel,
   categoryPath = "category",
   activeCategory,
   onCategoryChange,

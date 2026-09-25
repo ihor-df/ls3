@@ -36,9 +36,6 @@
     }
   },
   "common": {
-    "faq": {
-      "title": "Sık Sorulan Sorular"
-    },
     "cta": {
       "workAnon": {
         "main": "Linken Sphere ile anonim çalışın",
@@ -62,18 +59,21 @@
   },
   "blog": {
     "title": "Blog",
+    "allLabel": "Tüm yazılar",
     "article": {
       "content": "İçindekiler"
     }
   },
   "partners": {
     "title": "İş Ortakları",
+    "allLabel": "Tüm iş ortakları",
     "article": {
       "goToButton": "Ziyaret et:",
       "copied": "Kopyalandı!"
     }
   },
   "faq": {
+    "title": "Sık Sorulan Sorular",
     "allQuestions": "Tüm sorular",
     "topics": {
       "common-questions": "Genel sorular",

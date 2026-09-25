@@ -8,8 +8,9 @@ import { urlFor } from "@/sanity/helpers";
 import type { ARTICLES_QUERY_RESULT, ARTICLE_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
 import CategoryFilters from "@components/molecules/category-filters";
 import { Locale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-type BlogProps = {
+type BlogPageProps = {
   posts: ARTICLES_QUERY_RESULT;
   categories: ARTICLE_CATEGORIES_QUERY_RESULT;
   currentPage: number;
@@ -17,10 +18,12 @@ type BlogProps = {
   locale: Locale;
 };
 
-const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) => {
+const BlogPage = async ({ posts, categories, currentPage, hasMore, locale }: BlogPageProps) => {
+  const t = await getTranslations("blog");
+
   return (
     <div className="mt-10 flex flex-col">
-      <CategoryFilters page="blog" categories={categories} />
+      <CategoryFilters allLabel={t("allLabel")} page="blog" categories={categories} />
 
       {!!posts?.length && (
         <CollectionPageList>
@@ -52,4 +55,4 @@ const Blog = ({ posts, categories, currentPage, hasMore, locale }: BlogProps) =>
   );
 };
 
-export default Blog;
+export default BlogPage;
