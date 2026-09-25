@@ -72,6 +72,35 @@
       "copied": "Copied!"
     }
   },
+  "publications": {
+    "title": "Publications"
+  },
+  "guideVideos": {
+    "title": "Guide videos",
+    "allVideos": "All videos",
+    "categories": {
+      "sessions": "Sessions",
+      "preset": "Preset",
+      "proxies": "Proxies",
+      "teamwork": "Teamwork"
+    },
+    "videos": {
+      "creatingSession": "Creating a session",
+      "workingWithPresets": "Working with presets",
+      "warmingUpSessions": "Warming up sessions",
+      "mobileTabletSessions": "Working with mobile and tablet sessions",
+      "sessionManager": "Session manager",
+      "proxyManager": "Proxy manager",
+      "manageProxyList": "Managing proxy lists",
+      "fastProxyEditing": "Quick proxy editing",
+      "massActions": "Bulk actions",
+      "massSessionCreation": "Creating sessions in bulk",
+      "installExtensions": "Installing extensions",
+      "importBookmarks": "Importing bookmarks",
+      "teamManagement": "Team management",
+      "windowControlModes": "Window control modes"
+    }
+  },
   "faq": {
     "title": "Popular Questions",
     "allQuestions": "All questions",

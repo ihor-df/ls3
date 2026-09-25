@@ -6,11 +6,13 @@ import {
   type FAQItemsByCategory,
 } from "@/app/[locale]/(service)/faq/constants";
 import CollectionPageHeader from "@/components/atoms/collection-page-header";
+import Container from "@/components/atoms/container";
 import CategoryFilters from "@/components/molecules/category-filters";
 import FAQList from "@/components/organisms/faq-list";
+import useHashCategory from "@/hooks/useHashCategory";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { ComponentProps, useEffect, useState } from "react";
+import { ComponentProps } from "react";
 
 type FAQPageProps = {
   categories: {
@@ -29,40 +31,16 @@ const CategoryTitle = ({ className, children, ...props }: ComponentProps<"h2">) 
 );
 
 const FAQPage = ({ categories, itemsByCategory, totalQuestionsAmount }: FAQPageProps) => {
-  const [activeCategory, setActiveCategory] = useState<FAQCategorySlug | null>(null);
+  const [activeCategory, handleCategoryChange] = useHashCategory(isFAQCategorySlug);
+
   const tFAQ = useTranslations("faq");
 
   const allItems = Object.values(itemsByCategory).flat();
   const activeCategoryTitle = categories.find((category) => category.slug === activeCategory)?.title;
   const activeCategoryHeadingId = `faq-${activeCategory}-heading`;
 
-  useEffect(() => {
-    const syncCategoryFromHash = () => {
-      const slug = window.location.hash.slice(1);
-
-      setActiveCategory(isFAQCategorySlug(slug) ? slug : null);
-    };
-
-    syncCategoryFromHash();
-    window.addEventListener("popstate", syncCategoryFromHash);
-
-    return () => window.removeEventListener("popstate", syncCategoryFromHash);
-  }, []);
-
-  const handleCategoryChange = (slug: string | null) => {
-    const nextCategory = slug === null ? null : isFAQCategorySlug(slug) ? slug : null;
-
-    if (nextCategory === activeCategory) return;
-
-    setActiveCategory(nextCategory);
-
-    const url = new URL(window.location.href);
-    url.hash = nextCategory ?? "";
-    window.history.pushState(null, "", url);
-  };
-
   return (
-    <>
+    <Container as="main">
       <div className="flex items-center justify-between gap-5">
         <CollectionPageHeader title={tFAQ("title")} />{" "}
         <span className="text-[3.5rem] leading-none font-bold max-md:hidden">
@@ -113,7 +91,7 @@ const FAQPage = ({ categories, itemsByCategory, totalQuestionsAmount }: FAQPageP
           />
         </div>
       )}
-    </>
+    </Container>
   );
 };
 

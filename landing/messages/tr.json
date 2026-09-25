@@ -72,6 +72,35 @@
       "copied": "Kopyalandı!"
     }
   },
+  "publications": {
+    "title": "Yayınlar"
+  },
+  "guideVideos": {
+    "title": "Kılavuz videoları",
+    "allVideos": "Tüm videolar",
+    "categories": {
+      "sessions": "Oturumlar",
+      "preset": "Ön ayarlar",
+      "proxies": "Proxy'ler",
+      "teamwork": "Ekip çalışması"
+    },
+    "videos": {
+      "creatingSession": "Oturum oluşturma",
+      "workingWithPresets": "Ön ayarlarla çalışma",
+      "warmingUpSessions": "Oturumları hazırlama",
+      "mobileTabletSessions": "Mobil ve tablet oturumlarıyla çalışma",
+      "sessionManager": "Oturum yöneticisi",
+      "proxyManager": "Proxy yöneticisi",
+      "manageProxyList": "Proxy listelerini yönetme",
+      "fastProxyEditing": "Proxy'leri hızlı düzenleme",
+      "massActions": "Toplu işlemler",
+      "massSessionCreation": "Toplu oturum oluşturma",
+      "installExtensions": "Eklenti yükleme",
+      "importBookmarks": "Yer imlerini içe aktarma",
+      "teamManagement": "Ekip yönetimi",
+      "windowControlModes": "Pencere kontrol modları"
+    }
+  },
   "faq": {
     "title": "Sık Sorulan Sorular",
     "allQuestions": "Tüm sorular",

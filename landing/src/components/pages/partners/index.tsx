@@ -1,3 +1,5 @@
+import CollectionPageHeader from "@/components/atoms/collection-page-header";
+import Container from "@/components/atoms/container";
 import CollectionPageList from "@/components/molecules/collection-page-list";
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
@@ -15,14 +17,16 @@ type PartnersPageProps = {
   currentPage: number;
   hasMore: boolean;
   locale: Locale;
+  searchValue: string;
 };
 
-const PartnersPage = async ({ partners, categories, currentPage, hasMore }: PartnersPageProps) => {
+const PartnersPage = async ({ partners, categories, currentPage, hasMore, searchValue }: PartnersPageProps) => {
   const t = await getTranslations("partners");
 
   return (
-    <div className="mt-10 flex flex-col">
-      <CategoryFilters allLabel={t("allLabel")} page="partners" categories={categories} />
+    <Container as="main">
+      <CollectionPageHeader title={t("title")} initialSearchValue={searchValue} />
+      <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="partners" categories={categories} />
 
       {!!partners?.length && (
         <CollectionPageList>
@@ -56,7 +60,7 @@ const PartnersPage = async ({ partners, categories, currentPage, hasMore }: Part
         />
         <CtaLg className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]" variant="get-started" />
       </div>
-    </div>
+    </Container>
   );
 };
 

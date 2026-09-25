@@ -1,12 +1,9 @@
-import CollectionPageHeader from "@/components/atoms/collection-page-header";
-import Container from "@/components/atoms/container";
 import BlogPage from "@/components/pages/blog";
 import { routing } from "@/i18n/routing";
 import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleParams } from "@/types/common";
-import { getTranslations } from "next-intl/server";
 import { ARTICLE_CATEGORIES_QUERY, getArticlesQuery } from "./api";
 
 export function generateStaticParams() {
@@ -19,7 +16,6 @@ type PageProps = {
 };
 
 const Page = async ({ params, searchParams }: PageProps) => {
-  const t = await getTranslations("blog");
   const { locale } = await params;
   const { q, page: pageParam } = await searchParams;
 
@@ -51,17 +47,14 @@ const Page = async ({ params, searchParams }: PageProps) => {
   const posts = postsWithExtra.slice(0, limit);
 
   return (
-    <Container as="main">
-      <CollectionPageHeader title={t("title")} initSearchValue={search} />
-
-      <BlogPage
-        locale={locale}
-        posts={posts ?? []}
-        categories={categories ?? []}
-        currentPage={page}
-        hasMore={hasMore}
-      />
-    </Container>
+    <BlogPage
+      locale={locale}
+      posts={posts ?? []}
+      categories={categories ?? []}
+      searchValue={search}
+      currentPage={page}
+      hasMore={hasMore}
+    />
   );
 };
 

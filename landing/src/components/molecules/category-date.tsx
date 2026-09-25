@@ -1,13 +1,13 @@
 import { cn } from "@/lib/utils";
-import { ARTICLE_CATEGORIES_QUERY_RESULT, PARTNER_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
+import { Categories } from "@/types/common";
 import Tag from "../atoms/tag";
 
 type CategoryAndDateProps = {
-  categories: ARTICLE_CATEGORIES_QUERY_RESULT | PARTNER_CATEGORIES_QUERY_RESULT;
+  categories: Categories;
   date?: string;
   className?: string;
   linked?: boolean;
-  page: "blog" | "partners";
+  page: "blog" | "partners" | "guide-videos";
 };
 
 const CategoryAndDate = ({ categories, date, className, linked, page }: CategoryAndDateProps) => {

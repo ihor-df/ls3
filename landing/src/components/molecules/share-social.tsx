@@ -71,7 +71,7 @@ export const ShareSocial = ({ url, title, description, imageUrl, className }: Sh
     <div className="relative size-13 min-h-full md:h-13 md:w-auto">
       <div
         className={cn(
-          "glass absolute! top-0 right-0 z-20 h-13 overflow-hidden! rounded-full p-0 backdrop-blur-xl transition-[height,padding]! duration-300",
+          "glass absolute! top-0 right-0 z-20 h-13 overflow-hidden! rounded-full p-0 transition-[height,padding]! duration-300",
           "md:relative! md:h-13! md:w-auto md:overflow-visible! md:bg-transparent! md:p-0! md:backdrop-blur-none! md:transition-none md:before:bg-[linear-gradient(to_bottom,transparent,transparent)]! md:after:shadow-none!",
           isOpen ? "h-101 p-2" : "before:bg-[linear-gradient(to_bottom,transparent,transparent)]! after:shadow-none!",
         )}

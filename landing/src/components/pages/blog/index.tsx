@@ -1,3 +1,5 @@
+import CollectionPageHeader from "@/components/atoms/collection-page-header";
+import Container from "@/components/atoms/container";
 import CollectionPageList from "@/components/molecules/collection-page-list";
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
@@ -16,14 +18,16 @@ type BlogPageProps = {
   currentPage: number;
   hasMore: boolean;
   locale: Locale;
+  searchValue: string;
 };
 
-const BlogPage = async ({ posts, categories, currentPage, hasMore, locale }: BlogPageProps) => {
+const BlogPage = async ({ posts, categories, currentPage, hasMore, locale, searchValue }: BlogPageProps) => {
   const t = await getTranslations("blog");
 
   return (
-    <div className="mt-10 flex flex-col">
-      <CategoryFilters allLabel={t("allLabel")} page="blog" categories={categories} />
+    <Container as="main">
+      <CollectionPageHeader title={t("title")} initialSearchValue={searchValue} />
+      <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="blog" categories={categories} />
 
       {!!posts?.length && (
         <CollectionPageList>
@@ -51,7 +55,7 @@ const BlogPage = async ({ posts, categories, currentPage, hasMore, locale }: Blo
       {hasMore && <LoadMoreButton currentPage={currentPage} />}
 
       <CtaLg variant="get-started" className="mt-35 md:mt-40" />
-    </div>
+    </Container>
   );
 };
 

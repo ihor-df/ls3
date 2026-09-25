@@ -72,6 +72,35 @@
       "copied": "Copié !"
     }
   },
+  "publications": {
+    "title": "Publications"
+  },
+  "guideVideos": {
+    "title": "Vidéos tutorielles",
+    "allVideos": "Toutes les vidéos",
+    "categories": {
+      "sessions": "Sessions",
+      "preset": "Préréglages",
+      "proxies": "Proxys",
+      "teamwork": "Travail en équipe"
+    },
+    "videos": {
+      "creatingSession": "Créer une session",
+      "workingWithPresets": "Utiliser les préréglages",
+      "warmingUpSessions": "Préchauffage des sessions",
+      "mobileTabletSessions": "Utiliser les sessions sur mobile et tablette",
+      "sessionManager": "Gestionnaire de sessions",
+      "proxyManager": "Gestionnaire de proxys",
+      "manageProxyList": "Gérer les listes de proxys",
+      "fastProxyEditing": "Modifier rapidement les proxys",
+      "massActions": "Actions groupées",
+      "massSessionCreation": "Créer des sessions en masse",
+      "installExtensions": "Installer des extensions",
+      "importBookmarks": "Importer des favoris",
+      "teamManagement": "Gestion d’équipe",
+      "windowControlModes": "Modes de gestion des fenêtres"
+    }
+  },
   "faq": {
     "title": "Questions fréquentes",
     "allQuestions": "Toutes les questions",

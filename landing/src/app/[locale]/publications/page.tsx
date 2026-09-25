@@ -1,6 +1,4 @@
-import CollectionPageHeader from "@/components/atoms/collection-page-header";
-import Container from "@/components/atoms/container";
-import Publications from "@/components/pages/publications";
+import PublicationsPage from "@/components/pages/publications";
 import { PUBLICATIONS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import { PUBLICATIONS_QUERY_RESULT } from "@/sanity/sanity.types";
@@ -32,11 +30,5 @@ export default async function Page({ params, searchParams }: PageProps) {
   const hasMore = publicationsWithExtra.length > limit;
   const publications = publicationsWithExtra.slice(0, limit);
 
-  return (
-    <Container as="main">
-      <CollectionPageHeader title="Publications" />
-
-      <Publications locale={locale} publications={publications ?? []} currentPage={page} hasMore={hasMore} />
-    </Container>
-  );
+  return <PublicationsPage locale={locale} publications={publications ?? []} currentPage={page} hasMore={hasMore} />;
 }

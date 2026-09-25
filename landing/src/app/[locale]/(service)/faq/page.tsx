@@ -1,4 +1,3 @@
-import Container from "@/components/atoms/container";
 import FAQPage from "@/components/pages/faq";
 import { routing } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
@@ -41,9 +40,7 @@ const Page = async () => {
   }
 
   return (
-    <Container as="main">
-      <FAQPage categories={categories} itemsByCategory={itemsByCategory} totalQuestionsAmount={totalQuestionsAmount} />
-    </Container>
+    <FAQPage categories={categories} itemsByCategory={itemsByCategory} totalQuestionsAmount={totalQuestionsAmount} />
   );
 };
 

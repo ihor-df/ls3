@@ -1,7 +1,5 @@
-import Container from "@/components/atoms/container";
-import PartnersPage from "@/components/pages/partners";
+import Partners from "@/components/pages/partners";
 
-import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import { routing } from "@/i18n/routing";
 import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
@@ -51,17 +49,14 @@ const Page = async ({ params, searchParams }: PageProps) => {
   const partners = partnersWithExtra.slice(0, limit);
 
   return (
-    <Container as="main">
-      <CollectionPageHeader title={t("title")} initSearchValue={search} />
-
-      <PartnersPage
-        locale={locale}
-        partners={partners ?? []}
-        categories={categories ?? []}
-        currentPage={page}
-        hasMore={hasMore}
-      />
-    </Container>
+    <Partners
+      locale={locale}
+      partners={partners ?? []}
+      categories={categories ?? []}
+      currentPage={page}
+      hasMore={hasMore}
+      searchValue={search}
+    />
   );
 };
 

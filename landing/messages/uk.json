@@ -72,6 +72,35 @@
       "copied": "Скопійовано!"
     }
   },
+  "publications": {
+    "title": "Публікації"
+  },
+  "guideVideos": {
+    "title": "Навчальні відео",
+    "allVideos": "Усі відео",
+    "categories": {
+      "sessions": "Сесії",
+      "preset": "Пресети",
+      "proxies": "Проксі",
+      "teamwork": "Командна робота"
+    },
+    "videos": {
+      "creatingSession": "Створення сесії",
+      "workingWithPresets": "Робота з пресетами",
+      "warmingUpSessions": "Прогрів сесій",
+      "mobileTabletSessions": "Робота з мобільними й планшетними сесіями",
+      "sessionManager": "Менеджер сесій",
+      "proxyManager": "Менеджер проксі",
+      "manageProxyList": "Керування списками проксі",
+      "fastProxyEditing": "Швидке редагування проксі",
+      "massActions": "Масові дії",
+      "massSessionCreation": "Масове створення сесій",
+      "installExtensions": "Встановлення розширень",
+      "importBookmarks": "Імпорт закладок",
+      "teamManagement": "Керування командою",
+      "windowControlModes": "Режими керування вікнами"
+    }
+  },
   "faq": {
     "title": "Поширені запитання",
     "allQuestions": "Усі запитання",

@@ -1,15 +1,13 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import { ARTICLES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
+import { Categories } from "@/types/common";
 import orange from "@public/images/orange-cloud-bg.webp";
 import { StaticImport } from "next/dist/shared/lib/get-img-props";
 import Image from "next/image";
 import { ComponentProps } from "react";
+import PlayButton from "../atoms/play-button";
 import CategoryAndDate from "./category-date";
-
-type Categories =
-  NonNullable<ARTICLES_QUERY_RESULT[number]["categories"]> | NonNullable<PARTNERS_QUERY_RESULT[number]["categories"]>;
 
 type PostCardProps = ComponentProps<"div"> & {
   imageSrc: string | StaticImport;
@@ -17,25 +15,29 @@ type PostCardProps = ComponentProps<"div"> & {
   description?: string;
   date?: string;
   categories?: Categories;
-  page: "blog" | "partners" | "publications";
+  page: "blog" | "partners" | "publications" | "guide-videos";
   alt?: string;
+  videoUrl?: string;
 };
 
-const PostCard = ({ imageSrc, title, description, className, categories, page, alt }: PostCardProps) => {
+const PostCard = ({ imageSrc, title, description, className, categories, page, alt, videoUrl }: PostCardProps) => {
   const isPartners = page === "partners";
 
   return (
     <div className={cn("transition-opacity duration-300 hover:opacity-70", className)}>
-      <Image
-        style={{ backgroundImage: isPartners ? `url(${orange.src})` : undefined }}
-        className="rounded-small aspect-413/232 h-auto w-full border border-white/10 bg-cover bg-center"
-        quality={100}
-        src={imageSrc}
-        alt={alt ?? ""}
-        width={350}
-        height={196}
-        loading="eager"
-      />
+      <div className="relative">
+        <Image
+          style={{ backgroundImage: isPartners ? `url(${orange.src})` : undefined }}
+          className="rounded-small aspect-413/232 h-auto w-full border border-white/10 bg-cover bg-center"
+          src={imageSrc}
+          alt={alt ?? ""}
+          width={350}
+          height={196}
+          loading="eager"
+          quality={100}
+        />
+        {videoUrl && <PlayButton href={videoUrl} />}
+      </div>
 
       {title && <h2 className="mt-5 text-xl leading-[1.2] md:text-2xl">{title}</h2>}
       {description && (

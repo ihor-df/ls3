@@ -72,6 +72,35 @@
       "copied": "Kopiert!"
     }
   },
+  "publications": {
+    "title": "Veröffentlichungen"
+  },
+  "guideVideos": {
+    "title": "Anleitungsvideos",
+    "allVideos": "Alle Videos",
+    "categories": {
+      "sessions": "Sitzungen",
+      "preset": "Voreinstellungen",
+      "proxies": "Proxys",
+      "teamwork": "Teamarbeit"
+    },
+    "videos": {
+      "creatingSession": "Sitzung erstellen",
+      "workingWithPresets": "Mit Voreinstellungen arbeiten",
+      "warmingUpSessions": "Sitzungen aufwärmen",
+      "mobileTabletSessions": "Mobile und Tablet-Sitzungen nutzen",
+      "sessionManager": "Sitzungsmanager",
+      "proxyManager": "Proxy-Manager",
+      "manageProxyList": "Proxy-Listen verwalten",
+      "fastProxyEditing": "Proxys schnell bearbeiten",
+      "massActions": "Massenaktionen",
+      "massSessionCreation": "Sitzungen in großer Zahl erstellen",
+      "installExtensions": "Erweiterungen installieren",
+      "importBookmarks": "Lesezeichen importieren",
+      "teamManagement": "Teamverwaltung",
+      "windowControlModes": "Fenstersteuerung"
+    }
+  },
   "faq": {
     "title": "Häufig gestellte Fragen",
     "allQuestions": "Alle Fragen",

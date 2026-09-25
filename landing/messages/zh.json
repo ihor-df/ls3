@@ -72,6 +72,35 @@
       "copied": "已复制！"
     }
   },
+  "publications": {
+    "title": "出版物"
+  },
+  "guideVideos": {
+    "title": "教程视频",
+    "allVideos": "全部视频",
+    "categories": {
+      "sessions": "会话",
+      "preset": "预设",
+      "proxies": "代理",
+      "teamwork": "团队协作"
+    },
+    "videos": {
+      "creatingSession": "创建会话",
+      "workingWithPresets": "使用预设",
+      "warmingUpSessions": "会话预热",
+      "mobileTabletSessions": "管理手机和平板设备会话",
+      "sessionManager": "会话管理器",
+      "proxyManager": "代理管理器",
+      "manageProxyList": "管理代理列表",
+      "fastProxyEditing": "快速编辑代理",
+      "massActions": "批量操作",
+      "massSessionCreation": "批量创建会话",
+      "installExtensions": "安装扩展程序",
+      "importBookmarks": "导入书签",
+      "teamManagement": "团队管理",
+      "windowControlModes": "窗口控制模式"
+    }
+  },
   "faq": {
     "title": "常见问题",
     "allQuestions": "全部问题",

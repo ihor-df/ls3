@@ -72,6 +72,35 @@
       "copied": "Скопировано!"
     }
   },
+  "publications": {
+    "title": "Публикации"
+  },
+  "guideVideos": {
+    "title": "Обучающие видео",
+    "allVideos": "Все видео",
+    "categories": {
+      "sessions": "Сессии",
+      "preset": "Пресеты",
+      "proxies": "Прокси",
+      "teamwork": "Командная работа"
+    },
+    "videos": {
+      "creatingSession": "Создание сессии",
+      "workingWithPresets": "Работа с пресетами",
+      "warmingUpSessions": "Прогрев сессий",
+      "mobileTabletSessions": "Работа с мобильными и планшетными сессиями",
+      "sessionManager": "Менеджер сессий",
+      "proxyManager": "Менеджер прокси",
+      "manageProxyList": "Управление списком прокси",
+      "fastProxyEditing": "Быстрое редактирование прокси",
+      "massActions": "Массовые действия",
+      "massSessionCreation": "Массовое создание сессий",
+      "installExtensions": "Установка расширений",
+      "importBookmarks": "Импорт закладок",
+      "teamManagement": "Командная работа",
+      "windowControlModes": "Режимы управления окнами"
+    }
+  },
   "faq": {
     "title": "Часто задаваемые вопросы",
     "allQuestions": "Все вопросы",

@@ -1,13 +1,9 @@
-import Container from "@/components/atoms/container";
-import Heading from "@/components/atoms/heading";
-import PageSearch from "@/components/molecules/page-search";
 import CategoryPage from "@/components/pages/partners";
 import { routing } from "@/i18n/routing";
 import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleSlugParams } from "@/types/common";
-import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPartnersQuery, PARTNER_CATEGORIES_QUERY, PARTNER_CATEGORY_QUERY } from "../../api";
 
@@ -35,7 +31,6 @@ type PageProps = {
 const Page = async ({ params, searchParams }: PageProps) => {
   const { slug, locale } = await params;
   const { q, page: pageParam } = await searchParams;
-  const t = await getTranslations("partners");
 
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
@@ -75,20 +70,14 @@ const Page = async ({ params, searchParams }: PageProps) => {
   const partners = partnersWithExtra.slice(0, limit);
 
   return (
-    <Container as="main">
-      <div className="justify-between md:flex">
-        <Heading variant="page">{t("title")}</Heading>
-        <PageSearch className="max-md:hidden" initialValue={search} />
-      </div>
-
-      <CategoryPage
-        locale={locale}
-        partners={partners}
-        categories={categories ?? []}
-        currentPage={page}
-        hasMore={hasMore}
-      />
-    </Container>
+    <CategoryPage
+      locale={locale}
+      partners={partners}
+      categories={categories ?? []}
+      currentPage={page}
+      hasMore={hasMore}
+      searchValue={search}
+    />
   );
 };
 

@@ -51,86 +51,88 @@
   }
 }
 
-.custom-scrollbar {
-  scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.06);
-  scrollbar-width: thin;
-}
+@layer components {
+  .custom-scrollbar {
+    scrollbar-color: rgba(255, 255, 255, 0.4) rgba(255, 255, 255, 0.06);
+    scrollbar-width: thin;
+  }
 
-.custom-scrollbar::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.06);
-  border-radius: 9999px;
-}
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.06);
+    border-radius: 9999px;
+  }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background-clip: padding-box;
-  background-color: rgba(255, 255, 255, 0.4);
-  border: 2px solid transparent;
-  border-radius: 9999px;
-}
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-clip: padding-box;
+    background-color: rgba(255, 255, 255, 0.4);
+    border: 2px solid transparent;
+    border-radius: 9999px;
+  }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.6);
-}
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+  }
 
-.glass-border {
-  position: relative;
-  isolation: isolate;
-}
+  .glass-border {
+    position: relative;
+    isolation: isolate;
+  }
 
-.glass-border::after {
-  content: "";
-  z-index: 1;
-  inset: 0;
-  position: absolute;
-  border-radius: inherit;
+  .glass-border::after {
+    content: "";
+    z-index: 1;
+    inset: 0;
+    position: absolute;
+    border-radius: inherit;
 
-  box-shadow:
-    inset -1.5px -2.2px 1px -1.8px rgba(255, 255, 255, 0.7),
-    inset 1.5px 2.2px 1px -1.9px rgba(255, 255, 255, 0.7);
-  mix-blend-mode: screen;
-  pointer-events: none;
-  transition: all 150ms ease;
+    box-shadow:
+      inset -1.5px -2.2px 1px -1.8px rgba(255, 255, 255, 0.7),
+      inset 1.5px 2.2px 1px -1.9px rgba(255, 255, 255, 0.7);
+    mix-blend-mode: screen;
+    pointer-events: none;
+    transition: all 150ms ease;
 
-  border-left: 1px solid rgba(255, 255, 255, 0.2);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-}
+    border-left: 1px solid rgba(255, 255, 255, 0.2);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+  }
 
-.glass {
-  background-color: rgba(202, 213, 231, 0.2);
-  transition: background-color 300ms ease;
+  .glass {
+    background-color: rgba(202, 213, 231, 0.2);
+    transition: background-color 300ms ease;
 
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
 
-  backdrop-filter: blur(24px) saturate(120%);
-  -webkit-backdrop-filter: blur(24px) saturate(120%);
-}
+    backdrop-filter: blur(24px) saturate(120%);
+    -webkit-backdrop-filter: blur(24px) saturate(120%);
+  }
 
-.glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.1) 100%);
-}
+  .glass::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.1) 100%);
+  }
 
-.glass::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: 1;
-  mix-blend-mode: screen;
-  box-shadow:
-    inset -2.4px -2.3px 1px -1.8px rgba(255, 255, 255, 0.45),
-    inset 2.4px 2.3px 1px -1.9px rgba(255, 255, 255, 0.8);
+  .glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    z-index: 1;
+    mix-blend-mode: screen;
+    box-shadow:
+      inset -2.4px -2.3px 1px -1.8px rgba(255, 255, 255, 0.45),
+      inset 2.4px 2.3px 1px -1.9px rgba(255, 255, 255, 0.8);
+  }
 }
