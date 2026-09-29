@@ -6,6 +6,7 @@ import {tableType} from './objects/tableType'
 import {faqItemType} from './objects/faqType'
 import {partnerCategoryType} from './partnerCategoryType'
 import {partnerType} from './partnerType'
+import {publicationType} from './publicationType'
 
 export const schemaTypes = [
   articleType,
@@ -16,4 +17,5 @@ export const schemaTypes = [
   faqItemType,
   partnerCategoryType,
   partnerType,
+  publicationType,
 ]

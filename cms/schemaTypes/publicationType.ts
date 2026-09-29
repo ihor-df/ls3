@@ -1,10 +1,9 @@
 import {defineField, defineType} from 'sanity'
 import {isUniqueSlugByLanguage} from '../lib/isUniqueSlugByLanguage'
-import {articleBodyField} from './objects/articleBodyField'
 
-export const partnerType = defineType({
-  name: 'partner',
-  title: 'Partner',
+export const publicationType = defineType({
+  name: 'publication',
+  title: 'Publication',
   type: 'document',
   fields: [
     defineField({
@@ -12,18 +11,6 @@ export const partnerType = defineType({
       type: 'string',
       readOnly: true,
       hidden: true,
-    }),
-    defineField({
-      name: 'categories',
-      title: 'Categories',
-      type: 'array',
-      of: [
-        {
-          type: 'reference',
-          to: [{type: 'partnerCategory'}],
-        },
-      ],
-      validation: (rule) => rule.required().min(1),
     }),
     defineField({
       name: 'title',
@@ -40,34 +27,12 @@ export const partnerType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'description',
-      type: 'text',
-    }),
-    defineField({
-      name: 'discountPercent',
-      type: 'number',
-      validation: (rule) => rule.min(1).max(99),
-    }),
-    defineField({
-      name: 'discountText',
-      type: 'string',
-    }),
-    defineField({
-      name: 'promoCode',
-      type: 'string',
-    }),
-    defineField({
       name: 'url',
       type: 'url',
+      validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'publishedAt',
-      type: 'datetime',
-      initialValue: () => new Date().toISOString(),
-      validation: (rule) => rule.required().min('1'),
-    }),
-    defineField({
-      name: 'logo',
+      name: 'cover',
       type: 'image',
       options: {
         hotspot: true,
@@ -82,6 +47,11 @@ export const partnerType = defineType({
       ],
       validation: (rule) => rule.required(),
     }),
-    articleBodyField,
+    defineField({
+      name: 'publishedAt',
+      type: 'datetime',
+      initialValue: () => new Date().toISOString(),
+      validation: (rule) => rule.required().min('1'),
+    }),
   ],
 })

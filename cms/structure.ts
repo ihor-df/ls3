@@ -47,4 +47,15 @@ export const structure: StructureResolver = (S) =>
             .filter('_type == "partnerCategory"')
             .defaultOrdering([{field: 'slug.current', direction: 'asc'}]),
         ),
+
+      S.listItem()
+        .title('Publications')
+        .child(
+          S.documentList()
+            .title('Publications')
+            .schemaType('publication')
+            .filter('_type == "publication" && language == $language')
+            .params({language: 'en'})
+            .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
+        ),
     ])

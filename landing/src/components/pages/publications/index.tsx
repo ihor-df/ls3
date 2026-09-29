@@ -20,8 +20,6 @@ type PublicationsProps = {
 const Publications = async ({ publications, currentPage, hasMore }: PublicationsProps) => {
   const t = await getTranslations("publications");
 
-  console.log({ publications });
-
   return (
     <Container as="main">
       <CollectionPageHeader title={t("title")} />
