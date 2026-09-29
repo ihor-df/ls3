@@ -1,7 +1,4 @@
-import Container from "@/components/atoms/container";
-import Heading from "@/components/atoms/heading";
-import BlogSearch from "@/components/molecules/page-search";
-import CategoryPage from "@/components/pages/blog";
+import BlogPage from "@/components/pages/blog";
 import { sanityFetch } from "@/sanity/client";
 
 import { routing } from "@/i18n/routing";
@@ -75,21 +72,17 @@ const Page = async ({ params, searchParams }: PageProps) => {
   const hasMore = postsWithExtra.length > limit;
   const posts = postsWithExtra.slice(0, limit);
 
+  // category page
   return (
-    <Container as="main">
-      <div className="justify-between md:flex">
-        <Heading variant="page">{t("title")}</Heading>
-        <BlogSearch className="max-md:hidden" initialValue={search} />
-      </div>
-
-      <CategoryPage
-        locale={locale}
-        posts={posts ?? []}
-        categories={categories ?? []}
-        currentPage={page}
-        hasMore={hasMore}
-      />
-    </Container>
+    <BlogPage
+      locale={locale}
+      posts={posts ?? []}
+      categories={categories ?? []}
+      currentPage={page}
+      hasMore={hasMore}
+      searchValue={search}
+      title={category.title ?? t("title")}
+    />
   );
 };
 

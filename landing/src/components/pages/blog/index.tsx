@@ -19,14 +19,15 @@ type BlogPageProps = {
   hasMore: boolean;
   locale: Locale;
   searchValue: string;
+  title: string;
 };
 
-const BlogPage = async ({ posts, categories, currentPage, hasMore, locale, searchValue }: BlogPageProps) => {
+const BlogPage = async ({ posts, categories, currentPage, hasMore, locale, searchValue, title }: BlogPageProps) => {
   const t = await getTranslations("blog");
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={t("title")} initialSearchValue={searchValue} />
+      <CollectionPageHeader title={title} initialSearchValue={searchValue} />
       <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="blog" categories={categories} />
 
       {!!posts?.length && (

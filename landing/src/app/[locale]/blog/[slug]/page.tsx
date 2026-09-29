@@ -1,4 +1,3 @@
-import Container from "@/components/atoms/container";
 import BlogArticle from "@/components/pages/blog/article";
 import { routing } from "@/i18n/routing";
 import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
@@ -51,11 +50,7 @@ const Page = async ({ params }: PageProps) => {
       ]
     : undefined;
 
-  return (
-    <Container>
-      <BlogArticle breadcrumbs={breadcrumbs} post={post} locale={locale} />
-    </Container>
-  );
+  return <BlogArticle breadcrumbs={breadcrumbs} post={post} locale={locale} />;
 };
 
 export default Page;

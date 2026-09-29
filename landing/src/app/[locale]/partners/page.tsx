@@ -56,6 +56,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
       currentPage={page}
       hasMore={hasMore}
       searchValue={search}
+      title={t("title")}
     />
   );
 };

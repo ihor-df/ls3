@@ -1,5 +1,4 @@
-"use client";
-
+import Container from "@/components/atoms/container";
 import Heading from "@/components/atoms/heading";
 import ArticleNav from "@/components/molecules/article-nav";
 import AvatarCard from "@/components/molecules/avatar-card";
@@ -38,52 +37,59 @@ const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
   const selfUrl = buildAbsoluteUrl(locale, `/blog/${slug}`);
 
   return (
-    <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
-      <div className="mx-auto w-full max-w-3xl min-w-0">
-        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+    <Container>
+      <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
+        <div className="mx-auto w-full max-w-3xl min-w-0">
+          {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
 
-        {(categories || publishedAt) && (
-          <CategoryAndDate
-            page="blog"
-            linked
-            categories={categories ?? []}
-            date={publishedAt ? formatDate(publishedAt, locale) : undefined}
-            className="mt-10"
-          />
-        )}
+          {(categories || publishedAt) && (
+            <CategoryAndDate
+              page="blog"
+              linked
+              categories={categories ?? []}
+              date={publishedAt ? formatDate(publishedAt, locale) : undefined}
+              className="mt-10"
+            />
+          )}
 
-        <Heading variant="article" className="mt-5">
-          {title}
-        </Heading>
+          <Heading variant="article" className="mt-5">
+            {title}
+          </Heading>
 
-        {postImageUrl && (
-          <SanityImage
-            src={postImageUrl}
-            alt="Author photo"
-            width="550"
-            height="310"
-            className="rounded-small md:rounded-large mt-5 aspect-350/197 w-full border border-white/10"
-            loading="eager"
-          />
-        )}
+          {postImageUrl && (
+            <SanityImage
+              src={postImageUrl}
+              alt="Author photo"
+              width="550"
+              height="310"
+              className="rounded-small md:rounded-large mt-5 aspect-350/197 w-full border border-white/10"
+              loading="eager"
+            />
+          )}
 
-        <div className="mt-5 flex items-center justify-between">
-          <AvatarCard alt="Publisher avatar" src={authorImageUrl ?? ""} name={author?.name} role={author?.role ?? ""} />
-          <ShareSocial url={selfUrl} title={title} imageUrl={postImageUrl ?? ""} />
+          <div className="mt-5 flex items-center justify-between">
+            <AvatarCard
+              alt="Publisher avatar"
+              src={authorImageUrl ?? ""}
+              name={author?.name}
+              role={author?.role ?? ""}
+            />
+            <ShareSocial url={selfUrl} title={title} imageUrl={postImageUrl ?? ""} />
+          </div>
+
+          <ArticleNav content={tableOfContents} />
+          <CtaSm hasDiscount />
+
+          {/* Content */}
+          {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
+
+          {faq && <FAQList data={faq} className="mt-35 md:mt-40" />}
         </div>
 
-        <ArticleNav content={tableOfContents} />
-        <CtaSm hasDiscount />
-
-        {/* Content */}
-        {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
-
-        {faq && <FAQList data={faq} className="mt-35 md:mt-40" />}
-      </div>
-
-      <hr className="my-18 border-white/10 md:my-40" />
-      <CtaLg variant="get-started" />
-    </article>
+        <hr className="my-18 border-white/10 md:my-40" />
+        <CtaLg variant="get-started" />
+      </article>
+    </Container>
   );
 };
 

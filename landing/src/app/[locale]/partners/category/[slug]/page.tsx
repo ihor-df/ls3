@@ -1,9 +1,10 @@
-import CategoryPage from "@/components/pages/partners";
+import PartnersPage from "@/components/pages/partners";
 import { routing } from "@/i18n/routing";
 import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleSlugParams } from "@/types/common";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPartnersQuery, PARTNER_CATEGORIES_QUERY, PARTNER_CATEGORY_QUERY } from "../../api";
 
@@ -31,6 +32,7 @@ type PageProps = {
 const Page = async ({ params, searchParams }: PageProps) => {
   const { slug, locale } = await params;
   const { q, page: pageParam } = await searchParams;
+  const t = await getTranslations("partners");
 
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
@@ -69,14 +71,16 @@ const Page = async ({ params, searchParams }: PageProps) => {
   const hasMore = partnersWithExtra.length > limit;
   const partners = partnersWithExtra.slice(0, limit);
 
+  // category page
   return (
-    <CategoryPage
+    <PartnersPage
       locale={locale}
       partners={partners}
       categories={categories ?? []}
       currentPage={page}
       hasMore={hasMore}
       searchValue={search}
+      title={category.title ?? t("title")}
     />
   );
 };

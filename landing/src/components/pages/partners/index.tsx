@@ -18,14 +18,15 @@ type PartnersPageProps = {
   hasMore: boolean;
   locale: Locale;
   searchValue: string;
+  title: string;
 };
 
-const PartnersPage = async ({ partners, categories, currentPage, hasMore, searchValue }: PartnersPageProps) => {
+const PartnersPage = async ({ partners, categories, currentPage, hasMore, searchValue, title }: PartnersPageProps) => {
   const t = await getTranslations("partners");
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={t("title")} initialSearchValue={searchValue} />
+      <CollectionPageHeader title={title} initialSearchValue={searchValue} />
       <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="partners" categories={categories} />
 
       {!!partners?.length && (

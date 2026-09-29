@@ -25,7 +25,6 @@ const GuideVideosPage = ({ categories, videos }: GuideVideosPageProps) => {
   const [activeCategory, handleCategoryChange] = useHashCategory(isGuideVideoCategorySlug);
 
   const t = useTranslations("guideVideos");
-
   const visibleVideos = activeCategory ? videos.filter((video) => video.category === activeCategory) : videos;
 
   return (

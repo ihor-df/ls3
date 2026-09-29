@@ -4,6 +4,7 @@ import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleParams } from "@/types/common";
+import { getTranslations } from "next-intl/server";
 import { ARTICLE_CATEGORIES_QUERY, getArticlesQuery } from "./api";
 
 export function generateStaticParams() {
@@ -18,6 +19,7 @@ type PageProps = {
 const Page = async ({ params, searchParams }: PageProps) => {
   const { locale } = await params;
   const { q, page: pageParam } = await searchParams;
+  const t = await getTranslations("blog");
 
   const search = q?.trim() ?? "";
   const parsedPage = Number(pageParam ?? "1");
@@ -54,6 +56,7 @@ const Page = async ({ params, searchParams }: PageProps) => {
       searchValue={search}
       currentPage={page}
       hasMore={hasMore}
+      title={t("title")}
     />
   );
 };
