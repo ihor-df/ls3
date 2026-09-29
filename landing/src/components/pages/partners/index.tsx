@@ -26,7 +26,7 @@ const PartnersPage = async ({ partners, categories, currentPage, hasMore, search
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={title} initialSearchValue={searchValue} />
+      <CollectionPageHeader title={title} searchValue={searchValue} />
       <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="partners" categories={categories} />
 
       {!!partners?.length && (

@@ -5,14 +5,14 @@ import Heading from "./heading";
 type CollectionPageHeaderProps = {
   className?: string;
   title: string;
-  initialSearchValue?: string;
+  searchValue?: string;
 };
 
-const CollectionPageHeader = ({ className, title, initialSearchValue }: CollectionPageHeaderProps) => {
+const CollectionPageHeader = ({ className, title, searchValue }: CollectionPageHeaderProps) => {
   return (
     <div className={cn("justify-between md:flex", className)}>
       <Heading variant="page">{title}</Heading>
-      {initialSearchValue && <PageSearch className="max-md:hidden" initialValue={initialSearchValue} />}
+      {searchValue !== undefined && <PageSearch className="max-md:hidden" initialValue={searchValue} />}
     </div>
   );
 };

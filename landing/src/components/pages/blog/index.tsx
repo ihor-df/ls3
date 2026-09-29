@@ -27,7 +27,7 @@ const BlogPage = async ({ posts, categories, currentPage, hasMore, locale, searc
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={title} initialSearchValue={searchValue} />
+      <CollectionPageHeader title={title} searchValue={searchValue} />
       <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="blog" categories={categories} />
 
       {!!posts?.length && (
