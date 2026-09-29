@@ -78,6 +78,8 @@
   "guideVideos": {
     "title": "Обучающие видео",
     "allVideos": "Все видео",
+    "watchVideo": "Смотреть видео «{title}»",
+    "closeVideo": "Закрыть видео",
     "categories": {
       "sessions": "Сессии",
       "preset": "Пресеты",

@@ -9,15 +9,15 @@ import UkFlag from "@assets/icons/flags/uk.svg";
 import ZhFlag from "@assets/icons/flags/zh.svg";
 
 import Blog from "@assets/icons/header/resources/blog.svg";
-import Contacts from "@assets/icons/header/resources/contacts.svg";
-import Documentation from "@assets/icons/header/resources/documentation.svg";
+// import Contacts from "@assets/icons/header/resources/contacts.svg";
+// import Documentation from "@assets/icons/header/resources/documentation.svg";
 import FAQ from "@assets/icons/header/resources/faq.svg";
 import GuideVideos from "@assets/icons/header/resources/guide-videos.svg";
 import Partners from "@assets/icons/header/resources/partners.svg";
 import Publications from "@assets/icons/header/resources/publications.svg";
-import ReferralProgram from "@assets/icons/header/resources/referral-program.svg";
-import VersionHistory from "@assets/icons/header/resources/version-history.svg";
-import About from "@assets/icons/logo.svg";
+// import ReferralProgram from "@assets/icons/header/resources/referral-program.svg";
+// import VersionHistory from "@assets/icons/header/resources/version-history.svg";
+// import About from "@assets/icons/logo.svg";
 
 import Fingerprint from "@assets/icons/header/platform/fingerprint.svg";
 import Mobile from "@assets/icons/header/platform/mobile.svg";
@@ -64,21 +64,21 @@ type NavigationItem = {
 };
 
 export const RESOURCES: NavigationItem[] = [
-  {
-    label: "documentation",
-    icon: Documentation,
-    href: "/docs",
-  },
+  // {
+  //   label: "documentation",
+  //   icon: Documentation,
+  //   href: "/docs",
+  // },
   {
     label: "guideVideos",
     icon: GuideVideos,
     href: "/guide-videos",
   },
-  {
-    label: "versionHistory",
-    icon: VersionHistory,
-    href: "/version-history",
-  },
+  // {
+  //   label: "versionHistory",
+  //   icon: VersionHistory,
+  //   href: "/version-history",
+  // },
   {
     label: "faq",
     icon: FAQ,
@@ -99,21 +99,21 @@ export const RESOURCES: NavigationItem[] = [
     icon: Publications,
     href: "/publications",
   },
-  {
-    label: "referralProgram",
-    icon: ReferralProgram,
-    href: "/referral-program",
-  },
-  {
-    label: "contact",
-    icon: Contacts,
-    href: "/contact",
-  },
-  {
-    label: "aboutUs",
-    icon: About,
-    href: "/about",
-  },
+  // {
+  //   label: "referralProgram",
+  //   icon: ReferralProgram,
+  //   href: "/referral-program",
+  // },
+  // {
+  //   label: "contact",
+  //   icon: Contacts,
+  //   href: "/contact",
+  // },
+  // {
+  //   label: "aboutUs",
+  //   icon: About,
+  //   href: "/about",
+  // },
 ];
 
 export const USE_CASES: NavigationItem[] = [

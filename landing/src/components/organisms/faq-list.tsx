@@ -62,13 +62,18 @@ export default function FAQList({
             const isOpen = idx === openItem;
 
             return (
-              <li key={id} value={id.toString()}>
+              <li
+                key={id}
+                value={id.toString()}
+                className={cn("rounded-small bg-[#19191A] transition-colors", !isOpen && "hover:bg-[#252526]")}
+              >
                 <button
                   type="button"
                   aria-expanded={isOpen}
+                  aria-controls={`faq-answer-${id}`}
                   className={cn(
-                    "rounded-small grid w-full bg-[#19191A] p-5 text-left transition-colors md:px-7 md:py-8",
-                    !isOpen && "cursor-pointer hover:bg-[#252526]",
+                    "grid w-full p-5 text-left transition-[padding] duration-300 md:px-7 md:py-8",
+                    isOpen ? "md:pb-6" : "cursor-pointer",
                   )}
                   onClick={() => setOpenItem(idx)}
                 >
@@ -76,23 +81,24 @@ export default function FAQList({
                     <span>{question}</span>
                     <ArrowIcon className="size-6" />
                   </span>
+                </button>
 
-                  <span
+                <div
+                  id={`faq-answer-${id}`}
+                  className={cn(
+                    "grid overflow-hidden px-5 transition-[grid-template-rows,opacity,padding] duration-300 md:px-7",
+                    isOpen ? "grid-rows-[1fr] pb-5 opacity-100 md:pb-8" : "grid-rows-[0fr] opacity-0",
+                  )}
+                >
+                  <div
                     className={cn(
-                      "grid overflow-hidden transition-[grid-template-rows,opacity,padding] duration-300",
-                      isOpen ? "grid-rows-[1fr] pt-5 opacity-100 md:pt-6" : "grid-rows-[0fr] opacity-0",
+                      "min-h-0 border-t border-transparent transition-[padding,colors] duration-300",
+                      isOpen && "border-white/10 pt-5 md:pt-6",
                     )}
                   >
-                    <span
-                      className={cn(
-                        "min-h-0 border-t border-transparent transition-[padding,colors] duration-300",
-                        isOpen && "border-white/10 pt-5 md:pt-6",
-                      )}
-                    >
-                      {answer}
-                    </span>
-                  </span>
-                </button>
+                    {answer}
+                  </div>
+                </div>
               </li>
             );
           })}

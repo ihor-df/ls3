@@ -78,6 +78,8 @@
   "guideVideos": {
     "title": "Vídeos tutoriais",
     "allVideos": "Todos os vídeos",
+    "watchVideo": "Ver vídeo: {title}",
+    "closeVideo": "Fechar vídeo",
     "categories": {
       "sessions": "Sessões",
       "preset": "Predefinições",

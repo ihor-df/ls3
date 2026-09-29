@@ -78,6 +78,8 @@
   "guideVideos": {
     "title": "Kılavuz videoları",
     "allVideos": "Tüm videolar",
+    "watchVideo": "{title} videosunu izle",
+    "closeVideo": "Videoyu kapat",
     "categories": {
       "sessions": "Oturumlar",
       "preset": "Ön ayarlar",

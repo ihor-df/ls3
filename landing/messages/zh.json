@@ -78,6 +78,8 @@
   "guideVideos": {
     "title": "教程视频",
     "allVideos": "全部视频",
+    "watchVideo": "播放《{title}》",
+    "closeVideo": "关闭视频",
     "categories": {
       "sessions": "会话",
       "preset": "预设",

@@ -78,6 +78,8 @@
   "guideVideos": {
     "title": "Навчальні відео",
     "allVideos": "Усі відео",
+    "watchVideo": "Дивитися відео «{title}»",
+    "closeVideo": "Закрити відео",
     "categories": {
       "sessions": "Сесії",
       "preset": "Пресети",

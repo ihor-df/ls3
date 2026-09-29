@@ -44,8 +44,7 @@ const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
 
           {(categories || publishedAt) && (
             <CategoryAndDate
-              page="blog"
-              linked
+              categoryBasePath="/blog/category"
               categories={categories ?? []}
               date={publishedAt ? formatDate(publishedAt, locale) : undefined}
               className="mt-10"

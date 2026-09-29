@@ -6,17 +6,16 @@ type CategoryAndDateProps = {
   categories: Categories;
   date?: string;
   className?: string;
-  linked?: boolean;
-  page: "blog" | "partners" | "guide-videos";
+  categoryBasePath?: string;
 };
 
-const CategoryAndDate = ({ categories, date, className, linked, page }: CategoryAndDateProps) => {
+const CategoryAndDate = ({ categories, date, className, categoryBasePath }: CategoryAndDateProps) => {
   return (
     <div className={cn("flex items-center gap-3 text-sm", className)}>
       <ul className="flex gap-3">
         {categories?.map((c) => (
           <li key={c._id}>
-            <Tag href={linked ? `/${page}/category/${c.slug}` : undefined}>{c.title}</Tag>
+            <Tag href={categoryBasePath && c.slug ? `${categoryBasePath}/${c.slug}` : undefined}>{c.title}</Tag>
           </li>
         ))}
       </ul>

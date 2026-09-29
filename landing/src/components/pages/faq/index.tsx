@@ -12,7 +12,7 @@ import FAQList from "@/components/organisms/faq-list";
 import useHashCategory from "@/hooks/useHashCategory";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
-import { ComponentProps } from "react";
+import { ComponentProps, Fragment } from "react";
 
 type FAQPageProps = {
   categories: {
@@ -59,26 +59,30 @@ const FAQPage = ({ categories, itemsByCategory, totalQuestionsAmount }: FAQPageP
       </div>
 
       {activeCategory === null ? (
-        <div className="mt-10 flex flex-col gap-10 md:mt-16 md:gap-16">
+        <ul className="mt-10 flex flex-col md:mt-16">
           {categories.map((category, index) => {
             const headingId = `faq-${category.slug}-heading`;
 
             return (
-              <div key={category._id}>
-                <CategoryTitle id={headingId}>{category.title}</CategoryTitle>
+              <Fragment key={category._id}>
+                <li className="mt-10 first:mt-0 md:mt-16">
+                  <CategoryTitle id={headingId}>{category.title}</CategoryTitle>
 
-                <FAQList
-                  id={`faq-${category.slug}`}
-                  aria-labelledby={headingId}
-                  data={itemsByCategory[category.slug]}
-                  schemaData={allItems}
-                  renderJsonLd={index === 0}
-                  defaultOpenItem={index === 0 ? 0 : null}
-                />
-              </div>
+                  <FAQList
+                    id={`faq-${category.slug}`}
+                    aria-labelledby={headingId}
+                    data={itemsByCategory[category.slug]}
+                    schemaData={allItems}
+                    renderJsonLd={index === 0}
+                    defaultOpenItem={index === 0 ? 0 : null}
+                  />
+                </li>
+
+                <hr className="mt-10 border-white/10 last:hidden md:mt-16" />
+              </Fragment>
             );
           })}
-        </div>
+        </ul>
       ) : (
         <div className="mt-10 md:mt-16">
           <CategoryTitle id={activeCategoryHeadingId}>{activeCategoryTitle}</CategoryTitle>

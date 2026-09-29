@@ -4,10 +4,12 @@ import { isGuideVideoCategorySlug, type GuideVideoCategorySlug } from "@/app/[lo
 import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
 import CategoryFilters from "@/components/molecules/category-filters";
-import PostCard from "@/components/molecules/post-card";
+import VideoModal from "@/components/molecules/video-modal";
+import VideoPostCard from "@/components/molecules/video-post-card";
 import useHashCategory from "@/hooks/useHashCategory";
 import { useTranslations } from "next-intl";
 import { StaticImageData } from "next/image";
+import { useState } from "react";
 
 type GuideVideosPageProps = {
   categories: { _id: string; slug: GuideVideoCategorySlug; title: string }[];
@@ -23,9 +25,14 @@ type GuideVideosPageProps = {
 
 const GuideVideosPage = ({ categories, videos }: GuideVideosPageProps) => {
   const [activeCategory, handleCategoryChange] = useHashCategory(isGuideVideoCategorySlug);
+  const [activeVideo, setActiveVideo] = useState<{ videoId: string; title: string } | null>(null);
 
   const t = useTranslations("guideVideos");
   const visibleVideos = activeCategory ? videos.filter((video) => video.category === activeCategory) : videos;
+
+  const openVideo = (videoId: string, title: string) => {
+    setActiveVideo({ videoId, title });
+  };
 
   return (
     <Container as="main">
@@ -47,16 +54,18 @@ const GuideVideosPage = ({ categories, videos }: GuideVideosPageProps) => {
       <ul className="mt-10 grid gap-8 md:mt-16 md:grid-cols-2 xl:grid-cols-3">
         {visibleVideos.map(({ id, title, category, categoryTitle, imageSrc, videoId }) => (
           <li key={id}>
-            <PostCard
+            <VideoPostCard
               title={title}
-              page="guide-videos"
               imageSrc={imageSrc}
               categories={[{ _id: category, title: categoryTitle }]}
-              videoUrl={"https://www.youtube.com/watch?v=" + videoId}
+              onPlay={() => openVideo(videoId, title)}
+              playLabel={t("watchVideo", { title })}
             />
           </li>
         ))}
       </ul>
+
+      <VideoModal video={activeVideo} closeLabel={t("closeVideo")} onClose={() => setActiveVideo(null)} />
     </Container>
   );
 };

@@ -48,7 +48,7 @@ const PartnerArticle = async ({ post, breadcrumbs }: PartnerArticleProps) => {
           <Heading variant="article">{title}</Heading>
 
           {(categories || publishedAt) && (
-            <CategoryAndDate page="partners" linked categories={categories} className="ml-5 md:ml-10" />
+            <CategoryAndDate categoryBasePath="/partners/category" categories={categories} className="ml-5 md:ml-10" />
           )}
         </div>
 

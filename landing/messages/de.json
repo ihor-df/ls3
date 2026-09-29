@@ -78,6 +78,8 @@
   "guideVideos": {
     "title": "Anleitungsvideos",
     "allVideos": "Alle Videos",
+    "watchVideo": "Video ansehen: {title}",
+    "closeVideo": "Video schließen",
     "categories": {
       "sessions": "Sitzungen",
       "preset": "Voreinstellungen",
