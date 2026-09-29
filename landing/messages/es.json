@@ -54,6 +54,11 @@
         "title": "Conviértete en nuestro socio",
         "description": "Juntos crearemos un ecosistema aún más potente y rentable para profesionales",
         "button": "Enviar solicitud"
+      },
+      "help": {
+        "title": "¿Necesitas más ayuda?",
+        "description": "Consulta guías detalladas y artículos en nuestro centro de documentación",
+        "button": "Ir a la documentación"
       }
     }
   },

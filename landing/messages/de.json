@@ -54,6 +54,11 @@
         "title": "Werden Sie unser Partner",
         "description": "Gemeinsam schaffen wir ein noch leistungsstärkeres und profitableres Ökosystem für Profis",
         "button": "Anfrage senden"
+      },
+      "help": {
+        "title": "Benötigen Sie weitere Hilfe?",
+        "description": "Ausführliche Anleitungen und Artikel finden Sie in unserer Dokumentation",
+        "button": "Zur Dokumentation"
       }
     }
   },

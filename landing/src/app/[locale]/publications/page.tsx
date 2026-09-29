@@ -13,7 +13,6 @@ type PageProps = {
 export default async function Page({ params, searchParams }: PageProps) {
   const { locale } = await params;
   const { page: pageParam } = await searchParams;
-  // const t = await getTranslations("publications");
 
   const parsedPage = Number(pageParam ?? "1");
   const page = parsedPage > 0 ? parsedPage : 1;

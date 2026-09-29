@@ -8,8 +8,8 @@ import GlassButton from "../atoms/glass-button";
 import Button from "../atoms/main-button";
 import CloudBackground from "../molecules/cloud-background";
 
-type Variant = "get-started" | "become-partner";
-type CloudObj = { title: ReactNode; description: ReactNode };
+type Variant = "get-started" | "become-partner" | "help";
+type CloudObj = { title: ReactNode; description: ReactNode; buttonText: string };
 
 type CtaProps = {
   className?: string;
@@ -24,15 +24,22 @@ const Cta = ({ variant, className }: CtaProps) => {
     "get-started": {
       title: t("getStarted.title"),
       description: t("getStarted.description"),
+      buttonText: t("getStarted.button"),
     },
     "become-partner": {
       title: t("becomePartner.title"),
       description: t("becomePartner.description"),
+      buttonText: t("becomePartner.button"),
+    },
+    help: {
+      title: t("help.title"),
+      description: t("help.description"),
+      buttonText: t("help.button"),
     },
   };
 
   return (
-    <section className={cn("rounded-large relative overflow-hidden", className)}>
+    <section className={cn("rounded-large relative mt-35 overflow-hidden md:mt-40", className)}>
       <CloudBackground playSpeed={becomePartner ? 0.7 : 1} color={becomePartner ? "blue" : "orange"} />
 
       <div
@@ -58,9 +65,13 @@ const Cta = ({ variant, className }: CtaProps) => {
 
         <div className="mt-auto">
           {becomePartner ? (
-            <GlassButton className="mx-auto w-auto max-md:mt-5 md:mt-10">{t("becomePartner.button")}</GlassButton>
+            <GlassButton className="mx-auto w-auto max-md:mt-5 md:mt-10">
+              {CONTENT_MAPPER[variant].buttonText}
+            </GlassButton>
           ) : (
-            <Button className={cn("mx-auto w-auto text-nowrap max-md:mt-5 md:mt-10")}>{t("getStarted.button")}</Button>
+            <Button className={cn("mx-auto w-auto text-nowrap max-md:mt-5 md:mt-10")}>
+              {CONTENT_MAPPER[variant].buttonText}
+            </Button>
           )}
         </div>
       </div>

@@ -54,6 +54,11 @@
         "title": "Devenez notre partenaire",
         "description": "Ensemble, créons un écosystème encore plus puissant et rentable pour les professionnels",
         "button": "Envoyer une demande"
+      },
+      "help": {
+        "title": "Besoin d’aide supplémentaire ?",
+        "description": "Retrouvez des guides détaillés et des articles dans notre centre de documentation",
+        "button": "Consulter la documentation"
       }
     }
   },

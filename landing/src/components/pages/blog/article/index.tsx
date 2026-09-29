@@ -85,7 +85,7 @@ const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
           {faq && <FAQList data={faq} className="mt-35 md:mt-40" />}
         </div>
 
-        <hr className="my-18 border-white/10 md:my-40" />
+        <hr className="mt-18 border-white/10 md:mt-40" />
         <CtaLg variant="get-started" />
       </article>
     </Container>

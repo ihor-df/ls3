@@ -55,7 +55,7 @@ const BlogPage = async ({ posts, categories, currentPage, hasMore, locale, searc
 
       {hasMore && <LoadMoreButton currentPage={currentPage} />}
 
-      <CtaLg variant="get-started" className="mt-35 md:mt-40" />
+      <CtaLg variant="get-started" />
     </Container>
   );
 };

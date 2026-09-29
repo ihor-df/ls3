@@ -75,7 +75,7 @@ const PartnerArticle = async ({ post, breadcrumbs }: PartnerArticleProps) => {
         )}
       </div>
 
-      <hr className="my-18 border-white/10 md:my-20" />
+      <hr className="mt-18 border-white/10 md:mt-20" />
       <CtaLg variant="get-started" />
     </article>
   );

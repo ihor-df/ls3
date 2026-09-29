@@ -6,6 +6,7 @@ import Container from "@/components/atoms/container";
 import CategoryFilters from "@/components/molecules/category-filters";
 import VideoModal from "@/components/molecules/video-modal";
 import VideoPostCard from "@/components/molecules/video-post-card";
+import CtaLg from "@/components/organisms/cta-lg";
 import useHashCategory from "@/hooks/useHashCategory";
 import { useTranslations } from "next-intl";
 import { StaticImageData } from "next/image";
@@ -65,6 +66,7 @@ const GuideVideosPage = ({ categories, videos }: GuideVideosPageProps) => {
         ))}
       </ul>
 
+      <CtaLg variant="help" />
       <VideoModal video={activeVideo} closeLabel={t("closeVideo")} onClose={() => setActiveVideo(null)} />
     </Container>
   );

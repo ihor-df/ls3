@@ -54,6 +54,11 @@
         "title": "İş ortağımız olun",
         "description": "Birlikte profesyoneller için daha güçlü ve daha kârlı bir ekosistem oluşturalım",
         "button": "Başvuru yapın"
+      },
+      "help": {
+        "title": "Daha fazla yardıma mı ihtiyacınız var?",
+        "description": "Ayrıntılı rehberler ve makaleler için dokümantasyon merkezimizi ziyaret edin",
+        "button": "Dokümantasyona git"
       }
     }
   },

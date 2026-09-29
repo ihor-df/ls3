@@ -54,6 +54,11 @@
         "title": "Become our partner",
         "description": "Together, we will create an even more powerful and profitable ecosystem for professionals",
         "button": "Submit a request"
+      },
+      "help": {
+        "title": "Need more help?",
+        "description": "Visit our documentation center for in-depth guides and articles",
+        "button": "Go to documentation"
       }
     }
   },
