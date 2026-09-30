@@ -62,6 +62,9 @@
       }
     }
   },
+  "versionHistory": {
+    "title": "Історія версій"
+  },
   "blog": {
     "title": "Блог",
     "allLabel": "Усі статті",

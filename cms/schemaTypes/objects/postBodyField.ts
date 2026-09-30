@@ -1,6 +1,6 @@
 import {defineField} from 'sanity'
 
-export const articleBodyField = defineField({
+export const postBodyField = defineField({
   name: 'body',
   type: 'array',
   of: [
@@ -23,7 +23,7 @@ export const articleBodyField = defineField({
         // annotations: [], // ссылка и другие структурированные отметки
       },
     },
-    {type: 'articleBodyImage'},
+    {type: 'postBodyImage'},
     {type: 'table'},
   ],
 })

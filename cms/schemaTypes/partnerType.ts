@@ -1,6 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {isUniqueSlugByLanguage} from '../lib/isUniqueSlugByLanguage'
-import {articleBodyField} from './objects/articleBodyField'
+import {postBodyField} from './objects/postBodyField'
 
 export const partnerType = defineType({
   name: 'partner',
@@ -82,6 +82,6 @@ export const partnerType = defineType({
       ],
       validation: (rule) => rule.required(),
     }),
-    articleBodyField,
+    postBodyField,
   ],
 })

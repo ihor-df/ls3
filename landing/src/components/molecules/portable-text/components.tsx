@@ -1,6 +1,6 @@
 import { Link } from "@/i18n/navigation";
 import { PortableTextComponents } from "next-sanity";
-import { ArticleBodyImage } from "./article-body-image";
+import { PostBodyImage } from "./article-body-image";
 import { ArticleTable } from "./table";
 
 export const getHeadingId = (key: string) => `section-${key}`;
@@ -48,7 +48,7 @@ export const portableTextComponents: PortableTextComponents = {
     numyer: ({ children }) => <ol className="my-5 ml-2 list-decimal space-y-2 pl-5 md:my-6">{children}</ol>,
   },
   types: {
-    articleBodyImage: ArticleBodyImage,
+    articleBodyImage: PostBodyImage,
     table: ArticleTable,
   },
 };

@@ -62,6 +62,9 @@
       }
     }
   },
+  "versionHistory": {
+    "title": "Sürüm geçmişi"
+  },
   "blog": {
     "title": "Blog",
     "allLabel": "Tüm yazılar",

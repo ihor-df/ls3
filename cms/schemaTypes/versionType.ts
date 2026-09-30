@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {isUniqueSlugByLanguage} from '../lib/isUniqueSlugByLanguage'
+import {postBodyField} from './objects/postBodyField'
 
 export const versionType = defineType({
   name: 'version',
@@ -27,11 +28,6 @@ export const versionType = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'description',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'cover',
       type: 'image',
       options: {
@@ -49,9 +45,23 @@ export const versionType = defineType({
     }),
     defineField({
       name: 'releaseDate',
-      type: 'datetime',
+      type: 'date',
       initialValue: () => new Date().toISOString(),
       validation: (rule) => rule.required().min('1'),
     }),
+    defineField({
+      name: 'releaseType',
+      title: 'Release type',
+      type: 'string',
+      options: {
+        list: [
+          {title: 'Major', value: 'major'},
+          {title: 'Minor', value: 'minor'},
+        ],
+      },
+      initialValue: 'minor',
+      validation: (rule) => rule.required(),
+    }),
+    postBodyField,
   ],
 })

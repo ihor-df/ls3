@@ -62,6 +62,9 @@
       }
     }
   },
+  "versionHistory": {
+    "title": "版本历史"
+  },
   "blog": {
     "title": "博客",
     "allLabel": "全部文章",

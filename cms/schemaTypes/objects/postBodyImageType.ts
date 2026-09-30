@@ -1,7 +1,7 @@
 import {defineField, defineType} from 'sanity'
 
-export const articleBodyImageType = defineType({
-  name: 'articleBodyImage',
+export const postBodyImageType = defineType({
+  name: 'postBodyImage',
   title: 'Image',
   type: 'object',
   fields: [

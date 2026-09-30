@@ -16,7 +16,7 @@ import GuideVideos from "@assets/icons/header/resources/guide-videos.svg";
 import Partners from "@assets/icons/header/resources/partners.svg";
 import Publications from "@assets/icons/header/resources/publications.svg";
 // import ReferralProgram from "@assets/icons/header/resources/referral-program.svg";
-// import VersionHistory from "@assets/icons/header/resources/version-history.svg";
+import VersionHistory from "@assets/icons/header/resources/version-history.svg";
 // import About from "@assets/icons/logo.svg";
 
 import Fingerprint from "@assets/icons/header/platform/fingerprint.svg";
@@ -74,11 +74,11 @@ export const RESOURCES: NavigationItem[] = [
     icon: GuideVideos,
     href: "/guide-videos",
   },
-  // {
-  //   label: "versionHistory",
-  //   icon: VersionHistory,
-  //   href: "/version-history",
-  // },
+  {
+    label: "versionHistory",
+    icon: VersionHistory,
+    href: "/version-history",
+  },
   {
     label: "faq",
     icon: FAQ,

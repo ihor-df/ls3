@@ -62,6 +62,9 @@
       }
     }
   },
+  "versionHistory": {
+    "title": "Versionsverlauf"
+  },
   "blog": {
     "title": "Blog",
     "allLabel": "Alle Artikel",

@@ -1,9 +1,22 @@
+import {DocumentIcon} from '@sanity/icons/Document'
 import type {StructureResolver} from 'sanity/structure'
 
 export const structure: StructureResolver = (S) =>
   S.list()
     .title('Content')
     .items([
+      S.listItem()
+        .title('Pages')
+        .icon(DocumentIcon)
+        .child(
+          S.documentList()
+            .title('Pages')
+            .schemaType('page')
+            .filter('_type == "page" && language == $language')
+            .params({language: 'en'})
+            .defaultOrdering([{field: 'slug.current', direction: 'asc'}]),
+        ),
+
       S.listItem()
         .title('Articles')
         .child(

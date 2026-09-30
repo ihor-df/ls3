@@ -1,6 +1,6 @@
 import {defineArrayMember, defineField, defineType} from 'sanity'
 import {isUniqueSlugByLanguage} from '../lib/isUniqueSlugByLanguage'
-import {articleBodyField} from './objects/articleBodyField'
+import {postBodyField} from './objects/postBodyField'
 
 export const articleType = defineType({
   name: 'article',
@@ -83,6 +83,6 @@ export const articleType = defineType({
       type: 'array',
       of: [defineArrayMember({type: 'faqItem'})],
     }),
-    articleBodyField,
+    postBodyField,
   ],
 })
