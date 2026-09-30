@@ -58,4 +58,15 @@ export const structure: StructureResolver = (S) =>
             .params({language: 'en'})
             .defaultOrdering([{field: 'publishedAt', direction: 'desc'}]),
         ),
+
+      S.listItem()
+        .title('Versions')
+        .child(
+          S.documentList()
+            .title('Versions')
+            .schemaType('version')
+            .filter('_type == "version" && language == $language')
+            .params({language: 'en'})
+            .defaultOrdering([{field: 'releaseDate', direction: 'desc'}]),
+        ),
     ])

@@ -7,6 +7,7 @@ import {faqItemType} from './objects/faqType'
 import {partnerCategoryType} from './partnerCategoryType'
 import {partnerType} from './partnerType'
 import {publicationType} from './publicationType'
+import {versionType} from './versionType'
 
 export const schemaTypes = [
   articleType,
@@ -18,4 +19,5 @@ export const schemaTypes = [
   partnerCategoryType,
   partnerType,
   publicationType,
+  versionType,
 ]
