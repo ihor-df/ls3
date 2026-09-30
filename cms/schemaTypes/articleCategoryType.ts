@@ -19,6 +19,11 @@ export const articleCategoryType = defineType({
       },
       validation: (rule) => rule.required(),
     }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
   preview: {
     select: {

@@ -84,5 +84,11 @@ export const articleType = defineType({
       of: [defineArrayMember({type: 'faqItem'})],
     }),
     postBodyField,
+
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
 })

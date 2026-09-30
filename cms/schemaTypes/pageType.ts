@@ -34,7 +34,6 @@ export const pageType = defineType({
       name: 'seo',
       title: 'SEO',
       type: 'seo',
-      validation: (rule) => rule.required(),
     }),
   ],
   preview: {

@@ -9,6 +9,7 @@ import {pageType} from './pageType'
 import {partnerCategoryType} from './partnerCategoryType'
 import {partnerType} from './partnerType'
 import {publicationType} from './publicationType'
+import {siteSettingsType} from './siteSettingsType'
 import {versionType} from './versionType'
 
 export const schemaTypes = [
@@ -24,4 +25,5 @@ export const schemaTypes = [
   partnerType,
   publicationType,
   versionType,
+  siteSettingsType,
 ]

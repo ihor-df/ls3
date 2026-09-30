@@ -1,4 +1,5 @@
 import {DocumentIcon} from '@sanity/icons/Document'
+import {CogIcon} from '@sanity/icons/Cog'
 import type {StructureResolver} from 'sanity/structure'
 
 export const structure: StructureResolver = (S) =>
@@ -81,5 +82,14 @@ export const structure: StructureResolver = (S) =>
             .filter('_type == "version" && language == $language')
             .params({language: 'en'})
             .defaultOrdering([{field: 'releaseDate', direction: 'desc'}]),
+        ),
+
+      S.divider(),
+
+      S.listItem()
+        .title('Site Settings')
+        .icon(CogIcon)
+        .child(
+          S.document().title('Site Settings').schemaType('siteSettings').documentId('siteSettings'),
         ),
     ])

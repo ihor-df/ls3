@@ -43,6 +43,11 @@ export default defineConfig({
     types: schemaTypes,
   },
 
+  document: {
+    newDocumentOptions: (previousOptions) =>
+      previousOptions.filter((option) => option.templateId !== 'siteSettings'),
+  },
+
   form: {
     components: {
       portableText: {

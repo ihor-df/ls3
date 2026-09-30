@@ -83,5 +83,11 @@ export const partnerType = defineType({
       validation: (rule) => rule.required(),
     }),
     postBodyField,
+
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+    }),
   ],
 })

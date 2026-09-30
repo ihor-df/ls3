@@ -10,8 +10,8 @@ export const seoType = defineType({
       title: 'Title',
       type: 'string',
       validation: (rule) => [
-        rule.required(),
-        rule.max(150).warning('SEO titles longer than 60 characters may be truncated'),
+        rule.required().warning('Meta title is recommended'),
+        rule.max(60).warning('SEO titles longer than 60 characters may be truncated'),
       ],
     }),
     defineField({
@@ -20,16 +20,15 @@ export const seoType = defineType({
       type: 'text',
       rows: 3,
       validation: (rule) => [
-        rule.required(),
-        rule.max(300).warning('SEO descriptions longer than 160 characters may be truncated'),
+        rule.required().warning('Meta description is recommended'),
+        rule.max(160).warning('SEO descriptions longer than 160 characters may be truncated'),
       ],
     }),
     defineField({
       name: 'ogImage',
       title: 'Open Graph image',
       type: 'image',
-      description:
-        'Recommended size: 1200 × 630 px',
+      description: 'Recommended size: 1200 × 630 px',
       options: {
         hotspot: true,
       },
