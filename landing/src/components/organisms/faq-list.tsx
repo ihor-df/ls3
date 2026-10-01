@@ -65,7 +65,7 @@ export default function FAQList({
               <li
                 key={id}
                 value={id.toString()}
-                className={cn("rounded-small bg-dark-grey transition-colors", !isOpen && "hover:bg-[#252526]")}
+                className={cn("rounded-small bg-dark-grey transition-colors", !isOpen && "hover:bg-sidebar-hover")}
               >
                 <button
                   type="button"

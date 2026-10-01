@@ -1261,7 +1261,7 @@
         },
         "optional": false
       },
-      "title": {
+      "version": {
         "type": "objectAttribute",
         "value": {
           "type": "string"

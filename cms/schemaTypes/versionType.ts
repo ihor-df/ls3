@@ -17,13 +17,13 @@ export const versionType = defineType({
       name: 'slug',
       type: 'slug',
       options: {
-        source: 'title',
+        source: 'version',
         isUnique: isUniqueSlugByLanguage,
       },
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: 'title',
+      name: 'version',
       type: 'string',
       validation: (rule) => rule.required(),
     }),
@@ -64,4 +64,18 @@ export const versionType = defineType({
     }),
     postBodyField,
   ],
+  preview: {
+    select: {
+      title: 'version',
+      language: 'language',
+      media: 'cover',
+    },
+    prepare({title, language, media}) {
+      return {
+        title: title || 'Untitled version',
+        subtitle: language?.toUpperCase(),
+        media,
+      }
+    },
+  },
 })

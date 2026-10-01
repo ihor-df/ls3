@@ -38,7 +38,7 @@ const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
 
   return (
     <Container>
-      <article className="min-h-screen leading-[1.4] text-[#C3C3C3] md:text-xl">
+      <article className="text-light-grey min-h-screen leading-[1.4] md:text-xl">
         <div className="mx-auto w-full max-w-3xl min-w-0">
           {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
 

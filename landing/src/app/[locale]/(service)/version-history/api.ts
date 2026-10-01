@@ -16,7 +16,7 @@ export const VERSION_HISTORY_QUERY = defineQuery(`
       defined(releaseDate)
     ] | order(releaseDate desc, _id asc) {
       _id,
-      title,
+      version,
       "slug": slug.current,
       releaseType,
       releaseDate,

@@ -11,7 +11,7 @@ type CollectionPageHeaderProps = {
 
 const CollectionPageHeader = ({ className, title, searchValue }: CollectionPageHeaderProps) => {
   return (
-    <div className={cn("w-full justify-between md:flex", className)}>
+    <div className={cn("w-full items-center justify-between gap-5 md:flex", className)}>
       <Heading className="max-md:text-center" variant="page">
         {title}
       </Heading>

@@ -18,8 +18,10 @@
   --radius-small: 1.25rem;
   --radius-large: 2.5rem;
   --color-accent-orange: #ff9556;
+  --color-light-grey: #c3c3c3;
   --color-dark-grey: #19191a;
   --color-input-default: #222;
+  --color-sidebar-hover: #252526;
 }
 
 @layer base {

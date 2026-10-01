@@ -39,7 +39,7 @@ export const portableTextComponents: PortableTextComponents = {
     strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
     highlight: ({ children }) => (
       <span className="rounded-small bg-dark-grey my-5 block p-5 md:my-6 md:p-7">
-        <mark className="bg-transparent text-[#C3C3C3]">{children}</mark>
+        <mark className="text-light-grey bg-transparent">{children}</mark>
       </span>
     ),
   },

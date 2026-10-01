@@ -231,7 +231,7 @@ export type Version = {
   _rev: string;
   language?: string;
   slug: Slug;
-  title: string;
+  version: string;
   cover: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -529,14 +529,14 @@ export type AllSanitySchemaTypes = SanityImageAssetReference | SiteSettings | Sa
 
 // Source: ../landing/src/app/[locale]/(service)/version-history/api.ts
 // Variable: VERSION_HISTORY_QUERY
-// Query: {    "page": *[      _type == "page" &&      language == $locale &&      slug.current == "version-history"    ][0] {      mainTitle    },    "versions": *[      _type == "version" &&      language == $locale &&      defined(slug.current) &&      defined(releaseDate)    ] | order(releaseDate desc, _id asc) {      _id,      title,      "slug": slug.current,      releaseType,      releaseDate,      body,      "searchText": coalesce(pt::text(body), ""),      cover {        asset->{_id, url},        alt,        hotspot,        crop      }    }  }
+// Query: {    "page": *[      _type == "page" &&      language == $locale &&      slug.current == "version-history"    ][0] {      mainTitle    },    "versions": *[      _type == "version" &&      language == $locale &&      defined(slug.current) &&      defined(releaseDate)    ] | order(releaseDate desc, _id asc) {      _id,      version,      "slug": slug.current,      releaseType,      releaseDate,      body,      "searchText": coalesce(pt::text(body), ""),      cover {        asset->{_id, url},        alt,        hotspot,        crop      }    }  }
 export type VERSION_HISTORY_QUERY_RESULT = {
   page: {
     mainTitle: string;
   } | null;
   versions: Array<{
     _id: string;
-    title: string;
+    version: string;
     slug: string;
     releaseType: "major" | "minor";
     releaseDate: string;
@@ -836,7 +836,7 @@ export type PUBLICATION_SLUGS_QUERY_RESULT = Array<{
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    "\n  {\n    \"page\": *[\n      _type == \"page\" &&\n      language == $locale &&\n      slug.current == \"version-history\"\n    ][0] {\n      mainTitle\n    },\n    \"versions\": *[\n      _type == \"version\" &&\n      language == $locale &&\n      defined(slug.current) &&\n      defined(releaseDate)\n    ] | order(releaseDate desc, _id asc) {\n      _id,\n      title,\n      \"slug\": slug.current,\n      releaseType,\n      releaseDate,\n      body,\n      \"searchText\": coalesce(pt::text(body), \"\"),\n      cover {\n        asset->{_id, url},\n        alt,\n        hotspot,\n        crop\n      }\n    }\n  }\n": VERSION_HISTORY_QUERY_RESULT;
+    "\n  {\n    \"page\": *[\n      _type == \"page\" &&\n      language == $locale &&\n      slug.current == \"version-history\"\n    ][0] {\n      mainTitle\n    },\n    \"versions\": *[\n      _type == \"version\" &&\n      language == $locale &&\n      defined(slug.current) &&\n      defined(releaseDate)\n    ] | order(releaseDate desc, _id asc) {\n      _id,\n      version,\n      \"slug\": slug.current,\n      releaseType,\n      releaseDate,\n      body,\n      \"searchText\": coalesce(pt::text(body), \"\"),\n      cover {\n        asset->{_id, url},\n        alt,\n        hotspot,\n        crop\n      }\n    }\n  }\n": VERSION_HISTORY_QUERY_RESULT;
     "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": ARTICLE_SLUGS_QUERY_RESULT;
     "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n     \"slug\": slug.current\n  }|order(title asc)\n": ARTICLE_CATEGORIES_QUERY_RESULT;
     "\n  *[_type == \"articleCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n": ARTICLE_CATEGORY_QUERY_RESULT;

@@ -15,7 +15,7 @@ const ArticleNav = ({ content, className }: ArticleNavProps) => {
     <nav className={cn("my-12 md:my-16", className)}>
       <h2 className="text-2xl leading-none font-bold md:text-4xl xl:text-[2rem]">{t("blog.article.content")}</h2>
 
-      <ul className="mt-5 list-disc pl-5 leading-[1.4] text-[#C3C3C3] md:mt-9 md:text-xl">
+      <ul className="text-light-grey mt-5 list-disc pl-5 leading-[1.4] md:mt-9 md:text-xl">
         {content.map(({ title, href }) => {
           if (!title) return;
 

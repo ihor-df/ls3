@@ -35,7 +35,7 @@ const PostCard = ({ imageSrc, title, description, className, categories, page, a
 
       {title && <h2 className="mt-5 text-xl leading-[1.2] md:text-2xl">{title}</h2>}
       {description && (
-        <p className="mt-5 line-clamp-4 leading-[1.2] tracking-[-0.01em] text-[#C3C3C3]">{description}</p>
+        <p className="text-light-grey mt-5 line-clamp-4 leading-[1.2] tracking-[-0.01em]">{description}</p>
       )}
 
       {page !== "publications" && categories && <CategoryAndDate categories={categories} className="mt-5" />}
