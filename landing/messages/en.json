@@ -13,12 +13,12 @@
     "useCases": "Use Cases",
     "resources": "Resources",
     "pages": {
-      "homepage": "Linken Sphere homepage",
+      "homepage": "Linken Sphere homepage",
       "mobileBrowser": "Mobile Antidetect Browser",
       "webAutomation": "Web Automation",
       "teamwork": "Teamwork",
       "fingerprint": "Fingerprint management",
-      "multiAccount": "Multi-Account Management",
+      "multiAccount": "Multi-Account management",
       "traffic": "Traffic Arbitrage",
       "cryptocurrency": "Cryptocurrency",
       "affiliateMarketing": "Affiliate Marketing",
@@ -27,7 +27,7 @@
       "dropshipping": "Dropshipping & eCommerce",
       "agencies": "Digital agencies",
       "pricing": "Pricing",
-      "versionHistory": "Version History",
+      "versionHistory": "Version history",
       "guideVideos": "Guide videos",
       "faq": "FAQ",
       "partners": "Partners",
@@ -67,7 +67,7 @@
     }
   },
   "versionHistory": {
-    "title": "Version History"
+    "title": "Version history"
   },
   "blog": {
     "title": "Blog",

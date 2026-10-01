@@ -1,7 +1,7 @@
 import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
-import CollectionPageList from "@/components/molecules/collection-page-list";
 import { VERSION_HISTORY_QUERY_RESULT } from "@/sanity/sanity.types";
+import VersionCard from "./version-card";
 
 type VersionHistoryPageProps = {
   versions: VERSION_HISTORY_QUERY_RESULT["versions"];
@@ -13,17 +13,21 @@ const VersionHistoryPage = async ({ versions, title }: VersionHistoryPageProps) 
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={title} searchValue={""} />
+      <CollectionPageHeader title={title} searchValue="" />
 
-      {!!versions?.length && (
-        <CollectionPageList>
-          {versions.map((v) => {
-            // const postImageUrl = v?.image ? urlFor(v.image)?.width(820).height(462).url() : null;
+      <div className="mt-10 grid flex-1 grid-cols-1 gap-10 lg:grid-cols-[300px_1fr]">
+        <div className="bg-dark-grey lg:rounded-large rounded-full p-3 pr-4 lg:pr-1.5"></div>
 
-            return <li key={v._id}>{v.title}</li>;
-          })}
-        </CollectionPageList>
-      )}
+        {!!versions?.length && (
+          <ul>
+            {versions.map((v) => {
+              // const postImageUrl = v?.image ? urlFor(v.image)?.width(820).height(462).url() : null;
+
+              return <VersionCard key={v._id} />;
+            })}
+          </ul>
+        )}
+      </div>
     </Container>
   );
 };

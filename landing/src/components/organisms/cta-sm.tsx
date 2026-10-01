@@ -14,7 +14,7 @@ const Cta = ({ hasDiscount, className }: CtaProps) => {
   const t = useTranslations("common.cta.workAnon");
 
   return (
-    <section className={cn("rounded-large bg-[#19191A]", className)}>
+    <section className={cn("rounded-large bg-dark-grey", className)}>
       <div className="rounded-large relative overflow-hidden">
         <CloudBackground color="orange" />
 

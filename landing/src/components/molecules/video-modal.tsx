@@ -37,7 +37,7 @@ const VideoModal = ({ video, closeLabel, onClose }: VideoModalProps) => {
       onClick={(event) => {
         if (event.target === event.currentTarget) dialogRef.current?.close();
       }}
-      className="rounded-small m-auto max-h-[90dvh] w-[min(92vw,960px)] max-w-none overflow-auto border border-white/15 bg-[#19191A] p-4 text-white backdrop:bg-black/80 md:p-6"
+      className="rounded-small bg-dark-grey m-auto max-h-[90dvh] w-[min(92vw,960px)] max-w-none overflow-auto border border-white/15 p-4 text-white backdrop:bg-black/80 md:p-6"
     >
       {video && (
         <>

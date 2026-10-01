@@ -37,7 +37,7 @@ export const ArticleTable = ({ value }: { value: unknown }) => {
             className={cn(
               "border-r border-white/10 p-5 text-base last:border-r-0",
               !isLast && "border-b",
-              isHeader ? "bg-[#19191A] py-7 text-left font-bold text-white md:text-xl" : "align-top",
+              isHeader ? "bg-dark-grey py-7 text-left font-bold text-white md:text-xl" : "align-top",
             )}
           >
             <PortableText value={cell.value ?? []} components={tableCellComponents} />
