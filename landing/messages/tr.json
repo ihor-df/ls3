@@ -67,7 +67,11 @@
     }
   },
   "versionHistory": {
-    "title": "Sürüm geçmişi"
+    "title": "Sürüm geçmişi",
+    "periodDrawer": {
+      "title": "Dönem seçin",
+      "closeLabel": "Dönem seçiciyi kapat"
+    }
   },
   "blog": {
     "title": "Blog",

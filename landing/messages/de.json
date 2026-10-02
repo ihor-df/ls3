@@ -67,7 +67,11 @@
     }
   },
   "versionHistory": {
-    "title": "Versionsverlauf"
+    "title": "Versionsverlauf",
+    "periodDrawer": {
+      "title": "Zeitraum auswählen",
+      "closeLabel": "Zeitraumauswahl schließen"
+    }
   },
   "blog": {
     "title": "Blog",

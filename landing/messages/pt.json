@@ -67,7 +67,11 @@
     }
   },
   "versionHistory": {
-    "title": "Histórico de versões"
+    "title": "Histórico de versões",
+    "periodDrawer": {
+      "title": "Selecionar período",
+      "closeLabel": "Fechar seleção de período"
+    }
   },
   "blog": {
     "title": "Blog",

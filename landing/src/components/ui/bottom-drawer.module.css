@@ -1,0 +1,46 @@
+.overlay[data-state="open"] {
+  animation: overlay-show 180ms ease-out;
+}
+
+.overlay[data-state="closed"] {
+  animation: overlay-hide 150ms ease-in;
+}
+
+.content[data-state="open"] {
+  animation: drawer-show 300ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+.content[data-state="closed"] {
+  animation: drawer-hide 200ms ease-in;
+}
+
+@keyframes overlay-show {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes overlay-hide {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes drawer-show {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@keyframes drawer-hide {
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay,
+  .content {
+    animation-duration: 1ms !important;
+  }
+}

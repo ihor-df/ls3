@@ -1,7 +1,11 @@
 "use client";
 
+import BottomDrawer from "@/components/ui/bottom-drawer";
 import { cn } from "@/lib/utils";
-import Circles from "@assets/icons/circles.svg";
+import ArrowIcon from "@assets/icons/arrow.svg";
+import CirclesIcon from "@assets/icons/circles.svg";
+
+import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 type MonthPickerProps = {};
@@ -59,6 +63,7 @@ const MonthItem = ({
   selected: Selected | null;
 }) => {
   const active = selected?.month === month && selected.year === year;
+
   return (
     <li
       className={cn(
@@ -73,22 +78,46 @@ const MonthItem = ({
   );
 };
 
+const Circles = ({ className }: { className?: string }) => {
+  return (
+    <div className={cn("flex size-9 items-center justify-center rounded-full bg-white/10", className)}>
+      <CirclesIcon className="size-6" />
+    </div>
+  );
+};
+
 const MonthPicker = ({}: MonthPickerProps) => {
+  const t = useTranslations("versionHistory.periodDrawer");
+
   const [selected, setSelected] = useState<Selected | null>(null);
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   const handleMonthClick = ({ year, month }: Selected) => {
     setSelected({ year, month });
   };
 
   return (
-    <div className="bg-dark-grey lg:rounded-large max-h-[calc(100dvh-300px)] overflow-y-auto rounded-full p-3 pr-4 lg:pr-1.5">
-      <ul>
+    <div className="bg-dark-grey lg:rounded-large h-15 max-h-[calc(100dvh-300px)] overflow-y-auto rounded-full p-3 pr-5 lg:h-auto lg:pr-1.5">
+      <BottomDrawer
+        open={drawerOpen}
+        onOpenChange={setDrawerOpen}
+        title={t("title")}
+        closeLabel={t("closeLabel")}
+        trigger={
+          <button type="button" className="flex w-full items-center text-2xl font-medium lg:hidden">
+            <Circles className="mr-5" />
+            2026 - All
+            <ArrowIcon className={cn("ml-auto size-4 transition-transform", drawerOpen && "rotate-180")} />
+          </button>
+        }
+      />
+
+      {/* desktop menu */}
+      <ul className="max-lg:hidden">
         {years.map((y) => (
           <li key={y.year} className="group mt-4 first:mt-0">
             <div className="flex items-center px-5 py-4">
-              <div className="flex size-9 items-center justify-center rounded-full bg-white/10">
-                <Circles className="size-6" />
-              </div>
+              <Circles />
 
               <span className="ml-4 text-2xl">{y.year}</span>
               <span className="ml-auto tracking-[-0.01em] text-[#EAF5FF]/30">

@@ -67,7 +67,11 @@
     }
   },
   "versionHistory": {
-    "title": "История версий"
+    "title": "История версий",
+    "periodDrawer": {
+      "title": "Выберите период",
+      "closeLabel": "Закрыть выбор периода"
+    }
   },
   "blog": {
     "title": "Блог",
