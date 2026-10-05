@@ -25,5 +25,12 @@ export default async function Page({ params }: PageProps) {
     revalidate: VERSIONS_REVALIDATE_TIME,
   });
 
-  return <VersionHistoryPage title={data.page?.mainTitle ?? t("title")} versions={data.versions} />;
+  return (
+    <VersionHistoryPage
+      title={data.page?.mainTitle ?? t("title")}
+      noResults={t("noResults")}
+      versions={data.versions}
+      locale={locale}
+    />
+  );
 }

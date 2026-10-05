@@ -68,9 +68,11 @@
   },
   "versionHistory": {
     "title": "Version history",
+    "noResults": "Nothing found",
     "periodDrawer": {
       "title": "Select period",
-      "closeLabel": "Close period selector"
+      "closeLabel": "Close period selector",
+      "allLabel": "All"
     }
   },
   "blog": {

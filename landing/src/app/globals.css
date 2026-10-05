@@ -83,6 +83,32 @@
     background-color: rgba(255, 255, 255, 0.6);
   }
 
+  .period-scrollbar {
+    scrollbar-color: #fff transparent;
+    scrollbar-width: thin;
+  }
+
+  .period-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .period-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+  }
+
+  .period-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #ffffff;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+    border-radius: 9999px;
+  }
+
+  .period-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #e5e5e5;
+    border: 2px solid transparent;
+  }
+
   .glass-border {
     position: relative;
     isolation: isolate;

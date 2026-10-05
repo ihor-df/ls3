@@ -68,9 +68,11 @@
   },
   "versionHistory": {
     "title": "Історія версій",
+    "noResults": "Нічого не знайдено",
     "periodDrawer": {
       "title": "Виберіть період",
-      "closeLabel": "Закрити вибір періоду"
+      "closeLabel": "Закрити вибір періоду",
+      "allLabel": "Усі"
     }
   },
   "blog": {

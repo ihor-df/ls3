@@ -68,9 +68,11 @@
   },
   "versionHistory": {
     "title": "版本历史",
+    "noResults": "未找到结果",
     "periodDrawer": {
       "title": "选择时间段",
-      "closeLabel": "关闭时间段选择器"
+      "closeLabel": "关闭时间段选择器",
+      "allLabel": "全部"
     }
   },
   "blog": {

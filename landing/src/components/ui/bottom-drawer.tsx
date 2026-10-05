@@ -13,6 +13,7 @@ type BottomDrawerProps = {
   children?: ReactNode;
   className?: string;
   overlayClassName?: string;
+  scrollAreaClassName?: string;
   open?: boolean;
   defaultOpen?: boolean;
   onOpenChange?: (open: boolean) => void;
@@ -25,6 +26,7 @@ const BottomDrawer = ({
   children,
   className,
   overlayClassName,
+  scrollAreaClassName,
   open,
   defaultOpen,
   onOpenChange,
@@ -40,7 +42,7 @@ const BottomDrawer = ({
           aria-describedby={undefined}
           className={cn(
             styles.content,
-            "bg-dark-grey rounded-t-large fixed inset-x-px bottom-0 z-50 mx-auto flex max-h-[65dvh] min-h-[50dvh] w-[100%-2px] flex-col items-center gap-5 overflow-hidden overflow-y-auto px-5 pt-10 pr-3 pb-5 text-white shadow-[0_-7px_18.6px_0_#000] outline-none md:rounded-t-[5rem] md:px-10 md:pt-12",
+            "bg-dark-grey rounded-t-large fixed inset-x-px bottom-0 z-50 mx-auto flex max-h-[65dvh] min-h-[50dvh] w-[100%-2px] flex-col items-center gap-5 overflow-hidden px-5 pt-10 pr-3 pb-5 text-white shadow-[0_-7px_18.6px_0_#000] outline-none md:rounded-t-[5rem] md:px-10 md:pt-12",
             className,
           )}
         >
@@ -65,7 +67,9 @@ const BottomDrawer = ({
             </Dialog.Close>
           </div>
 
-          <div className="custom-scrollbar min-h-0 w-full flex-1 overflow-y-auto">{children}</div>
+          <div className={cn("custom-scrollbar min-h-0 w-full flex-1 overflow-y-auto", scrollAreaClassName)}>
+            {children}
+          </div>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>

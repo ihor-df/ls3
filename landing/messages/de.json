@@ -68,9 +68,11 @@
   },
   "versionHistory": {
     "title": "Versionsverlauf",
+    "noResults": "Nichts gefunden",
     "periodDrawer": {
       "title": "Zeitraum auswählen",
-      "closeLabel": "Zeitraumauswahl schließen"
+      "closeLabel": "Zeitraumauswahl schließen",
+      "allLabel": "Alle"
     }
   },
   "blog": {

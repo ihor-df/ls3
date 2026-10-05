@@ -3,179 +3,145 @@
 import BottomDrawer from "@/components/ui/bottom-drawer";
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@assets/icons/arrow.svg";
-import { useState } from "react";
-
 import { useTranslations } from "next-intl";
-import { Circles, MonthButtonDesktop, MonthButtonMobile, SelectedDate, SelectYearButton } from "./components";
+import { useState } from "react";
+import { Circles, MonthButtonDesktop, MonthButtonMobile, SelectYearButton } from "./components";
+import type { PeriodGroup, SelectedPeriod } from "./types";
 
-type MonthPickerProps = {};
+type MonthPickerProps = {
+  periods: PeriodGroup[];
+  selectedPeriod: SelectedPeriod | null;
+  onPeriodChange: (period: SelectedPeriod) => void;
+};
 
-const years = [
-  {
-    year: 2026,
-    months: [
-      {
-        month: "April",
-        amount: 2,
-      },
-      {
-        month: "March",
-        amount: 4,
-      },
-      {
-        month: "February",
-        amount: 3,
-      },
-    ],
-  },
-  {
-    year: 2025,
-    months: [
-      {
-        month: "December",
-        amount: 6,
-      },
-      {
-        month: "September",
-        amount: 4,
-      },
-      {
-        month: "June",
-        amount: 3,
-      },
-    ],
-  },
-  {
-    year: 2024,
-    months: [
-      {
-        month: "November",
-        amount: 2,
-      },
-      {
-        month: "July",
-        amount: 4,
-      },
-      {
-        month: "June",
-        amount: 3,
-      },
-    ],
-  },
-];
-
-const MonthPicker = ({}: MonthPickerProps) => {
+const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerProps) => {
   const t = useTranslations("versionHistory.periodDrawer");
-
-  const [selectedDate, setSelectedDate] = useState<SelectedDate | null>(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  const changeDate = ({ year, month }: SelectedDate) => {
-    setSelectedDate({ year, month });
-  };
+  const selectedYear = periods.find((period) => period.year === selectedPeriod?.year);
+  const selectedMonth = selectedYear?.months.find((month) => month.value === selectedPeriod?.month);
+  const selectedLabel = selectedPeriod
+    ? `${selectedPeriod.year} - ${selectedMonth?.label ?? t("allLabel")}`
+    : t("allLabel");
 
   return (
-    <div className="bg-dark-grey lg:rounded-large h-15 max-h-[calc(100dvh-300px)] overflow-y-auto rounded-full p-3 pr-5 lg:h-auto lg:pr-0.5">
-      {/* Mobile menu */}
-      <BottomDrawer
-        open={drawerOpen}
-        onOpenChange={setDrawerOpen}
-        title={t("title")}
-        closeLabel={t("closeLabel")}
-        trigger={
-          <button type="button" className="flex w-full items-center text-2xl font-medium lg:hidden">
-            <Circles className="mr-5" />
-            {selectedDate?.year} - {selectedDate?.month ? selectedDate.month : "All"}
-            <ArrowIcon className={cn("ml-auto size-4 transition-transform", drawerOpen && "rotate-180")} />
-          </button>
-        }
-      >
-        <ul className="mr-2">
-          {years.map((y) => {
-            const total = y.months.reduce((acc, val) => acc + val.month.length, 0);
-            const isOpen = selectedDate?.year === y.year;
-            const fullYear = selectedDate?.month === null && isOpen;
+    <div className="bg-dark-grey lg:rounded-large h-15 max-h-max rounded-full p-3 pr-5 lg:h-auto lg:pr-1">
+      <div className="period-scrollbar max-h-[calc(100dvh-300px)] lg:min-h-70 lg:overflow-y-auto">
+        {/* Mobile menu */}
+        <BottomDrawer
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+          title={t("title")}
+          closeLabel={t("closeLabel")}
+          scrollAreaClassName="period-scrollbar"
+          trigger={
+            <button type="button" className="flex w-full items-center text-2xl font-medium lg:hidden">
+              <Circles className="mr-5" />
+              {selectedLabel}
+              <ArrowIcon className={cn("ml-auto size-4 transition-transform", drawerOpen && "rotate-180")} />
+            </button>
+          }
+        >
+          <ul className="mr-2">
+            {periods.map((period) => {
+              const isOpen = selectedPeriod?.year === period.year;
+              const fullYear = selectedPeriod?.month === null && isOpen;
+              const monthsId = `period-months-${period.year}`;
 
-            return (
-              <li key={y.year} className="group mt-5 first:mt-0">
-                <SelectYearButton
-                  onClick={() => changeDate({ year: y.year, month: null })}
-                  variant="mobile"
-                  year={y.year}
-                  selectedDate={selectedDate}
-                  quantity={total}
-                  isOpen={selectedDate?.year === y.year}
-                  iconSize="lg"
-                  arrowClassName="size-6"
-                />
+              return (
+                <li key={period.year} className="group mt-5 first:mt-0">
+                  <SelectYearButton
+                    onClick={() => onPeriodChange({ year: period.year, month: null })}
+                    variant="mobile"
+                    year={period.year}
+                    selectedDate={selectedPeriod}
+                    quantity={period.count}
+                    isOpen={isOpen}
+                    iconSize="lg"
+                    arrowClassName="size-6"
+                    aria-controls={monthsId}
+                    aria-expanded={isOpen}
+                  />
 
-                <ul
-                  className={cn(
-                    "mt-2 grid h-0 grid-cols-3 gap-2 overflow-hidden md:flex md:flex-wrap",
-                    isOpen && "h-auto",
-                  )}
-                >
-                  <li className="col-span-3">
-                    <MonthButtonMobile active={fullYear} className="h-full max-md:h-13 md:text-center">
-                      All{" "}
-                      <span className="font-medium text-[rgba(234,245,255,0.30)] max-md:ml-3 md:mt-1 md:block">
-                        {total}
-                      </span>
-                    </MonthButtonMobile>
-                  </li>
+                  <div
+                    className={cn(
+                      "grid transition-[grid-template-rows] duration-300 ease-in-out",
+                      isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]",
+                    )}
+                  >
+                    <div className="min-h-0 overflow-hidden" aria-hidden={!isOpen} inert={!isOpen}>
+                      <ul id={monthsId} className="mt-2 grid grid-cols-3 gap-2 md:flex md:flex-wrap">
+                        <li className="col-span-3">
+                          <MonthButtonMobile
+                            active={fullYear}
+                            className="h-full max-md:h-13 md:text-center"
+                            onClick={() => onPeriodChange({ year: period.year, month: null })}
+                          >
+                            {t("allLabel")}{" "}
+                            <span className="font-medium text-[rgba(234,245,255,0.30)] max-md:ml-3 md:mt-1 md:block">
+                              {period.count}
+                            </span>
+                          </MonthButtonMobile>
+                        </li>
 
-                  {y.months.map((m) => {
-                    const current = selectedDate?.month === m.month && selectedDate?.year === y.year;
-                    return (
-                      <li key={m.month}>
-                        <MonthButtonMobile active={current} className="px-3 py-4 text-center">
-                          {m.month}
-                          <span className="mt-1 block font-medium text-[rgba(234,245,255,0.30)]">{m.amount}</span>
-                        </MonthButtonMobile>
-                      </li>
-                    );
-                  })}
-                </ul>
+                        {period.months.map((month) => {
+                          const current = selectedPeriod?.month === month.value && selectedPeriod?.year === period.year;
+                          return (
+                            <li key={month.value}>
+                              <MonthButtonMobile
+                                active={current}
+                                className="px-3 py-4 text-center"
+                                onClick={() => onPeriodChange({ year: period.year, month: month.value })}
+                              >
+                                {month.label}
+                                <span className="mt-1 block font-medium text-[rgba(234,245,255,0.30)]">
+                                  {month.count}
+                                </span>
+                              </MonthButtonMobile>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  </div>
 
-                <hr className="mt-5 border-white/10 group-last:hidden" />
-              </li>
-            );
-          })}
-        </ul>
-      </BottomDrawer>
+                  <hr className="mt-5 border-white/10 group-last:hidden" />
+                </li>
+              );
+            })}
+          </ul>
+        </BottomDrawer>
 
-      {/* Desktop menu */}
-      <ul className="pr-2 max-lg:hidden">
-        {years.map((y) => {
-          const total = y.months.reduce((acc, val) => acc + val.month.length, 0);
-
-          return (
-            <li key={y.year} className="group mt-4 first:mt-0">
+        {/* Desktop menu */}
+        <ul className="pr-2 max-lg:hidden">
+          {periods.map((period) => (
+            <li key={period.year} className="group mt-4 first:mt-0">
               <SelectYearButton
-                selectedDate={selectedDate}
-                onClick={() => changeDate({ year: y.year, month: null })}
-                year={y.year}
-                quantity={total}
+                selectedDate={selectedPeriod}
+                onClick={() => onPeriodChange({ year: period.year, month: null })}
+                year={period.year}
+                quantity={period.count}
               />
 
               <ul>
-                {y.months.map((m) => (
-                  <li key={m.month}>
+                {period.months.map((month) => (
+                  <li key={month.value}>
                     <MonthButtonDesktop
-                      year={y.year}
-                      month={m.month}
-                      amount={m.amount}
-                      selected={selectedDate}
-                      onClick={() => changeDate({ year: y.year, month: m.month })}
+                      year={period.year}
+                      month={month.value}
+                      label={month.label}
+                      amount={month.count}
+                      selected={selectedPeriod}
+                      onClick={() => onPeriodChange({ year: period.year, month: month.value })}
                     />
                   </li>
                 ))}
               </ul>
               <hr className="mt-4 border-white/10 group-last:hidden" />
             </li>
-          );
-        })}
-      </ul>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

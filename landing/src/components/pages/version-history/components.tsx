@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils";
 import ArrowIcon from "@assets/icons/arrow.svg";
 import CirclesIcon from "@assets/icons/circles.svg";
 import { ComponentProps } from "react";
+import type { SelectedPeriod } from "./types";
 
 export const Circles = ({ className, size = "sm" }: { className?: string; size?: "sm" | "lg" }) => {
   return (
@@ -17,19 +18,19 @@ export const Circles = ({ className, size = "sm" }: { className?: string; size?:
   );
 };
 
-export type SelectedDate = { year: number; month: string | null };
-
 export const MonthButtonDesktop = ({
   month,
+  label,
   amount,
   year,
   selected,
   ...props
 }: ComponentProps<"button"> & {
-  month: string;
+  month: number;
+  label: string;
   amount: number;
   year: number;
-  selected: SelectedDate | null;
+  selected: SelectedPeriod | null;
 }) => {
   const active = selected?.month === month && selected.year === year;
 
@@ -41,8 +42,9 @@ export const MonthButtonDesktop = ({
         active && "bg-sidebar-hover",
       )}
       type="button"
+      aria-pressed={active}
     >
-      <span className={cn("text-xl font-bold text-white/60", active && "text-white")}>{month}</span>{" "}
+      <span className={cn("text-xl font-bold text-white/60", active && "text-white")}>{label}</span>{" "}
       <span className="tracking-[-0.01em] text-[#EAF5FF]/30">{amount}</span>
     </button>
   );
@@ -63,7 +65,7 @@ export const SelectYearButton = ({
   quantity?: number;
   isOpen?: boolean;
   variant?: "mobile" | "desktop";
-  selectedDate: SelectedDate | null;
+  selectedDate: SelectedPeriod | null;
   iconSize?: "sm" | "lg";
   arrowClassName?: string;
 }) => {
@@ -78,6 +80,8 @@ export const SelectYearButton = ({
         active && variant === "desktop" && "bg-sidebar-hover",
         className,
       )}
+      aria-pressed={active}
+      type="button"
     >
       <Circles size={iconSize} />
       <span className="ml-4 text-2xl">{year}</span>
@@ -105,6 +109,8 @@ export const MonthButtonMobile = ({
         active && "border-white",
         className,
       )}
+      aria-pressed={active}
+      type="button"
     >
       {children}
     </button>
