@@ -1,8 +1,7 @@
-import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
+import CollectionPageHeader from "@/components/system/collection-page-header";
 import { VERSION_HISTORY_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
-import { Suspense } from "react";
 import VersionHistoryContent from "./content";
 import { buildVersionHistoryData } from "./data";
 
@@ -18,15 +17,18 @@ const VersionHistoryPage = ({ versions, title, locale, noResults }: VersionHisto
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={title} searchValue="" searchNavigationMode="history" />
-      <Suspense fallback={null}>
-        <VersionHistoryContent
-          locale={locale}
-          noResults={noResults}
-          versions={versionHistoryData.versions}
-          periods={versionHistoryData.periods}
-        />
-      </Suspense>
+      <CollectionPageHeader
+        title={title}
+        initialSearchValue=""
+        searchNavigationMode="history"
+        searchClassName="max-lg:hidden"
+      />
+      <VersionHistoryContent
+        locale={locale}
+        noResults={noResults}
+        versions={versionHistoryData.versions}
+        periods={versionHistoryData.periods}
+      />
     </Container>
   );
 };

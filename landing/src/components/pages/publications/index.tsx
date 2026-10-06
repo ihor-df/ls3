@@ -1,9 +1,9 @@
-import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
 import CollectionPageList from "@/components/molecules/collection-page-list";
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
 import CtaLg from "@/components/organisms/cta-lg";
+import CollectionPageHeader from "@/components/system/collection-page-header";
 import { Link } from "@/i18n/navigation";
 import { urlFor } from "@/sanity/helpers";
 import type { PUBLICATIONS_QUERY_RESULT } from "@/sanity/sanity.types";

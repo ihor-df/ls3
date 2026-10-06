@@ -5,10 +5,10 @@ import {
   type FAQCategorySlug,
   type FAQItemsByCategory,
 } from "@/app/[locale]/(service)/faq/constants";
-import CollectionPageHeader from "@/components/atoms/collection-page-header";
 import Container from "@/components/atoms/container";
 import CategoryFilters from "@/components/molecules/category-filters";
 import FAQList from "@/components/organisms/faq-list";
+import CollectionPageHeader from "@/components/system/collection-page-header";
 import useHashCategory from "@/hooks/useHashCategory";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";

@@ -1,8 +1,9 @@
+// disable scroll by condition
+
 "use client";
 
 import { useEffect } from "react";
 
-// disable scroll by condition
 export default function useScrollLock(isLocked: boolean) {
   useEffect(() => {
     if (!isLocked) return;

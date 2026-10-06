@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import Cross from "@assets/icons/cross.svg";
-import { ChangeEvent, ComponentPropsWithoutRef, FormEvent, useEffect, useState } from "react";
+import { ComponentPropsWithoutRef, FormEvent, useEffect, useState } from "react";
 
 type SearchInputProps = Omit<ComponentPropsWithoutRef<"input">, "className" | "defaultValue" | "onChange" | "value"> & {
   className?: string;
@@ -26,22 +26,14 @@ const SearchInput = ({
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSearch?.(value.trim());
+    const search = value.trim();
+    setValue(search);
+    onSearch?.(search);
   };
 
   const handleReset = () => {
     setValue("");
     onSearch?.("");
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const nextValue = event.target.value;
-
-    setValue(nextValue);
-
-    if (value.trim() && !nextValue.trim()) {
-      onSearch?.("");
-    }
   };
 
   return (
@@ -54,15 +46,7 @@ const SearchInput = ({
         className={cn(
           "bg-input-default relative h-full w-full rounded-full border border-transparent pr-13 pl-6 font-medium placeholder-[#EAF5FF]/30 transition-colors outline-none hover:bg-[#2E2E2E] focus:border-[#313131]",
         )}
-        onChange={handleChange}
-        onKeyDown={(event) => {
-          props.onKeyDown?.(event);
-
-          if (event.defaultPrevented || event.key !== "Enter") return;
-
-          event.preventDefault();
-          onSearch?.(value.trim());
-        }}
+        onChange={(event) => setValue(event.target.value)}
       />
       {/* TODO: Add translations */}
       <button type="submit" className="sr-only">

@@ -4,17 +4,17 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { MobileMenuCategory } from "../types";
 
 import Menu from "@assets/icons/menu.svg";
 import logo from "@public/images/logo-sm@2x.png";
 
-import SearchInputMobile from "@/components/atoms/search-input-mobile";
 import { LangSwitcherItem } from "../components";
 import { LOCALES_DATA } from "../constants";
 import { CloseButton } from "./components";
 import MenuBody from "./menu-body";
+import MobilePageSearch from "./mobile-page-search";
 
 type NavigationMobileProps = {
   isPathActive: (href: string) => boolean;
@@ -31,13 +31,9 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
   const pathname = usePathname();
   const t = useTranslations("navigation");
   const tPages = useTranslations("navigation.pages");
-  const hasSearch = pathname.startsWith("/version-history");
+  const hasSearch = pathname === "/version-history";
 
   useScrollLock(isMenuOpen || isLangMenuOpen);
-
-  const handleOpenSearch = (value: boolean) => {
-    setIsSearchOpen(value);
-  };
 
   const openMobileMenu = () => {
     setActiveMenu("root");
@@ -85,6 +81,7 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
 
   useEffect(() => {
     closeMobileMenu();
+    setIsSearchOpen(false);
   }, [pathname]);
 
   return (
@@ -124,16 +121,25 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
         </Link>
 
         <div
-          onBlur={() => setIsSearchOpen(false)}
+          onBlur={(event) => {
+            const focusLeftSearch = !event.currentTarget.contains(event.relatedTarget);
+            const hasSearchValue = Boolean(event.currentTarget.querySelector("input")?.value.trim());
+
+            if (focusLeftSearch && !hasSearchValue) setIsSearchOpen(false);
+          }}
           className={cn(
             "absolute top-2 right-2 z-10 flex h-12 gap-1 transition-[width] ease-out",
             hasSearch ? "w-25" : "w-12",
             isSearchOpen && "w-[calc(100%-1rem)]",
           )}
         >
-          {hasSearch && <SearchInputMobile handleOpen={handleOpenSearch} isOpen={isSearchOpen} />}
+          {hasSearch && (
+            <Suspense fallback={<div className="h-12 min-w-0 flex-1 rounded-full bg-white/10" aria-hidden="true" />}>
+              <MobilePageSearch onOpen={setIsSearchOpen} isOpen={isSearchOpen} />
+            </Suspense>
+          )}
 
-          {!isSearchOpen ? (
+          {!isSearchOpen && (
             <ButtonRounded
               className="size-12 uppercase"
               buttonProps={{
@@ -145,8 +151,6 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
             >
               <Menu aria-hidden="true" className="size-5" />
             </ButtonRounded>
-          ) : (
-            <CloseButton ariaLabel="Hide search" onClick={() => setIsSearchOpen(false)} />
           )}
         </div>
       </div>
@@ -164,7 +168,7 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
         }}
       />
 
-      {/* menu body */}
+      {/* Menu body */}
       <MenuBody
         isMenuOpen={isMenuOpen}
         activeMenu={activeMenu}
@@ -183,7 +187,6 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
           isLangMenuOpen ? "translate-x-0" : "-translate-x-full",
         )}
       >
-        {/* header */}
         <div className="flex shrink-0 items-center justify-between p-7 pb-5">
           <CloseButton ariaLabel={t("closeMenu")} onClick={closeLangMenu} />
         </div>

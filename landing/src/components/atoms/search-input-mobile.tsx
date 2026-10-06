@@ -2,7 +2,7 @@
 
 import { cn } from "@/lib/utils";
 import SearchIcon from "@assets/icons/search.svg";
-import { ChangeEvent, ComponentPropsWithoutRef, FormEvent, useEffect, useState } from "react";
+import { ComponentPropsWithoutRef, FormEvent, useEffect, useState } from "react";
 
 type SearchInputMobileProps = Omit<
   ComponentPropsWithoutRef<"input">,
@@ -30,25 +30,13 @@ const SearchInputMobile = ({
 
   useEffect(() => {
     setValue(initialValue);
-  }, [initialValue]);
+  }, [initialValue, isOpen]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onSearch?.(value.trim());
-  };
-
-  const handleReset = () => {
-    setValue("");
-    onSearch?.("");
-  };
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const nextValue = event.target.value;
-    setValue(nextValue);
-
-    if (value.trim() && !nextValue.trim()) {
-      onSearch?.("");
-    }
+    const search = value.trim();
+    setValue(search);
+    onSearch?.(search);
   };
 
   return (
@@ -73,14 +61,7 @@ const SearchInputMobile = ({
           "relative h-full min-w-0 flex-1 pr-4 pl-10.5 font-medium placeholder-[#EAF5FF]/30 transition-opacity duration-200 outline-none",
           !isOpen && "opacity-0",
         )}
-        onChange={handleChange}
-        onKeyDown={(event) => {
-          props.onKeyDown?.(event);
-          if (event.defaultPrevented || event.key !== "Enter") return;
-
-          event.preventDefault();
-          onSearch?.(value.trim());
-        }}
+        onChange={(event) => setValue(event.target.value)}
       />
 
       <button type="submit" className="sr-only">
