@@ -19,13 +19,15 @@ const CollectionPageHeader = ({
   searchNavigationMode,
   searchClassName = "max-md:hidden",
 }: CollectionPageHeaderProps) => {
+  const hasSearch = initialSearchValue !== undefined;
+
   return (
     <div className={cn("w-full items-center justify-between gap-5 md:flex", className)}>
       <Heading className="max-md:text-center" variant="page">
         {title}
       </Heading>
 
-      {initialSearchValue !== undefined && (
+      {hasSearch && (
         <Suspense fallback={<div className={cn("h-15 w-full md:max-w-75", searchClassName)} aria-hidden="true" />}>
           <PageSearch
             className={searchClassName}

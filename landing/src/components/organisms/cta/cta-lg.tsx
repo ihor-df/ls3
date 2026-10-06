@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils";
+import GlassButton from "@components/atoms/glass-button";
+import Button from "@components/atoms/main-button";
+import CloudBackground from "@components/molecules/cloud-background";
 import logo from "@public/images/logo-sm@2x.png";
 import news from "@public/images/news@2x.png";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { ReactNode } from "react";
-import GlassButton from "../atoms/glass-button";
-import Button from "../atoms/main-button";
-import CloudBackground from "../molecules/cloud-background";
 
 type Variant = "get-started" | "become-partner" | "help";
 type CloudObj = { title: ReactNode; description: ReactNode; buttonText: string };

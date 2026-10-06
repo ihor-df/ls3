@@ -7,8 +7,8 @@ import {
 } from "@/app/[locale]/(service)/faq/constants";
 import Container from "@/components/atoms/container";
 import CategoryFilters from "@/components/molecules/category-filters";
+import CollectionPageHeader from "@/components/organisms/collection-page-header";
 import FAQList from "@/components/organisms/faq-list";
-import CollectionPageHeader from "@/components/system/collection-page-header";
 import useHashCategory from "@/hooks/useHashCategory";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";

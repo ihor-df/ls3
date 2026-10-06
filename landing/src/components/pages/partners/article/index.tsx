@@ -5,7 +5,7 @@ import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcru
 import CategoryAndDate from "@/components/molecules/category-date";
 import { portableTextComponents } from "@/components/molecules/portable-text/components";
 
-import CtaLg from "@/components/organisms/cta-lg";
+import CtaLg from "@/components/organisms/cta/cta-lg";
 import { urlFor } from "@/sanity/helpers";
 import type { PARTNER_QUERY_RESULT } from "@/sanity/sanity.types";
 import orange from "@public/images/orange-cloud-bg.webp";
