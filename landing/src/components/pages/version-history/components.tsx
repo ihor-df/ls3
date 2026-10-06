@@ -73,6 +73,7 @@ export const SelectYearButton = ({
 
   return (
     <button
+      type="button"
       {...props}
       className={cn(
         "flex w-full cursor-pointer items-center rounded-full py-4 pr-1 transition-colors",
@@ -81,10 +82,9 @@ export const SelectYearButton = ({
         className,
       )}
       aria-pressed={active}
-      type="button"
     >
       <Circles size={iconSize} />
-      <span className="ml-4 text-2xl">{year}</span>
+      <span className="ml-4 text-xl lg:text-2xl">{year}</span>
       <span className="ml-auto flex gap-7">
         {quantity && <span className="tracking-[-0.01em] text-[#EAF5FF]/30">{quantity}</span>}
         {variant === "mobile" && (

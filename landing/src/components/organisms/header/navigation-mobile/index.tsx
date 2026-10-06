@@ -9,6 +9,8 @@ import { MobileMenuCategory } from "../types";
 
 import Menu from "@assets/icons/menu.svg";
 import logo from "@public/images/logo-sm@2x.png";
+
+import SearchInputMobile from "@/components/atoms/search-input-mobile";
 import { LangSwitcherItem } from "../components";
 import { LOCALES_DATA } from "../constants";
 import { CloseButton } from "./components";
@@ -23,13 +25,19 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MobileMenuCategory>("root");
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const locale = useLocale();
   const pathname = usePathname();
   const t = useTranslations("navigation");
   const tPages = useTranslations("navigation.pages");
+  const hasSearch = pathname.startsWith("/version-history");
 
   useScrollLock(isMenuOpen || isLangMenuOpen);
+
+  const handleOpenSearch = (value: boolean) => {
+    setIsSearchOpen(value);
+  };
 
   const openMobileMenu = () => {
     setActiveMenu("root");
@@ -87,8 +95,12 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
         )}
       >
         <ButtonRounded
-          className="size-12 font-bold uppercase"
+          className={cn(
+            "size-12 font-bold uppercase transition-[color,background-color,opacity,transform] duration-200",
+            isSearchOpen && "pointer-events-none scale-90 opacity-0",
+          )}
           buttonProps={{
+            inert: isSearchOpen,
             "aria-expanded": isLangMenuOpen,
             "aria-label": t("changeLanguage", { language: locale.toUpperCase() }),
             "aria-controls": "mobile-language-menu",
@@ -99,25 +111,44 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
         </ButtonRounded>
 
         <Link
-          className="h-full"
+          className={cn(
+            "absolute top-0 left-1/2 h-full -translate-x-1/2 transition-opacity duration-200",
+            isSearchOpen && "pointer-events-none opacity-0",
+          )}
+          inert={isSearchOpen}
           href="/"
           aria-label={tPages("homepage")}
           aria-current={pathname === "/" ? "page" : undefined}
         >
-          <Image src={logo} alt="Linken Sphere logo" className="h-full w-auto scale-[1.2] rounded-full duration-300" />
+          <Image src={logo} alt="Linken Sphere logo" className="h-16 w-auto rounded-full duration-300" />
         </Link>
 
-        <ButtonRounded
-          className="size-12 uppercase"
-          buttonProps={{
-            "aria-expanded": isMenuOpen,
-            "aria-label": t("openMenu"),
-            "aria-controls": "mobile-root-submenu",
-            onClick: openMobileMenu,
-          }}
+        <div
+          onBlur={() => setIsSearchOpen(false)}
+          className={cn(
+            "absolute top-2 right-2 z-10 flex h-12 gap-1 transition-[width] ease-out",
+            hasSearch ? "w-25" : "w-12",
+            isSearchOpen && "w-[calc(100%-1rem)]",
+          )}
         >
-          <Menu aria-hidden="true" className="size-5" />
-        </ButtonRounded>
+          {hasSearch && <SearchInputMobile handleOpen={handleOpenSearch} isOpen={isSearchOpen} />}
+
+          {!isSearchOpen ? (
+            <ButtonRounded
+              className="size-12 uppercase"
+              buttonProps={{
+                "aria-expanded": isMenuOpen,
+                "aria-label": t("openMenu"),
+                "aria-controls": "mobile-root-submenu",
+                onClick: openMobileMenu,
+              }}
+            >
+              <Menu aria-hidden="true" className="size-5" />
+            </ButtonRounded>
+          ) : (
+            <CloseButton ariaLabel="Hide search" onClick={() => setIsSearchOpen(false)} />
+          )}
+        </div>
       </div>
 
       {/* Backdrop */}

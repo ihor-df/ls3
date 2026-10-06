@@ -1,23 +1,31 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import Cross from "@assets/icons/cross.svg";
+import SearchIcon from "@assets/icons/search.svg";
 import { ChangeEvent, ComponentPropsWithoutRef, FormEvent, useEffect, useState } from "react";
 
-type SearchInputProps = Omit<ComponentPropsWithoutRef<"input">, "className" | "defaultValue" | "onChange" | "value"> & {
+type SearchInputMobileProps = Omit<
+  ComponentPropsWithoutRef<"input">,
+  "className" | "defaultValue" | "onChange" | "value"
+> & {
   className?: string;
   initialValue?: string;
   onSearch?: (value: string) => void;
   placeholder?: string;
+  isOpen: boolean;
+  handleOpen: (value: boolean) => void;
 };
 
-const SearchInput = ({
+const SearchInputMobile = ({
   className,
   initialValue = "",
   onSearch,
   placeholder = "Search",
+  isOpen,
+  handleOpen,
+  onFocus,
   ...props
-}: SearchInputProps) => {
+}: SearchInputMobileProps) => {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
@@ -36,7 +44,6 @@ const SearchInput = ({
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const nextValue = event.target.value;
-
     setValue(nextValue);
 
     if (value.trim() && !nextValue.trim()) {
@@ -45,43 +52,42 @@ const SearchInput = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className={cn("group relative flex h-15 w-full items-center md:max-w-75", className)}>
+    <form
+      onSubmit={handleSubmit}
+      className={cn(
+        "group relative flex h-12 min-w-0 flex-1 items-center overflow-hidden rounded-full bg-white/10",
+        className,
+      )}
+    >
+      <SearchIcon aria-hidden="true" className="pointer-events-none absolute top-3.5 left-3.5 size-5" />
       <input
         {...props}
         aria-label={props["aria-label"] ?? placeholder}
         value={value}
-        placeholder={placeholder}
+        placeholder={isOpen ? placeholder : undefined}
+        onFocus={(e) => {
+          handleOpen(true);
+          onFocus?.(e);
+        }}
         className={cn(
-          "bg-input-default relative h-full w-full rounded-full border border-transparent pr-13 pl-6 font-medium placeholder-[#EAF5FF]/30 transition-colors outline-none hover:bg-[#2E2E2E] focus:border-[#313131]",
+          "relative h-full min-w-0 flex-1 pr-4 pl-10.5 font-medium placeholder-[#EAF5FF]/30 transition-opacity duration-200 outline-none",
+          !isOpen && "opacity-0",
         )}
         onChange={handleChange}
         onKeyDown={(event) => {
           props.onKeyDown?.(event);
-
           if (event.defaultPrevented || event.key !== "Enter") return;
 
           event.preventDefault();
           onSearch?.(value.trim());
         }}
       />
-      {/* TODO: Add translations */}
+
       <button type="submit" className="sr-only">
         Search
-      </button>
-
-      <button
-        type="button"
-        aria-label="Reset search"
-        onClick={handleReset}
-        className={cn(
-          "absolute top-1/2 right-3.5 flex size-8 -translate-y-1/2 scale-30 cursor-pointer items-center justify-center rounded-full bg-white/10 opacity-0 transition-all duration-100",
-          value && "scale-100 opacity-100",
-        )}
-      >
-        <Cross className="size-4" />
       </button>
     </form>
   );
 };
 
-export default SearchInput;
+export default SearchInputMobile;

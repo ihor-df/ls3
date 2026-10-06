@@ -1,10 +1,11 @@
 "use client";
 
 import BottomDrawer from "@/components/ui/bottom-drawer";
+import useCheckScreen from "@/hooks/useCheckScreen";
 import { cn } from "@/lib/utils";
 import ArrowIcon from "@assets/icons/arrow.svg";
 import { useTranslations } from "next-intl";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Circles, MonthButtonDesktop, MonthButtonMobile, SelectYearButton } from "./components";
 import type { PeriodGroup, SelectedPeriod } from "./types";
 
@@ -15,8 +16,10 @@ type MonthPickerProps = {
 };
 
 const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerProps) => {
-  const t = useTranslations("versionHistory.periodDrawer");
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const isMobile = useCheckScreen("(max-width: 1023px)");
+  const t = useTranslations("versionHistory.periodDrawer");
 
   const selectedYear = periods.find((period) => period.year === selectedPeriod?.year);
   const selectedMonth = selectedYear?.months.find((month) => month.value === selectedPeriod?.month);
@@ -24,8 +27,14 @@ const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerPro
     ? `${selectedPeriod.year} - ${selectedMonth?.label ?? t("allLabel")}`
     : t("allLabel");
 
+  useEffect(() => {
+    if (!isMobile) {
+      setDrawerOpen(false);
+    }
+  }, [isMobile]);
+
   return (
-    <div className="bg-dark-grey lg:rounded-large h-15 max-h-max rounded-full p-3 pr-5 lg:h-auto lg:pr-1">
+    <div className="bg-dark-grey lg:rounded-large h-15 max-h-max rounded-full lg:h-auto lg:p-3 lg:pr-1">
       <div className="period-scrollbar max-h-[calc(100dvh-300px)] lg:min-h-70 lg:overflow-y-auto">
         {/* Mobile menu */}
         <BottomDrawer
@@ -35,7 +44,10 @@ const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerPro
           closeLabel={t("closeLabel")}
           scrollAreaClassName="period-scrollbar"
           trigger={
-            <button type="button" className="flex w-full items-center text-2xl font-medium lg:hidden">
+            <button
+              type="button"
+              className="flex w-full cursor-pointer items-center p-3 pr-5 text-xl font-medium md:text-2xl lg:hidden"
+            >
               <Circles className="mr-5" />
               {selectedLabel}
               <ArrowIcon className={cn("ml-auto size-4 transition-transform", drawerOpen && "rotate-180")} />
