@@ -40,6 +40,12 @@
     }
   },
   "common": {
+    "pagination": {
+      "label": "Sayfa gezintisi",
+      "page": "Sayfa {page}",
+      "previous": "Önceki sayfa",
+      "next": "Sonraki sayfa"
+    },
     "cta": {
       "workAnon": {
         "main": "Linken Sphere ile anonim çalışın",
@@ -64,6 +70,12 @@
         "description": "Ayrıntılı rehberler ve makaleler için dokümantasyon merkezimizi ziyaret edin",
         "button": "Dokümantasyona git"
       }
+    },
+    "search": {
+      "placeholder": "Ara",
+      "submit": "Ara",
+      "reset": "Aramayı temizle",
+      "hide": "Aramayı kapat"
     }
   },
   "versionHistory": {
@@ -80,6 +92,11 @@
     "allLabel": "Tüm yazılar",
     "article": {
       "content": "İçindekiler"
+    },
+    "search": {
+      "label": "Arama sonuçları",
+      "empty": "Sonuç bulunamadı. Farklı bir arama deneyin.",
+      "error": "Arama sonuçları yüklenemedi."
     }
   },
   "partners": {

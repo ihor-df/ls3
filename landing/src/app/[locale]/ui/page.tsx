@@ -1,3 +1,4 @@
+import PaginationExamples from "@/app/[locale]/ui/pagination-examples";
 import GlassButton from "@/components/atoms/glass-button";
 import GlassInput from "@/components/atoms/glass-input";
 import Button from "@/components/atoms/main-button";
@@ -36,6 +37,8 @@ export default function Page() {
           <Button disabled variant="secondary">
             Start for free
           </Button>
+
+          <PaginationExamples />
         </div>
       </main>
     </Container>

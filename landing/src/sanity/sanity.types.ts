@@ -585,11 +585,12 @@ export type ARTICLE_SLUGS_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLE_CATEGORIES_QUERY
-// Query: *[_type == "articleCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),     "slug": slug.current  }|order(title asc)
+// Query: *[_type == "articleCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current,    "articleCount": count(*[  _type == "article" &&  language == $locale &&  defined(slug.current) && references(^._id)])  }[articleCount > 0] | order(title asc)
 export type ARTICLE_CATEGORIES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
   slug: string;
+  articleCount: number;
 }>;
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
@@ -603,7 +604,7 @@ export type ARTICLE_CATEGORY_QUERY_RESULT = {
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLES_QUERY
-// Query: *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{      _id,  title,  slug,  publishedAt,  image {    asset->{_id, url},    alt,  },  categories[]->{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }  }
+// Query: *[    _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))] | order(publishedAt desc, _id asc)[0...12]{      _id,  title,  slug,  publishedAt,  image {    asset->{_id, url},    alt,  },  categories[]->{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }  }
 export type ARTICLES_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -625,7 +626,7 @@ export type ARTICLES_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLES_COUNT_QUERY
-// Query: count(*[      _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search) &&  (!defined($categoryId) || references($categoryId))  ])
+// Query: count(*[        _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))  ])
 export type ARTICLES_COUNT_QUERY_RESULT = number;
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
@@ -838,10 +839,10 @@ declare global {
   interface SanityQueries {
     "\n  {\n    \"page\": *[\n      _type == \"page\" &&\n      language == $locale &&\n      slug.current == \"version-history\"\n    ][0] {\n      mainTitle\n    },\n    \"versions\": *[\n      _type == \"version\" &&\n      language == $locale &&\n      defined(slug.current) &&\n      defined(releaseDate)\n    ] | order(releaseDate desc, _id asc) {\n      _id,\n      version,\n      \"slug\": slug.current,\n      releaseType,\n      releaseDate,\n      body,\n      \"searchText\": coalesce(pt::text(body), \"\"),\n      cover {\n        asset->{_id, url},\n        alt,\n        hotspot,\n        crop\n      }\n    }\n  }\n": VERSION_HISTORY_QUERY_RESULT;
     "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": ARTICLE_SLUGS_QUERY_RESULT;
-    "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n     \"slug\": slug.current\n  }|order(title asc)\n": ARTICLE_CATEGORIES_QUERY_RESULT;
+    "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current,\n    \"articleCount\": count(*[\n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n && references(^._id)])\n  }[articleCount > 0] | order(title asc)\n": ARTICLE_CATEGORIES_QUERY_RESULT;
     "\n  *[_type == \"articleCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n": ARTICLE_CATEGORY_QUERY_RESULT;
-    "\n  *[_type == \"article\" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n  }\n": ARTICLES_QUERY_RESULT;
-    "\n  count(*[\n    \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": ARTICLES_COUNT_QUERY_RESULT;
+    "\n  \n  *[\n  \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)\n[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n  }\n": ARTICLES_QUERY_RESULT;
+    "\n  count(*[\n    \n  \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": ARTICLES_COUNT_QUERY_RESULT;
     "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n      \"slug\": slug.current,\n    },\n    faq[]{\n      \"id\":_key,\n      question,\n      answer\n    },\n  }\n": ARTICLE_QUERY_RESULT;
     "\n  *[_type == \"partnerCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  } | order(title asc)\n": PARTNER_CATEGORIES_QUERY_RESULT;
     "\n  *[_type == \"partnerCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n": PARTNER_CATEGORY_QUERY_RESULT;

@@ -20,6 +20,49 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Blog pagination migration
+
+The blog uses `/blog`, `/blog/page/N`, `/blog/category/{slug}`, and `/blog/category/{slug}/page/N`.
+Listing routes are prerendered with 300-second ISR. Published content determines build-time paths;
+new paths can be generated on their first request without rebuilding.
+
+- `src/lib/pagination.ts` validates page numbers and calculates counts, offsets, paths, and static page parameters.
+- `src/app/[locale]/blog/data.ts` exposes `getArticlesData(locale, options)`, `getArticlesCount(locale, filters)`, and `getArticleCategories(locale)`.
+- `src/app/[locale]/blog/listing.tsx` shares rendering and 404 checks across the four listing routes.
+- Categories without articles in the selected language are hidden and return 404. Invalid page numbers, `/page/1`, and out-of-range pages also return 404.
+- Articles and counts share the same language, category, and title/body search filters. Public data uses the published perspective and a 300-second revalidation interval.
+- `ARTICLES_PER_PAGE` remains `1` for pagination testing. Set it to `12` after validating the new routes.
+
+Run the focused pagination and GROQ checks with `npm run test:blog-pagination` (Node.js 22.6 or newer).
+
+The reusable `PagePagination` component is available in `src/components/molecules/page-pagination.tsx`.
+Pass `basePath` for localized, crawlable links, or `onPageChange` for client-side search results.
+Button mode also accepts `disabled` while a request is pending. Zero or one page hides the component.
+The `/ui` gallery includes first, middle, last, interactive, and disabled examples.
+
+Server listing routes do not read query parameters. `BlogSearchProvider` shares the active query,
+result page, and loading state between desktop search, mobile search, and the blog's `index.tsx`.
+Search is submitted explicitly and does not modify the URL. Reloading or navigating to another
+catalogue page, category, or language resets it. Emptying either search input immediately clears results,
+aborts any pending request, and restores the original SSG catalogue without submitting the form.
+The server passes the initial articles to the blog component. Initial article cards and pagination links
+remain in the prerendered HTML; the CTA is passed as server-rendered children.
+
+Results come from `GET /api/blog/search?locale=en&q=browser&page=2&category=proxy`.
+The endpoint validates the locale, category, page, and query (up to 200 characters), and returns only
+the current page's article data. The blog's `index.tsx` converts both initial articles and search results
+to card data in one place, importing only the image URL builder, not the CMS client. Search covers titles
+and Portable Text spans without sending article bodies to the browser. Requests are aborted when another
+search starts, search is cleared, or the catalogue changes.
+While a request is pending, the previous list and its current page remain visible. A successful response
+replaces both together; an empty response replaces the list with a short message. Loading and result-count
+messages are not displayed. Errors preserve the previous list and show a message above it.
+The endpoint response is `no-store`; its published Sanity data retains the 300-second cache.
+
+Search does not create separate listing URLs. The catalogue remains indexable, and the search API
+receives `X-Robots-Tag: noindex, follow`. Other SEO metadata is a later stage.
+Redirects, sitemap, and robots.txt are outside the current scope.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

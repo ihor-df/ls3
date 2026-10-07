@@ -1,6 +1,7 @@
 import ButtonRounded from "@/components/atoms/button-rounded";
 import useScrollLock from "@/hooks/useScrollLock";
 import { Link, usePathname } from "@/i18n/navigation";
+import { BLOG_SEARCH_MAX_LENGTH, isBlogListingPath } from "@/lib/blog-search";
 import { cn } from "@/lib/utils";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
@@ -31,7 +32,8 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
   const pathname = usePathname();
   const t = useTranslations("navigation");
   const tPages = useTranslations("navigation.pages");
-  const hasSearch = pathname === "/version-history";
+  const isBlogListing = isBlogListingPath(pathname);
+  const hasSearch = pathname === "/version-history" || isBlogListing;
 
   useScrollLock(isMenuOpen || isLangMenuOpen);
 
@@ -135,7 +137,11 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
         >
           {hasSearch && (
             <Suspense fallback={<div className="h-12 min-w-0 flex-1 rounded-full bg-white/10" aria-hidden="true" />}>
-              <MobilePageSearch onOpen={setIsSearchOpen} isOpen={isSearchOpen} />
+              <MobilePageSearch
+                onOpen={setIsSearchOpen}
+                isOpen={isSearchOpen}
+                maxLength={isBlogListing ? BLOG_SEARCH_MAX_LENGTH : undefined}
+              />
             </Suspense>
           )}
 

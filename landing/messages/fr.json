@@ -40,6 +40,12 @@
     }
   },
   "common": {
+    "pagination": {
+      "label": "Navigation entre les pages",
+      "page": "Page {page}",
+      "previous": "Page précédente",
+      "next": "Page suivante"
+    },
     "cta": {
       "workAnon": {
         "main": "Travaillez anonymement avec Linken Sphere",
@@ -64,6 +70,12 @@
         "description": "Retrouvez des guides détaillés et des articles dans notre centre de documentation",
         "button": "Consulter la documentation"
       }
+    },
+    "search": {
+      "placeholder": "Rechercher",
+      "submit": "Rechercher",
+      "reset": "Effacer la recherche",
+      "hide": "Fermer la recherche"
     }
   },
   "versionHistory": {
@@ -80,6 +92,11 @@
     "allLabel": "Tous les articles",
     "article": {
       "content": "Sommaire"
+    },
+    "search": {
+      "label": "Résultats de recherche",
+      "empty": "Aucun résultat. Essayez une autre recherche.",
+      "error": "Impossible de charger les résultats de recherche."
     }
   },
   "partners": {

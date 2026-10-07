@@ -1,4 +1,5 @@
 import Header from "@/components/organisms/header";
+import BlogSearchProvider from "@/context/blog-search-provider";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -64,8 +65,10 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
     >
       <body className="relative flex min-h-full flex-col">
         <NextIntlClientProvider>
-          <Header />
-          {children}
+          <BlogSearchProvider>
+            <Header />
+            {children}
+          </BlogSearchProvider>
         </NextIntlClientProvider>
       </body>
     </html>

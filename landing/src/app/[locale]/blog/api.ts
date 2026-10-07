@@ -1,11 +1,19 @@
 import { defineQuery } from "next-sanity";
 
-const articleListFilter = /* groq */ `
+const publishedArticleFilter = /* groq */ `
   _type == "article" &&
   language == $locale &&
-  defined(slug.current) &&
-  (!defined($search) || title match $search) &&
+  defined(slug.current)
+`;
+
+const articleListFilter = /* groq */ `
+  ${publishedArticleFilter} &&
+  (!defined($search) || title match $search || body[].children[].text match $search) &&
   (!defined($categoryId) || references($categoryId))
+`;
+
+const orderedArticleList = /* groq */ `
+  *[${articleListFilter}] | order(publishedAt desc, _id asc)
 `;
 
 const articleListProjection = /* groq */ `
@@ -27,14 +35,15 @@ const articleListProjection = /* groq */ `
   }
 `;
 
-export const getArticlesQuery = (limit: number) => {
-  if (!Number.isSafeInteger(limit) || limit < 1) {
-    throw new Error("Article query limit must be a positive integer");
+export const getArticlesQuery = (start: number, limit: number) => {
+  if (!Number.isInteger(start) || start < 0 || !Number.isInteger(limit) || limit < 1) {
+    throw new RangeError("Article query requires a non-negative offset and a positive page size");
   }
+
+  const end = start + limit;
+
   return defineQuery(`
-    *[
-      ${articleListFilter}
-    ] | order(publishedAt desc, _id asc)[0...${limit}]{
+    ${orderedArticleList}[${start}...${end}]{
       ${articleListProjection}
     }
   `);
@@ -53,8 +62,9 @@ export const ARTICLE_CATEGORIES_QUERY = defineQuery(`
       title[language == $locale][0].value,
       title[language == "en"][0].value
     ),
-     "slug": slug.current
-  }|order(title asc)
+    "slug": slug.current,
+    "articleCount": count(*[${publishedArticleFilter} && references(^._id)])
+  }[articleCount > 0] | order(title asc)
 `);
 
 export const ARTICLE_CATEGORY_QUERY = defineQuery(`
@@ -69,12 +79,11 @@ export const ARTICLE_CATEGORY_QUERY = defineQuery(`
 `);
 
 export const ARTICLES_QUERY = defineQuery(`
-  *[_type == "article" && language == $locale && defined(slug.current)]|order(publishedAt desc)[0...12]{
+  ${orderedArticleList}[0...12]{
     ${articleListProjection}
   }
 `);
 
-// unused
 export const ARTICLES_COUNT_QUERY = defineQuery(`
   count(*[
     ${articleListFilter}

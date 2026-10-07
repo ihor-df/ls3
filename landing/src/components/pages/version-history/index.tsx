@@ -1,5 +1,5 @@
 import Container from "@/components/atoms/container";
-import CollectionPageHeader from "@/components/organisms/collection-page-header";
+import CollectionPageHeader from "@/components/molecules/collection-page-header";
 import { VERSION_HISTORY_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
 import VersionHistoryContent from "./content";

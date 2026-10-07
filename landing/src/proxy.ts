@@ -6,7 +6,6 @@ const handleI18n = createMiddleware(routing);
 
 export default function proxy(request: NextRequest) {
   const response = handleI18n(request);
-
   if (request.nextUrl.pathname.endsWith("/version-history") && request.nextUrl.search) {
     response.headers.set("X-Robots-Tag", "noindex, follow");
   }

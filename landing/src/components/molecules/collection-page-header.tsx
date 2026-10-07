@@ -1,8 +1,8 @@
+import PageSearch from "@/components/molecules/page-search";
 import type { SearchNavigationMode } from "@/hooks/usePageSearch";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
 import Heading from "../atoms/heading";
-import PageSearch from "./page-search";
 
 type CollectionPageHeaderProps = {
   className?: string;
@@ -10,6 +10,7 @@ type CollectionPageHeaderProps = {
   initialSearchValue?: string;
   searchNavigationMode?: SearchNavigationMode;
   searchClassName?: string;
+  searchMaxLength?: number;
 };
 
 const CollectionPageHeader = ({
@@ -18,6 +19,7 @@ const CollectionPageHeader = ({
   initialSearchValue,
   searchNavigationMode,
   searchClassName = "max-md:hidden",
+  searchMaxLength,
 }: CollectionPageHeaderProps) => {
   const hasSearch = initialSearchValue !== undefined;
 
@@ -33,6 +35,7 @@ const CollectionPageHeader = ({
             className={searchClassName}
             initialValue={initialSearchValue}
             navigationMode={searchNavigationMode}
+            maxLength={searchMaxLength}
           />
         </Suspense>
       )}

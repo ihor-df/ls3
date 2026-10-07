@@ -30,13 +30,17 @@ const CategoryFilters = ({
   const pathname = usePathname();
   const baseUrl = `/${page}`;
   const categoryBaseUrl = categoryPath ? `${baseUrl}/${categoryPath}` : baseUrl;
-  const slug = pathname.split(`${categoryBaseUrl}/`)[1];
+  const slug = pathname.split(`${categoryBaseUrl}/`)[1]?.split("/")[0];
   const isClientFilter = onCategoryChange !== undefined;
 
   return (
     <ul className={cn("flex flex-wrap gap-x-6 md:gap-x-8 md:gap-y-5", className)}>
       <FilterItem
-        current={isClientFilter ? activeCategory === null : pathname === baseUrl}
+        current={
+          activeCategory !== undefined
+            ? activeCategory === null
+            : pathname === baseUrl || pathname.startsWith(`${baseUrl}/page/`)
+        }
         href={isClientFilter ? undefined : baseUrl}
         onClick={isClientFilter ? () => onCategoryChange(null) : undefined}
       >
@@ -48,7 +52,7 @@ const CategoryFilters = ({
 
         return (
           <FilterItem
-            current={isClientFilter ? activeCategory === c.slug : slug === c.slug}
+            current={activeCategory !== undefined ? activeCategory === c.slug : slug === c.slug}
             href={isClientFilter ? undefined : `${categoryBaseUrl}/${c.slug}`}
             onClick={isClientFilter ? () => onCategoryChange(c.slug ?? null) : undefined}
             key={c._id}

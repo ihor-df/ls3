@@ -1,13 +1,20 @@
 "use client";
 
+import { BlogSearchContext } from "@/context/blog-search-provider";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useContext, useEffect, useState } from "react";
 
 export type SearchNavigationMode = "router" | "history";
 
 const usePageSearch = (navigationMode: SearchNavigationMode = "router") => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const query = searchParams.get("q");
+  const blogSearch = useContext(BlogSearchContext);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  // Static HTML has no query. Match it on hydration before applying the browser URL.
+  useEffect(() => setIsHydrated(true), []);
+  const query = isHydrated ? searchParams.get("q") : null;
 
   const submitSearch = (value: string) => {
     const nextQuery = value.trim();
@@ -32,7 +39,15 @@ const usePageSearch = (navigationMode: SearchNavigationMode = "router") => {
     }
   };
 
-  return { query, submitSearch };
+  if (blogSearch) {
+    return {
+      query: blogSearch.query,
+      submitSearch: (value: string) => void blogSearch.search(value),
+      clearSearch: () => void blogSearch.search(""),
+    };
+  }
+
+  return { query, submitSearch, clearSearch: undefined };
 };
 
 export default usePageSearch;

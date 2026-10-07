@@ -1,61 +1,101 @@
+"use client";
+
 import Container from "@/components/atoms/container";
-import CollectionPageList from "@/components/molecules/collection-page-list";
-import LoadMoreButton from "@/components/molecules/load-more-button";
-import PostCard from "@/components/molecules/post-card";
-import CollectionPageHeader from "@/components/organisms/collection-page-header";
-import CtaLg from "@/components/organisms/cta/cta-lg";
-import { Link } from "@/i18n/navigation";
-import { formatDate } from "@/lib/utils";
-import { urlFor } from "@/sanity/helpers";
+import CollectionPageHeader from "@/components/molecules/collection-page-header";
+import PagePagination from "@/components/molecules/page-pagination";
+import { useBlogSearch } from "@/context/blog-search-provider";
+import { BLOG_SEARCH_MAX_LENGTH } from "@/lib/blog-search";
 import type { ARTICLES_QUERY_RESULT, ARTICLE_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
 import CategoryFilters from "@components/molecules/category-filters";
-import { Locale } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { createImageUrlBuilder } from "@sanity/image-url";
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
+import BlogPostList from "./post-list";
+
+const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
+const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+const imageBuilder = projectId && dataset ? createImageUrlBuilder({ projectId, dataset }) : null;
 
 type BlogPageProps = {
   posts: ARTICLES_QUERY_RESULT;
   categories: ARTICLE_CATEGORIES_QUERY_RESULT;
   currentPage: number;
-  hasMore: boolean;
-  locale: Locale;
-  searchValue: string;
+  pageCount: number;
+  paginationBasePath: string;
+  activeCategory: string | null;
   title: string;
+  children: ReactNode;
 };
 
-const BlogPage = async ({ posts, categories, currentPage, hasMore, locale, searchValue, title }: BlogPageProps) => {
-  const t = await getTranslations("blog");
+const BlogPage = ({
+  posts,
+  categories,
+  currentPage,
+  pageCount,
+  paginationBasePath,
+  activeCategory,
+  title,
+  children,
+}: BlogPageProps) => {
+  const t = useTranslations("blog");
+  const { query, result, status, search } = useBlogSearch();
+  const visiblePosts = (result?.posts ?? posts).map((post) => ({
+    id: post._id,
+    title: post.title,
+    href: `/blog/${post.slug.current}`,
+    imageSrc: post.image ? (imageBuilder?.image(post.image).width(820).height(462).url() ?? "") : "",
+    alt: post.image?.alt ?? "",
+    categories: post.categories ?? [],
+  }));
+
+  const searchMessage =
+    status === "error" ? t("search.error") : result && !result.posts.length ? t("search.empty") : undefined;
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={title} initialSearchValue={searchValue} />
-      <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="blog" categories={categories} />
+      <CollectionPageHeader
+        title={title}
+        initialSearchValue=""
+        searchClassName="max-lg:hidden"
+        searchMaxLength={BLOG_SEARCH_MAX_LENGTH}
+      />
+      <CategoryFilters
+        className="mt-10"
+        allLabel={t("allLabel")}
+        page="blog"
+        categories={categories}
+        activeCategory={activeCategory}
+      />
 
-      {!!posts?.length && (
-        <CollectionPageList>
-          {posts.map((post) => {
-            const postImageUrl = post?.image ? urlFor(post.image)?.width(820).height(462).url() : null;
+      <section aria-label={query ? t("search.label") : undefined} aria-busy={status === "loading"}>
+        {searchMessage && (
+          <p role="status" aria-live="polite" className="text-light-grey mt-10 text-center">
+            {searchMessage}
+          </p>
+        )}
 
-            return (
-              <li key={post._id}>
-                <Link href={`/blog/${post.slug?.current}`}>
-                  <PostCard
-                    page="blog"
-                    date={post.publishedAt ? formatDate(post.publishedAt, locale) : undefined}
-                    title={post.title}
-                    imageSrc={postImageUrl ?? ""}
-                    categories={post.categories}
-                    alt={post.image.alt}
-                  />
-                </Link>
-              </li>
-            );
-          })}
-        </CollectionPageList>
-      )}
+        <BlogPostList posts={visiblePosts} />
 
-      {hasMore && <LoadMoreButton currentPage={currentPage} />}
+        {visiblePosts.length > 0 &&
+          (result ? (
+            <PagePagination
+              className="mt-16 md:mt-40"
+              currentPage={result.page}
+              pageCount={result.pageCount}
+              disabled={status === "loading"}
+              onPageChange={(nextPage) => void search(result.query, nextPage)}
+            />
+          ) : (
+            <PagePagination
+              className="mt-16 md:mt-40"
+              basePath={paginationBasePath}
+              currentPage={currentPage}
+              pageCount={pageCount}
+            />
+          ))}
+      </section>
 
-      <CtaLg variant="get-started" />
+      {children}
     </Container>
   );
 };

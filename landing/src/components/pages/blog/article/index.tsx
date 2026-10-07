@@ -6,8 +6,8 @@ import { BreadcrumbItemData, Breadcrumbs } from "@/components/molecules/breadcru
 import CategoryAndDate from "@/components/molecules/category-date";
 import { getHeadingId, portableTextComponents } from "@/components/molecules/portable-text/components";
 import { ShareSocial } from "@/components/molecules/share-social";
-import CtaSm from "@/components/organisms/cta-sm";
 import CtaLg from "@/components/organisms/cta/cta-lg";
+import CtaSm from "@/components/organisms/cta/cta-sm";
 import FAQList from "@/components/organisms/faq-list";
 import { buildAbsoluteUrl, formatDate } from "@/lib/utils";
 import { urlFor } from "@/sanity/helpers";

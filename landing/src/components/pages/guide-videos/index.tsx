@@ -3,9 +3,9 @@
 import { isGuideVideoCategorySlug, type GuideVideoCategorySlug } from "@/app/[locale]/(service)/guide-videos/constants";
 import Container from "@/components/atoms/container";
 import CategoryFilters from "@/components/molecules/category-filters";
+import CollectionPageHeader from "@/components/molecules/collection-page-header";
 import VideoModal from "@/components/molecules/video-modal";
 import VideoPostCard from "@/components/molecules/video-post-card";
-import CollectionPageHeader from "@/components/organisms/collection-page-header";
 import CtaLg from "@/components/organisms/cta/cta-lg";
 import useHashCategory from "@/hooks/useHashCategory";
 import { useTranslations } from "next-intl";

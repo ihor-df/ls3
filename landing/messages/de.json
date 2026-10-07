@@ -40,6 +40,12 @@
     }
   },
   "common": {
+    "pagination": {
+      "label": "Seitennavigation",
+      "page": "Seite {page}",
+      "previous": "Vorherige Seite",
+      "next": "Nächste Seite"
+    },
     "cta": {
       "workAnon": {
         "main": "Arbeiten Sie anonym mit Linken Sphere",
@@ -64,6 +70,12 @@
         "description": "Ausführliche Anleitungen und Artikel finden Sie in unserer Dokumentation",
         "button": "Zur Dokumentation"
       }
+    },
+    "search": {
+      "placeholder": "Suchen",
+      "submit": "Suchen",
+      "reset": "Suche löschen",
+      "hide": "Suche schließen"
     }
   },
   "versionHistory": {
@@ -80,6 +92,11 @@
     "allLabel": "Alle Artikel",
     "article": {
       "content": "Inhalt"
+    },
+    "search": {
+      "label": "Suchergebnisse",
+      "empty": "Keine Ergebnisse. Versuche einen anderen Suchbegriff.",
+      "error": "Die Suchergebnisse konnten nicht geladen werden."
     }
   },
   "partners": {

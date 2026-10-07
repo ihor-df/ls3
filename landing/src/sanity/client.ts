@@ -9,7 +9,7 @@ export const client = createClient({
   useCdn: true,
 });
 
-export async function sanityFetch<const QueryString extends string>({
+export async function sanityFetch<Result = unknown, const QueryString extends string = string>({
   query,
   params = {},
   revalidate = 60,
@@ -24,7 +24,7 @@ export async function sanityFetch<const QueryString extends string>({
   stega?: boolean | StegaConfig;
   perspective?: ClientPerspective;
 }) {
-  return client.fetch(query, params, {
+  return client.fetch<Result, QueryParams, QueryString>(query, params, {
     perspective,
     stega,
     next: {
