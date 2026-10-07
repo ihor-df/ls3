@@ -10,7 +10,7 @@ import CtaLg from "@/components/organisms/cta/cta-lg";
 import CtaSm from "@/components/organisms/cta/cta-sm";
 import FAQList from "@/components/organisms/faq-list";
 import { buildAbsoluteUrl, formatDate } from "@/lib/utils";
-import { urlFor } from "@/sanity/helpers";
+import { imageBuilder } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
 import { Locale } from "next-intl";
 import { PortableText } from "next-sanity";
@@ -25,8 +25,8 @@ type BlogArticleProps = {
 const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
   const { image, categories, publishedAt, title, body, author, faq, slug } = post;
 
-  const postImageUrl = image ? urlFor(image)?.width(820).height(462).url() : null;
-  const authorImageUrl = post.author?.avatar ? urlFor(post.author.avatar)?.width(48).height(48).url() : null;
+  const postImageUrl = image ? imageBuilder(image)?.width(820).height(462).url() : null;
+  const authorImageUrl = post.author?.avatar ? imageBuilder(post.author.avatar)?.width(48).height(48).url() : null;
 
   const tableOfContents =
     post.tableOfContents?.map(({ _key, title }) => ({

@@ -5,7 +5,7 @@ import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
 import CtaLg from "@/components/organisms/cta/cta-lg";
 import { Link } from "@/i18n/navigation";
-import { urlFor } from "@/sanity/helpers";
+import { imageBuilder } from "@/sanity/helpers";
 import type { PUBLICATIONS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -26,7 +26,7 @@ const Publications = async ({ publications, currentPage, hasMore }: Publications
       {!!publications?.length && (
         <CollectionPageList className="mt-10">
           {publications.map((p) => {
-            const pLogoUrl = p.cover ? urlFor(p.cover)?.width(413).height(232).url() : null;
+            const pLogoUrl = p.cover ? imageBuilder(p.cover)?.width(413).height(232).url() : null;
 
             return (
               <li key={p._id}>

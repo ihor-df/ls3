@@ -1,9 +1,10 @@
-import { urlFor } from "@/sanity/helpers";
+import { imageBuilder } from "@/sanity/helpers";
 import { PostBodyImage as PostBodyImageValue } from "@/sanity/sanity.types";
 import { Image } from "next-sanity/image";
 
 export const PostBodyImage = ({ value }: { value: PostBodyImageValue }) => {
-  const imageUrl = value.image ? urlFor(value.image)?.width(820).height(462).url() : null;
+  const imageUrl = value.image ? imageBuilder(value.image)?.width(820).height(462).url() : null;
+
   if (!imageUrl) return null;
 
   return (

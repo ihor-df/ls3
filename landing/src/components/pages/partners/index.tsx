@@ -5,7 +5,7 @@ import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
 import CtaLg from "@/components/organisms/cta/cta-lg";
 import { Link } from "@/i18n/navigation";
-import { urlFor } from "@/sanity/helpers";
+import { imageBuilder } from "@/sanity/helpers";
 import type { PARTNER_CATEGORIES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import CategoryFilters from "@components/molecules/category-filters";
 import { Locale } from "next-intl";
@@ -32,7 +32,7 @@ const PartnersPage = async ({ partners, categories, currentPage, hasMore, search
       {!!partners?.length && (
         <CollectionPageList>
           {partners.map((partner) => {
-            const partnerLogoUrl = partner.logo ? urlFor(partner.logo)?.width(413).height(232).url() : null;
+            const partnerLogoUrl = partner.logo ? imageBuilder(partner.logo)?.width(413).height(232).url() : null;
 
             return (
               <li key={partner._id}>

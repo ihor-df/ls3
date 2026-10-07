@@ -1,5 +1,5 @@
 import { formatDate } from "@/lib/utils";
-import { urlFor } from "@/sanity/helpers";
+import { imageBuilder } from "@/sanity/helpers";
 import type { VERSION_HISTORY_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
 import type { PeriodGroup, VersionHistoryItem } from "./types";
@@ -44,7 +44,7 @@ export const buildVersionHistoryData = (
       formattedReleaseDate: formatDate(version.releaseDate, locale, { month: "long" }),
       releaseYear: year,
       releaseMonth: month,
-      imageUrl: urlFor(version.cover)?.url() ?? null,
+      imageUrl: imageBuilder(version.cover)?.url() ?? null,
       imageAlt: version.cover.alt,
     };
   });

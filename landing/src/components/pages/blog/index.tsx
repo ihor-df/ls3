@@ -5,16 +5,12 @@ import CollectionPageHeader from "@/components/molecules/collection-page-header"
 import PagePagination from "@/components/molecules/page-pagination";
 import { useBlogSearch } from "@/context/blog-search-provider";
 import { BLOG_SEARCH_MAX_LENGTH } from "@/lib/blog-search";
+import { imageBuilder } from "@/sanity/helpers";
 import type { ARTICLES_QUERY_RESULT, ARTICLE_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
 import CategoryFilters from "@components/molecules/category-filters";
-import { createImageUrlBuilder } from "@sanity/image-url";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
 import BlogPostList from "./post-list";
-
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
-const imageBuilder = projectId && dataset ? createImageUrlBuilder({ projectId, dataset }) : null;
 
 type BlogPageProps = {
   posts: ARTICLES_QUERY_RESULT;
@@ -39,11 +35,12 @@ const BlogPage = ({
 }: BlogPageProps) => {
   const t = useTranslations("blog");
   const { query, result, status, search } = useBlogSearch();
+
   const visiblePosts = (result?.posts ?? posts).map((post) => ({
     id: post._id,
     title: post.title,
     href: `/blog/${post.slug.current}`,
-    imageSrc: post.image ? (imageBuilder?.image(post.image).width(820).height(462).url() ?? "") : "",
+    imageSrc: post.image ? (imageBuilder(post.image)?.width(820).height(462).url() ?? "") : "",
     alt: post.image?.alt ?? "",
     categories: post.categories ?? [],
   }));

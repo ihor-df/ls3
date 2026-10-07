@@ -6,7 +6,7 @@ import CategoryAndDate from "@/components/molecules/category-date";
 import { portableTextComponents } from "@/components/molecules/portable-text/components";
 
 import CtaLg from "@/components/organisms/cta/cta-lg";
-import { urlFor } from "@/sanity/helpers";
+import { imageBuilder } from "@/sanity/helpers";
 import type { PARTNER_QUERY_RESULT } from "@/sanity/sanity.types";
 import orange from "@public/images/orange-cloud-bg.webp";
 import { getTranslations } from "next-intl/server";
@@ -20,12 +20,11 @@ type PartnerArticleProps = {
 };
 
 const PartnerArticle = async ({ post, breadcrumbs }: PartnerArticleProps) => {
-  const { logo, categories, publishedAt, title, body, description, discountPercent, discountText, promoCode, url } =
-    post;
+  const { logo, categories, publishedAt, title, body, discountPercent, discountText, promoCode, url } = post;
 
   const t = await getTranslations("partners.article");
 
-  const postImageUrl = logo ? urlFor(logo)?.width(820).height(462).url() : null;
+  const postImageUrl = logo ? imageBuilder(logo)?.width(820).height(462).url() : null;
 
   return (
     <article className="text-light-grey min-h-screen leading-[1.4] md:text-xl">
@@ -52,7 +51,7 @@ const PartnerArticle = async ({ post, breadcrumbs }: PartnerArticleProps) => {
           )}
         </div>
 
-        <p className="mt-5 md:mt-9">{description}</p>
+        {/* <p className="mt-5 md:mt-9">{description}</p> */}
 
         {discountPercent && discountText && (
           <DiscountBanner percent={discountPercent} text={discountText} promo={promoCode} />
