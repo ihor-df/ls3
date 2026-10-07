@@ -1,11 +1,19 @@
 import { defineQuery } from "next-sanity";
 
-const partnerListFilter = /* groq */ `
+const publishedPartnerFilter = /* groq */ `
   _type == "partner" &&
   language == $locale &&
-  defined(slug.current) &&
-  (!defined($search) || title match $search) &&
+  defined(slug.current)
+`;
+
+const partnerListFilter = /* groq */ `
+  ${publishedPartnerFilter} &&
+  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&
   (!defined($categoryId) || references($categoryId))
+`;
+
+const orderedPartnerList = /* groq */ `
+  *[${partnerListFilter}] | order(publishedAt desc, _id asc)
 `;
 
 const partnerListProjection = /* groq */ `
@@ -28,15 +36,15 @@ const partnerListProjection = /* groq */ `
   }
 `;
 
-export const getPartnersQuery = (limit: number) => {
-  if (!Number.isSafeInteger(limit) || limit < 1) {
-    throw new Error("Partner query limit must be a positive integer");
+export const getPartnersQuery = (start: number, limit: number) => {
+  if (!Number.isInteger(start) || start < 0 || !Number.isInteger(limit) || limit < 1) {
+    throw new RangeError("Partner query requires a non-negative offset and a positive page size");
   }
 
+  const end = start + limit;
+
   return defineQuery(`
-    *[
-      ${partnerListFilter}
-    ] | order(publishedAt desc, _id asc)[0...${limit}]{
+    ${orderedPartnerList}[${start}...${end}]{
       ${partnerListProjection}
     }
   `);
@@ -49,8 +57,9 @@ export const PARTNER_CATEGORIES_QUERY = defineQuery(`
       title[language == $locale][0].value,
       title[language == "en"][0].value
     ),
-    "slug": slug.current
-  } | order(title asc)
+    "slug": slug.current,
+    "partnerCount": count(*[${publishedPartnerFilter} && references(^._id)])
+  }[partnerCount > 0] | order(title asc)
 `);
 
 export const PARTNER_CATEGORY_QUERY = defineQuery(`
@@ -65,10 +74,9 @@ export const PARTNER_CATEGORY_QUERY = defineQuery(`
 `);
 
 export const PARTNERS_QUERY = defineQuery(`
-  *[_type == "partner" && language == $locale && defined(slug.current)]
-    | order(publishedAt desc, _id asc)[0...12]{
-      ${partnerListProjection}
-    }
+  ${orderedPartnerList}[0...12]{
+    ${partnerListProjection}
+  }
 `);
 
 export const PARTNER_SLUGS_QUERY = defineQuery(`
@@ -114,7 +122,6 @@ export const PARTNER_QUERY = defineQuery(`
   }
 `);
 
-// unused
 export const PARTNERS_COUNT_QUERY = defineQuery(`
   count(*[
     ${partnerListFilter}

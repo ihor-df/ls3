@@ -105,6 +105,11 @@
     "article": {
       "goToButton": "Accéder à",
       "copied": "Copié !"
+    },
+    "search": {
+      "label": "Résultats de recherche",
+      "empty": "Aucun résultat. Essayez une autre recherche.",
+      "error": "Impossible de charger les résultats de recherche."
     }
   },
   "publications": {

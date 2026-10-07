@@ -1,6 +1,7 @@
 "use client";
 
 import { BlogSearchContext } from "@/context/blog-search-provider";
+import { PartnersSearchContext } from "@/context/partners-search-provider";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useContext, useEffect, useState } from "react";
 
@@ -10,6 +11,8 @@ const usePageSearch = (navigationMode: SearchNavigationMode = "router") => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const blogSearch = useContext(BlogSearchContext);
+  const partnersSearch = useContext(PartnersSearchContext);
+  const searchContext = blogSearch ?? partnersSearch;
   const [isHydrated, setIsHydrated] = useState(false);
 
   // Static HTML has no query. Match it on hydration before applying the browser URL.
@@ -39,11 +42,11 @@ const usePageSearch = (navigationMode: SearchNavigationMode = "router") => {
     }
   };
 
-  if (blogSearch) {
+  if (searchContext) {
     return {
-      query: blogSearch.query,
-      submitSearch: (value: string) => void blogSearch.search(value),
-      clearSearch: () => void blogSearch.search(""),
+      query: searchContext.query,
+      submitSearch: (value: string) => void searchContext.search(value),
+      clearSearch: () => void searchContext.search(""),
     };
   }
 

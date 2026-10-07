@@ -105,6 +105,11 @@
     "article": {
       "goToButton": "前往",
       "copied": "已复制！"
+    },
+    "search": {
+      "label": "搜索结果",
+      "empty": "未找到结果，请尝试其他关键词。",
+      "error": "无法加载搜索结果。"
     }
   },
   "publications": {

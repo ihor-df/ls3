@@ -55,8 +55,8 @@ test("static pagination params include only pages after the base page", () => {
   assert.deepEqual(getStaticPaginationPages(3, 1), [2, 3]);
 });
 
-test("pagination paths preserve the base URL of blogs and categories", () => {
-  for (const basePath of ["/blog", "/blog/category/news"]) {
+test("pagination paths preserve the base URL of listings and categories", () => {
+  for (const basePath of ["/blog", "/blog/category/news", "/partners", "/partners/category/proxies"]) {
     assert.equal(getPaginationPath(basePath, 1), basePath);
     assert.equal(getPaginationPath(basePath, 3), `${basePath}/page/3`);
   }

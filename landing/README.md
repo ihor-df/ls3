@@ -63,6 +63,42 @@ Search does not create separate listing URLs. The catalogue remains indexable, a
 receives `X-Robots-Tag: noindex, follow`. Other SEO metadata is a later stage.
 Redirects, sitemap, and robots.txt are outside the current scope.
 
+## Partners pagination migration
+
+The partners catalogue uses `/partners`, `/partners/page/N`, `/partners/category/{slug}`, and
+`/partners/category/{slug}/page/N`, following the blog's routing and rendering architecture.
+Listing routes are prerendered with 300-second ISR; new valid paths can be generated on their first request.
+They do not read server-side query parameters. Pagination uses localized, crawlable `PagePagination` links.
+
+`src/app/[locale]/partners/data.ts` follows the blog's data layer and exposes
+`getPartnersData(locale, options)`, `getPartnersCount(locale, filters)`, and `getPartnerCategories(locale)`.
+It uses the shared pagination calculations, the published perspective, and 300-second revalidation.
+List and count queries share language, category, and title/description/Portable Text search filters.
+Category counts exclude partners without a URL and categories without partners in the selected language.
+
+`src/app/[locale]/partners/listing.tsx` shares the server-rendered listing following `BlogListing`.
+It resolves the active category, fetches a single page, and rejects missing/empty categories and pages
+outside the available range. Invalid page numbers and `/page/1` also return 404.
+The existing CTA section is passed as server-rendered children. Initial cards and navigation links remain in HTML.
+
+`PartnersSearchProvider` shares search state between the two search inputs and the partners' `index.tsx`.
+Search is submitted explicitly, stays in React state, and resets on reload or catalogue/category/language navigation.
+Clearing the input immediately aborts a pending request and restores the original catalogue page.
+The previous list remains while loading; successful responses replace both the list and pagination together.
+Empty responses hide cards and pagination and show a short message. Errors preserve the previous list and show an error.
+Loading text, result counts, and retry controls are not displayed.
+
+Results come from `GET /api/partners/search?locale=en&q=proxy&page=2&category=proxy-services`.
+The endpoint validates locale, page, category, and query (up to 200 characters), returns only card fields,
+and uses `Cache-Control: no-store` and `X-Robots-Tag: noindex, follow`.
+Its published Sanity data keeps the 300-second cache. Search is scoped to the active category and language;
+the page component transforms initial partners and search results in one place.
+Search does not create listing URLs or change the catalogue's indexing.
+
+`PARTNERS_PER_PAGE` remains `1` for testing. Set it to `12` after validating pagination.
+Run the focused GROQ and search-path checks with `npm run test:partners-pagination`.
+Redirects, sitemap, robots.txt, and further SEO metadata are outside the current scope.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

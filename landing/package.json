@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "test:blog-pagination": "node --experimental-strip-types --test tests/blog-pagination.test.mjs",
+    "test:partners-pagination": "node --experimental-strip-types --test tests/partners-pagination.test.mjs",
     "format": "npx prettier . --write"
   },
   "dependencies": {

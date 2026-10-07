@@ -105,6 +105,11 @@
     "article": {
       "goToButton": "Ziyaret et:",
       "copied": "Kopyalandı!"
+    },
+    "search": {
+      "label": "Arama sonuçları",
+      "empty": "Sonuç bulunamadı. Farklı bir arama deneyin.",
+      "error": "Arama sonuçları yüklenemedi."
     }
   },
   "publications": {

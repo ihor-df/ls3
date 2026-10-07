@@ -1,66 +1,111 @@
+"use client";
+
 import Container from "@/components/atoms/container";
 import CollectionPageHeader from "@/components/molecules/collection-page-header";
 import CollectionPageList from "@/components/molecules/collection-page-list";
-import LoadMoreButton from "@/components/molecules/load-more-button";
+import PagePagination from "@/components/molecules/page-pagination";
 import PostCard from "@/components/molecules/post-card";
-import CtaLg from "@/components/organisms/cta/cta-lg";
+import { usePartnersSearch } from "@/context/partners-search-provider";
 import { Link } from "@/i18n/navigation";
+import { PARTNERS_SEARCH_MAX_LENGTH } from "@/lib/partners-search";
 import { imageBuilder } from "@/sanity/helpers";
 import type { PARTNER_CATEGORIES_QUERY_RESULT, PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import CategoryFilters from "@components/molecules/category-filters";
-import { Locale } from "next-intl";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
+import type { ReactNode } from "react";
 
 type PartnersPageProps = {
   partners: PARTNERS_QUERY_RESULT;
   categories: PARTNER_CATEGORIES_QUERY_RESULT;
   currentPage: number;
-  hasMore: boolean;
-  locale: Locale;
-  searchValue: string;
+  pageCount: number;
+  paginationBasePath: string;
+  activeCategory: string | null;
   title: string;
+  children: ReactNode;
 };
 
-const PartnersPage = async ({ partners, categories, currentPage, hasMore, searchValue, title }: PartnersPageProps) => {
-  const t = await getTranslations("partners");
+const PartnersPage = ({
+  partners,
+  categories,
+  currentPage,
+  pageCount,
+  paginationBasePath,
+  activeCategory,
+  title,
+  children,
+}: PartnersPageProps) => {
+  const t = useTranslations("partners");
+  const { query, result, status, search } = usePartnersSearch();
+
+  const visiblePartners = (result?.partners ?? partners).map((partner) => ({
+    id: partner._id,
+    title: partner.title,
+    description: partner.description ?? "",
+    href: `/partners/${partner.slug.current}`,
+    imageSrc: partner.logo ? (imageBuilder(partner.logo)?.width(413).height(232).url() ?? "") : "",
+    alt: partner.logo?.alt ?? "",
+    categories: partner.categories ?? [],
+  }));
+
+  const searchMessage =
+    status === "error" ? t("search.error") : result && !result.partners.length ? t("search.empty") : undefined;
 
   return (
     <Container as="main">
-      <CollectionPageHeader title={title} initialSearchValue={searchValue} />
-      <CategoryFilters className="mt-10" allLabel={t("allLabel")} page="partners" categories={categories} />
+      <CollectionPageHeader
+        title={title}
+        initialSearchValue=""
+        searchClassName="max-lg:hidden"
+        searchMaxLength={PARTNERS_SEARCH_MAX_LENGTH}
+      />
+      <CategoryFilters
+        className="mt-10"
+        allLabel={t("allLabel")}
+        page="partners"
+        categories={categories}
+        activeCategory={activeCategory}
+      />
 
-      {!!partners?.length && (
-        <CollectionPageList>
-          {partners.map((partner) => {
-            const partnerLogoUrl = partner.logo ? imageBuilder(partner.logo)?.width(413).height(232).url() : null;
+      <section aria-label={query ? t("search.label") : undefined} aria-busy={status === "loading"}>
+        {searchMessage && (
+          <p role="status" aria-live="polite" className="text-light-grey mt-10 text-center">
+            {searchMessage}
+          </p>
+        )}
 
-            return (
-              <li key={partner._id}>
-                <Link href={`/partners/${partner.slug?.current}`}>
-                  <PostCard
-                    page="partners"
-                    title={partner.title}
-                    description={partner.description ?? ""}
-                    imageSrc={partnerLogoUrl ?? ""}
-                    categories={partner.categories}
-                    alt={partner.logo.alt}
-                  />
+        {visiblePartners.length > 0 && (
+          <CollectionPageList>
+            {visiblePartners.map(({ id, href, ...partner }) => (
+              <li key={id}>
+                <Link href={href}>
+                  <PostCard page="partners" {...partner} />
                 </Link>
               </li>
-            );
-          })}
-        </CollectionPageList>
-      )}
+            ))}
+          </CollectionPageList>
+        )}
 
-      {hasMore && <LoadMoreButton currentPage={currentPage} />}
+        {visiblePartners.length > 0 &&
+          (result ? (
+            <PagePagination
+              className="mt-16 md:mt-40"
+              currentPage={result.page}
+              pageCount={result.pageCount}
+              disabled={status === "loading"}
+              onPageChange={(nextPage) => void search(result.query, nextPage)}
+            />
+          ) : (
+            <PagePagination
+              className="mt-16 md:mt-40"
+              basePath={paginationBasePath}
+              currentPage={currentPage}
+              pageCount={pageCount}
+            />
+          ))}
+      </section>
 
-      <div className="mt-35 grid grid-cols-1 gap-5 md:mt-40 md:gap-10 xl:grid-cols-2">
-        <CtaLg
-          className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]"
-          variant="become-partner"
-        />
-        <CtaLg className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]" variant="get-started" />
-      </div>
+      {children}
     </Container>
   );
 };

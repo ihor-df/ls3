@@ -1,64 +1,13 @@
-import Partners from "@/components/pages/partners";
-
 import { routing } from "@/i18n/routing";
-import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
-import { sanityFetch } from "@/sanity/client";
-import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
-import { LocaleParams } from "@/types/common";
-import { getTranslations } from "next-intl/server";
-import { getPartnersQuery, PARTNER_CATEGORIES_QUERY } from "./api";
+import type { LocaleParams } from "@/types/common";
+import { PartnersListing } from "./listing";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-type PageProps = {
-  params: LocaleParams;
-  searchParams: Promise<{ q?: string; page?: string }>;
-};
-
-const Page = async ({ params, searchParams }: PageProps) => {
+export default async function Page({ params }: { params: LocaleParams }) {
   const { locale } = await params;
-  const { q, page: pageParam } = await searchParams;
-  const t = await getTranslations("partners");
 
-  const search = q?.trim() ?? "";
-  const parsedPage = Number(pageParam ?? "1");
-  const page = parsedPage > 0 ? parsedPage : 1;
-  const limit = page * PARTNERS_PER_PAGE;
-  const partnerParams = {
-    locale,
-    search: search ? `*${search}*` : null,
-    categoryId: null,
-  };
-
-  const [partnersWithExtra, categories] = await Promise.all([
-    sanityFetch({
-      params: partnerParams,
-      query: getPartnersQuery(limit + 1),
-      revalidate: SANITY_REVALIDATE_TIME,
-    }) as Promise<PARTNERS_QUERY_RESULT>,
-    sanityFetch({
-      params: { locale },
-      query: PARTNER_CATEGORIES_QUERY,
-      revalidate: SANITY_REVALIDATE_TIME,
-    }),
-  ]);
-
-  const hasMore = partnersWithExtra.length > limit;
-  const partners = partnersWithExtra.slice(0, limit);
-
-  return (
-    <Partners
-      locale={locale}
-      partners={partners ?? []}
-      categories={categories ?? []}
-      currentPage={page}
-      hasMore={hasMore}
-      searchValue={search}
-      title={t("title")}
-    />
-  );
-};
-
-export default Page;
+  return <PartnersListing locale={locale} page={1} />;
+}
