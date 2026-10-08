@@ -29,7 +29,7 @@ new paths can be generated on their first request without rebuilding.
 - `src/lib/pagination.ts` validates page numbers and calculates counts, offsets, paths, and static page parameters.
 - `src/app/[locale]/blog/data.ts` exposes `getArticlesData(locale, options)`, `getArticlesCount(locale, filters)`, and `getArticleCategories(locale)`.
 - `src/app/[locale]/blog/listing.tsx` shares rendering and 404 checks across the four listing routes.
-- Categories without articles in the selected language are hidden and return 404. Invalid page numbers, `/page/1`, and out-of-range pages also return 404.
+- Categories without articles in the selected language are hidden and return 404. Invalid page numbers and out-of-range pages also return 404. `/page/1` permanently redirects to the base catalogue or category URL through `src/proxy.ts`, preserving the language and query parameters.
 - Articles and counts share the same language, category, and title/body search filters. Public data uses the published perspective and a 300-second revalidation interval.
 - `ARTICLES_PER_PAGE` remains `1` for pagination testing. Set it to `12` after validating the new routes.
 
@@ -61,7 +61,7 @@ The endpoint response is `no-store`; its published Sanity data retains the 300-s
 
 Search does not create separate listing URLs. The catalogue remains indexable, and the search API
 receives `X-Robots-Tag: noindex, follow`. Other SEO metadata is a later stage.
-Redirects, sitemap, and robots.txt are outside the current scope.
+Legacy query-parameter redirects, sitemap, and robots.txt are outside the current scope.
 
 ## Partners pagination migration
 
@@ -78,7 +78,8 @@ Category counts exclude partners without a URL and categories without partners i
 
 `src/app/[locale]/partners/listing.tsx` shares the server-rendered listing following `BlogListing`.
 It resolves the active category, fetches a single page, and rejects missing/empty categories and pages
-outside the available range. Invalid page numbers and `/page/1` also return 404.
+outside the available range. Invalid page numbers also return 404. `/page/1` permanently redirects
+to the base catalogue or category URL through `src/proxy.ts`, preserving the language and query parameters.
 The existing CTA section is passed as server-rendered children. Initial cards and navigation links remain in HTML.
 
 `PartnersSearchProvider` shares search state between the two search inputs and the partners' `index.tsx`.
@@ -97,7 +98,7 @@ Search does not create listing URLs or change the catalogue's indexing.
 
 `PARTNERS_PER_PAGE` remains `1` for testing. Set it to `12` after validating pagination.
 Run the focused GROQ and search-path checks with `npm run test:partners-pagination`.
-Redirects, sitemap, robots.txt, and further SEO metadata are outside the current scope.
+Legacy query-parameter redirects, sitemap, robots.txt, and further SEO metadata are outside the current scope.
 
 ## Learn More
 

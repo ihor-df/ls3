@@ -34,6 +34,7 @@ export async function PartnersListing({ locale, page, categorySlug }: PartnersLi
       activeCategory={category?.slug ?? null}
       title={category?.title ?? t("title")}
     >
+      {/* server content as children */}
       <div className="mt-35 grid grid-cols-1 gap-5 md:mt-40 md:gap-10 xl:grid-cols-2">
         <CtaLg
           className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]"

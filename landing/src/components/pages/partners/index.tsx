@@ -105,6 +105,7 @@ const PartnersPage = ({
           ))}
       </section>
 
+      {/* server content */}
       {children}
     </Container>
   );

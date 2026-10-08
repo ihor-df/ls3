@@ -34,6 +34,7 @@ export async function BlogListing({ locale, page, categorySlug }: BlogListingPro
       activeCategory={category?.slug ?? null}
       title={category?.title ?? t("title")}
     >
+      {/* server content as children */}
       <CtaLg variant="get-started" />
     </BlogPage>
   );
