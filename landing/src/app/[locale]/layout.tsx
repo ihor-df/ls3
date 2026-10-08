@@ -1,6 +1,7 @@
 import Header from "@/components/organisms/header-navigation";
 import BlogSearchProvider from "@/context/blog-search-provider";
 import PartnersSearchProvider from "@/context/partners-search-provider";
+import { getLanguageNavigation } from "@/sanity/language-navigation";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
@@ -57,6 +58,7 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
   const { locale } = await params;
+  const languageNavigation = await getLanguageNavigation(locale); // Map available blog and partners locales
 
   return (
     <html
@@ -68,7 +70,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
         <NextIntlClientProvider>
           <BlogSearchProvider>
             <PartnersSearchProvider>
-              <Header />
+              <Header languageNavigation={languageNavigation} />
               {children}
             </PartnersSearchProvider>
           </BlogSearchProvider>

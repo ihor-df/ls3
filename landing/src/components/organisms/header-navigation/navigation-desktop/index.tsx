@@ -1,5 +1,6 @@
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
+import type { LocaleHrefs } from "@/sanity/helpers";
 import ButtonRounded from "@components/atoms/button-rounded";
 import Button from "@components/atoms/main-button";
 import logo from "@public/images/logo-sm@2x.png";
@@ -13,10 +14,10 @@ import MenuBody from "./menu-body";
 
 type NavigationDesktopProps = {
   isPathActive: (href: string) => boolean;
-  changeLocale: (locale: string) => void;
+  localeHrefs: LocaleHrefs;
 };
 
-const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProps) => {
+const NavigationDesktop = ({ isPathActive, localeHrefs }: NavigationDesktopProps) => {
   const [activeMenu, setActiveMenu] = useState<MenuCategory>();
   const [clickedMenu, setClickedMenu] = useState<MenuCategory>();
   const [renderedMenu, setRenderedMenu] = useState<MenuCategory>();
@@ -174,7 +175,8 @@ const NavigationDesktop = ({ isPathActive, changeLocale }: NavigationDesktopProp
         activeMenu={activeMenu}
         renderedMenu={renderedMenu}
         isPathActive={isPathActive}
-        changeLocale={changeLocale}
+        localeHrefs={localeHrefs}
+        closeMenu={closeSecondMenu}
       />
     </nav>
   );

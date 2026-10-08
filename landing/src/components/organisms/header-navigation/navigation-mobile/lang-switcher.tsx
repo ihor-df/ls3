@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import type { LocaleHrefs } from "@/sanity/helpers";
 import { useLocale, useTranslations } from "next-intl";
 import { LOCALES_DATA } from "../constants";
 import { LangSwitcherItem } from "../lang-switcher-item";
@@ -7,23 +8,17 @@ import { CloseButton } from "./components";
 type LangSwitcherProps = {
   isLangMenuOpen: boolean;
   closeLangMenu: () => void;
-  changeLocale: (locale: string) => void;
+  localeHrefs: LocaleHrefs;
 };
 
-const LangSwitcher = ({ isLangMenuOpen, closeLangMenu, changeLocale }: LangSwitcherProps) => {
+const LangSwitcher = ({ isLangMenuOpen, closeLangMenu, localeHrefs }: LangSwitcherProps) => {
   const t = useTranslations("navigation");
   const locale = useLocale();
-
-  const handleLocaleChange = (locale: string) => {
-    changeLocale(locale);
-    closeLangMenu();
-  };
 
   return (
     <div
       id="mobile-language-menu"
       inert={!isLangMenuOpen}
-
       className={cn(
         "fixed top-0 left-0 z-20 flex h-dvh w-62 flex-col backdrop-blur-2xl transition-transform duration-300",
         isLangMenuOpen ? "translate-x-0" : "-translate-x-full",
@@ -40,7 +35,8 @@ const LangSwitcher = ({ isLangMenuOpen, closeLangMenu, changeLocale }: LangSwitc
               key={data.code}
               {...data}
               className="text-xl"
-              changeLocale={handleLocaleChange}
+              href={localeHrefs[data.code]}
+              onClick={closeLangMenu}
               locale={locale}
             />
           );

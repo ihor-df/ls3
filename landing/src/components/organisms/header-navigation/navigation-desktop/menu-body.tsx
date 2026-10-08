@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import type { LocaleHrefs } from "@/sanity/helpers";
 import { useTranslations } from "next-intl";
 
 import { RESOURCES, SOLUTIONS, USE_CASES } from "../constants";
@@ -11,10 +12,11 @@ type MenuBodyProps = {
   activeMenu: MenuCategory | undefined;
   renderedMenu: MenuCategory | undefined;
   isPathActive: (href: string) => boolean;
-  changeLocale: (locale: string) => void;
+  localeHrefs: LocaleHrefs;
+  closeMenu: () => void;
 };
 
-const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLocale }: MenuBodyProps) => {
+const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, localeHrefs, closeMenu }: MenuBodyProps) => {
   const tPages = useTranslations("navigation.pages");
 
   const faq = RESOURCES.find((item) => item.label === "faq");
@@ -88,7 +90,12 @@ const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLo
           </SecondLevelMenu>
 
           {/* Language switcher */}
-          <LangSwitcher changeLocale={changeLocale} renderedMenu={renderedMenu} activeMenu={activeMenu} />
+          <LangSwitcher
+            localeHrefs={localeHrefs}
+            closeMenu={closeMenu}
+            renderedMenu={renderedMenu}
+            activeMenu={activeMenu}
+          />
         </ul>
       </div>
     </div>

@@ -4,6 +4,7 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { BLOG_SEARCH_MAX_LENGTH, isBlogListingPath } from "@/lib/blog-search";
 import { isPartnersListingPath, PARTNERS_SEARCH_MAX_LENGTH } from "@/lib/partners-search";
 import { cn } from "@/lib/utils";
+import type { LocaleHrefs } from "@/sanity/helpers";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
@@ -18,10 +19,10 @@ import MenuBody from "./menu-body";
 
 type NavigationMobileProps = {
   isPathActive: (href: string) => boolean;
-  changeLocale: (locale: string) => void;
+  localeHrefs: LocaleHrefs;
 };
 
-const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps) => {
+const NavigationMobile = ({ isPathActive, localeHrefs }: NavigationMobileProps) => {
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeMenu, setActiveMenu] = useState<MobileMenuCategory>("root");
@@ -181,7 +182,7 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
       />
 
       {/* Lang switcher */}
-      <LangSwitcher isLangMenuOpen={isLangMenuOpen} closeLangMenu={closeLangMenu} changeLocale={changeLocale} />
+      <LangSwitcher isLangMenuOpen={isLangMenuOpen} closeLangMenu={closeLangMenu} localeHrefs={localeHrefs} />
     </nav>
   );
 };
