@@ -3,7 +3,7 @@
 import SearchInputMobile from "@/components/atoms/search-input-mobile";
 import usePageSearch from "@/hooks/usePageSearch";
 import { useTranslations } from "next-intl";
-import { CloseButton } from "./components";
+import { CloseButton } from "../organisms/header-navigation/navigation-mobile/components";
 
 type MobilePageSearchProps = {
   isOpen: boolean;

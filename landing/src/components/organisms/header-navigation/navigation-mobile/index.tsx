@@ -12,11 +12,9 @@ import { MobileMenuCategory } from "../types";
 import Menu from "@assets/icons/menu.svg";
 import logo from "@public/images/logo-sm@2x.png";
 
-import { LangSwitcherItem } from "../components";
-import { LOCALES_DATA } from "../constants";
-import { CloseButton } from "./components";
+import MobilePageSearch from "../../../molecules/page-search-mobile";
+import LangSwitcher from "./lang-switcher";
 import MenuBody from "./menu-body";
-import MobilePageSearch from "./mobile-page-search";
 
 type NavigationMobileProps = {
   isPathActive: (href: string) => boolean;
@@ -59,11 +57,6 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
 
   const closeLangMenu = () => {
     setIsLangMenuOpen(false);
-  };
-
-  const handleLocaleChange = (locale: string) => {
-    changeLocale(locale);
-    closeLangMenu();
   };
 
   // close menu on change screen size to > lg
@@ -188,33 +181,7 @@ const NavigationMobile = ({ isPathActive, changeLocale }: NavigationMobileProps)
       />
 
       {/* Lang switcher */}
-      <div
-        id="mobile-language-menu"
-        inert={!isLangMenuOpen}
-
-        className={cn(
-          "fixed top-0 left-0 z-20 flex h-dvh w-62 flex-col backdrop-blur-2xl transition-transform duration-300",
-          isLangMenuOpen ? "translate-x-0" : "-translate-x-full",
-        )}
-      >
-        <div className="flex shrink-0 items-center justify-between p-7 pb-5">
-          <CloseButton ariaLabel={t("closeMenu")} onClick={closeLangMenu} />
-        </div>
-
-        <ul className="custom-scrollbar overflow-auto px-5 pt-10 pb-20">
-          {LOCALES_DATA.map((data) => {
-            return (
-              <LangSwitcherItem
-                key={data.code}
-                {...data}
-                className="text-xl"
-                changeLocale={handleLocaleChange}
-                locale={locale}
-              />
-            );
-          })}
-        </ul>
-      </div>
+      <LangSwitcher isLangMenuOpen={isLangMenuOpen} closeLangMenu={closeLangMenu} changeLocale={changeLocale} />
     </nav>
   );
 };

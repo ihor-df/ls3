@@ -1,10 +1,10 @@
 import { cn } from "@/lib/utils";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 
-import { LangSwitcherItem } from "../components";
-import { LOCALES_DATA, RESOURCES, SOLUTIONS, USE_CASES } from "../constants";
+import { RESOURCES, SOLUTIONS, USE_CASES } from "../constants";
 import { MenuCategory } from "../types";
 import { SecondLevelMenu, SecondLevelMenuItem } from "./components";
+import LangSwitcher from "./lang-switcher";
 
 type MenuBodyProps = {
   isMenuOpen: boolean;
@@ -15,7 +15,6 @@ type MenuBodyProps = {
 };
 
 const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLocale }: MenuBodyProps) => {
-  const locale = useLocale();
   const tPages = useTranslations("navigation.pages");
 
   const faq = RESOURCES.find((item) => item.label === "faq");
@@ -88,17 +87,8 @@ const MenuBody = ({ renderedMenu, isMenuOpen, activeMenu, isPathActive, changeLo
             })}
           </SecondLevelMenu>
 
-          {/* Locale switcher */}
-          <SecondLevelMenu
-            renderedMenu={renderedMenu}
-            relativeTo="desktop-language-menu"
-            menuName="language"
-            activeMenu={activeMenu}
-          >
-            {LOCALES_DATA.map((data) => {
-              return <LangSwitcherItem key={data.code} {...data} changeLocale={changeLocale} locale={locale} />;
-            })}
-          </SecondLevelMenu>
+          {/* Language switcher */}
+          <LangSwitcher changeLocale={changeLocale} renderedMenu={renderedMenu} activeMenu={activeMenu} />
         </ul>
       </div>
     </div>

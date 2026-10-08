@@ -4,6 +4,14 @@ import GlassInput from "@/components/atoms/glass-input";
 import Button from "@/components/atoms/main-button";
 import SearchInput from "@/components/atoms/search-input";
 import Container from "@components/atoms/container";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: false,
+  },
+};
 
 export default function Page() {
   return (

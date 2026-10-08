@@ -1,4 +1,4 @@
-import Header from "@/components/organisms/header";
+import Header from "@/components/organisms/header-navigation";
 import BlogSearchProvider from "@/context/blog-search-provider";
 import PartnersSearchProvider from "@/context/partners-search-provider";
 import type { Metadata } from "next";

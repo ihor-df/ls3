@@ -1,4 +1,4 @@
-import PageSearch from "@/components/molecules/page-search";
+import PageSearch from "@/components/molecules/page-search-desktop";
 import type { SearchNavigationMode } from "@/hooks/usePageSearch";
 import { cn } from "@/lib/utils";
 import { Suspense } from "react";
