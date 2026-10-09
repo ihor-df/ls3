@@ -34,7 +34,7 @@ test("documented webhook filter and projection work for both publication and del
   }
 });
 
-test("sanityFetch caches without TTL and bypasses CDN during builds", async () => {
+test("sanityFetch caches without TTL, rejects stale CDN responses and bypasses CDN during builds", async () => {
   const keys = ["NEXT_PUBLIC_SANITY_PROJECT_ID", "NEXT_PUBLIC_SANITY_DATASET", "NEXT_PHASE"];
   const previous = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
   process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = "testproject";
@@ -52,6 +52,7 @@ test("sanityFetch caches without TTL and bypasses CDN during builds", async () =
     assert.deepEqual(calls[0].next, { revalidate: false, tags: ["page:ru:faq"] });
     assert.equal(calls[0].perspective, "published");
     assert.equal(calls[0].useCdn, true);
+    assert.equal(calls[0].cacheMode, "noStale");
     process.env.NEXT_PHASE = "phase-production-build";
     await sanityFetch({ query: "*[0]", tags: ["page:ru:faq"] });
     assert.equal(calls[1].next.revalidate, false);

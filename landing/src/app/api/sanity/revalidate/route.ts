@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   if (!secret) return Response.json({ error: "Webhook secret is not configured" }, { status: 503 });
 
   try {
-    // parseBody verifies the raw-body signature and waits 3 seconds for Sanity CDN to catch up.
+    // parseBody verifies the signature and waits 3 seconds for Content Lake eventual consistency.
     const { body, isValidSignature } = await parseBody<WebhookPayload>(request, secret);
     if (!isValidSignature || !body) return Response.json({ error: "Invalid signature" }, { status: 401 });
 

@@ -10,7 +10,7 @@ tags. Pages regenerate on visits, not all at once.
 2. Deploy this code. Existing `NEXT_PUBLIC_SANITY_PROJECT_ID` and
    `NEXT_PUBLIC_SANITY_DATASET` must match the webhook project and dataset.
 3. Enable the saved webhook in Sanity Manage → project → API → Webhooks.
-4. Publish a content edit and check the Attempts log for HTTP 200. Ordinary edits use
+4. Publish a content edit and check ⋯ → Show attempt log on the webhook card for HTTP 200. Ordinary edits use
    background regeneration; the first visit may still serve the previous content.
 
 Endpoint: `https://ls3x.vercel.app/api/sanity/revalidate`. Update it when the domain changes.
@@ -47,13 +47,16 @@ Projection (matches the saved settings):
 
 The route checks the webhook secret and signature, then reads `sanity-operation`.
 It trusts the filter and projection above, so it does not repeat their validation.
-`parseBody` waits three seconds before invalidation to let Sanity CDN catch up.
+`parseBody` waits three seconds before invalidation for Content Lake eventual consistency.
 Processing errors return 500 so Sanity can retry.
 
 ## Cache rules
 
 There is no TTL. Tagged data is refreshed through the webhook.
-Build queries bypass Sanity CDN; runtime queries use it. Next.js Data Cache can persist
+Build queries bypass Sanity CDN; runtime queries use it with `cacheMode: "noStale"`.
+This prevents a stale CDN response, including a missing document, from being cached again
+after webhook invalidation. The SDK only adds this parameter when CDN is enabled.
+Next.js Data Cache can persist
 across deployments, so a new build does not guarantee a fresh CMS request.
 
 Tag factories are in `src/sanity/cache-tags.ts`; document rules are in

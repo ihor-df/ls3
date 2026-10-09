@@ -27,6 +27,8 @@ export async function sanityFetch<Result = unknown, const QueryString extends st
     stega,
     // Read directly from Content Lake during builds; use CDN at runtime.
     useCdn: process.env.NEXT_PHASE !== "phase-production-build",
+    // Do not persist a stale CDN response (including null) after webhook invalidation.
+    cacheMode: "noStale",
     next: {
       revalidate: false,
       tags,
