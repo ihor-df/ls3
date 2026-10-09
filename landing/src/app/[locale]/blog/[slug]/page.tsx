@@ -10,6 +10,7 @@ import { ARTICLE_QUERY, ARTICLE_SLUGS_QUERY } from "../api";
 export async function generateStaticParams() {
   const posts = await sanityFetch({
     query: ARTICLE_SLUGS_QUERY,
+    tags: routing.locales.map(sanityTags.blogList),
     perspective: "published",
     stega: false, // important for metadata and generateStaticParams
   });

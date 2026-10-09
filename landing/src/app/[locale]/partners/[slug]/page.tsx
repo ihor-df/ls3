@@ -11,6 +11,7 @@ import { PARTNER_QUERY, PARTNER_SLUGS_QUERY } from "../api";
 export async function generateStaticParams() {
   const posts = await sanityFetch({
     query: PARTNER_SLUGS_QUERY,
+    tags: routing.locales.map(sanityTags.partnersList),
     perspective: "published",
     stega: false,
   });

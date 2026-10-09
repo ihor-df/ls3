@@ -16,6 +16,7 @@ export async function POST(request: NextRequest) {
 
     const plan = getRevalidationPlan(body, request.headers.get("sanity-operation"));
     const profile = plan.immediate ? { expire: 0 } : "max";
+
     for (const tag of plan.tags) revalidateTag(tag, profile);
     for (const path of plan.paths) revalidatePath(path);
 
