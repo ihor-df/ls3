@@ -1,5 +1,6 @@
-import { ARTICLES_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
+import { ARTICLES_PER_PAGE } from "@/lib/constants";
 import { getPageCount, getPageOffset } from "@/lib/pagination";
+import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
@@ -27,8 +28,8 @@ const getArticleParams = (locale: Locale, { categoryId, searchQuery }: ArticleFi
 export const getArticlesCount = (locale: Locale, filters: ArticleFilters = {}) =>
   sanityFetch({
     query: ARTICLES_COUNT_QUERY,
+    tags: [sanityTags.blogList(locale)],
     params: getArticleParams(locale, filters),
-    revalidate: SANITY_REVALIDATE_TIME,
     perspective: "published",
     stega: false,
   });
@@ -36,8 +37,8 @@ export const getArticlesCount = (locale: Locale, filters: ArticleFilters = {}) =
 export const getArticleCategories = (locale: Locale) =>
   sanityFetch({
     query: ARTICLE_CATEGORIES_QUERY,
+    tags: [sanityTags.blogList(locale), sanityTags.articleCategories],
     params: { locale },
-    revalidate: SANITY_REVALIDATE_TIME,
     perspective: "published",
     stega: false,
   });
@@ -52,8 +53,8 @@ export async function getArticlesData(locale: Locale, { page = 1, ...filters }: 
 
   const posts = await sanityFetch<ARTICLES_QUERY_RESULT>({
     query: getArticlesQuery(getPageOffset(page, ARTICLES_PER_PAGE), ARTICLES_PER_PAGE),
+    tags: [sanityTags.blogList(locale), sanityTags.articleCategories],
     params: getArticleParams(locale, filters),
-    revalidate: SANITY_REVALIDATE_TIME,
     perspective: "published",
     stega: false,
   });

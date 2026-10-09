@@ -1,8 +1,9 @@
 import type { Locale } from "next-intl";
 import { defineQuery } from "next-sanity";
 import { routing } from "../i18n/routing.ts";
-import { ARTICLES_PER_PAGE, PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "../lib/constants.ts";
+import { ARTICLES_PER_PAGE, PARTNERS_PER_PAGE } from "../lib/constants.ts";
 import { getPageCount, getPaginationPath } from "../lib/pagination.ts";
+import { sanityTags } from "./cache-tags.ts";
 import type { LanguageNavigation } from "./helpers.ts";
 
 type Section = "blog" | "partners";
@@ -90,10 +91,10 @@ export function buildLanguageNavigation(content: LanguageNavigationContent, loca
 export async function getLanguageNavigation(locale: Locale) {
   const { sanityFetch } = await import("./client.ts");
   // Build the map on the server so both menus have real links in the initial HTML.
-  // Use the same published perspective and revalidation interval as the content pages.
+  // Only structural webhook events expire this shared map.
   const content = await sanityFetch<LanguageNavigationContent>({
     query: LANGUAGE_NAVIGATION_QUERY,
-    revalidate: SANITY_REVALIDATE_TIME,
+    tags: [sanityTags.languageNavigation],
     perspective: "published",
     stega: false,
   });

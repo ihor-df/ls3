@@ -1,5 +1,6 @@
 import PublicationsPage from "@/components/pages/publications";
-import { PUBLICATIONS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
+import { PUBLICATIONS_PER_PAGE } from "@/lib/constants";
+import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import { PUBLICATIONS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { LocaleParams } from "@/types/common";
@@ -22,7 +23,7 @@ export default async function Page({ params, searchParams }: PageProps) {
     sanityFetch({
       params: { locale },
       query: getPublicationsQuery(limit + 1),
-      revalidate: SANITY_REVALIDATE_TIME,
+      tags: [sanityTags.publications(locale)],
     }) as Promise<PUBLICATIONS_QUERY_RESULT>,
   ]);
 

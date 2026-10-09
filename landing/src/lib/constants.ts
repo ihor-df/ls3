@@ -1,5 +1,4 @@
 export const PRODUCTION_DOMAIN = "ls3x.vercel.app";
-export const SANITY_REVALIDATE_TIME = 300;
 export const ARTICLES_PER_PAGE = 1;
 export const PARTNERS_PER_PAGE = 1;
 export const PUBLICATIONS_PER_PAGE = 1;

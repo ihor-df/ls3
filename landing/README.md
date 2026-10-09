@@ -23,14 +23,14 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 ## Blog pagination migration
 
 The blog uses `/blog`, `/blog/page/N`, `/blog/category/{slug}`, and `/blog/category/{slug}/page/N`.
-Listing routes are prerendered with 300-second ISR. Published content determines build-time paths;
+Listing routes are prerendered with webhook invalidation. Published content determines build-time paths;
 new paths can be generated on their first request without rebuilding.
 
 - `src/lib/pagination.ts` validates page numbers and calculates counts, offsets, paths, and static page parameters.
 - `src/app/[locale]/blog/data.ts` exposes `getArticlesData(locale, options)`, `getArticlesCount(locale, filters)`, and `getArticleCategories(locale)`.
 - `src/app/[locale]/blog/listing.tsx` shares rendering and 404 checks across the four listing routes.
 - Categories without articles in the selected language are hidden and return 404. Invalid page numbers and out-of-range pages also return 404. `/page/1` permanently redirects to the base catalogue or category URL through `src/proxy.ts`, preserving the language and query parameters.
-- Articles and counts share the same language, category, and title/body search filters. Public data uses the published perspective and a 300-second revalidation interval.
+- Articles and counts share the same language, category, and title/body search filters. Public data uses the published perspective, webhook invalidation.
 - `ARTICLES_PER_PAGE` remains `1` for pagination testing. Set it to `12` after validating the new routes.
 
 Run the focused pagination and GROQ checks with `npm run test:blog-pagination` (Node.js 22.6 or newer).
@@ -57,7 +57,7 @@ search starts, search is cleared, or the catalogue changes.
 While a request is pending, the previous list and its current page remain visible. A successful response
 replaces both together; an empty response replaces the list with a short message. Loading and result-count
 messages are not displayed. Errors preserve the previous list and show a message above it.
-The endpoint response is `no-store`; its published Sanity data retains the 300-second cache.
+The endpoint response is `no-store`; its published Sanity data retains webhook tags without a TTL.
 
 Search does not create separate listing URLs. The catalogue remains indexable, and the search API
 receives `X-Robots-Tag: noindex, follow`. Other SEO metadata is a later stage.
@@ -67,12 +67,12 @@ Legacy query-parameter redirects, sitemap, and robots.txt are outside the curren
 
 The partners catalogue uses `/partners`, `/partners/page/N`, `/partners/category/{slug}`, and
 `/partners/category/{slug}/page/N`, following the blog's routing and rendering architecture.
-Listing routes are prerendered with 300-second ISR; new valid paths can be generated on their first request.
+Listing routes are prerendered with webhook invalidation; new valid paths can be generated on their first request.
 They do not read server-side query parameters. Pagination uses localized, crawlable `PagePagination` links.
 
 `src/app/[locale]/partners/data.ts` follows the blog's data layer and exposes
 `getPartnersData(locale, options)`, `getPartnersCount(locale, filters)`, and `getPartnerCategories(locale)`.
-It uses the shared pagination calculations, the published perspective, and 300-second revalidation.
+It uses the shared pagination calculations and the published perspective, with webhook invalidation.
 List and count queries share language, category, and title/description/Portable Text search filters.
 Category counts exclude partners without a URL and categories without partners in the selected language.
 
@@ -92,13 +92,17 @@ Loading text, result counts, and retry controls are not displayed.
 Results come from `GET /api/partners/search?locale=en&q=proxy&page=2&category=proxy-services`.
 The endpoint validates locale, page, category, and query (up to 200 characters), returns only card fields,
 and uses `Cache-Control: no-store` and `X-Robots-Tag: noindex, follow`.
-Its published Sanity data keeps the 300-second cache. Search is scoped to the active category and language;
+Its published Sanity data keeps webhook tags without a TTL. Search is scoped to the active category and language;
 the page component transforms initial partners and search results in one place.
 Search does not create listing URLs or change the catalogue's indexing.
 
 `PARTNERS_PER_PAGE` remains `1` for testing. Set it to `12` after validating pagination.
 Run the focused GROQ and search-path checks with `npm run test:partners-pagination`.
 Legacy query-parameter redirects, sitemap, robots.txt, and further SEO metadata are outside the current scope.
+
+## Sanity webhook
+
+See [setup and cache rules](docs/sanity-webhook.md) for deployment, activation, and future CMS pages.
 
 ## Learn More
 

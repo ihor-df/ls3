@@ -1,5 +1,6 @@
-import { PARTNERS_PER_PAGE, SANITY_REVALIDATE_TIME } from "@/lib/constants";
+import { PARTNERS_PER_PAGE } from "@/lib/constants";
 import { getPageCount, getPageOffset } from "@/lib/pagination";
+import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
@@ -27,8 +28,8 @@ const getPartnerParams = (locale: Locale, { categoryId, searchQuery }: PartnerFi
 export const getPartnersCount = (locale: Locale, filters: PartnerFilters = {}) =>
   sanityFetch({
     query: PARTNERS_COUNT_QUERY,
+    tags: [sanityTags.partnersList(locale)],
     params: getPartnerParams(locale, filters),
-    revalidate: SANITY_REVALIDATE_TIME,
     perspective: "published",
     stega: false,
   });
@@ -36,8 +37,8 @@ export const getPartnersCount = (locale: Locale, filters: PartnerFilters = {}) =
 export const getPartnerCategories = (locale: Locale) =>
   sanityFetch({
     query: PARTNER_CATEGORIES_QUERY,
+    tags: [sanityTags.partnersList(locale), sanityTags.partnerCategories],
     params: { locale },
-    revalidate: SANITY_REVALIDATE_TIME,
     perspective: "published",
     stega: false,
   });
@@ -52,8 +53,8 @@ export async function getPartnersData(locale: Locale, { page = 1, ...filters }: 
 
   const partners = await sanityFetch<PARTNERS_QUERY_RESULT>({
     query: getPartnersQuery(getPageOffset(page, PARTNERS_PER_PAGE), PARTNERS_PER_PAGE),
+    tags: [sanityTags.partnersList(locale), sanityTags.partnerCategories],
     params: getPartnerParams(locale, filters),
-    revalidate: SANITY_REVALIDATE_TIME,
     perspective: "published",
     stega: false,
   });

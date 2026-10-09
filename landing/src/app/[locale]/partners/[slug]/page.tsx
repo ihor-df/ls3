@@ -1,7 +1,7 @@
 import Container from "@/components/atoms/container";
 import PartnerArticle from "@/components/pages/partners/article";
 import { routing } from "@/i18n/routing";
-import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
+import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import { LocaleSlugParams } from "@/types/common";
 import { getTranslations } from "next-intl/server";
@@ -34,7 +34,7 @@ const Page = async ({ params }: PageProps) => {
   const post = await sanityFetch({
     params: { slug, locale },
     query: PARTNER_QUERY,
-    revalidate: SANITY_REVALIDATE_TIME,
+    tags: [sanityTags.partner(locale, slug), sanityTags.partnerCategories],
   });
 
   if (!post) notFound();

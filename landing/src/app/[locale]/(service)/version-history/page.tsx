@@ -1,11 +1,10 @@
 import VersionHistoryPage from "@/components/pages/version-history";
 import { routing } from "@/i18n/routing";
+import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import type { LocaleParams } from "@/types/common";
 import { getTranslations } from "next-intl/server";
 import { VERSION_HISTORY_QUERY } from "./api";
-
-const VERSIONS_REVALIDATE_TIME = 60 * 60;
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -22,7 +21,7 @@ export default async function Page({ params }: PageProps) {
   const data = await sanityFetch({
     query: VERSION_HISTORY_QUERY,
     params: { locale },
-    revalidate: VERSIONS_REVALIDATE_TIME,
+    tags: [sanityTags.versionHistory(locale), sanityTags.page(locale, "version-history")],
   });
 
   return (

@@ -1,6 +1,6 @@
 import BlogArticle from "@/components/pages/blog/article";
 import { routing } from "@/i18n/routing";
-import { SANITY_REVALIDATE_TIME } from "@/lib/constants";
+import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import { LocaleSlugParams } from "@/types/common";
 import { getTranslations } from "next-intl/server";
@@ -33,7 +33,7 @@ const Page = async ({ params }: PageProps) => {
   const post = await sanityFetch({
     params: { slug, locale },
     query: ARTICLE_QUERY,
-    revalidate: SANITY_REVALIDATE_TIME,
+    tags: [sanityTags.article(locale, slug), sanityTags.articleCategories, sanityTags.articleAuthors],
   });
 
   if (!post) notFound();

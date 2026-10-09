@@ -1,4 +1,4 @@
-import { ClientPerspective, createClient, StegaConfig, type QueryParams } from "next-sanity";
+import { createClient, type ClientPerspective, type QueryParams, type StegaConfig } from "next-sanity";
 
 const SANITY_API_VERSION = "2026-08-13";
 
@@ -12,14 +12,12 @@ export const client = createClient({
 export async function sanityFetch<Result = unknown, const QueryString extends string = string>({
   query,
   params = {},
-  revalidate = 60,
   tags = [],
   stega,
-  perspective,
+  perspective = "published",
 }: {
   query: QueryString;
   params?: QueryParams;
-  revalidate?: number | false;
   tags?: string[];
   stega?: boolean | StegaConfig;
   perspective?: ClientPerspective;
@@ -27,8 +25,10 @@ export async function sanityFetch<Result = unknown, const QueryString extends st
   return client.fetch<Result, QueryParams, QueryString>(query, params, {
     perspective,
     stega,
+    // Read directly from Content Lake during builds; use CDN at runtime.
+    useCdn: process.env.NEXT_PHASE !== "phase-production-build",
     next: {
-      revalidate: tags.length ? false : revalidate,
+      revalidate: false,
       tags,
     },
   });
