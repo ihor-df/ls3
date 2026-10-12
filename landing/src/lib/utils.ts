@@ -22,7 +22,7 @@ export function formatDate(
 }
 
 export const appDomain = () => PRODUCTION_DOMAIN; // TODO: process.env.NEXT_PUBLIC_APP_DOMAIN
-export const isProduction = () => process.env.NEXT_PUBLIC_APP_DOMAIN === "ls.app"; // TODO: appDomain() === "ls.app";
+export const isProductionDomain = () => process.env.NEXT_PUBLIC_APP_DOMAIN === "ls.app"; // TODO: appDomain() === "ls.app";
 export const metadataAppDomain = () => appDomain() ?? PRODUCTION_DOMAIN;
 
 export const hostName = () => {

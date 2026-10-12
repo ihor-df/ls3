@@ -35,7 +35,7 @@ test("documented webhook filter and projection work for both publication and del
 });
 
 test("sanityFetch caches without TTL, rejects stale CDN responses and bypasses CDN during builds", async () => {
-  const keys = ["NEXT_PUBLIC_SANITY_PROJECT_ID", "NEXT_PUBLIC_SANITY_DATASET", "NEXT_PHASE"];
+  const keys = ["NEXT_PUBLIC_SANITY_PROJECT_ID", "NEXT_PUBLIC_SANITY_DATASET", "NEXT_PUBLIC_APP_DOMAIN", "NEXT_PHASE"];
   const previous = Object.fromEntries(keys.map((key) => [key, process.env[key]]));
   process.env.NEXT_PUBLIC_SANITY_PROJECT_ID = "testproject";
   process.env.NEXT_PUBLIC_SANITY_DATASET = "production";
@@ -57,6 +57,15 @@ test("sanityFetch caches without TTL, rejects stale CDN responses and bypasses C
     await sanityFetch({ query: "*[0]", tags: ["page:ru:faq"] });
     assert.equal(calls[1].next.revalidate, false);
     assert.equal(calls[1].useCdn, false);
+    for (const domain of [undefined, "localhost:3000", "ls3x.vercel.app", "ls.app"]) {
+      if (domain === undefined) delete process.env.NEXT_PUBLIC_APP_DOMAIN;
+      else process.env.NEXT_PUBLIC_APP_DOMAIN = domain;
+      await sanityFetch({ query: "*[0]" });
+      assert.equal(calls.at(-1).stega, false);
+    }
+    const stega = { enabled: true, studioUrl: "http://localhost:3333" };
+    await sanityFetch({ query: "*[0]", stega });
+    assert.deepEqual(calls.at(-1).stega, stega);
   } finally {
     client.fetch = originalFetch;
     for (const key of keys) {
