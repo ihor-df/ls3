@@ -13,7 +13,7 @@ export async function sanityFetch<Result = unknown, const QueryString extends st
   query,
   params = {},
   tags = [],
-  stega,
+  stega = process.env.NEXT_PUBLIC_APP_DOMAIN === "ls.app" ? false : true,
   perspective = "published",
 }: {
   query: QueryString;

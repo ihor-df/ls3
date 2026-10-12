@@ -96,7 +96,6 @@ export async function getLanguageNavigation(locale: Locale) {
     query: LANGUAGE_NAVIGATION_QUERY,
     tags: [sanityTags.languageNavigation],
     perspective: "published",
-    stega: false,
   });
 
   return buildLanguageNavigation(content, locale);

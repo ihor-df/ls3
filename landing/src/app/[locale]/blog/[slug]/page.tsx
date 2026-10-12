@@ -12,7 +12,6 @@ export async function generateStaticParams() {
     query: ARTICLE_SLUGS_QUERY,
     tags: routing.locales.map(sanityTags.blogList),
     perspective: "published",
-    stega: false, // important for metadata and generateStaticParams
   });
 
   return posts.flatMap(({ language, slug }) =>

@@ -13,7 +13,6 @@ export async function generateStaticParams() {
     query: PARTNER_SLUGS_QUERY,
     tags: routing.locales.map(sanityTags.partnersList),
     perspective: "published",
-    stega: false,
   });
 
   return posts.flatMap(({ language, slug }) =>

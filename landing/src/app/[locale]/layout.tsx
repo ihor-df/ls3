@@ -2,6 +2,7 @@ import Header from "@/components/organisms/header-navigation";
 import BlogSearchProvider from "@/context/blog-search-provider";
 import PartnersSearchProvider from "@/context/partners-search-provider";
 import { NO_INDEX_NO_FOLLOW_ROBOTS } from "@/lib/constants";
+import { isProduction } from "@/lib/utils";
 import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import { getLanguageNavigation } from "@/sanity/language-navigation";
@@ -60,7 +61,6 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
     sanityFetch<SITE_SETTINGS_QUERY_RESULT>({
       query: SITE_SETTINGS_QUERY,
       tags: [sanityTags.siteSettings],
-      stega: false,
     }),
   ]);
 
@@ -78,7 +78,7 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
   return {
     title,
     description,
-    robots: process.env.APP_DOMAIN !== "ls.app" ? NO_INDEX_NO_FOLLOW_ROBOTS : undefined,
+    robots: isProduction() ? NO_INDEX_NO_FOLLOW_ROBOTS : undefined,
     openGraph: {
       siteName: "Linken Sphere",
       locale: locale,

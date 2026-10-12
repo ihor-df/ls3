@@ -21,9 +21,9 @@ export function formatDate(
   }).format(new Date(date));
 }
 
-export const appDomain = () => PRODUCTION_DOMAIN; // process.env.NEXT_PUBLIC_APP_DOMAIN
+export const appDomain = () => PRODUCTION_DOMAIN; // TODO: process.env.NEXT_PUBLIC_APP_DOMAIN
+export const isProduction = () => process.env.NEXT_PUBLIC_APP_DOMAIN === "ls.app"; // TODO: appDomain() === "ls.app";
 export const metadataAppDomain = () => appDomain() ?? PRODUCTION_DOMAIN;
-export const isProduction = () => appDomain() === PRODUCTION_DOMAIN;
 
 export const hostName = () => {
   return `https://${metadataAppDomain()}`;

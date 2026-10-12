@@ -31,7 +31,6 @@ export const getArticlesCount = (locale: Locale, filters: ArticleFilters = {}) =
     tags: [sanityTags.blogList(locale)],
     params: getArticleParams(locale, filters),
     perspective: "published",
-    stega: false,
   });
 
 export const getArticleCategories = (locale: Locale) =>
@@ -40,7 +39,6 @@ export const getArticleCategories = (locale: Locale) =>
     tags: [sanityTags.blogList(locale), sanityTags.articleCategories],
     params: { locale },
     perspective: "published",
-    stega: false,
   });
 
 export async function getArticlesData(locale: Locale, { page = 1, ...filters }: ArticlePaginationOptions = {}) {
@@ -56,7 +54,6 @@ export async function getArticlesData(locale: Locale, { page = 1, ...filters }: 
     tags: [sanityTags.blogList(locale), sanityTags.articleCategories],
     params: getArticleParams(locale, filters),
     perspective: "published",
-    stega: false,
   });
 
   return { posts, total, pageCount };

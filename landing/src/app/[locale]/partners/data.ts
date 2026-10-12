@@ -31,7 +31,6 @@ export const getPartnersCount = (locale: Locale, filters: PartnerFilters = {}) =
     tags: [sanityTags.partnersList(locale)],
     params: getPartnerParams(locale, filters),
     perspective: "published",
-    stega: false,
   });
 
 export const getPartnerCategories = (locale: Locale) =>
@@ -40,7 +39,6 @@ export const getPartnerCategories = (locale: Locale) =>
     tags: [sanityTags.partnersList(locale), sanityTags.partnerCategories],
     params: { locale },
     perspective: "published",
-    stega: false,
   });
 
 export async function getPartnersData(locale: Locale, { page = 1, ...filters }: PartnerPaginationOptions = {}) {
@@ -56,7 +54,6 @@ export async function getPartnersData(locale: Locale, { page = 1, ...filters }: 
     tags: [sanityTags.partnersList(locale), sanityTags.partnerCategories],
     params: getPartnerParams(locale, filters),
     perspective: "published",
-    stega: false,
   });
 
   return { partners, total, pageCount };
