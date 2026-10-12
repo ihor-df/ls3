@@ -9,7 +9,7 @@ import { ShareSocial } from "@/components/molecules/share-social";
 import CtaLg from "@/components/organisms/cta/cta-lg";
 import CtaSm from "@/components/organisms/cta/cta-sm";
 import FAQList from "@/components/organisms/faq-list";
-import { buildAbsoluteUrl, formatDate } from "@/lib/utils";
+import { formatDate, generateUrl } from "@/lib/utils";
 import { imageBuilder } from "@/sanity/helpers";
 import type { ARTICLE_QUERY_RESULT } from "@/sanity/sanity.types";
 import { Locale } from "next-intl";
@@ -34,7 +34,7 @@ const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
       href: `#${getHeadingId(_key)}`,
     })) ?? [];
 
-  const selfUrl = buildAbsoluteUrl(locale, `/blog/${slug}`);
+  const selfUrl = generateUrl(locale, `/blog/${slug}`);
 
   return (
     <Container>

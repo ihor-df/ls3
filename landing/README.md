@@ -20,6 +20,24 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Absolute page URLs
+
+Use `generateUrl(locale, pathname)` from `src/lib/utils.ts` for absolute page URLs
+in metadata, sharing, structured data, and future sitemap entries. Pass a pathname
+without a locale prefix, query parameters, or fragment, such as `/blog/article`.
+The helper also accepts a missing leading slash and treats `""` as `/`.
+
+Locale prefixes come from `src/i18n/routing.ts`: English has no prefix,
+Ukrainian uses `/ua`, Chinese uses `/ch`, and other languages use their locale code.
+Only the site root ends with `/`; localized homepages and other paths do not:
+`https://example.com/`, `https://example.com/ua`, `https://example.com/ch/blog/article`.
+Normalization happens after localization, so `/` can be passed for every homepage.
+`trailingSlash: false` in `next.config.ts` keeps page redirects consistent with this rule.
+
+The origin uses `APP_DOMAIN` when set, otherwise `PRODUCTION_DOMAIN`.
+`APP_DOMAIN` is a hostname with an optional port, without a protocol or trailing slash;
+`localhost:3000` uses HTTP and other hosts use HTTPS.
+
 ## Blog pagination migration
 
 The blog uses `/blog`, `/blog/page/N`, `/blog/category/{slug}`, and `/blog/category/{slug}/page/N`.

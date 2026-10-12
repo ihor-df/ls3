@@ -1,4 +1,7 @@
+import { getPathname } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import { clsx, type ClassValue } from "clsx";
+import { Locale } from "next-intl";
 import { twMerge } from "tailwind-merge";
 import { PRODUCTION_DOMAIN } from "./constants";
 
@@ -23,31 +26,56 @@ export function formatDate(
 
 export const appDomain = () => PRODUCTION_DOMAIN; // TODO: process.env.NEXT_PUBLIC_APP_DOMAIN
 export const isProductionDomain = () => process.env.NEXT_PUBLIC_APP_DOMAIN === "ls.app"; // TODO: appDomain() === "ls.app";
-export const metadataAppDomain = () => appDomain() ?? PRODUCTION_DOMAIN;
 
 export const hostName = () => {
-  return `https://${metadataAppDomain()}`;
+  const protocol = process.env.APP_DOMAIN === "localhost:3000" ? "http" : "https";
+  return `${protocol}://${process.env.APP_DOMAIN || PRODUCTION_DOMAIN}`;
 };
 
+// Remove trailing slashes from every path except the site root (/).
 export const normalizePathname = (pathname: string) => {
   if (!pathname || pathname === "/") return "/";
-  return pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
+  return pathname.replace(/\/+$/, "");
 };
 
-export const buildAbsoluteUrl = (locale: string, pathname: string) => {
-  const origin = hostName();
-  if (!origin) return "";
+export const generateUrl = (locale: Locale, pathname: string) => {
+  const path = pathname.startsWith("/") ? pathname : `/${pathname}`;
+  // Use routing's locale prefixes: en → none, uk → /ua, zh → /ch, others → /{locale}.
+  const localizedPathname = getPathname({ locale, href: path });
 
-  const normalizedPathname = normalizePathname(pathname);
-
-  const localizedPathname =
-    normalizedPathname === "/"
-      ? locale === "en"
-        ? "/"
-        : `/${locale}`
-      : locale === "en"
-        ? normalizedPathname
-        : `/${locale}${normalizedPathname}`;
-
-  return `${origin}${localizedPathname}`;
+  return `${hostName()}${normalizePathname(localizedPathname)}`;
 };
+
+export async function generatePageMetadata({
+  locale,
+  pathname,
+  title,
+  description,
+  pageLocales,
+}: {
+  locale: Locale;
+  pathname: string;
+  title?: string;
+  description?: string;
+  pageLocales?: Locale[];
+}) {
+  const locales = pageLocales ? pageLocales : routing.locales;
+  const canonical = generateUrl(locale, pathname);
+
+  const alternateLinks = locales.map((loc) => ({
+    hrefLang: loc,
+    href: generateUrl(loc, pathname),
+  }));
+
+  const languages = Object.fromEntries(alternateLinks.map((l) => [l.hrefLang, l.href]));
+  languages["x-default"] = languages["en"];
+
+  return {
+    ...(title ? { title } : {}),
+    ...(description ? { description } : {}),
+    alternates: {
+      canonical,
+      languages,
+    },
+  };
+}
