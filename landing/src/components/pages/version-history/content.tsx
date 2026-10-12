@@ -103,7 +103,12 @@ const VersionHistoryContent = ({ locale, noResults, versions, periods }: Version
       </Suspense>
 
       <div className="mt-10 grid flex-1 grid-cols-1 gap-10 lg:grid-cols-[300px_1fr]">
-        <MonthPicker periods={periods} selectedPeriod={filters.period} onPeriodChange={handlePeriodChange} />
+        <MonthPicker
+          periods={periods}
+          selectedPeriod={filters.period}
+          initialPeriod={getDefaultPeriod(periods)}
+          onPeriodChange={handlePeriodChange}
+        />
 
         {filteredVersions.length ? (
           <ul>

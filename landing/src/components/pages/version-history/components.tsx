@@ -85,7 +85,7 @@ export const SelectYearButton = ({
     >
       <Circles size={iconSize} />
       <span className="ml-4 text-xl lg:text-2xl">{year}</span>
-      <span className="ml-auto flex gap-7">
+      <span className="ml-auto flex items-center gap-7">
         {quantity && <span className="tracking-[-0.01em] text-[#EAF5FF]/30">{quantity}</span>}
         {variant === "mobile" && (
           <ArrowIcon className={cn("size-4 transition-transform", isOpen && "rotate-180", arrowClassName)} />

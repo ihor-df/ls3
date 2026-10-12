@@ -12,11 +12,39 @@ import type { PeriodGroup, SelectedPeriod } from "./types";
 type MonthPickerProps = {
   periods: PeriodGroup[];
   selectedPeriod: SelectedPeriod | null;
+  initialPeriod: SelectedPeriod | null;
   onPeriodChange: (period: SelectedPeriod) => void;
 };
 
-const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerProps) => {
+const getPeriodKey = (period: SelectedPeriod | null) => (period ? `${period.year}:${period.month ?? "all"}` : null);
+
+const MonthPicker = ({ periods, selectedPeriod, initialPeriod, onPeriodChange }: MonthPickerProps) => {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const selectedPeriodKey = getPeriodKey(selectedPeriod);
+  const [mobileAccordion, setMobileAccordion] = useState({
+    periodKey: selectedPeriodKey,
+    openYear: selectedPeriod?.year ?? null,
+  });
+
+  // Follow external filter changes, while preserving a collapse after resetting the period.
+  if (mobileAccordion.periodKey !== selectedPeriodKey) {
+    setMobileAccordion({ periodKey: selectedPeriodKey, openYear: selectedPeriod?.year ?? null });
+  }
+
+  const handlePeriodChange = (period: SelectedPeriod) => {
+    setMobileAccordion({ periodKey: getPeriodKey(period), openYear: period.year });
+    onPeriodChange(period);
+  };
+
+  const handleYearToggle = (year: number) => {
+    if (mobileAccordion.openYear !== year) {
+      handlePeriodChange({ year, month: null });
+      return;
+    }
+
+    setMobileAccordion({ periodKey: getPeriodKey(initialPeriod), openYear: null });
+    if (initialPeriod) onPeriodChange(initialPeriod);
+  };
 
   const isMobile = useCheckScreen("(max-width: 1023px)");
   const t = useTranslations("versionHistory.periodDrawer");
@@ -56,21 +84,20 @@ const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerPro
         >
           <ul className="mr-2">
             {periods.map((period) => {
-              const isOpen = selectedPeriod?.year === period.year;
-              const fullYear = selectedPeriod?.month === null && isOpen;
+              const isOpen = mobileAccordion.openYear === period.year;
+              const fullYear = selectedPeriod?.month === null && selectedPeriod.year === period.year;
               const monthsId = `period-months-${period.year}`;
 
               return (
                 <li key={period.year} className="group mt-5 first:mt-0">
                   <SelectYearButton
-                    onClick={() => onPeriodChange({ year: period.year, month: null })}
+                    onClick={() => handleYearToggle(period.year)}
                     variant="mobile"
                     year={period.year}
                     selectedDate={selectedPeriod}
                     quantity={period.count}
                     isOpen={isOpen}
                     iconSize="lg"
-                    arrowClassName="size-6"
                     aria-controls={monthsId}
                     aria-expanded={isOpen}
                   />
@@ -87,7 +114,7 @@ const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerPro
                           <MonthButtonMobile
                             active={fullYear}
                             className="h-full max-md:h-13 md:text-center"
-                            onClick={() => onPeriodChange({ year: period.year, month: null })}
+                            onClick={() => handlePeriodChange({ year: period.year, month: null })}
                           >
                             {t("allLabel")}{" "}
                             <span className="font-medium text-[rgba(234,245,255,0.30)] max-md:ml-3 md:mt-1 md:block">
@@ -103,7 +130,7 @@ const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerPro
                               <MonthButtonMobile
                                 active={current}
                                 className="px-3 py-4 text-center"
-                                onClick={() => onPeriodChange({ year: period.year, month: month.value })}
+                                onClick={() => handlePeriodChange({ year: period.year, month: month.value })}
                               >
                                 {month.label}
                                 <span className="mt-1 block font-medium text-[rgba(234,245,255,0.30)]">
@@ -130,12 +157,12 @@ const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerPro
             <li key={period.year} className="group mt-4 first:mt-0">
               <SelectYearButton
                 selectedDate={selectedPeriod}
-                onClick={() => onPeriodChange({ year: period.year, month: null })}
+                onClick={() => handlePeriodChange({ year: period.year, month: null })}
                 year={period.year}
                 quantity={period.count}
               />
 
-              <ul>
+              <ul className="flex flex-col gap-0.5">
                 {period.months.map((month) => (
                   <li key={month.value}>
                     <MonthButtonDesktop
@@ -144,7 +171,7 @@ const MonthPicker = ({ periods, selectedPeriod, onPeriodChange }: MonthPickerPro
                       label={month.label}
                       amount={month.count}
                       selected={selectedPeriod}
-                      onClick={() => onPeriodChange({ year: period.year, month: month.value })}
+                      onClick={() => handlePeriodChange({ year: period.year, month: month.value })}
                     />
                   </li>
                 ))}

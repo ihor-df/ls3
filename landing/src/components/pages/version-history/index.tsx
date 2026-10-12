@@ -2,7 +2,7 @@ import Container from "@/components/atoms/container";
 import CollectionPageHeader from "@/components/molecules/collection-page-header";
 import { VERSION_HISTORY_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
-import VersionHistoryContent from "./content";
+import Content from "./content";
 import { buildVersionHistoryData } from "./data";
 
 type VersionHistoryPageProps = {
@@ -23,7 +23,7 @@ const VersionHistoryPage = ({ versions, title, locale, noResults }: VersionHisto
         searchNavigationMode="history"
         searchClassName="max-lg:hidden"
       />
-      <VersionHistoryContent
+      <Content
         locale={locale}
         noResults={noResults}
         versions={versionHistoryData.versions}
