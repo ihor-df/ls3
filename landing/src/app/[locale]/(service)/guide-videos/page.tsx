@@ -10,6 +10,7 @@ export function generateStaticParams() {
 
 export default async function Page({ params }: { params: LocaleParams }) {
   const { locale } = await params;
+
   const t = await getTranslations("guideVideos");
   const useRussianVideos = locale === "ru" || locale === "uk";
 

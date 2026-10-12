@@ -22,7 +22,7 @@ Filter:
 ```groq
 coalesce(after()._type, before()._type) in [
   "article", "partner", "articleCategory", "partnerCategory",
-  "author", "publication", "version", "page", "translation.metadata"
+  "author", "publication", "version", "page", "translation.metadata", "siteSettings"
 ]
 ```
 
@@ -67,6 +67,8 @@ Tag factories are in `src/sanity/cache-tags.ts`; document rules are in
   the queries that reference those documents.
 - Language navigation is invalidated only for changes to addresses, publication state,
   category membership or translation metadata. Text edits do not invalidate it.
+- Site settings edits invalidate `site-settings`, refreshing the default social image
+  used by all locales. Include `siteSettings` in the saved webhook filter above.
 - Ordinary edits use `revalidateTag(tag, "max")`. Creation, deletion and address changes
   use `{ expire: 0 }` and invalidate the old/new detail paths, including cached 404s.
   Paths use internal locales `/en`, `/uk`, `/zh`, before next-intl rewrites.

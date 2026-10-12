@@ -1,10 +1,15 @@
 import Header from "@/components/organisms/header-navigation";
 import BlogSearchProvider from "@/context/blog-search-provider";
 import PartnersSearchProvider from "@/context/partners-search-provider";
+import { NO_INDEX_NO_FOLLOW_ROBOTS } from "@/lib/constants";
+import { sanityTags } from "@/sanity/cache-tags";
+import { sanityFetch } from "@/sanity/client";
 import { getLanguageNavigation } from "@/sanity/language-navigation";
+import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import { defineQuery } from "next-sanity";
 import localFont from "next/font/local";
 import { ReactNode } from "react";
 import "../globals.css";
@@ -36,29 +41,60 @@ type RootLayoutProps = {
   params: Promise<{ locale: string }>;
 };
 
+const SITE_SETTINGS_QUERY = defineQuery(`
+  *[_type == "siteSettings" && _id == "siteSettings"][0]{
+    defaultOgImage {
+      asset->{
+        url,
+        metadata { dimensions { width, height } }
+      }
+    }
+  }
+`);
+
 export async function generateMetadata({ params }: Pick<RootLayoutProps, "params">): Promise<Metadata> {
   const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "metadata" });
+
+  const [t, siteSettings] = await Promise.all([
+    getTranslations({ locale, namespace: "metadata" }),
+    sanityFetch<SITE_SETTINGS_QUERY_RESULT>({
+      query: SITE_SETTINGS_QUERY,
+      tags: [sanityTags.siteSettings],
+      stega: false,
+    }),
+  ]);
+
   const title = t("title");
   const description = t("description");
+  const ogImage = siteSettings?.defaultOgImage?.asset;
+
+  const socialImage = {
+    url: ogImage?.url ?? "https://ls.app/images/thumbnail-for-sharing.webp",
+    alt: "Linken Sphere Antidetect Browser",
+    width: ogImage?.metadata?.dimensions?.width ?? 1200,
+    height: ogImage?.metadata?.dimensions?.height ?? 630,
+  };
 
   return {
     title,
     description,
+    robots: process.env.APP_DOMAIN !== "ls.app" ? NO_INDEX_NO_FOLLOW_ROBOTS : undefined,
     openGraph: {
-      title,
-      description,
+      siteName: "Linken Sphere",
+      locale: locale,
+      type: "website",
+      images: [socialImage],
     },
     twitter: {
-      title,
-      description,
+      card: "summary",
+      images: [socialImage],
     },
   };
 }
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
   const { locale } = await params;
-  const languageNavigation = await getLanguageNavigation(locale); // Map available blog and partners locales
+  const languageNavigation = await getLanguageNavigation(locale); // Map available blog and partners pages locale
 
   return (
     <html

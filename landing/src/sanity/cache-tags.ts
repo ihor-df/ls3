@@ -11,4 +11,5 @@ export const sanityTags = {
   partnerCategories: "partner-categories",
   articleAuthors: "article-authors",
   languageNavigation: "language-navigation",
+  siteSettings: "site-settings",
 };

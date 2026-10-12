@@ -64,13 +64,6 @@
           "type": "string"
         }
       },
-      "siteName": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": false
-      },
       "defaultOgImage": {
         "type": "objectAttribute",
         "value": {

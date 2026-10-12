@@ -28,7 +28,6 @@ export type SiteSettings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  siteName: string;
   defaultOgImage: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -697,6 +696,23 @@ export type ARTICLE_QUERY_RESULT = {
   }> | null;
 } | null;
 
+// Source: ../landing/src/app/[locale]/layout.tsx
+// Variable: SITE_SETTINGS_QUERY
+// Query: *[_type == "siteSettings" && _id == "siteSettings"][0]{    defaultOgImage {      asset->{        url,        metadata { dimensions { width, height } }      }    }  }
+export type SITE_SETTINGS_QUERY_RESULT = {
+  defaultOgImage: {
+    asset: {
+      url: string;
+      metadata: {
+        dimensions: {
+          width: number;
+          height: number;
+        } | null;
+      } | null;
+    } | null;
+  };
+} | null;
+
 // Source: ../landing/src/app/[locale]/partners/api.ts
 // Variable: PARTNER_CATEGORIES_QUERY
 // Query: *[_type == "partnerCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current,    "partnerCount": count(*[  _type == "partner" &&  language == $locale &&  defined(slug.current) && references(^._id)])  }[partnerCount > 0] | order(title asc)
@@ -835,6 +851,40 @@ export type PUBLICATION_SLUGS_QUERY_RESULT = Array<{
   language: string | null;
 }>;
 
+// Source: ../landing/src/sanity/language-navigation.ts
+// Variable: LANGUAGE_NAVIGATION_QUERY
+// Query: {  "documents": *[_type in ["article", "partner"] && defined(slug.current)]{    "section": select(_type == "article" => "blog", "partners"),    language,    "slug": slug.current,    "categories": categories[]._ref,    "translations": (*[_type == "translation.metadata" && references(^._id)][0]      .translations[].value->{language, "slug": slug.current})[defined(language) && defined(slug)]  },  "categories": *[_type in ["articleCategory", "partnerCategory"] && defined(slug.current)]{    _id,    "section": select(_type == "articleCategory" => "blog", "partners"),    "slug": slug.current  }}
+export type LANGUAGE_NAVIGATION_QUERY_RESULT = {
+  documents: Array<{
+    section: "blog";
+    language: string | null;
+    slug: string;
+    categories: Array<string>;
+    translations: Array<{
+      language: string;
+      slug: string;
+    }> | null;
+  } | {
+    section: "partners";
+    language: string | null;
+    slug: string;
+    categories: Array<string>;
+    translations: Array<{
+      language: string;
+      slug: string;
+    }> | null;
+  }>;
+  categories: Array<{
+    _id: string;
+    section: "blog";
+    slug: string;
+  } | {
+    _id: string;
+    section: "partners";
+    slug: string;
+  }>;
+};
+
 // Query TypeMap
 declare global {
   interface SanityQueries {
@@ -845,6 +895,7 @@ declare global {
     "\n  \n  *[\n  \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)\n[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n  }\n": ARTICLES_QUERY_RESULT;
     "\n  count(*[\n    \n  \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": ARTICLES_COUNT_QUERY_RESULT;
     "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n      \"slug\": slug.current,\n    },\n    faq[]{\n      \"id\":_key,\n      question,\n      answer\n    },\n  }\n": ARTICLE_QUERY_RESULT;
+    "\n  *[_type == \"siteSettings\" && _id == \"siteSettings\"][0]{\n    defaultOgImage {\n      asset->{\n        url,\n        metadata { dimensions { width, height } }\n      }\n    }\n  }\n": SITE_SETTINGS_QUERY_RESULT;
     "\n  *[_type == \"partnerCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current,\n    \"partnerCount\": count(*[\n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n && references(^._id)])\n  }[partnerCount > 0] | order(title asc)\n": PARTNER_CATEGORIES_QUERY_RESULT;
     "\n  *[_type == \"partnerCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n": PARTNER_CATEGORY_QUERY_RESULT;
     "\n  \n  *[\n  \n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)\n[0...12]{\n    \n  _id,\n  title,\n  description,\n  slug,\n  publishedAt,\n  logo {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n  }\n": PARTNERS_QUERY_RESULT;
@@ -853,6 +904,7 @@ declare global {
     "\n  count(*[\n    \n  \n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": PARTNERS_COUNT_QUERY_RESULT;
     "\n  *[_type == \"publication\" && language == $locale && defined(slug.current)]\n    | order(publishedAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  url,\n  cover {\n   asset->{_id, url},\n   alt,\n   hotspot,\n   crop\n  },\n\n    }\n": PUBLICATIONS_QUERY_RESULT;
     "\n  *[_type == \"publication\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": PUBLICATION_SLUGS_QUERY_RESULT;
+    "{\n  \"documents\": *[_type in [\"article\", \"partner\"] && defined(slug.current)]{\n    \"section\": select(_type == \"article\" => \"blog\", \"partners\"),\n    language,\n    \"slug\": slug.current,\n    \"categories\": categories[]._ref,\n    \"translations\": (*[_type == \"translation.metadata\" && references(^._id)][0]\n      .translations[].value->{language, \"slug\": slug.current})[defined(language) && defined(slug)]\n  },\n  \"categories\": *[_type in [\"articleCategory\", \"partnerCategory\"] && defined(slug.current)]{\n    _id,\n    \"section\": select(_type == \"articleCategory\" => \"blog\", \"partners\"),\n    \"slug\": slug.current\n  }\n}": LANGUAGE_NAVIGATION_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too

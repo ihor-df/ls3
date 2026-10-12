@@ -103,6 +103,9 @@ export function getRevalidationPlan({ type, before, after }: WebhookPayload, ope
     case "translation.metadata":
       tags.add(sanityTags.languageNavigation);
       break;
+    case "siteSettings":
+      tags.add(sanityTags.siteSettings);
+      break;
   }
 
   return { tags: [...tags], paths: [...paths], immediate };

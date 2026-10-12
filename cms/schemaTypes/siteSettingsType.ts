@@ -8,12 +8,6 @@ export const siteSettingsType = defineType({
   icon: CogIcon,
   fields: [
     defineField({
-      name: 'siteName',
-      title: 'Site name',
-      type: 'string',
-      validation: (rule) => rule.required(),
-    }),
-    defineField({
       name: 'defaultOgImage',
       title: 'Default Open Graph image',
       type: 'image',
