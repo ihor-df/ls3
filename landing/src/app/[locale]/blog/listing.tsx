@@ -3,6 +3,7 @@ import BlogPage from "@/components/pages/blog";
 import type { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
+import { getPageQuery } from "../api";
 import { getArticleCategories, getArticlesData } from "./data";
 
 type BlogListingProps = {
@@ -17,12 +18,15 @@ export async function BlogListing({ locale, page, categorySlug }: BlogListingPro
 
   if (categorySlug && !category) notFound();
 
-  const [{ posts, pageCount }, t] = await Promise.all([
-    getArticlesData(locale, { page, categoryId: category?._id }),
+  const [t, { posts, pageCount }, data] = await Promise.all([
     getTranslations({ locale, namespace: "blog" }),
+    getArticlesData(locale, { page, categoryId: category?._id }),
+    category?.title == null ? getPageQuery("blog", locale) : null,
   ]);
 
   if (page > Math.max(1, pageCount) || (category && !posts.length)) notFound();
+
+  const title = data?.mainTitle ? data.mainTitle : t("title");
 
   return (
     <BlogPage
@@ -32,9 +36,9 @@ export async function BlogListing({ locale, page, categorySlug }: BlogListingPro
       pageCount={pageCount}
       paginationBasePath={category ? `/blog/category/${category.slug}` : "/blog"}
       activeCategory={category?.slug ?? null}
-      title={category?.title ?? t("title")}
+      title={category?.title ?? title}
     >
-      {/* server content as children */}
+      {/* server components */}
       <CtaLg variant="get-started" />
     </BlogPage>
   );

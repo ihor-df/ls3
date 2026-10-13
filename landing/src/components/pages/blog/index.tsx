@@ -92,7 +92,7 @@ const BlogPage = ({
           ))}
       </section>
 
-      {/* server content */}
+      {/* server components as children*/}
       {children}
     </Container>
   );

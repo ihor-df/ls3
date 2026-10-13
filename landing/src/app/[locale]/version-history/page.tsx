@@ -24,6 +24,8 @@ export default async function Page({ params }: PageProps) {
     tags: [sanityTags.versionHistory(locale), sanityTags.page(locale, "version-history")],
   });
 
+  console.log({ seo: data.page?.seo });
+
   return (
     <VersionHistoryPage
       title={data.page?.mainTitle ?? t("title")}

@@ -1,7 +1,7 @@
 import Header from "@/components/organisms/header-navigation";
-import BlogSearchProvider from "@/context/blog-search-provider";
-import PartnersSearchProvider from "@/context/partners-search-provider";
+import ContextProviders from "@/context/context-providers";
 import { NO_INDEX_NO_FOLLOW_ROBOTS } from "@/lib/constants";
+import { abcDiatype } from "@/lib/fonts";
 import { isProductionDomain } from "@/lib/utils";
 import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
@@ -10,48 +10,14 @@ import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
-import { defineQuery } from "next-sanity";
-import localFont from "next/font/local";
 import { ReactNode } from "react";
 import "../globals.css";
-
-const abcDiatype = localFont({
-  src: [
-    {
-      path: "../../assets/fonts/ABCDiatypeCyrillic/ABCDiatypeCyrillic-Regular.woff2",
-      weight: "400",
-      style: "normal",
-    },
-    {
-      path: "../../assets/fonts/ABCDiatypeCyrillic/ABCDiatypeCyrillic-Medium.woff2",
-      weight: "500",
-      style: "normal",
-    },
-    {
-      path: "../../assets/fonts/ABCDiatypeCyrillic/ABCDiatypeCyrillic-Bold.woff2",
-      weight: "700",
-      style: "normal",
-    },
-  ],
-  display: "fallback",
-  variable: "--font-abc-diatype",
-});
+import { SITE_SETTINGS_QUERY } from "./api";
 
 type RootLayoutProps = {
   children: ReactNode;
   params: Promise<{ locale: string }>;
 };
-
-const SITE_SETTINGS_QUERY = defineQuery(`
-  *[_type == "siteSettings" && _id == "siteSettings"][0]{
-    defaultOgImage {
-      asset->{
-        url,
-        metadata { dimensions { width, height } }
-      }
-    }
-  }
-`);
 
 export async function generateMetadata({ params }: Pick<RootLayoutProps, "params">): Promise<Metadata> {
   const { locale } = await params;
@@ -104,12 +70,10 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
     >
       <body className="relative flex min-h-full flex-col">
         <NextIntlClientProvider>
-          <BlogSearchProvider>
-            <PartnersSearchProvider>
-              <Header languageNavigation={languageNavigation} />
-              {children}
-            </PartnersSearchProvider>
-          </BlogSearchProvider>
+          <ContextProviders>
+            <Header languageNavigation={languageNavigation} />
+            {children}
+          </ContextProviders>
         </NextIntlClientProvider>
       </body>
     </html>

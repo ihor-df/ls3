@@ -9,8 +9,8 @@ import {
   WhatsappShareButton,
 } from "next-share";
 
+import { copyToClipboard } from "@/helpers/copy-to-clipboard";
 import useCheckScreen from "@/hooks/useCheckScreen";
-import { copyToClipboard } from "@/lib/helpers/copy-to-clipboard";
 import { ComponentPropsWithoutRef, useId, useState } from "react";
 import ButtonRounded, { buttonRoundedStyles } from "../atoms/button-rounded";
 

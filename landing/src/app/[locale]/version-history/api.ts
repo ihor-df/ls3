@@ -7,17 +7,21 @@ export const VERSION_HISTORY_QUERY = defineQuery(`
       language == $locale &&
       slug.current == "version-history"
     ][0] {
-      mainTitle
+      mainTitle,
+      seo {
+        title,
+        description,
+        ogImage,
+        noIndex
+      }
     },
     "versions": *[
       _type == "version" &&
       language == $locale &&
-      defined(slug.current) &&
       defined(releaseDate)
     ] | order(releaseDate desc, _id asc) {
       _id,
       version,
-      "slug": slug.current,
       releaseType,
       releaseDate,
       body,

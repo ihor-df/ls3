@@ -1,4 +1,3 @@
-import { isProductionDomain } from "@/lib/utils";
 import { createClient, type ClientPerspective, type QueryParams, type StegaConfig } from "next-sanity";
 
 const SANITY_API_VERSION = "2026-08-13";
@@ -15,7 +14,7 @@ export async function sanityFetch<Result = unknown, const QueryString extends st
   params = {},
   tags = [],
   stega = {
-    enabled: isProductionDomain() ? false : true,
+    enabled: false, // isProductionDomain() ? false : true,
     studioUrl: "https://ls3-cms.sanity.studio",
   },
   perspective = "published",

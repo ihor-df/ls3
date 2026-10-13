@@ -1,6 +1,6 @@
 "use client";
 
-import { copyToClipboard } from "@/lib/helpers/copy-to-clipboard";
+import { copyToClipboard } from "@/helpers/copy-to-clipboard";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
