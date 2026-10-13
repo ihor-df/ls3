@@ -162,7 +162,7 @@ const MonthPicker = ({ periods, selectedPeriod, initialPeriod, onPeriodChange }:
                 quantity={period.count}
               />
 
-              <ul className="flex flex-col gap-0.5">
+              <ul className="mt-0.5 flex flex-col gap-0.5">
                 {period.months.map((month) => (
                   <li key={month.value}>
                     <MonthButtonDesktop
