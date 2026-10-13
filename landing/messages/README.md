@@ -13,6 +13,7 @@
 - Use natural language written for a modern website. Headings should be concise, CTA labels should be direct, and explanatory text should be clear rather than promotional by default.
 - Follow native capitalization, punctuation, spacing, and word order. Do not copy English Title Case into languages that do not normally use it.
 - Keep product names, company names, URLs, promo codes, and technical identifiers unchanged unless an approved localized form exists.
+- `Linken Sphere` is a proper brand name and must always remain exactly `Linken Sphere` in every language. Preserve its spelling and capitalization; never translate, transliterate, or replace it with a localized equivalent, including in headings and SEO metadata.
 - Prefer established interface terminology such as the local equivalent of "Frequently asked questions" instead of a literal translation of "Popular Questions".
 - Avoid unnecessary English loanwords when a familiar native interface term exists, except for established terms such as "Blog" where appropriate.
 

@@ -1,5 +1,4 @@
 import {defineField, defineType} from 'sanity'
-import {isUniqueSlugByLanguage} from '../lib/isUniqueSlugByLanguage'
 import {postBodyField} from './objects/postBodyField'
 
 export const versionType = defineType({
@@ -12,15 +11,6 @@ export const versionType = defineType({
       type: 'string',
       readOnly: true,
       hidden: true,
-    }),
-    defineField({
-      name: 'slug',
-      type: 'slug',
-      options: {
-        source: 'version',
-        isUnique: isUniqueSlugByLanguage,
-      },
-      validation: (rule) => rule.required(),
     }),
     defineField({
       name: 'version',

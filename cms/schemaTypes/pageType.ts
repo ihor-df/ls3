@@ -25,7 +25,6 @@ export const pageType = defineType({
       title: 'Slug',
       type: 'slug',
       options: {
-        source: 'mainTitle',
         isUnique: isUniqueSlugByLanguage,
       },
       validation: (rule) => rule.required(),
