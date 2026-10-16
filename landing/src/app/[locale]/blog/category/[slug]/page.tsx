@@ -1,7 +1,13 @@
+import { getArticleCategory } from "@/app/[locale]/blog/api";
+import { getArticleCategories } from "@/app/[locale]/blog/data";
+import { BlogListing } from "@/app/[locale]/blog/listing";
+import { generatePageMetadata } from "@/helpers/metadata/generate-page-metadata";
+
 import { routing } from "@/i18n/routing";
-import type { LocaleSlugParams } from "@/types/common";
-import { getArticleCategories } from "../../data";
-import { BlogListing } from "../../listing";
+import { getLanguageNavigation } from "@/sanity/language-navigation";
+import type { LocaleSlugPageProps, LocaleSlugParams } from "@/types/common";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
   const categoriesByLocale = await Promise.all(
@@ -15,8 +21,36 @@ export async function generateStaticParams() {
   return categoriesByLocale.flat();
 }
 
+export async function generateMetadata({ params }: LocaleSlugPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const category = await getArticleCategory(slug, locale);
+
+  if (!category) {
+    notFound();
+  }
+
+  const pathname = `/blog/category/${category.slug}`;
+  const navigation = await getLanguageNavigation(locale);
+  const pageLocales = routing.locales.filter((language) => navigation[pathname]?.[language]);
+
+  return generatePageMetadata({
+    locale,
+    pathname,
+    pageLocales,
+    title: category.seo?.title || category.title,
+    description: category.seo?.description,
+    ogImage: category.seo?.ogImage,
+    noIndex: !!category.seo?.noIndex,
+  });
+}
+
 export default async function Page({ params }: { params: LocaleSlugParams }) {
   const { locale, slug } = await params;
+  const category = await getArticleCategory(slug, locale);
 
-  return <BlogListing locale={locale} page={1} categorySlug={slug} />;
+  if (!category?.title) {
+    notFound();
+  }
+
+  return <BlogListing locale={locale} page={1} categorySlug={slug} title={category.title} />;
 }

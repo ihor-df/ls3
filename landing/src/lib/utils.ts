@@ -44,3 +44,6 @@ export const generateUrl = (locale: Locale, pathname: string) => {
 
   return `${hostName()}${normalizePathname(localizedPathname)}`;
 };
+
+export const getPaginationPath = (basePath: string, page: number) =>
+  page === 1 ? basePath : `${basePath}/page/${page}`;

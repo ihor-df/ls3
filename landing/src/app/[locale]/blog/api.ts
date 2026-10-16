@@ -1,19 +1,24 @@
+import { sanityTags } from "@/sanity/cache-tags";
+import { sanityFetch } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 
-const publishedArticleFilter = /* groq */ `
+const articleListFilter = /* groq */ `
   _type == "article" &&
   language == $locale &&
-  defined(slug.current)
-`;
-
-const articleListFilter = /* groq */ `
-  ${publishedArticleFilter} &&
+  defined(slug.current) &&
   (!defined($search) || title match $search || body[].children[].text match $search) &&
   (!defined($categoryId) || references($categoryId))
 `;
 
-const orderedArticleList = /* groq */ `
-  *[${articleListFilter}] | order(publishedAt desc, _id asc)
+const articleCategoriesProjection = /* groq */ `
+  categories[]->{
+    _id,
+    "title": coalesce(
+      title[language == $locale && value match "*"][0].value,
+      title[language == "en" && value match "*"][0].value
+    ),
+    "slug": slug.current
+  }
 `;
 
 const articleListProjection = /* groq */ `
@@ -25,14 +30,7 @@ const articleListProjection = /* groq */ `
     asset->{_id, url},
     alt,
   },
-  categories[]->{
-    _id,
-    "title": coalesce(
-      title[language == $locale][0].value,
-      title[language == "en"][0].value
-    ),
-    "slug": slug.current
-  }
+  ${articleCategoriesProjection}
 `;
 
 export const getArticlesQuery = (start: number, limit: number) => {
@@ -43,7 +41,7 @@ export const getArticlesQuery = (start: number, limit: number) => {
   const end = start + limit;
 
   return defineQuery(`
-    ${orderedArticleList}[${start}...${end}]{
+    *[${articleListFilter}] | order(publishedAt desc, _id asc)[${start}...${end}]{
       ${articleListProjection}
     }
   `);
@@ -59,11 +57,16 @@ export const ARTICLE_CATEGORIES_QUERY = defineQuery(`
   *[_type == "articleCategory" && defined(slug.current)]{
     _id,
     "title": coalesce(
-      title[language == $locale][0].value,
-      title[language == "en"][0].value
+      title[language == $locale && value match "*"][0].value,
+      title[language == "en" && value match "*"][0].value
     ),
     "slug": slug.current,
-    "articleCount": count(*[${publishedArticleFilter} && references(^._id)])
+    "articleCount": count(*[
+      _type == "article" &&
+      language == $locale &&
+      defined(slug.current) &&
+      references(^._id)
+    ])
   }[articleCount > 0] | order(title asc)
 `);
 
@@ -71,15 +74,28 @@ export const ARTICLE_CATEGORY_QUERY = defineQuery(`
   *[_type == "articleCategory" && slug.current == $slug][0]{
     _id,
     "title": coalesce(
-      title[language == $locale][0].value,
-      title[language == "en"][0].value
+      title[language == $locale && value match "*"][0].value,
+      title[language == "en" && value match "*"][0].value
     ),
-    "slug": slug.current
+    "slug": slug.current,
+    seo {
+        "title": coalesce(
+          title[language == $locale && value match "*"][0].value,
+          title[language == "en" && value match "*"][0].value
+      ),
+        "description": coalesce(
+          description[language == $locale && value match "*"][0].value,
+          description[language == "en" && value match "*"][0].value
+      ),
+        ogImage,
+        noIndex
+    }
   }
 `);
 
+// Static query for TypeGen. Runtime pagination uses getArticlesQuery with the same fields.
 export const ARTICLES_QUERY = defineQuery(`
-  ${orderedArticleList}[0...12]{
+  *[${articleListFilter}] | order(publishedAt desc, _id asc)[0...12]{
     ${articleListProjection}
   }
 `);
@@ -117,18 +133,33 @@ export const ARTICLE_QUERY = defineQuery(`
       ),
       avatar
     },
-    categories[]->{
-      _id,
-      "title": coalesce(
-        title[language == $locale][0].value,
-        title[language == "en"][0].value
-      ),
-      "slug": slug.current,
-    },
+    ${articleCategoriesProjection},
     faq[]{
       "id":_key,
       question,
       answer
     },
+    seo {
+      title,
+      description,
+      ogImage,
+      noIndex
+    }
   }
 `);
+
+export const getArticle = async (slug: string, locale: string) => {
+  return sanityFetch({
+    params: { slug, locale },
+    query: ARTICLE_QUERY,
+    tags: [sanityTags.article(locale, slug), sanityTags.articleCategories, sanityTags.articleAuthors],
+  });
+};
+
+export const getArticleCategory = async (slug: string, locale: string) => {
+  return sanityFetch({
+    query: ARTICLE_CATEGORY_QUERY,
+    params: { locale, slug },
+    tags: [sanityTags.articleCategories],
+  });
+};

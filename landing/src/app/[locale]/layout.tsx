@@ -1,6 +1,6 @@
 import Header from "@/components/organisms/header-navigation";
 import ContextProviders from "@/context/context-providers";
-import { NO_INDEX_NO_FOLLOW_ROBOTS } from "@/lib/constants";
+import { DEFAULT_OG_IMAGE_URL, NO_INDEX_NO_FOLLOW_ROBOTS, SITE_NAME } from "@/lib/constants";
 import { abcDiatype } from "@/lib/fonts";
 import { isProductionDomain } from "@/lib/utils";
 import { sanityTags } from "@/sanity/cache-tags";
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
   const ogImage = siteSettings?.defaultOgImage?.asset;
 
   const socialImage = {
-    url: ogImage?.url ?? "https://ls.app/images/thumbnail-for-sharing.webp",
+    url: ogImage?.url ?? DEFAULT_OG_IMAGE_URL,
     alt: "Linken Sphere Antidetect Browser",
     width: ogImage?.metadata?.dimensions?.width ?? 1200,
     height: ogImage?.metadata?.dimensions?.height ?? 630,
@@ -46,7 +46,7 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
     description,
     robots: isProductionDomain() ? NO_INDEX_NO_FOLLOW_ROBOTS : undefined,
     openGraph: {
-      siteName: "Linken Sphere",
+      siteName: SITE_NAME,
       locale: locale,
       type: "website",
       images: [socialImage],

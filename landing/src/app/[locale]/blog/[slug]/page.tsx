@@ -1,11 +1,13 @@
 import BlogArticle from "@/components/pages/blog/article";
+import { generateCollectionMetadata } from "@/helpers/metadata/generate-collection-metadata";
 import { routing } from "@/i18n/routing";
 import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
-import { LocaleSlugParams } from "@/types/common";
+import { LocaleSlugPageProps } from "@/types/common";
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { ARTICLE_QUERY, ARTICLE_SLUGS_QUERY } from "../api";
+import { ARTICLE_SLUGS_QUERY, getArticle } from "../api";
 
 export async function generateStaticParams() {
   const posts = await sanityFetch({
@@ -21,20 +23,31 @@ export async function generateStaticParams() {
   );
 }
 
-type PageProps = {
-  params: LocaleSlugParams;
-  searchParams: Promise<{ page?: string }>;
-};
+export async function generateMetadata({ params }: LocaleSlugPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
 
-const Page = async ({ params }: PageProps) => {
+  const article = await getArticle(slug, locale);
+
+  if (!article) {
+    notFound();
+  }
+
+  return generateCollectionMetadata({
+    locale,
+    pathname: `/blog/${slug}`,
+    type: "article",
+    title: article.seo?.title || article.title,
+    description: article.seo?.description,
+    ogImage: article.seo?.ogImage,
+    noIndex: !!article.seo?.noIndex,
+  });
+}
+
+const Page = async ({ params }: LocaleSlugPageProps) => {
   const { slug, locale } = await params;
   const t = await getTranslations("blog");
 
-  const post = await sanityFetch({
-    params: { slug, locale },
-    query: ARTICLE_QUERY,
-    tags: [sanityTags.article(locale, slug), sanityTags.articleCategories, sanityTags.articleAuthors],
-  });
+  const post = await getArticle(slug, locale);
 
   if (!post) notFound();
 

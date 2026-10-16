@@ -61,13 +61,13 @@ export type PartnerCategory = {
   _rev: string;
   title: InternationalizedArrayString;
   slug: Slug;
-  seo?: Seo;
+  seo?: LocalizedSeo;
 };
 
-export type Seo = {
-  _type: "seo";
-  title: string;
-  description: string;
+export type LocalizedSeo = {
+  _type: "localizedSeo";
+  title?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
   ogImage?: {
     asset?: SanityImageAssetReference;
     media?: unknown;
@@ -125,6 +125,20 @@ export type Table = {
   }>;
 };
 
+export type Seo = {
+  _type: "seo";
+  title: string;
+  description: string;
+  ogImage?: {
+    asset?: SanityImageAssetReference;
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    _type: "image";
+  };
+  noIndex?: boolean;
+};
+
 export type PostBodyImage = {
   _type: "postBodyImage";
   image: {
@@ -146,7 +160,17 @@ export type ArticleCategory = {
   _rev: string;
   title: InternationalizedArrayString;
   slug: Slug;
-  seo?: Seo;
+  seo?: LocalizedSeo;
+};
+
+export type InternationalizedArrayText = Array<{
+  _key: string;
+} & InternationalizedArrayTextValue>;
+
+export type InternationalizedArrayTextValue = {
+  _type: "internationalizedArrayTextValue";
+  value?: string;
+  language: string;
 };
 
 export type InternationalizedArrayStringValue = {
@@ -523,7 +547,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = SanityImageAssetReference | SiteSettings | SanityImageCrop | SanityImageHotspot | PartnerCategory | Seo | Slug | InternationalizedArrayString | FaqItem | Table | PostBodyImage | ArticleCategory | InternationalizedArrayStringValue | TranslationMetadata | InternationalizedArrayReference | ArticleReference | PartnerReference | PublicationReference | VersionReference | PageReference | InternationalizedArrayReferenceValue | Page | Version | Publication | PartnerCategoryReference | Partner | AuthorReference | ArticleCategoryReference | Article | Author | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes = SanityImageAssetReference | SiteSettings | SanityImageCrop | SanityImageHotspot | PartnerCategory | LocalizedSeo | Slug | InternationalizedArrayString | FaqItem | Table | Seo | PostBodyImage | ArticleCategory | InternationalizedArrayText | InternationalizedArrayTextValue | InternationalizedArrayStringValue | TranslationMetadata | InternationalizedArrayReference | ArticleReference | PartnerReference | PublicationReference | VersionReference | PageReference | InternationalizedArrayReferenceValue | Page | Version | Publication | PartnerCategoryReference | Partner | AuthorReference | ArticleCategoryReference | Article | Author | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 
 // Source: ../landing/src/app/[locale]/api.ts
 // Variable: SITE_SETTINGS_QUERY
@@ -571,7 +595,7 @@ export type ARTICLE_SLUGS_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLE_CATEGORIES_QUERY
-// Query: *[_type == "articleCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current,    "articleCount": count(*[  _type == "article" &&  language == $locale &&  defined(slug.current) && references(^._id)])  }[articleCount > 0] | order(title asc)
+// Query: *[_type == "articleCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current,    "articleCount": count(*[      _type == "article" &&      language == $locale &&      defined(slug.current) &&      references(^._id)    ])  }[articleCount > 0] | order(title asc)
 export type ARTICLE_CATEGORIES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -581,16 +605,28 @@ export type ARTICLE_CATEGORIES_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLE_CATEGORY_QUERY
-// Query: *[_type == "articleCategory" && slug.current == $slug][0]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }
+// Query: *[_type == "articleCategory" && slug.current == $slug][0]{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current,    seo {        "title": coalesce(          title[language == $locale && value match "*"][0].value,          title[language == "en" && value match "*"][0].value      ),        "description": coalesce(          description[language == $locale && value match "*"][0].value,          description[language == "en" && value match "*"][0].value      ),        ogImage,        noIndex    }  }
 export type ARTICLE_CATEGORY_QUERY_RESULT = {
   _id: string;
   title: string | null;
   slug: string;
+  seo: {
+    title: string | null;
+    description: string | null;
+    ogImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
 } | null;
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLES_QUERY
-// Query: *[    _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))] | order(publishedAt desc, _id asc)[0...12]{      _id,  title,  slug,  publishedAt,  image {    asset->{_id, url},    alt,  },  categories[]->{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }  }
+// Query: *[  _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))] | order(publishedAt desc, _id asc)[0...12]{      _id,  title,  slug,  publishedAt,  image {    asset->{_id, url},    alt,  },    categories[]->{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current  }  }
 export type ARTICLES_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -612,12 +648,12 @@ export type ARTICLES_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLES_COUNT_QUERY
-// Query: count(*[        _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))  ])
+// Query: count(*[      _type == "article" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))  ])
 export type ARTICLES_COUNT_QUERY_RESULT = number;
 
 // Source: ../landing/src/app/[locale]/blog/api.ts
 // Variable: ARTICLE_QUERY
-// Query: *[_type == "article" && language == $locale && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    body,    "tableOfContents": body[_type == "block" && style == "h2"]{      _key,      "title": coalesce(pt::text(@), "")    },    image {      asset->{_id, url},      alt,      caption,      hotspot,      crop    },    author->{      _id,      name,      "role": coalesce(        role[language == $locale][0].value,        role[language == "en"][0].value      ),      avatar    },    categories[]->{      _id,      "title": coalesce(        title[language == $locale][0].value,        title[language == "en"][0].value      ),      "slug": slug.current,    },    faq[]{      "id":_key,      question,      answer    },  }
+// Query: *[_type == "article" && language == $locale && slug.current == $slug][0]{    _id,    title,    slug,    publishedAt,    body,    "tableOfContents": body[_type == "block" && style == "h2"]{      _key,      "title": coalesce(pt::text(@), "")    },    image {      asset->{_id, url},      alt,      caption,      hotspot,      crop    },    author->{      _id,      name,      "role": coalesce(        role[language == $locale][0].value,        role[language == "en"][0].value      ),      avatar    },      categories[]->{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current  },    faq[]{      "id":_key,      question,      answer    },    seo {      title,      description,      ogImage,      noIndex    }  }
 export type ARTICLE_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -681,6 +717,18 @@ export type ARTICLE_QUERY_RESULT = {
     question: string;
     answer: string;
   }> | null;
+  seo: {
+    title: string;
+    description: string;
+    ogImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
 } | null;
 
 // Source: ../landing/src/app/[locale]/partners/api.ts
@@ -920,11 +968,11 @@ declare global {
     "\n  *[\n    _type == \"siteSettings\" && _id == \"siteSettings\"][0]{\n    defaultOgImage {\n      asset->{\n        url,\n        metadata { dimensions { width, height } }\n      }\n    }\n  }\n": SITE_SETTINGS_QUERY_RESULT;
     "\n  *[\n    _type == \"page\" &&\n      language == $locale &&\n      slug.current == $slug\n    ][0] {\n      mainTitle,\n      seo {\n        title,\n        description,\n        ogImage,\n        noIndex\n      }\n    }\n": PAGE_QUERY_RESULT;
     "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": ARTICLE_SLUGS_QUERY_RESULT;
-    "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current,\n    \"articleCount\": count(*[\n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n && references(^._id)])\n  }[articleCount > 0] | order(title asc)\n": ARTICLE_CATEGORIES_QUERY_RESULT;
-    "\n  *[_type == \"articleCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n": ARTICLE_CATEGORY_QUERY_RESULT;
-    "\n  \n  *[\n  \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)\n[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n  }\n": ARTICLES_QUERY_RESULT;
-    "\n  count(*[\n    \n  \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": ARTICLES_COUNT_QUERY_RESULT;
-    "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n      \"slug\": slug.current,\n    },\n    faq[]{\n      \"id\":_key,\n      question,\n      answer\n    },\n  }\n": ARTICLE_QUERY_RESULT;
+    "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current,\n    \"articleCount\": count(*[\n      _type == \"article\" &&\n      language == $locale &&\n      defined(slug.current) &&\n      references(^._id)\n    ])\n  }[articleCount > 0] | order(title asc)\n": ARTICLE_CATEGORIES_QUERY_RESULT;
+    "\n  *[_type == \"articleCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current,\n    seo {\n        \"title\": coalesce(\n          title[language == $locale && value match \"*\"][0].value,\n          title[language == \"en\" && value match \"*\"][0].value\n      ),\n        \"description\": coalesce(\n          description[language == $locale && value match \"*\"][0].value,\n          description[language == \"en\" && value match \"*\"][0].value\n      ),\n        ogImage,\n        noIndex\n    }\n  }\n": ARTICLE_CATEGORY_QUERY_RESULT;
+    "\n  *[\n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  \n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n\n  }\n": ARTICLES_QUERY_RESULT;
+    "\n  count(*[\n    \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": ARTICLES_COUNT_QUERY_RESULT;
+    "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    \n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n,\n    faq[]{\n      \"id\":_key,\n      question,\n      answer\n    },\n    seo {\n      title,\n      description,\n      ogImage,\n      noIndex\n    }\n  }\n": ARTICLE_QUERY_RESULT;
     "\n  *[_type == \"partnerCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current,\n    \"partnerCount\": count(*[\n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n && references(^._id)])\n  }[partnerCount > 0] | order(title asc)\n": PARTNER_CATEGORIES_QUERY_RESULT;
     "\n  *[_type == \"partnerCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n": PARTNER_CATEGORY_QUERY_RESULT;
     "\n  \n  *[\n  \n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)\n[0...12]{\n    \n  _id,\n  title,\n  description,\n  slug,\n  publishedAt,\n  logo {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n  }\n": PARTNERS_QUERY_RESULT;
