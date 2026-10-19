@@ -1,5 +1,6 @@
 import {CogIcon} from '@sanity/icons/Cog'
 import {defineField, defineType} from 'sanity'
+import {LocalizedTextValue, validateLocalizedText} from './objects/localizedSeoType'
 
 export const siteSettingsType = defineType({
   name: 'siteSettings',
@@ -8,15 +9,22 @@ export const siteSettingsType = defineType({
   icon: CogIcon,
   fields: [
     defineField({
-      name: 'defaultOgImage',
-      title: 'Default Open Graph image',
-      type: 'image',
-      description:
-        'Fallback image used when a page does not have its own Open Graph image. Recommended size: 1200 × 630 px.',
-      options: {
-        hotspot: true,
-      },
-      validation: (rule) => rule.required(),
+      name: 'title',
+      title: 'Title',
+      type: 'internationalizedArrayString',
+      validation: (rule) =>
+        rule
+          .custom<LocalizedTextValue[]>((value) => validateLocalizedText(value, 'title', 60))
+          .warning(),
+    }),
+    defineField({
+      name: 'description',
+      title: 'Description',
+      type: 'internationalizedArrayText',
+      validation: (rule) =>
+        rule
+          .custom<LocalizedTextValue[]>((value) => validateLocalizedText(value, 'description', 160))
+          .warning(),
     }),
   ],
   preview: {

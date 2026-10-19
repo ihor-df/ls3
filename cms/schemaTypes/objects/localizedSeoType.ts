@@ -1,11 +1,11 @@
 import {defineField, defineType} from 'sanity'
 
-type LocalizedTextValue = {
+export type LocalizedTextValue = {
   _key: string
   value?: string
 }
 
-const validateLocalizedText = (
+export const validateLocalizedText = (
   translations: LocalizedTextValue[] | undefined,
   label: string,
   maxLength: number,
@@ -54,7 +54,7 @@ export const localizedSeoType = defineType({
       name: 'ogImage',
       title: 'Open Graph image',
       type: 'image',
-      description: 'Shared across languages. Recommended size: 1200 × 630 px',
+      description: 'Shared across languages. Recommended size: 1200 x 630 px',
       options: {
         hotspot: true,
       },
