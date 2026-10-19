@@ -5,13 +5,15 @@ import { defineQuery } from "next-sanity";
 export const SITE_SETTINGS_QUERY = defineQuery(`
   *[
     _type == "siteSettings" && _id == "siteSettings"][0]{
-    defaultOgImage {
-      asset->{
-        url,
-        metadata { dimensions { width, height } }
-      }
+      "title": coalesce(
+        title[language == $locale && value match "*"][0].value,
+        title[language == "en" && value match "*"][0].value
+      ),
+      "description": coalesce(
+        description[language == $locale && value match "*"][0].value,
+        description[language == "en" && value match "*"][0].value
+      )
     }
-  }
 `);
 
 export const PAGE_QUERY = defineQuery(`

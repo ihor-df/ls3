@@ -1,5 +1,3 @@
-import { sanityTags } from "@/sanity/cache-tags";
-import { sanityFetch } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 
 const articleListFilter = /* groq */ `
@@ -147,19 +145,3 @@ export const ARTICLE_QUERY = defineQuery(`
     }
   }
 `);
-
-export const getArticle = async (slug: string, locale: string) => {
-  return sanityFetch({
-    params: { slug, locale },
-    query: ARTICLE_QUERY,
-    tags: [sanityTags.article(locale, slug), sanityTags.articleCategories, sanityTags.articleAuthors],
-  });
-};
-
-export const getArticleCategory = async (slug: string, locale: string) => {
-  return sanityFetch({
-    query: ARTICLE_CATEGORY_QUERY,
-    params: { locale, slug },
-    tags: [sanityTags.articleCategories],
-  });
-};

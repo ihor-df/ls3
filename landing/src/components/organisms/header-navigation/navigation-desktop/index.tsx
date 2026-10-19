@@ -108,7 +108,12 @@ const NavigationDesktop = ({ isPathActive, localeHrefs }: NavigationDesktopProps
           aria-label={tPages("homepage")}
           aria-current={pathname === "/" ? "page" : undefined}
         >
-          <Image src={logo} alt="Linken Sphere logo" className="h-auto w-16 scale-[1.1] rounded-full duration-300" />
+          <Image
+            src={logo}
+            alt="Linken Sphere logo"
+            loading="eager"
+            className="h-auto w-16 scale-[1.1] rounded-full duration-300"
+          />
         </Link>
 
         {/* First level menu */}

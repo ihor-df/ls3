@@ -1,5 +1,4 @@
-import { getArticleCategory } from "@/app/[locale]/blog/api";
-import { getArticleCategories } from "@/app/[locale]/blog/data";
+import { getArticleCategories, getArticleCategory } from "@/app/[locale]/blog/data";
 import { BlogListing } from "@/app/[locale]/blog/listing";
 import { generatePageMetadata } from "@/helpers/metadata/generate-page-metadata";
 

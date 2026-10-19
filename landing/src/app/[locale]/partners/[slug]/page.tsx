@@ -1,12 +1,15 @@
 import Container from "@/components/atoms/container";
 import PartnerArticle from "@/components/pages/partners/article";
+import { generateCollectionPageMetadata } from "@/helpers/metadata/generate-collection-metadata";
 import { routing } from "@/i18n/routing";
 import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
-import { LocaleSlugParams } from "@/types/common";
+import { LocaleSlugPageProps } from "@/types/common";
+import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { PARTNER_QUERY, PARTNER_SLUGS_QUERY } from "../api";
+import { PARTNER_SLUGS_QUERY } from "../api";
+import { getPartner } from "../data";
 
 export async function generateStaticParams() {
   const posts = await sanityFetch({
@@ -22,38 +25,48 @@ export async function generateStaticParams() {
   );
 }
 
-type PageProps = {
-  params: LocaleSlugParams;
-  searchParams: Promise<{ page?: string }>;
-};
+export async function generateMetadata({ params }: LocaleSlugPageProps): Promise<Metadata> {
+  const { locale, slug } = await params;
 
-const Page = async ({ params }: PageProps) => {
+  const partner = await getPartner(slug, locale);
+
+  if (!partner) {
+    notFound();
+  }
+
+  return generateCollectionPageMetadata({
+    locale,
+    pathname: `/partners/${slug}`,
+    title: partner.seo?.title || partner.title,
+    description: partner.seo?.description,
+    ogImage: partner.seo?.ogImage,
+    noIndex: !!partner.seo?.noIndex,
+  });
+}
+
+const Page = async ({ params }: LocaleSlugPageProps) => {
   const { slug, locale } = await params;
   const t = await getTranslations("partners");
 
-  const post = await sanityFetch({
-    params: { slug, locale },
-    query: PARTNER_QUERY,
-    tags: [sanityTags.partner(locale, slug), sanityTags.partnerCategories],
-  });
+  const partner = await getPartner(slug, locale);
 
-  if (!post) notFound();
+  if (!partner) notFound();
 
-  const breadcrumbs = post
+  const breadcrumbs = partner
     ? [
         {
           label: t("title"),
           href: "/partners",
         },
         {
-          label: post?.title,
+          label: partner?.title,
         },
       ]
     : undefined;
 
   return (
     <Container>
-      <PartnerArticle breadcrumbs={breadcrumbs} post={post} />
+      <PartnerArticle breadcrumbs={breadcrumbs} post={partner} />
     </Container>
   );
 };

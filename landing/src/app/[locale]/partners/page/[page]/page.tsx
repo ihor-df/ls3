@@ -1,7 +1,11 @@
+import { getPageQuery } from "@/app/[locale]/api";
+import { generatePaginationPageMetadata } from "@/helpers/metadata/generate-pagination-metadata";
 import { routing } from "@/i18n/routing";
 import { PARTNERS_PER_PAGE } from "@/lib/constants";
 import { getStaticPaginationPages, parsePageNumber } from "@/lib/pagination";
+import { Metadata } from "next";
 import type { Locale } from "next-intl";
+import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { getPartnersCount } from "../../data";
 import { PartnersListing } from "../../listing";
@@ -25,11 +29,35 @@ export async function generateStaticParams() {
   return pagesByLocale.flat();
 }
 
-export default async function Page({ params }: PageProps) {
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, page } = await params;
   const pageNumber = parsePageNumber(page);
+  if (!pageNumber || pageNumber === 1) {
+    notFound();
+  }
 
-  if (!pageNumber || pageNumber === 1) notFound();
+  const data = await getPageQuery("partners", locale);
 
-  return <PartnersListing locale={locale} page={pageNumber} />;
+  return generatePaginationPageMetadata({
+    locale,
+    pathname: "/partners",
+    page: pageNumber,
+    title: data?.seo?.title,
+    description: data?.seo?.description,
+    ogImage: data?.seo?.ogImage,
+    noIndex: !!data?.seo?.noIndex,
+  });
+}
+
+export default async function Page({ params }: PageProps) {
+  const { locale, page } = await params;
+  const data = await getPageQuery("partners", locale);
+
+  const pageNumber = parsePageNumber(page);
+  if (!pageNumber || pageNumber === 1 || !data) notFound();
+
+  const t = await getTranslations("partners");
+  const title = data?.mainTitle ? data.mainTitle : t("title");
+
+  return <PartnersListing locale={locale} page={pageNumber} title={title} />;
 }

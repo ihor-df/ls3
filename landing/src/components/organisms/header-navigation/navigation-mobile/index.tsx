@@ -115,7 +115,7 @@ const NavigationMobile = ({ isPathActive, localeHrefs }: NavigationMobileProps) 
           aria-label={tPages("homepage")}
           aria-current={pathname === "/" ? "page" : undefined}
         >
-          <Image src={logo} alt="Linken Sphere logo" className="h-16 w-auto rounded-full duration-300" />
+          <Image src={logo} alt="Linken Sphere logo" loading="eager" className="h-16 w-auto rounded-full duration-300" />
         </Link>
 
         <div

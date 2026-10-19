@@ -32,7 +32,6 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, page } = await params;
   const pageNumber = parsePageNumber(page);
-
   if (!pageNumber || pageNumber === 1) {
     notFound();
   }

@@ -1,5 +1,4 @@
-import { getArticleCategory } from "@/app/[locale]/blog/api";
-import { getArticleCategories } from "@/app/[locale]/blog/data";
+import { getArticleCategories, getArticleCategory } from "@/app/[locale]/blog/data";
 import { BlogListing } from "@/app/[locale]/blog/listing";
 import { generatePaginationPageMetadata } from "@/helpers/metadata/generate-pagination-metadata";
 import { ARTICLES_PER_PAGE } from "@/lib/constants";
@@ -50,7 +49,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale,
     pathname: `/blog/category/${category.slug}`,
     page: pageNumber,
-    title: category.seo?.title,
+    title: category.seo?.title || category.title,
     description: category.seo?.description,
     ogImage: category.seo?.ogImage,
     noIndex: !!category.seo?.noIndex,

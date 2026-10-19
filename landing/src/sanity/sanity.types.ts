@@ -15,43 +15,27 @@
 export declare const internalGroqTypeReferenceTo: unique symbol;
 
 // Source: schema.json
-export type SanityImageAssetReference = {
-  _ref: string;
-  _type: "reference";
-  _weak?: boolean;
-  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-};
-
 export type SiteSettings = {
   _id: string;
   _type: "siteSettings";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  defaultOgImage: {
-    asset?: SanityImageAssetReference;
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    _type: "image";
-  };
+  title?: InternationalizedArrayString;
+  description?: InternationalizedArrayText;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
-};
+export type InternationalizedArrayText = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayTextValue
+>;
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
+export type InternationalizedArrayString = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayStringValue
+>;
 
 export type PartnerCategory = {
   _id: string;
@@ -62,6 +46,13 @@ export type PartnerCategory = {
   title: InternationalizedArrayString;
   slug: Slug;
   seo?: LocalizedSeo;
+};
+
+export type SanityImageAssetReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
 };
 
 export type LocalizedSeo = {
@@ -83,10 +74,6 @@ export type Slug = {
   current: string;
   source?: string;
 };
-
-export type InternationalizedArrayString = Array<{
-  _key: string;
-} & InternationalizedArrayStringValue>;
 
 export type FaqItem = {
   _type: "faqItem";
@@ -163,9 +150,21 @@ export type ArticleCategory = {
   seo?: LocalizedSeo;
 };
 
-export type InternationalizedArrayText = Array<{
-  _key: string;
-} & InternationalizedArrayTextValue>;
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top: number;
+  bottom: number;
+  left: number;
+  right: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x: number;
+  y: number;
+  height: number;
+  width: number;
+};
 
 export type InternationalizedArrayTextValue = {
   _type: "internationalizedArrayTextValue";
@@ -189,9 +188,11 @@ export type TranslationMetadata = {
   schemaTypes?: Array<string>;
 };
 
-export type InternationalizedArrayReference = Array<{
-  _key: string;
-} & InternationalizedArrayReferenceValue>;
+export type InternationalizedArrayReference = Array<
+  {
+    _key: string;
+  } & InternationalizedArrayReferenceValue
+>;
 
 export type ArticleReference = {
   _ref: string;
@@ -264,28 +265,32 @@ export type Version = {
   };
   releaseDate: string;
   releaseType: "major" | "minor";
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h2" | "h3";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & PostBodyImage | {
-    _key: string;
-  } & Table>;
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & PostBodyImage)
+    | ({
+        _key: string;
+      } & Table)
+  >;
 };
 
 export type Publication = {
@@ -323,9 +328,11 @@ export type Partner = {
   _updatedAt: string;
   _rev: string;
   language?: string;
-  categories: Array<{
-    _key: string;
-  } & PartnerCategoryReference>;
+  categories: Array<
+    {
+      _key: string;
+    } & PartnerCategoryReference
+  >;
   title: string;
   slug: Slug;
   description?: string;
@@ -342,28 +349,32 @@ export type Partner = {
     alt: string;
     _type: "image";
   };
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h2" | "h3";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & PostBodyImage | {
-    _key: string;
-  } & Table>;
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & PostBodyImage)
+    | ({
+        _key: string;
+      } & Table)
+  >;
   seo?: Seo;
 };
 
@@ -402,34 +413,42 @@ export type Article = {
   };
   recommended?: boolean;
   author: AuthorReference;
-  categories: Array<{
-    _key: string;
-  } & ArticleCategoryReference>;
-  faq?: Array<{
-    _key: string;
-  } & FaqItem>;
-  body?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
+  categories: Array<
+    {
       _key: string;
-    }>;
-    style?: "normal" | "h2" | "h3";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
+    } & ArticleCategoryReference
+  >;
+  faq?: Array<
+    {
       _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & PostBodyImage | {
-    _key: string;
-  } & Table>;
+    } & FaqItem
+  >;
+  body?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "normal" | "h2" | "h3";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & PostBodyImage)
+    | ({
+        _key: string;
+      } & Table)
+  >;
   seo?: Seo;
 };
 
@@ -547,23 +566,55 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type AllSanitySchemaTypes = SanityImageAssetReference | SiteSettings | SanityImageCrop | SanityImageHotspot | PartnerCategory | LocalizedSeo | Slug | InternationalizedArrayString | FaqItem | Table | Seo | PostBodyImage | ArticleCategory | InternationalizedArrayText | InternationalizedArrayTextValue | InternationalizedArrayStringValue | TranslationMetadata | InternationalizedArrayReference | ArticleReference | PartnerReference | PublicationReference | VersionReference | PageReference | InternationalizedArrayReferenceValue | Page | Version | Publication | PartnerCategoryReference | Partner | AuthorReference | ArticleCategoryReference | Article | Author | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
+export type AllSanitySchemaTypes =
+  | SiteSettings
+  | InternationalizedArrayText
+  | InternationalizedArrayString
+  | PartnerCategory
+  | SanityImageAssetReference
+  | LocalizedSeo
+  | Slug
+  | FaqItem
+  | Table
+  | Seo
+  | PostBodyImage
+  | ArticleCategory
+  | SanityImageCrop
+  | SanityImageHotspot
+  | InternationalizedArrayTextValue
+  | InternationalizedArrayStringValue
+  | TranslationMetadata
+  | InternationalizedArrayReference
+  | ArticleReference
+  | PartnerReference
+  | PublicationReference
+  | VersionReference
+  | PageReference
+  | InternationalizedArrayReferenceValue
+  | Page
+  | Version
+  | Publication
+  | PartnerCategoryReference
+  | Partner
+  | AuthorReference
+  | ArticleCategoryReference
+  | Article
+  | Author
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityImageMetadata
+  | SanityFileAsset
+  | SanityAssetSourceData
+  | SanityImageAsset
+  | Geopoint;
 
 // Source: ../landing/src/app/[locale]/api.ts
 // Variable: SITE_SETTINGS_QUERY
-// Query: *[    _type == "siteSettings" && _id == "siteSettings"][0]{    defaultOgImage {      asset->{        url,        metadata { dimensions { width, height } }      }    }  }
+// Query: *[    _type == "siteSettings" && _id == "siteSettings"][0]{      "title": coalesce(        title[language == $locale && value match "*"][0].value,        title[language == "en" && value match "*"][0].value      ),      "description": coalesce(        description[language == $locale && value match "*"][0].value,        description[language == "en" && value match "*"][0].value      )    }
 export type SITE_SETTINGS_QUERY_RESULT = {
-  defaultOgImage: {
-    asset: {
-      url: string;
-      metadata: {
-        dimensions: {
-          width: number;
-          height: number;
-        } | null;
-      } | null;
-    } | null;
-  };
+  title: string | null;
+  description: string | null;
 } | null;
 
 // Source: ../landing/src/app/[locale]/api.ts
@@ -659,28 +710,32 @@ export type ARTICLE_QUERY_RESULT = {
   title: string;
   slug: Slug;
   publishedAt: string;
-  body: Array<{
-    _key: string;
-  } & PostBodyImage | {
-    _key: string;
-  } & Table | {
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "h2" | "h3" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
+  body: Array<
+    | ({
+        _key: string;
+      } & PostBodyImage)
+    | ({
+        _key: string;
+      } & Table)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "h2" | "h3" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+  > | null;
   tableOfContents: Array<{
     _key: string;
     title: string;
@@ -732,8 +787,16 @@ export type ARTICLE_QUERY_RESULT = {
 } | null;
 
 // Source: ../landing/src/app/[locale]/partners/api.ts
+// Variable: PARTNER_SLUGS_QUERY
+// Query: *[_type == "partner" && defined(slug.current)]{    "slug": slug.current,    language  }
+export type PARTNER_SLUGS_QUERY_RESULT = Array<{
+  slug: string;
+  language: string | null;
+}>;
+
+// Source: ../landing/src/app/[locale]/partners/api.ts
 // Variable: PARTNER_CATEGORIES_QUERY
-// Query: *[_type == "partnerCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current,    "partnerCount": count(*[  _type == "partner" &&  language == $locale &&  defined(slug.current) && references(^._id)])  }[partnerCount > 0] | order(title asc)
+// Query: *[_type == "partnerCategory" && defined(slug.current)]{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current,    "partnerCount": count(*[      _type == "partner" &&      language == $locale &&      defined(slug.current) &&      references(^._id)    ])  }[partnerCount > 0] | order(title asc)
 export type PARTNER_CATEGORIES_QUERY_RESULT = Array<{
   _id: string;
   title: string | null;
@@ -743,16 +806,28 @@ export type PARTNER_CATEGORIES_QUERY_RESULT = Array<{
 
 // Source: ../landing/src/app/[locale]/partners/api.ts
 // Variable: PARTNER_CATEGORY_QUERY
-// Query: *[_type == "partnerCategory" && slug.current == $slug][0]{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }
+// Query: *[_type == "partnerCategory" && slug.current == $slug][0]{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current,    seo {      "title": coalesce(        title[language == $locale && value match "*"][0].value,        title[language == "en" && value match "*"][0].value      ),      "description": coalesce(        description[language == $locale && value match "*"][0].value,        description[language == "en" && value match "*"][0].value      ),      ogImage,      noIndex    }  }
 export type PARTNER_CATEGORY_QUERY_RESULT = {
   _id: string;
   title: string | null;
   slug: string;
+  seo: {
+    title: string | null;
+    description: string | null;
+    ogImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
 } | null;
 
 // Source: ../landing/src/app/[locale]/partners/api.ts
 // Variable: PARTNERS_QUERY
-// Query: *[    _type == "partner" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))] | order(publishedAt desc, _id asc)[0...12]{      _id,  title,  description,  slug,  publishedAt,  logo {    asset->{_id, url},    alt,  },  categories[]->{    _id,    "title": coalesce(      title[language == $locale][0].value,      title[language == "en"][0].value    ),    "slug": slug.current  }  }
+// Query: *[  _type == "partner" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))] | order(publishedAt desc, _id asc)[0...12]{      _id,  title,  description,  slug,  publishedAt,  logo {    asset->{_id, url},    alt,  },    categories[]->{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current  }  }
 export type PARTNERS_QUERY_RESULT = Array<{
   _id: string;
   title: string;
@@ -774,16 +849,13 @@ export type PARTNERS_QUERY_RESULT = Array<{
 }>;
 
 // Source: ../landing/src/app/[locale]/partners/api.ts
-// Variable: PARTNER_SLUGS_QUERY
-// Query: *[_type == "partner" && defined(slug.current)]{    "slug": slug.current,    language  }
-export type PARTNER_SLUGS_QUERY_RESULT = Array<{
-  slug: string;
-  language: string | null;
-}>;
+// Variable: PARTNERS_COUNT_QUERY
+// Query: count(*[      _type == "partner" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))  ])
+export type PARTNERS_COUNT_QUERY_RESULT = number;
 
 // Source: ../landing/src/app/[locale]/partners/api.ts
 // Variable: PARTNER_QUERY
-// Query: *[    _type == "partner" &&    language == $locale &&    slug.current == $slug  ][0]{    _id,    title,    description,    slug,    discountPercent,    discountText,    promoCode,    url,    publishedAt,    body,    "tableOfContents": body[_type == "block" && style == "h2"]{      _key,      "title": coalesce(pt::text(@), "")    },    logo {      asset->{_id, url},      alt,      hotspot,      crop    },    categories[]->{      _id,      "title": coalesce(        title[language == $locale][0].value,        title[language == "en"][0].value      ),      "slug": slug.current    }  }
+// Query: *[_type == "partner" && language == $locale && slug.current == $slug][0]{    _id,    title,    description,    slug,    discountPercent,    discountText,    promoCode,    url,    publishedAt,    body,    "tableOfContents": body[_type == "block" && style == "h2"]{      _key,      "title": coalesce(pt::text(@), "")    },    logo {      asset->{_id, url},      alt,      hotspot,      crop    },      categories[]->{    _id,    "title": coalesce(      title[language == $locale && value match "*"][0].value,      title[language == "en" && value match "*"][0].value    ),    "slug": slug.current  },    seo {      title,      description,      ogImage,      noIndex    }  }
 export type PARTNER_QUERY_RESULT = {
   _id: string;
   title: string;
@@ -794,28 +866,32 @@ export type PARTNER_QUERY_RESULT = {
   promoCode: string | null;
   url: string | null;
   publishedAt: string;
-  body: Array<{
-    _key: string;
-  } & PostBodyImage | {
-    _key: string;
-  } & Table | {
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "h2" | "h3" | "normal";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      href?: string;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }> | null;
+  body: Array<
+    | ({
+        _key: string;
+      } & PostBodyImage)
+    | ({
+        _key: string;
+      } & Table)
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: "span";
+          _key: string;
+        }>;
+        style?: "h2" | "h3" | "normal";
+        listItem?: "bullet" | "number";
+        markDefs?: Array<{
+          href?: string;
+          _type: "link";
+          _key: string;
+        }>;
+        level?: number;
+        _type: "block";
+        _key: string;
+      }
+  > | null;
   tableOfContents: Array<{
     _key: string;
     title: string;
@@ -834,12 +910,19 @@ export type PARTNER_QUERY_RESULT = {
     title: string | null;
     slug: string;
   }>;
+  seo: {
+    title: string;
+    description: string;
+    ogImage: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      _type: "image";
+    } | null;
+    noIndex: boolean | null;
+  } | null;
 } | null;
-
-// Source: ../landing/src/app/[locale]/partners/api.ts
-// Variable: PARTNERS_COUNT_QUERY
-// Query: count(*[        _type == "partner" &&  language == $locale &&  defined(slug.current) &&  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&  (!defined($categoryId) || references($categoryId))  ])
-export type PARTNERS_COUNT_QUERY_RESULT = number;
 
 // Source: ../landing/src/app/[locale]/publications/api.ts
 // Variable: PUBLICATIONS_QUERY
@@ -893,28 +976,32 @@ export type VERSION_HISTORY_QUERY_RESULT = {
     version: string;
     releaseType: "major" | "minor";
     releaseDate: string;
-    body: Array<{
-      _key: string;
-    } & PostBodyImage | {
-      _key: string;
-    } & Table | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: "span";
-        _key: string;
-      }>;
-      style?: "h2" | "h3" | "normal";
-      listItem?: "bullet" | "number";
-      markDefs?: Array<{
-        href?: string;
-        _type: "link";
-        _key: string;
-      }>;
-      level?: number;
-      _type: "block";
-      _key: string;
-    }> | null;
+    body: Array<
+      | ({
+          _key: string;
+        } & PostBodyImage)
+      | ({
+          _key: string;
+        } & Table)
+      | {
+          children?: Array<{
+            marks?: Array<string>;
+            text?: string;
+            _type: "span";
+            _key: string;
+          }>;
+          style?: "h2" | "h3" | "normal";
+          listItem?: "bullet" | "number";
+          markDefs?: Array<{
+            href?: string;
+            _type: "link";
+            _key: string;
+          }>;
+          level?: number;
+          _type: "block";
+          _key: string;
+        }
+    > | null;
     searchText: string;
     cover: {
       asset: {
@@ -932,61 +1019,66 @@ export type VERSION_HISTORY_QUERY_RESULT = {
 // Variable: LANGUAGE_NAVIGATION_QUERY
 // Query: {  "documents": *[_type in ["article", "partner"] && defined(slug.current)]{    "section": select(_type == "article" => "blog", "partners"),    language,    "slug": slug.current,    "categories": categories[]._ref,    "translations": (*[_type == "translation.metadata" && references(^._id)][0]      .translations[].value->{language, "slug": slug.current})[defined(language) && defined(slug)]  },  "categories": *[_type in ["articleCategory", "partnerCategory"] && defined(slug.current)]{    _id,    "section": select(_type == "articleCategory" => "blog", "partners"),    "slug": slug.current  }}
 export type LANGUAGE_NAVIGATION_QUERY_RESULT = {
-  documents: Array<{
-    section: "blog";
-    language: string | null;
-    slug: string;
-    categories: Array<string>;
-    translations: Array<{
-      language: string;
-      slug: string;
-    }> | null;
-  } | {
-    section: "partners";
-    language: string | null;
-    slug: string;
-    categories: Array<string>;
-    translations: Array<{
-      language: string;
-      slug: string;
-    }> | null;
-  }>;
-  categories: Array<{
-    _id: string;
-    section: "blog";
-    slug: string;
-  } | {
-    _id: string;
-    section: "partners";
-    slug: string;
-  }>;
+  documents: Array<
+    | {
+        section: "blog";
+        language: string | null;
+        slug: string;
+        categories: Array<string>;
+        translations: Array<{
+          language: string;
+          slug: string;
+        }> | null;
+      }
+    | {
+        section: "partners";
+        language: string | null;
+        slug: string;
+        categories: Array<string>;
+        translations: Array<{
+          language: string;
+          slug: string;
+        }> | null;
+      }
+  >;
+  categories: Array<
+    | {
+        _id: string;
+        section: "blog";
+        slug: string;
+      }
+    | {
+        _id: string;
+        section: "partners";
+        slug: string;
+      }
+  >;
 };
 
 // Query TypeMap
 declare global {
   interface SanityQueries {
-    "\n  *[\n    _type == \"siteSettings\" && _id == \"siteSettings\"][0]{\n    defaultOgImage {\n      asset->{\n        url,\n        metadata { dimensions { width, height } }\n      }\n    }\n  }\n": SITE_SETTINGS_QUERY_RESULT;
-    "\n  *[\n    _type == \"page\" &&\n      language == $locale &&\n      slug.current == $slug\n    ][0] {\n      mainTitle,\n      seo {\n        title,\n        description,\n        ogImage,\n        noIndex\n      }\n    }\n": PAGE_QUERY_RESULT;
-    "\n  *[_type == \"article\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": ARTICLE_SLUGS_QUERY_RESULT;
-    "\n  *[_type == \"articleCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current,\n    \"articleCount\": count(*[\n      _type == \"article\" &&\n      language == $locale &&\n      defined(slug.current) &&\n      references(^._id)\n    ])\n  }[articleCount > 0] | order(title asc)\n": ARTICLE_CATEGORIES_QUERY_RESULT;
-    "\n  *[_type == \"articleCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current,\n    seo {\n        \"title\": coalesce(\n          title[language == $locale && value match \"*\"][0].value,\n          title[language == \"en\" && value match \"*\"][0].value\n      ),\n        \"description\": coalesce(\n          description[language == $locale && value match \"*\"][0].value,\n          description[language == \"en\" && value match \"*\"][0].value\n      ),\n        ogImage,\n        noIndex\n    }\n  }\n": ARTICLE_CATEGORY_QUERY_RESULT;
-    "\n  *[\n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  \n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n\n  }\n": ARTICLES_QUERY_RESULT;
-    "\n  count(*[\n    \n  _type == \"article\" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": ARTICLES_COUNT_QUERY_RESULT;
-    "\n  *[_type == \"article\" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      \"role\": coalesce(\n        role[language == $locale][0].value,\n        role[language == \"en\"][0].value\n      ),\n      avatar\n    },\n    \n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale && value match \"*\"][0].value,\n      title[language == \"en\" && value match \"*\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n,\n    faq[]{\n      \"id\":_key,\n      question,\n      answer\n    },\n    seo {\n      title,\n      description,\n      ogImage,\n      noIndex\n    }\n  }\n": ARTICLE_QUERY_RESULT;
-    "\n  *[_type == \"partnerCategory\" && defined(slug.current)]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current,\n    \"partnerCount\": count(*[\n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n && references(^._id)])\n  }[partnerCount > 0] | order(title asc)\n": PARTNER_CATEGORIES_QUERY_RESULT;
-    "\n  *[_type == \"partnerCategory\" && slug.current == $slug][0]{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n": PARTNER_CATEGORY_QUERY_RESULT;
-    "\n  \n  *[\n  \n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)\n[0...12]{\n    \n  _id,\n  title,\n  description,\n  slug,\n  publishedAt,\n  logo {\n    asset->{_id, url},\n    alt,\n  },\n  categories[]->{\n    _id,\n    \"title\": coalesce(\n      title[language == $locale][0].value,\n      title[language == \"en\"][0].value\n    ),\n    \"slug\": slug.current\n  }\n\n  }\n": PARTNERS_QUERY_RESULT;
-    "\n  *[_type == \"partner\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": PARTNER_SLUGS_QUERY_RESULT;
-    "\n  *[\n    _type == \"partner\" &&\n    language == $locale &&\n    slug.current == $slug\n  ][0]{\n    _id,\n    title,\n    description,\n    slug,\n    discountPercent,\n    discountText,\n    promoCode,\n    url,\n    publishedAt,\n    body,\n    \"tableOfContents\": body[_type == \"block\" && style == \"h2\"]{\n      _key,\n      \"title\": coalesce(pt::text(@), \"\")\n    },\n    logo {\n      asset->{_id, url},\n      alt,\n      hotspot,\n      crop\n    },\n    categories[]->{\n      _id,\n      \"title\": coalesce(\n        title[language == $locale][0].value,\n        title[language == \"en\"][0].value\n      ),\n      \"slug\": slug.current\n    }\n  }\n": PARTNER_QUERY_RESULT;
-    "\n  count(*[\n    \n  \n  _type == \"partner\" &&\n  language == $locale &&\n  defined(slug.current)\n &&\n  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n": PARTNERS_COUNT_QUERY_RESULT;
-    "\n  *[_type == \"publication\" && language == $locale && defined(slug.current)]\n    | order(publishedAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  url,\n  cover {\n   asset->{_id, url},\n   alt,\n   hotspot,\n   crop\n  },\n\n    }\n": PUBLICATIONS_QUERY_RESULT;
-    "\n  *[_type == \"publication\" && defined(slug.current)]{\n    \"slug\": slug.current,\n    language\n  }": PUBLICATION_SLUGS_QUERY_RESULT;
-    "\n  {\n    \"page\": *[\n      _type == \"page\" &&\n      language == $locale &&\n      slug.current == \"version-history\"\n    ][0] {\n      mainTitle,\n      seo {\n        title,\n        description,\n        ogImage,\n        noIndex\n      }\n    },\n    \"versions\": *[\n      _type == \"version\" &&\n      language == $locale &&\n      defined(releaseDate)\n    ] | order(releaseDate desc, _id asc) {\n      _id,\n      version,\n      releaseType,\n      releaseDate,\n      body,\n      \"searchText\": coalesce(pt::text(body), \"\"),\n      cover {\n        asset->{_id, url},\n        alt,\n        hotspot,\n        crop\n      }\n    }\n  }\n": VERSION_HISTORY_QUERY_RESULT;
-    "{\n  \"documents\": *[_type in [\"article\", \"partner\"] && defined(slug.current)]{\n    \"section\": select(_type == \"article\" => \"blog\", \"partners\"),\n    language,\n    \"slug\": slug.current,\n    \"categories\": categories[]._ref,\n    \"translations\": (*[_type == \"translation.metadata\" && references(^._id)][0]\n      .translations[].value->{language, \"slug\": slug.current})[defined(language) && defined(slug)]\n  },\n  \"categories\": *[_type in [\"articleCategory\", \"partnerCategory\"] && defined(slug.current)]{\n    _id,\n    \"section\": select(_type == \"articleCategory\" => \"blog\", \"partners\"),\n    \"slug\": slug.current\n  }\n}": LANGUAGE_NAVIGATION_QUERY_RESULT;
+    '\n  *[\n    _type == "siteSettings" && _id == "siteSettings"][0]{\n      "title": coalesce(\n        title[language == $locale && value match "*"][0].value,\n        title[language == "en" && value match "*"][0].value\n      ),\n      "description": coalesce(\n        description[language == $locale && value match "*"][0].value,\n        description[language == "en" && value match "*"][0].value\n      )\n    }\n': SITE_SETTINGS_QUERY_RESULT;
+    '\n  *[\n    _type == "page" &&\n      language == $locale &&\n      slug.current == $slug\n    ][0] {\n      mainTitle,\n      seo {\n        title,\n        description,\n        ogImage,\n        noIndex\n      }\n    }\n': PAGE_QUERY_RESULT;
+    '\n  *[_type == "article" && defined(slug.current)]{\n    "slug": slug.current,\n    language\n  }': ARTICLE_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "articleCategory" && defined(slug.current)]{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current,\n    "articleCount": count(*[\n      _type == "article" &&\n      language == $locale &&\n      defined(slug.current) &&\n      references(^._id)\n    ])\n  }[articleCount > 0] | order(title asc)\n': ARTICLE_CATEGORIES_QUERY_RESULT;
+    '\n  *[_type == "articleCategory" && slug.current == $slug][0]{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current,\n    seo {\n        "title": coalesce(\n          title[language == $locale && value match "*"][0].value,\n          title[language == "en" && value match "*"][0].value\n      ),\n        "description": coalesce(\n          description[language == $locale && value match "*"][0].value,\n          description[language == "en" && value match "*"][0].value\n      ),\n        ogImage,\n        noIndex\n    }\n  }\n': ARTICLE_CATEGORY_QUERY_RESULT;
+    '\n  *[\n  _type == "article" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)[0...12]{\n    \n  _id,\n  title,\n  slug,\n  publishedAt,\n  image {\n    asset->{_id, url},\n    alt,\n  },\n  \n  categories[]->{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current\n  }\n\n\n  }\n': ARTICLES_QUERY_RESULT;
+    '\n  count(*[\n    \n  _type == "article" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n': ARTICLES_COUNT_QUERY_RESULT;
+    '\n  *[_type == "article" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    publishedAt,\n    body,\n    "tableOfContents": body[_type == "block" && style == "h2"]{\n      _key,\n      "title": coalesce(pt::text(@), "")\n    },\n    image {\n      asset->{_id, url},\n      alt,\n      caption,\n      hotspot,\n      crop\n    },\n    author->{\n      _id,\n      name,\n      "role": coalesce(\n        role[language == $locale][0].value,\n        role[language == "en"][0].value\n      ),\n      avatar\n    },\n    \n  categories[]->{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current\n  }\n,\n    faq[]{\n      "id":_key,\n      question,\n      answer\n    },\n    seo {\n      title,\n      description,\n      ogImage,\n      noIndex\n    }\n  }\n': ARTICLE_QUERY_RESULT;
+    '\n  *[_type == "partner" && defined(slug.current)]{\n    "slug": slug.current,\n    language\n  }': PARTNER_SLUGS_QUERY_RESULT;
+    '\n  *[_type == "partnerCategory" && defined(slug.current)]{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current,\n    "partnerCount": count(*[\n      _type == "partner" &&\n      language == $locale &&\n      defined(slug.current) &&\n      references(^._id)\n    ])\n  }[partnerCount > 0] | order(title asc)\n': PARTNER_CATEGORIES_QUERY_RESULT;
+    '\n  *[_type == "partnerCategory" && slug.current == $slug][0]{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current,\n    seo {\n      "title": coalesce(\n        title[language == $locale && value match "*"][0].value,\n        title[language == "en" && value match "*"][0].value\n      ),\n      "description": coalesce(\n        description[language == $locale && value match "*"][0].value,\n        description[language == "en" && value match "*"][0].value\n      ),\n      ogImage,\n      noIndex\n    }\n  }\n': PARTNER_CATEGORY_QUERY_RESULT;
+    '\n  *[\n  _type == "partner" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n] | order(publishedAt desc, _id asc)[0...12]{\n    \n  _id,\n  title,\n  description,\n  slug,\n  publishedAt,\n  logo {\n    asset->{_id, url},\n    alt,\n  },\n  \n  categories[]->{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current\n  }\n\n\n  }\n': PARTNERS_QUERY_RESULT;
+    '\n  count(*[\n    \n  _type == "partner" &&\n  language == $locale &&\n  defined(slug.current) &&\n  (!defined($search) || title match $search || description match $search || body[].children[].text match $search) &&\n  (!defined($categoryId) || references($categoryId))\n\n  ])\n': PARTNERS_COUNT_QUERY_RESULT;
+    '\n  *[_type == "partner" && language == $locale && slug.current == $slug][0]{\n    _id,\n    title,\n    description,\n    slug,\n    discountPercent,\n    discountText,\n    promoCode,\n    url,\n    publishedAt,\n    body,\n    "tableOfContents": body[_type == "block" && style == "h2"]{\n      _key,\n      "title": coalesce(pt::text(@), "")\n    },\n    logo {\n      asset->{_id, url},\n      alt,\n      hotspot,\n      crop\n    },\n    \n  categories[]->{\n    _id,\n    "title": coalesce(\n      title[language == $locale && value match "*"][0].value,\n      title[language == "en" && value match "*"][0].value\n    ),\n    "slug": slug.current\n  }\n,\n    seo {\n      title,\n      description,\n      ogImage,\n      noIndex\n    }\n  }\n': PARTNER_QUERY_RESULT;
+    '\n  *[_type == "publication" && language == $locale && defined(slug.current)]\n    | order(publishedAt desc, _id asc)[0...12]{\n      \n  _id,\n  title,\n  slug,\n  publishedAt,\n  url,\n  cover {\n   asset->{_id, url},\n   alt,\n   hotspot,\n   crop\n  },\n\n    }\n': PUBLICATIONS_QUERY_RESULT;
+    '\n  *[_type == "publication" && defined(slug.current)]{\n    "slug": slug.current,\n    language\n  }': PUBLICATION_SLUGS_QUERY_RESULT;
+    '\n  {\n    "page": *[\n      _type == "page" &&\n      language == $locale &&\n      slug.current == "version-history"\n    ][0] {\n      mainTitle,\n      seo {\n        title,\n        description,\n        ogImage,\n        noIndex\n      }\n    },\n    "versions": *[\n      _type == "version" &&\n      language == $locale &&\n      defined(releaseDate)\n    ] | order(releaseDate desc, _id asc) {\n      _id,\n      version,\n      releaseType,\n      releaseDate,\n      body,\n      "searchText": coalesce(pt::text(body), ""),\n      cover {\n        asset->{_id, url},\n        alt,\n        hotspot,\n        crop\n      }\n    }\n  }\n': VERSION_HISTORY_QUERY_RESULT;
+    '{\n  "documents": *[_type in ["article", "partner"] && defined(slug.current)]{\n    "section": select(_type == "article" => "blog", "partners"),\n    language,\n    "slug": slug.current,\n    "categories": categories[]._ref,\n    "translations": (*[_type == "translation.metadata" && references(^._id)][0]\n      .translations[].value->{language, "slug": slug.current})[defined(language) && defined(slug)]\n  },\n  "categories": *[_type in ["articleCategory", "partnerCategory"] && defined(slug.current)]{\n    _id,\n    "section": select(_type == "articleCategory" => "blog", "partners"),\n    "slug": slug.current\n  }\n}': LANGUAGE_NAVIGATION_QUERY_RESULT;
   }
 }
 // Lets @sanity/client releases that predate the global registry read it too
 declare module "@sanity/client" {
   interface SanityQueries extends globalThis.SanityQueries {}
 }
-

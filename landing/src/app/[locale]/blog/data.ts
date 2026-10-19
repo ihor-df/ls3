@@ -4,7 +4,13 @@ import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
-import { ARTICLE_CATEGORIES_QUERY, ARTICLES_COUNT_QUERY, getArticlesQuery } from "./api";
+import {
+  ARTICLE_CATEGORIES_QUERY,
+  ARTICLE_CATEGORY_QUERY,
+  ARTICLE_QUERY,
+  ARTICLES_COUNT_QUERY,
+  getArticlesQuery,
+} from "./api";
 
 type ArticleFilters = {
   categoryId?: string;
@@ -32,6 +38,22 @@ export const getArticlesCount = (locale: Locale, filters: ArticleFilters = {}) =
     params: getArticleParams(locale, filters),
     perspective: "published",
   });
+
+export const getArticle = async (slug: string, locale: string) => {
+  return sanityFetch({
+    params: { slug, locale },
+    query: ARTICLE_QUERY,
+    tags: [sanityTags.article(locale, slug), sanityTags.articleCategories, sanityTags.articleAuthors],
+  });
+};
+
+export const getArticleCategory = async (slug: string, locale: string) => {
+  return sanityFetch({
+    query: ARTICLE_CATEGORY_QUERY,
+    params: { locale, slug },
+    tags: [sanityTags.articleCategories],
+  });
+};
 
 export const getArticleCategories = (locale: Locale) =>
   sanityFetch({

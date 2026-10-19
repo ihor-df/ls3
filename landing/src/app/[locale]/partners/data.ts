@@ -4,7 +4,13 @@ import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import type { PARTNERS_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Locale } from "next-intl";
-import { getPartnersQuery, PARTNER_CATEGORIES_QUERY, PARTNERS_COUNT_QUERY } from "./api";
+import {
+  getPartnersQuery,
+  PARTNER_CATEGORIES_QUERY,
+  PARTNER_CATEGORY_QUERY,
+  PARTNER_QUERY,
+  PARTNERS_COUNT_QUERY,
+} from "./api";
 
 type PartnerFilters = {
   categoryId?: string;
@@ -32,6 +38,22 @@ export const getPartnersCount = (locale: Locale, filters: PartnerFilters = {}) =
     params: getPartnerParams(locale, filters),
     perspective: "published",
   });
+
+export const getPartner = async (slug: string, locale: string) => {
+  return sanityFetch({
+    params: { slug, locale },
+    query: PARTNER_QUERY,
+    tags: [sanityTags.partner(locale, slug), sanityTags.partnerCategories],
+  });
+};
+
+export const getPartnerCategory = async (slug: string, locale: string) => {
+  return sanityFetch({
+    query: PARTNER_CATEGORY_QUERY,
+    params: { locale, slug },
+    tags: [sanityTags.partnerCategories],
+  });
+};
 
 export const getPartnerCategories = (locale: Locale) =>
   sanityFetch({

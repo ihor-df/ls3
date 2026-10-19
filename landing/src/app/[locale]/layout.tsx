@@ -3,6 +3,8 @@ import ContextProviders from "@/context/context-providers";
 import { DEFAULT_OG_IMAGE_URL, NO_INDEX_NO_FOLLOW_ROBOTS, SITE_NAME } from "@/lib/constants";
 import { abcDiatype } from "@/lib/fonts";
 import { isProductionDomain } from "@/lib/utils";
+import { SITE_SETTINGS_QUERY } from "./api";
+
 import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import { getLanguageNavigation } from "@/sanity/language-navigation";
@@ -11,8 +13,8 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { ReactNode } from "react";
+
 import "../globals.css";
-import { SITE_SETTINGS_QUERY } from "./api";
 
 type RootLayoutProps = {
   children: ReactNode;
@@ -26,25 +28,24 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
     getTranslations({ locale, namespace: "metadata" }),
     sanityFetch<SITE_SETTINGS_QUERY_RESULT>({
       query: SITE_SETTINGS_QUERY,
+      params: { locale },
       tags: [sanityTags.siteSettings],
     }),
   ]);
 
-  const title = t("title");
-  const description = t("description");
-  const ogImage = siteSettings?.defaultOgImage?.asset;
+  const title = siteSettings?.title || t("title");
+  const description = siteSettings?.description || t("description");
 
   const socialImage = {
-    url: ogImage?.url ?? DEFAULT_OG_IMAGE_URL,
+    url: DEFAULT_OG_IMAGE_URL,
     alt: "Linken Sphere Antidetect Browser",
-    width: ogImage?.metadata?.dimensions?.width ?? 1200,
-    height: ogImage?.metadata?.dimensions?.height ?? 630,
+    width: 1200,
+    height: 630,
   };
 
   return {
     title,
     description,
-    robots: isProductionDomain() ? NO_INDEX_NO_FOLLOW_ROBOTS : undefined,
     openGraph: {
       siteName: SITE_NAME,
       locale: locale,
@@ -55,6 +56,7 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
       card: "summary",
       images: [socialImage],
     },
+    ...(!isProductionDomain() ? { robots: NO_INDEX_NO_FOLLOW_ROBOTS } : {}),
   };
 }
 

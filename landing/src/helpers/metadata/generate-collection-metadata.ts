@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getSocialImage } from "./get-social-image";
 
-export async function generateCollectionMetadata({
+export async function generateCollectionPageMetadata({
   locale,
   pathname,
   title,

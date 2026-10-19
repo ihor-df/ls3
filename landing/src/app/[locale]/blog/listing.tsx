@@ -16,9 +16,7 @@ export async function BlogListing({ locale, page, categorySlug, title }: BlogLis
   const category = categorySlug ? categories.find(({ slug }) => slug === categorySlug) : undefined;
 
   if (categorySlug && !category) notFound();
-
   const { posts, pageCount } = await getArticlesData(locale, { page, categoryId: category?._id });
-
   if (page > Math.max(1, pageCount) || (category && !posts.length)) notFound();
 
   return (

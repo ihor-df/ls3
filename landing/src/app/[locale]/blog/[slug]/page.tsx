@@ -1,5 +1,5 @@
 import BlogArticle from "@/components/pages/blog/article";
-import { generateCollectionMetadata } from "@/helpers/metadata/generate-collection-metadata";
+import { generateCollectionPageMetadata } from "@/helpers/metadata/generate-collection-metadata";
 import { routing } from "@/i18n/routing";
 import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
@@ -7,7 +7,8 @@ import { LocaleSlugPageProps } from "@/types/common";
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { ARTICLE_SLUGS_QUERY, getArticle } from "../api";
+import { ARTICLE_SLUGS_QUERY } from "../api";
+import { getArticle } from "../data";
 
 export async function generateStaticParams() {
   const posts = await sanityFetch({
@@ -32,7 +33,7 @@ export async function generateMetadata({ params }: LocaleSlugPageProps): Promise
     notFound();
   }
 
-  return generateCollectionMetadata({
+  return generateCollectionPageMetadata({
     locale,
     pathname: `/blog/${slug}`,
     type: "article",
