@@ -26,9 +26,9 @@ export async function generateMetadata({ params }: LocalePageProps): Promise<Met
 
 export default async function Page({ params }: { params: LocaleParams }) {
   const { locale } = await params;
-
   const data = await getPageQuery("partners", locale);
   const t = await getTranslations("partners");
+
   const title = data?.mainTitle ? data.mainTitle : t("title");
 
   return <PartnersListing locale={locale} page={1} title={title} />;

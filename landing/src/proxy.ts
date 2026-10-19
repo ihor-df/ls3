@@ -21,7 +21,9 @@ export default function proxy(request: NextRequest) {
     return redirect;
   }
 
-  if (request.nextUrl.pathname.endsWith("/version-history") && request.nextUrl.search) {
+  // Exclude query-parameter variants of these listings from search results in every locale.
+  // X-Robots-Tag is independent of the page's HTML robots metadata.
+  if (/\/(?:version-history|publications)$/.test(request.nextUrl.pathname) && request.nextUrl.search) {
     response.headers.set("X-Robots-Tag", "noindex, follow");
   }
 

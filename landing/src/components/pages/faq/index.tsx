@@ -22,6 +22,7 @@ type FAQPageProps = {
   }[];
   itemsByCategory: FAQItemsByCategory;
   totalQuestionsAmount: number;
+  title: string;
 };
 
 const CategoryTitle = ({ className, children, ...props }: ComponentProps<"h2">) => (
@@ -30,10 +31,9 @@ const CategoryTitle = ({ className, children, ...props }: ComponentProps<"h2">) 
   </h2>
 );
 
-const FAQPage = ({ categories, itemsByCategory, totalQuestionsAmount }: FAQPageProps) => {
+const FAQPage = ({ categories, itemsByCategory, totalQuestionsAmount, title }: FAQPageProps) => {
   const [activeCategory, handleCategoryChange] = useHashCategory(isFAQCategorySlug);
-
-  const tFAQ = useTranslations("faq");
+  const t = useTranslations("faq");
 
   const allItems = Object.values(itemsByCategory).flat();
   const activeCategoryTitle = categories.find((category) => category.slug === activeCategory)?.title;
@@ -42,7 +42,7 @@ const FAQPage = ({ categories, itemsByCategory, totalQuestionsAmount }: FAQPageP
   return (
     <Container as="main">
       <div className="flex items-center justify-between gap-5">
-        <CollectionPageHeader title={tFAQ("title")} />{" "}
+        <CollectionPageHeader title={title} />{" "}
         <span className="text-[3.5rem] leading-none font-bold max-md:hidden">
           ({activeCategory ? itemsByCategory[activeCategory].length : totalQuestionsAmount})
         </span>
@@ -51,7 +51,7 @@ const FAQPage = ({ categories, itemsByCategory, totalQuestionsAmount }: FAQPageP
       <div className="mt-10 flex flex-col">
         <CategoryFilters
           page="faq"
-          allLabel={tFAQ("allQuestions")}
+          allLabel={t("allQuestions")}
           categories={categories}
           activeCategory={activeCategory}
           onCategoryChange={handleCategoryChange}

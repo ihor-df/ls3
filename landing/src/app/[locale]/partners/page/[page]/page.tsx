@@ -32,11 +32,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, page } = await params;
   const pageNumber = parsePageNumber(page);
-  if (!pageNumber || pageNumber === 1) {
-    notFound();
-  }
 
   const data = await getPageQuery("partners", locale);
+  if (!pageNumber || pageNumber === 1) notFound();
 
   return generatePaginationPageMetadata({
     locale,
@@ -54,7 +52,7 @@ export default async function Page({ params }: PageProps) {
   const data = await getPageQuery("partners", locale);
 
   const pageNumber = parsePageNumber(page);
-  if (!pageNumber || pageNumber === 1 || !data) notFound();
+  if (!pageNumber || pageNumber === 1) notFound();
 
   const t = await getTranslations("partners");
   const title = data?.mainTitle ? data.mainTitle : t("title");

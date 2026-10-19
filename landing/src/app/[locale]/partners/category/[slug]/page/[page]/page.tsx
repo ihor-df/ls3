@@ -34,15 +34,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { locale, slug, page } = await params;
   const pageNumber = parsePageNumber(page);
 
-  if (!pageNumber || pageNumber === 1) {
-    notFound();
-  }
-
   const category = await getPartnerCategory(slug, locale);
 
-  if (!category) {
-    notFound();
-  }
+  if (!pageNumber || pageNumber === 1 || !category) notFound();
 
   return generatePaginationPageMetadata({
     locale,

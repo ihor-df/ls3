@@ -8,21 +8,19 @@ import { Link } from "@/i18n/navigation";
 import { imageBuilder } from "@/sanity/helpers";
 import type { PUBLICATIONS_QUERY_RESULT } from "@/sanity/sanity.types";
 import { Locale } from "next-intl";
-import { getTranslations } from "next-intl/server";
 
 type PublicationsProps = {
   publications: PUBLICATIONS_QUERY_RESULT;
   currentPage: number;
   hasMore: boolean;
   locale: Locale;
+  title: string;
 };
 
-const Publications = async ({ publications, currentPage, hasMore }: PublicationsProps) => {
-  const t = await getTranslations("publications");
-
+const Publications = async ({ publications, currentPage, hasMore, title }: PublicationsProps) => {
   return (
     <Container as="main">
-      <CollectionPageHeader title={t("title")} />
+      <CollectionPageHeader title={title} />
       {!!publications?.length && (
         <CollectionPageList className="mt-10">
           {publications.map((p) => {

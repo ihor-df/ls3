@@ -13,6 +13,7 @@ import { StaticImageData } from "next/image";
 import { useState } from "react";
 
 type GuideVideosPageProps = {
+  title: string;
   categories: { _id: string; slug: GuideVideoCategorySlug; title: string }[];
   videos: {
     id: string;
@@ -24,7 +25,7 @@ type GuideVideosPageProps = {
   }[];
 };
 
-const GuideVideosPage = ({ categories, videos }: GuideVideosPageProps) => {
+const GuideVideosPage = ({ categories, videos, title }: GuideVideosPageProps) => {
   const [activeCategory, handleCategoryChange] = useHashCategory(isGuideVideoCategorySlug);
   const [activeVideo, setActiveVideo] = useState<{ videoId: string; title: string } | null>(null);
 
@@ -38,7 +39,7 @@ const GuideVideosPage = ({ categories, videos }: GuideVideosPageProps) => {
   return (
     <Container as="main">
       <div className="flex items-center justify-between gap-5">
-        <CollectionPageHeader title={t("title")} />
+        <CollectionPageHeader title={title} />
         <span className="text-[3.5rem] leading-none font-bold max-md:hidden">({visibleVideos.length})</span>
       </div>
 

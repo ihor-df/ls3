@@ -34,14 +34,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { locale, slug, page } = await params;
   const pageNumber = parsePageNumber(page);
-
-  if (!pageNumber || pageNumber === 1) {
-    notFound();
-  }
-
   const category = await getArticleCategory(slug, locale);
 
-  if (!category) {
+  if (!pageNumber || pageNumber === 1 || !category) {
     notFound();
   }
 
