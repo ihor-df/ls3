@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {requireEnglishTitle} from '../lib/requireEnglishTitle'
 
 export const articleCategoryType = defineType({
   name: 'articleCategory',
@@ -9,7 +10,7 @@ export const articleCategoryType = defineType({
       name: 'title',
       title: 'Title',
       type: 'internationalizedArrayString',
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required().custom(requireEnglishTitle),
     }),
     defineField({
       name: 'slug',
@@ -22,7 +23,7 @@ export const articleCategoryType = defineType({
     defineField({
       name: 'seo',
       title: 'SEO',
-      type: 'seo',
+      type: 'localizedSeo',
     }),
   ],
   preview: {

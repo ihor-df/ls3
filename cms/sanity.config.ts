@@ -1,4 +1,4 @@
-import {defineConfig} from 'sanity'
+import {defineConfig, defineField} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
@@ -35,7 +35,14 @@ export default defineConfig({
     internationalizedArray({
       languages,
       defaultLanguages: ['en'],
-      fieldTypes: ['string'],
+      fieldTypes: [
+        'string',
+        defineField({
+          name: 'text',
+          type: 'text',
+          rows: 3,
+        }),
+      ],
     }),
   ],
 

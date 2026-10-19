@@ -2,6 +2,7 @@ import {articleCategoryType} from './articleCategoryType'
 import {articleType} from './articleType'
 import {authorType} from './authorType'
 import {postBodyImageType} from './objects/postBodyImageType'
+import {localizedSeoType} from './objects/localizedSeoType'
 import {seoType} from './objects/seoType'
 import {tableType} from './objects/tableType'
 import {faqItemType} from './objects/faqType'
@@ -17,6 +18,7 @@ export const schemaTypes = [
   articleCategoryType,
   authorType,
   postBodyImageType,
+  localizedSeoType,
   seoType,
   tableType,
   faqItemType,
