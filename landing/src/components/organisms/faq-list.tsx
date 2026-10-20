@@ -48,7 +48,7 @@ export default function FAQList({
 
   return (
     <>
-      {renderJsonLd && <JsonLd data={faqScript} />}
+      {renderJsonLd && schemaData.length > 0 && <JsonLd data={faqScript} />}
 
       <div id="faq-section" className={cn(className)} {...props}>
         {!isFAQPage && (

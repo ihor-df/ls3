@@ -51,5 +51,13 @@ export default async function Page({ params }: { params: LocaleSlugParams }) {
     notFound();
   }
 
-  return <BlogListing locale={locale} page={1} categorySlug={slug} title={category.title} />;
+  return (
+    <BlogListing
+      locale={locale}
+      page={1}
+      categorySlug={slug}
+      title={category.title}
+      description={category.seo?.description}
+    />
+  );
 }

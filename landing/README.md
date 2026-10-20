@@ -136,6 +136,39 @@ available alternatives; an English alternative adds
 Run the proxy and metadata regression checks with
 `node --import tsx --test tests/seo-metadata.test.mjs`.
 
+## Structured data
+
+The locale root layout renders `SoftwareApplication` and `Organization` together
+in a server-rendered JSON-LD `@graph`, following the previous landing site.
+`src/app/[locale]/structured-data.tsx` contains the schemas; the shared `JsonLd`
+component escapes `<` so CMS text cannot terminate the script tag.
+
+Application name and description use the same localized site settings and message
+fallbacks as root metadata. Application and pricing URLs use `generateUrl`, including
+the `/ua` and `/ch` prefixes. Organization identity, logo, legal details and contacts
+are retained from the reference site, with the application author linked by `@id`.
+
+The five USD offers and the 0–300 price range are retained from the reference.
+Update these values when the pricing model changes; they are not loaded from a pricing API.
+
+Page-specific markup follows the reference as well:
+
+- `/blog/{slug}` renders `Article` with the visible title, CMS author (or the publisher
+  as fallback), cover image, publication/update dates, description and localized page URL.
+  Its FAQ block already renders `FAQPage`; empty FAQ arrays do not emit a schema.
+- `/blog/category/{slug}` and `/blog/category/{slug}/page/{N}` render `CollectionPage`
+  with the category title, optional SEO description and the current pagination URL.
+- `/faq` already renders one `FAQPage` covering all categories.
+
+In the reference, the homepage and all solutions/use-case pages also render `FAQPage`
+alongside visible FAQ blocks. Those routes are currently placeholders in this project;
+add their FAQ blocks with the existing `FAQList` component when implementing their content.
+The reference has no additional page-specific schemas for the blog hub, partners,
+pricing, documentation, publications, video guides or version history.
+
+Run the schema, locale URL and script-escaping checks with
+`node --import tsx --test tests/structured-data.test.mjs`.
+
 ## Sanity webhook
 
 See [setup and cache rules](docs/sanity-webhook.md) for deployment, activation, and future CMS pages.

@@ -9,6 +9,7 @@ import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { ARTICLE_SLUGS_QUERY } from "../api";
 import { getArticle } from "../data";
+import { StructuredData } from "./structured-data";
 
 export async function generateStaticParams() {
   const posts = await sanityFetch({
@@ -64,7 +65,12 @@ const Page = async ({ params }: LocaleSlugPageProps) => {
       ]
     : undefined;
 
-  return <BlogArticle breadcrumbs={breadcrumbs} post={post} locale={locale} />;
+  return (
+    <>
+      <StructuredData post={post} locale={locale} slug={slug} />
+      <BlogArticle breadcrumbs={breadcrumbs} post={post} locale={locale} />
+    </>
+  );
 };
 
 export default Page;

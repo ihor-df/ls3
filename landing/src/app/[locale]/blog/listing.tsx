@@ -2,6 +2,7 @@ import CtaLg from "@/components/organisms/cta/cta-lg";
 import BlogPage from "@/components/pages/blog";
 import type { Locale } from "next-intl";
 import { notFound } from "next/navigation";
+import { StructuredData } from "./category/[slug]/structured-data";
 import { getArticleCategories, getArticlesData } from "./data";
 
 type BlogListingProps = {
@@ -9,9 +10,10 @@ type BlogListingProps = {
   page: number;
   categorySlug?: string;
   title: string;
+  description?: string | null;
 };
 
-export async function BlogListing({ locale, page, categorySlug, title }: BlogListingProps) {
+export async function BlogListing({ locale, page, categorySlug, title, description }: BlogListingProps) {
   const categories = await getArticleCategories(locale);
   const category = categorySlug ? categories.find(({ slug }) => slug === categorySlug) : undefined;
 
@@ -20,17 +22,28 @@ export async function BlogListing({ locale, page, categorySlug, title }: BlogLis
   if (page > Math.max(1, pageCount) || (category && !posts.length)) notFound();
 
   return (
-    <BlogPage
-      posts={posts}
-      categories={categories}
-      currentPage={page}
-      pageCount={pageCount}
-      paginationBasePath={category ? `/blog/category/${category.slug}` : "/blog"}
-      activeCategory={category?.slug ?? null}
-      title={category?.title ?? title}
-    >
-      {/* server components */}
-      <CtaLg variant="get-started" />
-    </BlogPage>
+    <>
+      {category && (
+        <StructuredData
+          locale={locale}
+          slug={category.slug}
+          title={category.title ?? title}
+          description={description}
+          page={page}
+        />
+      )}
+      <BlogPage
+        posts={posts}
+        categories={categories}
+        currentPage={page}
+        pageCount={pageCount}
+        paginationBasePath={category ? `/blog/category/${category.slug}` : "/blog"}
+        activeCategory={category?.slug ?? null}
+        title={category?.title ?? title}
+      >
+        {/* server components */}
+        <CtaLg variant="get-started" />
+      </BlogPage>
+    </>
   );
 }

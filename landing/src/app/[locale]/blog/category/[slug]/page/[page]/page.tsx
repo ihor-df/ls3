@@ -58,5 +58,13 @@ export default async function Page({ params }: PageProps) {
   const pageNumber = parsePageNumber(page);
   if (!pageNumber || pageNumber === 1 || !category?.title) notFound();
 
-  return <BlogListing locale={locale} page={pageNumber} categorySlug={slug} title={category.title} />;
+  return (
+    <BlogListing
+      locale={locale}
+      page={pageNumber}
+      categorySlug={slug}
+      title={category.title}
+      description={category.seo?.description}
+    />
+  );
 }

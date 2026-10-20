@@ -13,6 +13,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
 import { ReactNode } from "react";
+import { StructuredData } from "./structured-data";
 
 import "../globals.css";
 
@@ -21,9 +22,7 @@ type RootLayoutProps = {
   params: Promise<{ locale: string }>;
 };
 
-export async function generateMetadata({ params }: Pick<RootLayoutProps, "params">): Promise<Metadata> {
-  const { locale } = await params;
-
+async function getSiteMetadata(locale: string) {
   const [t, siteSettings] = await Promise.all([
     getTranslations({ locale, namespace: "metadata" }),
     sanityFetch<SITE_SETTINGS_QUERY_RESULT>({
@@ -33,8 +32,15 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
     }),
   ]);
 
-  const title = siteSettings?.title || t("title");
-  const description = siteSettings?.description || t("description");
+  return {
+    title: siteSettings?.title || t("title"),
+    description: siteSettings?.description || t("description"),
+  };
+}
+
+export async function generateMetadata({ params }: Pick<RootLayoutProps, "params">): Promise<Metadata> {
+  const { locale } = await params;
+  const { title, description } = await getSiteMetadata(locale);
 
   const socialImage = {
     url: DEFAULT_OG_IMAGE_URL,
@@ -62,7 +68,11 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
   const { locale } = await params;
-  const languageNavigation = await getLanguageNavigation(locale); // Map available blog and partners pages locale
+
+  const [languageNavigation, siteMetadata] = await Promise.all([
+    getLanguageNavigation(locale), // Map available blog and partners pages locale
+    getSiteMetadata(locale),
+  ]);
 
   return (
     <html
@@ -70,6 +80,9 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       data-scroll-behavior="smooth"
       className={`${abcDiatype.variable} font-diatype h-full antialiased`}
     >
+      <head>
+        <StructuredData locale={locale} {...siteMetadata} />
+      </head>
       <body className="relative flex min-h-full flex-col">
         <NextIntlClientProvider>
           <ContextProviders>

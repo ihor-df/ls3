@@ -107,6 +107,7 @@ export const ARTICLES_COUNT_QUERY = defineQuery(`
 export const ARTICLE_QUERY = defineQuery(`
   *[_type == "article" && language == $locale && slug.current == $slug][0]{
     _id,
+    _updatedAt,
     title,
     slug,
     publishedAt,

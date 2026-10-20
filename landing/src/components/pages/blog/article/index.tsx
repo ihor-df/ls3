@@ -82,7 +82,7 @@ const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
           {/* Content */}
           {Array.isArray(body) && <PortableText value={body} components={portableTextComponents} />}
 
-          {faq && <FAQList data={faq} className="mt-35 md:mt-40" />}
+          {!!faq?.length && <FAQList data={faq} className="mt-35 md:mt-40" />}
         </div>
 
         <hr className="mt-18 border-white/10 md:mt-40" />
