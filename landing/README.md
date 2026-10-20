@@ -118,6 +118,24 @@ Search does not create listing URLs or change the catalogue's indexing.
 Run the focused GROQ and search-path checks with `npm run test:partners-pagination`.
 Legacy query-parameter redirects, sitemap, robots.txt, and further SEO metadata are outside the current scope.
 
+## Query URL indexing and listing hreflang
+
+Public page URLs with `utm_*`, `_gl`, `search`, `category` or `page` parameters
+receive `X-Robots-Tag: noindex, follow` through `src/proxy.ts`. Other parameters,
+including the internal Next.js `_rsc`, do not trigger this rule. Existing
+version-history and publications rules still cover any query parameters on
+those listings. Metadata helpers continue to produce clean canonical URLs
+without reading page `searchParams`.
+
+Blog and partner pagination metadata uses the language navigation map to include
+only locales where that page exists. Partner hubs, categories and pagination
+pass `pageLocales: ["en", "ru"]` to the metadata helpers, which advertise only
+available alternatives; an English alternative adds
+`x-default`. This does not restrict the user-facing language switcher.
+
+Run the proxy and metadata regression checks with
+`node --import tsx --test tests/seo-metadata.test.mjs`.
+
 ## Sanity webhook
 
 See [setup and cache rules](docs/sanity-webhook.md) for deployment, activation, and future CMS pages.

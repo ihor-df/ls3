@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
 
 const handleI18n = createMiddleware(routing);
+const NO_INDEX_QUERY_PARAMS = new Set(["_gl", "search", "category", "page"]);
 
 export default function proxy(request: NextRequest) {
   const response = handleI18n(request);
@@ -21,9 +22,13 @@ export default function proxy(request: NextRequest) {
     return redirect;
   }
 
-  // Exclude query-parameter variants of these listings from search results in every locale.
-  // X-Robots-Tag is independent of the page's HTML robots metadata.
-  if (/\/(?:version-history|publications)$/.test(request.nextUrl.pathname) && request.nextUrl.search) {
+  const { pathname, search, searchParams } = request.nextUrl;
+  const hasListingQuery = /\/(?:version-history|publications)$/.test(pathname) && Boolean(search);
+  const hasNoIndexParam = [...searchParams.keys()].some(
+    (key) => key.startsWith("utm_") || NO_INDEX_QUERY_PARAMS.has(key),
+  );
+
+  if (hasListingQuery || hasNoIndexParam) {
     response.headers.set("X-Robots-Tag", "noindex, follow");
   }
 

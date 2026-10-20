@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: LocaleSlugPageProps): Promise
 
   const pathname = `/partners/category/${category.slug}`;
   const navigation = await getLanguageNavigation(locale);
-  const pageLocales = routing.locales.filter((language) => navigation[pathname]?.[language]);
+  const pageLocales = (["en", "ru"] as const).filter((language) => navigation[pathname]?.[language]);
 
   return generatePageMetadata({
     locale,
@@ -38,7 +38,8 @@ export async function generateMetadata({ params }: LocaleSlugPageProps): Promise
     title: category.seo?.title || category.title,
     description: category.seo?.description,
     ogImage: category.seo?.ogImage,
-    noIndex: !!category.seo?.noIndex,
+    // CMS cannot enable indexing outside EN/RU.
+    noIndex: (locale !== "en" && locale !== "ru") || !!category.seo?.noIndex,
   });
 }
 

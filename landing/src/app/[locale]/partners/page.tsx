@@ -17,10 +17,12 @@ export async function generateMetadata({ params }: LocalePageProps): Promise<Met
   return generatePageMetadata({
     locale,
     pathname: "/partners",
+    pageLocales: ["en", "ru"],
     title: data?.seo?.title,
     description: data?.seo?.description,
     ogImage: data?.seo?.ogImage,
-    noIndex: !!data?.seo?.noIndex,
+    // CMS cannot enable indexing outside EN/RU.
+    noIndex: (locale !== "en" && locale !== "ru") || !!data?.seo?.noIndex,
   });
 }
 

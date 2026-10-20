@@ -6,6 +6,16 @@ import type { Metadata } from "next";
 import { Locale } from "next-intl";
 import { getSocialImage } from "./get-social-image";
 
+export type GenerateMetadataProps = {
+  locale: Locale;
+  pathname: string;
+  title?: string | null;
+  description?: string | null;
+  pageLocales?: Locale[];
+  ogImage?: Seo["ogImage"] | null;
+  noIndex?: boolean;
+};
+
 export async function generatePageMetadata({
   locale,
   pathname,
@@ -14,16 +24,8 @@ export async function generatePageMetadata({
   pageLocales,
   ogImage,
   noIndex,
-}: {
-  locale: Locale;
-  pathname: string;
-  title?: string | null;
-  description?: string | null;
-  pageLocales?: Locale[];
-  ogImage?: Seo["ogImage"] | null;
-  noIndex?: boolean;
-}): Promise<Metadata> {
-  const locales = pageLocales ? pageLocales : routing.locales;
+}: GenerateMetadataProps): Promise<Metadata> {
+  const locales = pageLocales ?? routing.locales;
   const currentUrl = generateUrl(locale, pathname);
 
   const alternateLinks = locales.map((loc) => ({

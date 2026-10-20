@@ -13,7 +13,7 @@ export const INDEX_FOLLOW_ROBOTS = {
 
 export const NO_INDEX_FOLLOW_ROBOTS = {
   index: false,
-  follow: false, // TODO true
+  follow: false, // TODO: true
 } as const;
 
 export const NO_INDEX_NO_FOLLOW_ROBOTS = {

@@ -21,8 +21,6 @@ const usePageSearch = (navigationMode: SearchNavigationMode = "router") => {
 
   const submitSearch = (value: string) => {
     const nextQuery = value.trim();
-    if (nextQuery === (query ?? "") && !searchParams.has("page")) return;
-
     const url = new URL(window.location.href);
 
     if (nextQuery) {
@@ -32,6 +30,14 @@ const usePageSearch = (navigationMode: SearchNavigationMode = "router") => {
     }
 
     url.searchParams.delete("page");
+
+    // Version history search covers all dates, so remove the inactive period filters from the URL.
+    if (nextQuery && url.pathname.endsWith("/version-history")) {
+      url.searchParams.delete("year");
+      url.searchParams.delete("month");
+    }
+
+    if (url.href === window.location.href) return;
 
     const href = `${url.pathname}${url.search}${url.hash}`;
 

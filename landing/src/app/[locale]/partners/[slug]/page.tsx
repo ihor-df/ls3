@@ -40,7 +40,7 @@ export async function generateMetadata({ params }: LocaleSlugPageProps): Promise
     title: partner.seo?.title || partner.title,
     description: partner.seo?.description,
     ogImage: partner.seo?.ogImage,
-    noIndex: !!partner.seo?.noIndex,
+    noIndex: true, // TODO: !!partner.seo?.noIndex,
   });
 }
 

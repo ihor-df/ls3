@@ -2,10 +2,13 @@ import { routing } from "@/i18n/routing";
 import { NO_INDEX_FOLLOW_ROBOTS, SITE_NAME } from "@/lib/constants";
 import { generateUrl } from "@/lib/utils";
 import { getLanguageNavigation } from "@/sanity/language-navigation";
-import type { Seo } from "@/sanity/sanity.types";
 import type { Metadata } from "next";
-import type { Locale } from "next-intl";
+import { GenerateMetadataProps } from "./generate-page-metadata";
 import { getSocialImage } from "./get-social-image";
+
+type Props = GenerateMetadataProps & {
+  type?: "website" | "article";
+};
 
 export async function generateCollectionPageMetadata({
   locale,
@@ -15,15 +18,7 @@ export async function generateCollectionPageMetadata({
   ogImage,
   noIndex,
   type = "website",
-}: {
-  locale: Locale;
-  pathname: string;
-  title?: string | null;
-  description?: string | null;
-  ogImage?: Seo["ogImage"] | null;
-  noIndex?: boolean;
-  type?: "website" | "article";
-}): Promise<Metadata> {
+}: Props): Promise<Metadata> {
   const navigation = await getLanguageNavigation(locale);
   const currentUrl = generateUrl(locale, pathname);
   const translatedPaths = navigation[pathname] ?? {};

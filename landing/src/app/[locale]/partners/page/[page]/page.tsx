@@ -39,11 +39,13 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   return generatePaginationPageMetadata({
     locale,
     pathname: "/partners",
+    pageLocales: ["en", "ru"],
     page: pageNumber,
     title: data?.seo?.title,
     description: data?.seo?.description,
     ogImage: data?.seo?.ogImage,
-    noIndex: !!data?.seo?.noIndex,
+    // CMS cannot enable indexing outside EN/RU.
+    noIndex: (locale !== "en" && locale !== "ru") || !!data?.seo?.noIndex,
   });
 }
 

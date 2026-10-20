@@ -1,48 +1,34 @@
-import { NO_INDEX_FOLLOW_ROBOTS, SITE_NAME } from "@/lib/constants";
+import { routing } from "@/i18n/routing";
 import { getPaginationPath } from "@/lib/pagination";
-import { generateUrl } from "@/lib/utils";
-import type { Seo } from "@/sanity/sanity.types";
+import { getLanguageNavigation } from "@/sanity/language-navigation";
 import type { Metadata } from "next";
-import type { Locale } from "next-intl";
-import { getSocialImage } from "./get-social-image";
+import { GenerateMetadataProps, generatePageMetadata } from "./generate-page-metadata";
+
+type Props = GenerateMetadataProps & {
+  page: number;
+};
 
 export async function generatePaginationPageMetadata({
   locale,
   pathname,
   page,
+  pageLocales,
   title,
   description,
   ogImage,
   noIndex,
-}: {
-  locale: Locale;
-  pathname: string;
-  page: number;
-  title?: string | null;
-  description?: string | null;
-  ogImage?: Seo["ogImage"] | null;
-  noIndex?: boolean;
-}): Promise<Metadata> {
-  const currentUrl = generateUrl(locale, getPaginationPath(pathname, page));
-  const socialImage = getSocialImage(ogImage);
+}: Props): Promise<Metadata> {
+  const pagePath = getPaginationPath(pathname, page);
+  const navigation = await getLanguageNavigation(locale);
+  const availableLocales = (pageLocales ?? routing.locales).filter((language) => navigation[pagePath]?.[language]);
 
-  return {
-    alternates: {
-      canonical: currentUrl,
-    },
-    openGraph: {
-      siteName: SITE_NAME,
-      locale,
-      type: "website",
-      images: [socialImage],
-      url: currentUrl,
-    },
-    twitter: {
-      card: "summary_large_image",
-      images: [socialImage],
-    },
-    ...(title ? { title } : {}),
-    ...(description ? { description } : {}),
-    ...(noIndex ? { robots: NO_INDEX_FOLLOW_ROBOTS } : {}),
-  };
+  return generatePageMetadata({
+    locale,
+    pathname: pagePath,
+    pageLocales: availableLocales,
+    title,
+    description,
+    ogImage,
+    noIndex,
+  });
 }
