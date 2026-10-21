@@ -1,7 +1,7 @@
 "use client";
 
+import { isBlogListingPath } from "@/helpers/blog-search";
 import { usePathname } from "@/i18n/navigation";
-import { isBlogListingPath } from "@/lib/blog-search";
 import type { BlogSearchResult } from "@/types/blog";
 import { useLocale, type Locale } from "next-intl";
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";

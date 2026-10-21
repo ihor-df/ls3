@@ -1,7 +1,7 @@
 import { getArticleCategories, getArticlesData } from "@/app/[locale]/blog/data";
+import { BLOG_SEARCH_MAX_LENGTH } from "@/helpers/blog-search";
+import { parsePageNumber } from "@/helpers/pagination";
 import { routing } from "@/i18n/routing";
-import { BLOG_SEARCH_MAX_LENGTH } from "@/lib/blog-search";
-import { parsePageNumber } from "@/lib/pagination";
 import { hasLocale } from "next-intl";
 import type { NextRequest } from "next/server";
 

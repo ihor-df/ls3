@@ -1,8 +1,8 @@
 import { getPageQuery } from "@/app/[locale]/api";
 import { generatePaginationPageMetadata } from "@/helpers/metadata/generate-pagination-metadata";
+import { getStaticPaginationPages, parsePageNumber } from "@/helpers/pagination";
 import { routing } from "@/i18n/routing";
 import { ARTICLES_PER_PAGE } from "@/lib/constants";
-import { getStaticPaginationPages, parsePageNumber } from "@/lib/pagination";
 import type { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { getTranslations } from "next-intl/server";

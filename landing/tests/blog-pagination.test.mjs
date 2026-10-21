@@ -7,7 +7,7 @@ import {
   ARTICLES_QUERY,
   getArticlesQuery,
 } from "../src/app/[locale]/blog/api.ts";
-import { isBlogListingPath } from "../src/lib/blog-search.ts";
+import { isBlogListingPath } from "../src/helpers/blog-search.ts";
 import {
   getPageCount,
   getPageOffset,
@@ -15,7 +15,7 @@ import {
   getPaginationPath,
   getStaticPaginationPages,
   parsePageNumber,
-} from "../src/lib/pagination.ts";
+} from "../src/helpers/pagination.ts";
 
 test("page numbers use positive safe integers and canonical decimal spelling", () => {
   assert.equal(parsePageNumber(), 1);

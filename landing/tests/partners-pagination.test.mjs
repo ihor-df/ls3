@@ -7,7 +7,7 @@ import {
   PARTNERS_COUNT_QUERY,
   PARTNERS_QUERY,
 } from "../src/app/[locale]/partners/api.ts";
-import { isPartnersListingPath } from "../src/lib/partners-search.ts";
+import { isPartnersListingPath } from "../src/helpers/partners-search.ts";
 
 const createPartner = (
   _id,

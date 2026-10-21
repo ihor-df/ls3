@@ -1,5 +1,5 @@
+import { getPageCount, getPageOffset } from "@/helpers/pagination";
 import { ARTICLES_PER_PAGE } from "@/lib/constants";
-import { getPageCount, getPageOffset } from "@/lib/pagination";
 import { sanityTags } from "@/sanity/cache-tags";
 import { sanityFetch } from "@/sanity/client";
 import type { ARTICLES_QUERY_RESULT } from "@/sanity/sanity.types";

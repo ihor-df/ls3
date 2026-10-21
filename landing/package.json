@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "test:logo-motion": "node --experimental-strip-types --test tests/logo-motion.test.mjs",
     "test:blog-pagination": "node --experimental-strip-types --test tests/blog-pagination.test.mjs",
     "test:partners-pagination": "node --experimental-strip-types --test tests/partners-pagination.test.mjs",
     "test:sanity-revalidation": "node --experimental-strip-types --test tests/sanity-revalidation.test.mjs",

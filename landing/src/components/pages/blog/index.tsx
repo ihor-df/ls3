@@ -4,7 +4,7 @@ import Container from "@/components/atoms/container";
 import CollectionPageHeader from "@/components/molecules/collection-page-header";
 import PagePagination from "@/components/molecules/page-pagination";
 import { useBlogSearch } from "@/context/blog-search-provider";
-import { BLOG_SEARCH_MAX_LENGTH } from "@/lib/blog-search";
+import { BLOG_SEARCH_MAX_LENGTH } from "@/helpers/blog-search";
 import { imageBuilder } from "@/sanity/helpers";
 import type { ARTICLES_QUERY_RESULT, ARTICLE_CATEGORIES_QUERY_RESULT } from "@/sanity/sanity.types";
 import CategoryFilters from "@components/molecules/category-filters";

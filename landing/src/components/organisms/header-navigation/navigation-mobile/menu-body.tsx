@@ -2,9 +2,8 @@ import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import Arrow from "@assets/icons/arrow.svg";
 import LS from "@assets/icons/linken-sphere.svg";
-import logo from "@public/images/logo-sm@2x.png";
+import AnimatedLogo from "@components/atoms/animated-logo";
 import { useTranslations } from "next-intl";
-import Image from "next/image";
 import { RESOURCES, SOLUTIONS, USE_CASES } from "../constants";
 import { MobileMenuCategory } from "../types";
 import { CloseButton, FirstLevelMenuItem, MenuListItem, SecondLevelMenuItem } from "./components";
@@ -63,7 +62,7 @@ const MenuBody = ({ isMenuOpen, activeMenu, isPathActive, changeActiveMenu, clos
             aria-label={tPages("homepage")}
             aria-current={pathname === "/" ? "page" : undefined}
           >
-            <Image src={logo} alt="Linken Sphere logo" className="h-12 w-auto scale-[1.2] rounded-full duration-300" />
+            <AnimatedLogo className="h-12 w-auto scale-[1.2]" />
             <LS aria-hidden="true" className="max-xxxs:hidden h-8 w-auto" />
           </Link>
         )}

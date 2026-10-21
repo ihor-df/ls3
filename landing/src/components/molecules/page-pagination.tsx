@@ -1,7 +1,7 @@
 "use client";
 
+import { getPaginationItems, getPaginationPath } from "@/helpers/pagination";
 import { Link } from "@/i18n/navigation";
-import { getPaginationItems, getPaginationPath } from "@/lib/pagination";
 import { cn } from "@/lib/utils";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";

@@ -1,5 +1,5 @@
 import JsonLd from "@/components/system/json-ld";
-import { getPaginationPath } from "@/lib/pagination";
+import { getPaginationPath } from "@/helpers/pagination";
 import { generateUrl } from "@/lib/utils";
 import type { Locale } from "next-intl";
 import type { CollectionPage } from "schema-dts";

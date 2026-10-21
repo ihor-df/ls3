@@ -1,5 +1,5 @@
+import { getPaginationPath } from "@/helpers/pagination";
 import { routing } from "@/i18n/routing";
-import { getPaginationPath } from "@/lib/pagination";
 import { getLanguageNavigation } from "@/sanity/language-navigation";
 import type { Metadata } from "next";
 import { GenerateMetadataProps, generatePageMetadata } from "./generate-page-metadata";

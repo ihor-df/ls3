@@ -1,11 +1,10 @@
 import { Link, usePathname } from "@/i18n/navigation";
 import { cn } from "@/lib/utils";
 import type { LocaleHrefs } from "@/sanity/helpers";
+import AnimatedLogo from "@components/atoms/animated-logo";
 import ButtonRounded from "@components/atoms/button-rounded";
 import Button from "@components/atoms/main-button";
-import logo from "@public/images/logo-sm@2x.png";
 import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
 
 import { MenuCategory } from "../types";
@@ -108,12 +107,7 @@ const NavigationDesktop = ({ isPathActive, localeHrefs }: NavigationDesktopProps
           aria-label={tPages("homepage")}
           aria-current={pathname === "/" ? "page" : undefined}
         >
-          <Image
-            src={logo}
-            alt="Linken Sphere logo"
-            loading="eager"
-            className="h-auto w-16 scale-[1.1] rounded-full duration-300"
-          />
+          <AnimatedLogo className="w-16 scale-[1.1]" playKey={`${locale}:${pathname}`} />
         </Link>
 
         {/* First level menu */}

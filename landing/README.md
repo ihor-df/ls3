@@ -20,6 +20,11 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Animated logo
+
+Use the shared `AnimatedLogo` inside a labeled link or button. See
+[usage, behavior, and preview instructions](docs/animated-logo.md).
+
 ## Absolute page URLs
 
 Use `generateUrl(locale, pathname)` from `src/lib/utils.ts` for absolute page URLs
@@ -44,7 +49,7 @@ The blog uses `/blog`, `/blog/page/N`, `/blog/category/{slug}`, and `/blog/categ
 Listing routes are prerendered with webhook invalidation. Published content determines build-time paths;
 new paths can be generated on their first request without rebuilding.
 
-- `src/lib/pagination.ts` validates page numbers and calculates counts, offsets, paths, and static page parameters.
+- `src/helpers/pagination.ts` validates page numbers and calculates counts, offsets, paths, and static page parameters.
 - `src/app/[locale]/blog/data.ts` exposes `getArticlesData(locale, options)`, `getArticlesCount(locale, filters)`, and `getArticleCategories(locale)`.
 - `src/app/[locale]/blog/listing.tsx` shares rendering and 404 checks across the four listing routes.
 - Categories without articles in the selected language are hidden and return 404. Invalid page numbers and out-of-range pages also return 404. `/page/1` permanently redirects to the base catalogue or category URL through `src/proxy.ts`, preserving the language and query parameters.

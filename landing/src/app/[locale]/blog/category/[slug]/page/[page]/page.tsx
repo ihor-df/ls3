@@ -1,8 +1,8 @@
 import { getArticleCategories, getArticleCategory } from "@/app/[locale]/blog/data";
 import { BlogListing } from "@/app/[locale]/blog/listing";
 import { generatePaginationPageMetadata } from "@/helpers/metadata/generate-pagination-metadata";
+import { getStaticPaginationPages, parsePageNumber } from "@/helpers/pagination";
 import { ARTICLES_PER_PAGE } from "@/lib/constants";
-import { getStaticPaginationPages, parsePageNumber } from "@/lib/pagination";
 
 import { routing } from "@/i18n/routing";
 import type { Metadata } from "next";

@@ -1,17 +1,16 @@
 import ButtonRounded from "@/components/atoms/button-rounded";
+import { BLOG_SEARCH_MAX_LENGTH, isBlogListingPath } from "@/helpers/blog-search";
+import { isPartnersListingPath, PARTNERS_SEARCH_MAX_LENGTH } from "@/helpers/partners-search";
 import useScrollLock from "@/hooks/useScrollLock";
 import { Link, usePathname } from "@/i18n/navigation";
-import { BLOG_SEARCH_MAX_LENGTH, isBlogListingPath } from "@/lib/blog-search";
-import { isPartnersListingPath, PARTNERS_SEARCH_MAX_LENGTH } from "@/lib/partners-search";
 import { cn } from "@/lib/utils";
 import type { LocaleHrefs } from "@/sanity/helpers";
+import AnimatedLogo from "@components/atoms/animated-logo";
 import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
 import { Suspense, useEffect, useState } from "react";
 import { MobileMenuCategory } from "../types";
 
 import Menu from "@assets/icons/menu.svg";
-import logo from "@public/images/logo-sm@2x.png";
 
 import MobilePageSearch from "../../../molecules/page-search-mobile";
 import LangSwitcher from "./lang-switcher";
@@ -115,7 +114,7 @@ const NavigationMobile = ({ isPathActive, localeHrefs }: NavigationMobileProps) 
           aria-label={tPages("homepage")}
           aria-current={pathname === "/" ? "page" : undefined}
         >
-          <Image src={logo} alt="Linken Sphere logo" loading="eager" className="h-16 w-auto rounded-full duration-300" />
+          <AnimatedLogo className="h-16 w-auto" playKey={`${locale}:${pathname}`} />
         </Link>
 
         <div

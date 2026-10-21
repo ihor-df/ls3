@@ -1,8 +1,8 @@
 import type { Locale } from "next-intl";
 import { defineQuery } from "next-sanity";
+import { getPageCount, getPaginationPath } from "../helpers/pagination.ts";
 import { routing } from "../i18n/routing.ts";
 import { ARTICLES_PER_PAGE, PARTNERS_PER_PAGE } from "../lib/constants.ts";
-import { getPageCount, getPaginationPath } from "../lib/pagination.ts";
 import { sanityTags } from "./cache-tags.ts";
 import type { LanguageNavigation } from "./helpers.ts";
 

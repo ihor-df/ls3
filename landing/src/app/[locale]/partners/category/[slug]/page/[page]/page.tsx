@@ -1,9 +1,9 @@
 import { getPartnerCategories, getPartnerCategory } from "@/app/[locale]/partners/data";
 import { PartnersListing } from "@/app/[locale]/partners/listing";
 import { generatePaginationPageMetadata } from "@/helpers/metadata/generate-pagination-metadata";
+import { getStaticPaginationPages, parsePageNumber } from "@/helpers/pagination";
 import { routing } from "@/i18n/routing";
 import { PARTNERS_PER_PAGE } from "@/lib/constants";
-import { getStaticPaginationPages, parsePageNumber } from "@/lib/pagination";
 import { Metadata } from "next";
 import type { Locale } from "next-intl";
 import { notFound } from "next/navigation";

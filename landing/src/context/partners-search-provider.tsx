@@ -1,7 +1,7 @@
 "use client";
 
+import { isPartnersListingPath } from "@/helpers/partners-search";
 import { usePathname } from "@/i18n/navigation";
-import { isPartnersListingPath } from "@/lib/partners-search";
 import type { PartnersSearchResult } from "@/types/partners";
 import { useLocale, type Locale } from "next-intl";
 import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";

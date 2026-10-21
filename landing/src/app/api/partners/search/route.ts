@@ -1,7 +1,7 @@
 import { getPartnerCategories, getPartnersData } from "@/app/[locale]/partners/data";
+import { parsePageNumber } from "@/helpers/pagination";
+import { PARTNERS_SEARCH_MAX_LENGTH } from "@/helpers/partners-search";
 import { routing } from "@/i18n/routing";
-import { parsePageNumber } from "@/lib/pagination";
-import { PARTNERS_SEARCH_MAX_LENGTH } from "@/lib/partners-search";
 import { hasLocale } from "next-intl";
 import type { NextRequest } from "next/server";
 
