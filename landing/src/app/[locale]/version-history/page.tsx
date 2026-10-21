@@ -43,11 +43,15 @@ export default async function Page({ params }: PageProps) {
   });
 
   return (
-    <VersionHistoryPage
-      title={data.page?.mainTitle ?? t("title")}
-      noResults={t("noResults")}
-      versions={data.versions}
-      locale={locale}
-    />
+    <>
+      <VersionHistoryPage
+        title={data.page?.mainTitle ?? t("title")}
+        noResults={t("noResults")}
+        versions={data.versions}
+        locale={locale}
+      />
+
+      <footer className="h-50">Footer example</footer>
+    </>
   );
 }

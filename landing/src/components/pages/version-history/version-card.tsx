@@ -1,25 +1,14 @@
 import Tag from "@/components/atoms/tag";
 import { portableTextComponents } from "@/components/molecules/portable-text/components";
-import { cn } from "@/lib/utils";
-import type { VERSION_HISTORY_QUERY_RESULT } from "@/sanity/sanity.types";
 import { PortableText } from "next-sanity";
 import { Image } from "next-sanity/image";
+import type { VersionHistoryItem } from "./types";
 
-type VersionBody = VERSION_HISTORY_QUERY_RESULT["versions"][number]["body"];
+const VersionCard = ({ item }: { item: VersionHistoryItem }) => {
+  const { body, imageUrl, version, imageAlt, releaseType, formattedReleaseDate } = item;
 
-type VersionCardProps = {
-  className?: string;
-  body: VersionBody;
-  imageUrl: string | null | undefined;
-  version: string;
-  imageAlt?: string;
-  releaseType: string;
-  releaseDate: string;
-};
-
-const VersionCard = ({ className, body, imageUrl, version, imageAlt, releaseType, releaseDate }: VersionCardProps) => {
   return (
-    <li className={cn("group mt-10 first:mt-0 md:mt-16", className)}>
+    <li className="group mt-10 first:mt-0 md:mt-16">
       <div className="flex flex-col gap-5 md:flex-row md:gap-10">
         <Image
           width={700}
@@ -36,7 +25,7 @@ const VersionCard = ({ className, body, imageUrl, version, imageAlt, releaseType
             </span>
             <Tag className="capitalize max-md:ml-4">{releaseType}</Tag>
           </div>
-          <span className="ml-auto text-sm text-white/60 md:self-start md:text-base">{releaseDate}</span>
+          <span className="ml-auto text-sm text-white/60 md:self-start md:text-base">{formattedReleaseDate}</span>
         </div>
       </div>
 

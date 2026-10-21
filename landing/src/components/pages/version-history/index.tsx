@@ -16,14 +16,17 @@ const VersionHistoryPage = ({ versions, title, locale, noResults }: VersionHisto
   const versionHistoryData = buildVersionHistoryData(versions, locale);
 
   return (
-    <Container as="main">
-      <CollectionPageHeader
-        title={title}
-        initialSearchValue=""
-        searchNavigationMode="history"
-        searchClassName="max-lg:hidden"
-      />
+    <Container as="main" className="lg:py-0">
       <Content
+        header={
+          <CollectionPageHeader
+            title={title}
+            initialSearchValue=""
+            searchNavigationMode="history"
+            searchClassName="max-lg:hidden"
+            className="lg:bg-background lg:pointer-events-auto lg:pt-40 lg:pb-10"
+          />
+        }
         locale={locale}
         noResults={noResults}
         versions={versionHistoryData.versions}

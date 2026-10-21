@@ -83,6 +83,7 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       <head>
         <StructuredData locale={locale} {...siteMetadata} />
       </head>
+
       <body className="relative flex min-h-full flex-col">
         <NextIntlClientProvider>
           <ContextProviders>

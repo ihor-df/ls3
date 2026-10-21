@@ -1,14 +1,16 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import type { Locale } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { Suspense, useEffect, useState } from "react";
+import { Suspense, useEffect, useState, type ReactNode } from "react";
 import { filterVersions } from "./helpers";
 import MonthPicker from "./month-picker";
 import type { PeriodGroup, SelectedPeriod, VersionHistoryItem } from "./types";
 import VersionCard from "./version-card";
 
 type VersionHistoryContentProps = {
+  header: ReactNode;
   locale: Locale;
   noResults: string;
   versions: VersionHistoryItem[];
@@ -19,6 +21,8 @@ type VersionHistoryFilters = {
   search: string;
   period: SelectedPeriod | null;
 };
+
+const resultsClassName = "lg:col-start-2 lg:row-start-1 lg:pt-65 lg:pb-40";
 
 const getDefaultPeriod = (periods: PeriodGroup[]): SelectedPeriod | null => {
   const latestPeriod = periods[0];
@@ -31,15 +35,11 @@ const getPeriodFromParams = (
   yearParam: string | null,
   monthParam: string | null,
 ): SelectedPeriod | null => {
-  const year = Number(yearParam);
-  const selectedYear = periods.find((period) => period.year === year);
+  const selectedYear = periods.find((period) => period.year === Number(yearParam));
 
   if (!selectedYear) return getDefaultPeriod(periods);
 
-  if (!monthParam) return { year: selectedYear.year, month: null };
-
-  const month = Number(monthParam);
-  const selectedMonth = selectedYear.months.find((item) => item.value === month);
+  const selectedMonth = selectedYear.months.find((item) => item.value === Number(monthParam));
 
   return {
     year: selectedYear.year,
@@ -82,10 +82,11 @@ const updatePeriodSearchParams = (period: SelectedPeriod) => {
   window.history.pushState(null, "", `${url.pathname}${url.search}${url.hash}`);
 };
 
-const VersionHistoryContent = ({ locale, noResults, versions, periods }: VersionHistoryContentProps) => {
+const VersionHistoryContent = ({ header, locale, noResults, versions, periods }: VersionHistoryContentProps) => {
+  const initialPeriod = getDefaultPeriod(periods);
   const [filters, setFilters] = useState<VersionHistoryFilters>(() => ({
     search: "",
-    period: getDefaultPeriod(periods),
+    period: initialPeriod,
   }));
 
   const filteredVersions = filterVersions(versions, { locale, ...filters });
@@ -102,30 +103,32 @@ const VersionHistoryContent = ({ locale, noResults, versions, periods }: Version
         <VersionHistoryUrlSync periods={periods} onFiltersChange={setFilters} />
       </Suspense>
 
-      <div className="mt-10 grid flex-1 grid-cols-1 gap-10 lg:grid-cols-[300px_1fr]">
-        <MonthPicker
-          periods={periods}
-          selectedPeriod={filters.period}
-          initialPeriod={getDefaultPeriod(periods)}
-          onPeriodChange={handlePeriodChange}
-        />
+      <div className="grid flex-1 grid-cols-1 gap-10 lg:grid-cols-[300px_minmax(0,1fr)]">
+        {/* A viewport-sized layer makes all controls leave together when the footer enters the screen. */}
+        <div className="lg:pointer-events-none lg:sticky lg:top-0 lg:z-20 lg:col-span-full lg:row-start-1 lg:h-dvh lg:self-start">
+          {header}
+
+          <div className="mt-10 lg:pointer-events-auto lg:mt-0 lg:w-75">
+            <MonthPicker
+              periods={periods}
+              selectedPeriod={filters.period}
+              initialPeriod={initialPeriod}
+              onPeriodChange={handlePeriodChange}
+            />
+          </div>
+        </div>
 
         {filteredVersions.length ? (
-          <ul>
+          <ul className={resultsClassName}>
             {filteredVersions.map((version) => (
-              <VersionCard
-                releaseType={version.releaseType}
-                key={version._id}
-                version={version.version}
-                imageUrl={version.imageUrl}
-                imageAlt={version.imageAlt}
-                body={version.body}
-                releaseDate={version.formattedReleaseDate}
-              />
+              <VersionCard key={version._id} item={version} />
             ))}
           </ul>
         ) : (
-          <p className="text-light-grey flex min-h-40 items-center justify-center text-center" role="status">
+          <p
+            className={cn(resultsClassName, "text-light-grey flex min-h-40 items-center justify-center text-center")}
+            role="status"
+          >
             {noResults}
           </p>
         )}

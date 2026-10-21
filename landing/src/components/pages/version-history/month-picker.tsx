@@ -63,7 +63,7 @@ const MonthPicker = ({ periods, selectedPeriod, initialPeriod, onPeriodChange }:
 
   return (
     <div className="bg-dark-grey lg:rounded-large h-15 max-h-max rounded-full lg:h-auto lg:p-3 lg:pr-1">
-      <div className="period-scrollbar max-h-[calc(100dvh-300px)] lg:min-h-70 lg:overflow-y-auto">
+      <div className="period-scrollbar max-h-[calc(100dvh-300px)] lg:overflow-y-auto">
         {/* Mobile menu */}
         <BottomDrawer
           open={drawerOpen}
