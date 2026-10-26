@@ -40,7 +40,7 @@ export function getDocumentMediaFolder(value: unknown): string | undefined {
       path = slug ? `blog/${slug}` : undefined
       break
     case 'version':
-      path = document.version ? `version-history/${document.version}` : undefined
+      path = 'version-history'
       break
     case 'partner':
       path = slug ? `partners/${slug}` : undefined

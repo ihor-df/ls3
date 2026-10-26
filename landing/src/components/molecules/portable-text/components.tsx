@@ -45,7 +45,7 @@ export const portableTextComponents: PortableTextComponents = {
   },
   list: {
     bullet: ({ children }) => <ul className="my-5 ml-2 list-disc space-y-2 pl-5 md:my-6">{children}</ul>,
-    numyer: ({ children }) => <ol className="my-5 ml-2 list-decimal space-y-2 pl-5 md:my-6">{children}</ol>,
+    number: ({ children }) => <ol className="my-5 ml-2 list-decimal space-y-2 pl-5 md:my-6">{children}</ol>,
   },
   types: {
     articleBodyImage: PostBodyImage,

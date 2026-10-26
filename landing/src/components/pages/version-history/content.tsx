@@ -94,6 +94,7 @@ const VersionHistoryContent = ({ header, locale, noResults, versions, periods }:
   const handlePeriodChange = (period: SelectedPeriod) => {
     setFilters({ search: "", period });
     updatePeriodSearchParams(period);
+    window.scrollTo({ top: 0, behavior: "instant" });
   };
 
   return (

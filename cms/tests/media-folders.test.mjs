@@ -57,7 +57,7 @@ function createDataset(initial = []) {
   return {client, documents, writes}
 }
 
-test('all nine version locales share one nested folder; other pages follow their routes', () => {
+test('all releases and nine locales share the root folder; articles keep their own folders', () => {
   const locales = ['en', 'ru', 'pt', 'es', 'fr', 'de', 'tr', 'uk', 'zh']
   const paths = locales.map((language) =>
     getDocumentMediaFolder({
@@ -66,7 +66,9 @@ test('all nine version locales share one nested folder; other pages follow their
       language,
     }),
   )
-  assert.deepEqual([...new Set(paths)], ['version-history/v2.0.0'])
+  assert.deepEqual([...new Set(paths)], ['version-history'])
+  assert.equal(getDocumentMediaFolder({_type: 'version', version: 'v2.21.0'}), 'version-history')
+  assert.equal(getDocumentMediaFolder({_type: 'version'}), 'version-history')
   assert.equal(
     getDocumentMediaFolder({_type: 'article', slug: {current: 'article-name'}}),
     'blog/article-name',
@@ -119,16 +121,16 @@ test('only image selection/upload patches trigger organization; captions and cro
 test('concurrent uploads create a single hierarchy and repeat runs reuse it', async () => {
   const {client, documents, writes} = createDataset()
   const ids = await Promise.all(
-    Array.from({length: 9}, () => ensureMediaFolder(client, 'version-history/v2.0.0')),
+    Array.from({length: 9}, () => ensureMediaFolder(client, 'blog/article-name')),
   )
   assert.equal(new Set(ids).size, 1)
   assert.equal(documents.size, 2)
   assert.equal(writes.length, 2)
   const leaf = documents.get(ids[0])
-  assert.equal(leaf.name, 'v2.0.0')
-  assert.equal(documents.get(leaf.parent._ref).name, 'version-history')
+  assert.equal(leaf.name, 'article-name')
+  assert.equal(documents.get(leaf.parent._ref).name, 'blog')
   assert.equal(leaf.parent._weak, true)
-  assert.equal(await ensureMediaFolder(client, 'version-history/v2.0.0'), ids[0])
+  assert.equal(await ensureMediaFolder(client, 'blog/article-name'), ids[0])
   assert.equal(writes.length, 2)
 })
 

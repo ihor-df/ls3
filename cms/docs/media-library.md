@@ -7,14 +7,14 @@ browser and keep the plugin's **Edit Media** action. Direct uploads remain avail
 
 ## Folder conventions
 
-| Document    | Folder                                                     |
-| ----------- | ---------------------------------------------------------- |
-| Article     | `blog/<slug>`                                              |
-| Version     | `version-history/<version>`, e.g. `version-history/v2.0.0` |
-| Partner     | `partners/<slug>`                                          |
-| Publication | `publications/<slug>`                                      |
-| Page        | `<slug>`; `/` maps to `home`                               |
-| Author      | `authors/<name>` (lowercase, spaces replaced by hyphens)   |
+| Document    | Folder                                                   |
+| ----------- | -------------------------------------------------------- |
+| Article     | `blog/<slug>`                                            |
+| Version     | `version-history`                                        |
+| Partner     | `partners/<slug>`                                        |
+| Publication | `publications/<slug>`                                    |
+| Page        | `<slug>`; `/` maps to `home`                             |
+| Author      | `authors/<name>` (lowercase, spaces replaced by hyphens) |
 
 These are actual nested `media.folder` documents linked by `parent` references,
 not tags containing slashes. Assets refer to the leaf folder at `opt.media.folder`,
@@ -23,7 +23,7 @@ registered by the plugin; manage them in Media rather than the Content editor.
 
 When an editor uploads or selects an unfiled image in a document, the Studio
 creates/reuses the folder hierarchy and assigns the image. This applies to covers,
-inline body images, and SEO images. Set the slug/version before selecting an image;
+inline body images, and SEO images. For slug-based folders, set the slug before selecting an image;
 if it is entered afterward while the image input remains mounted, the assignment
 waits for it. The target path is shown below the image field.
 
@@ -36,7 +36,7 @@ uses `setIfMissing`, preserving tags, other metadata, and concurrent folder move
 Uploads made directly in Media go into its selected folder. Images added through
 an API/import must be assigned explicitly; the Studio input is not a server hook.
 The future migration can reuse `ensureMediaFolder` and `assignImageToMediaFolder`
-from `lib/mediaFolders.ts`. If a slug/version changes later, rename/move the existing
+from `lib/mediaFolders.ts`. If a slug changes later, rename/move the existing
 folder in Media; the Studio does not move already filed assets automatically.
 
 ## Localization
@@ -58,8 +58,8 @@ The configuration itself does not create folders or change existing assets.
 1. Open Media; create a parent folder and a child folder. Check nesting and moving
    assets using the folder sidebar.
 2. In an article with a slug, upload an image and check `blog/<slug>` in Media.
-3. In a version document, select an unfiled image and check
-   `version-history/<version>`.
+3. In a version document, select an unfiled image and check `version-history`.
+   All releases and locales share this folder; no per-version subfolders are created.
 4. Reuse a filed image in another document; its original folder should remain.
 5. Check that alt text can differ across document locales and that image cropping,
    hotspot selection, inline images, and the Edit Media action still work.
@@ -72,5 +72,5 @@ Agreed scope: published entries in all nine locales, directly into `production`;
 all releases use `major`. Update existing matching documents while preserving IDs,
 then add missing releases/locales and translation links. Skip `sortOrder` and SEO;
 no redirects. Upload one shared cover per release as
-`version-history-<version>.jpg` into `version-history/<version>`.
+`version-history-<version>.jpg` into `version-history`.
 The migration starts after the Studio configuration is reviewed and pushed.
