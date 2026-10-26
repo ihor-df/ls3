@@ -119,7 +119,6 @@ export const ARTICLE_QUERY = defineQuery(`
     image {
       asset->{_id, url},
       alt,
-      caption,
       hotspot,
       crop
     },

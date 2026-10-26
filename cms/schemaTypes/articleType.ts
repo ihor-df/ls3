@@ -46,11 +46,6 @@ export const articleType = defineType({
           type: 'string',
           validation: (rule) => rule.required().warning('Alt text is important for SEO'),
         }),
-        defineField({
-          name: 'caption',
-          title: 'Caption',
-          type: 'string',
-        }),
       ],
       validation: (rule) => rule.required(),
     }),

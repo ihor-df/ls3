@@ -776,7 +776,6 @@ export type ARTICLE_QUERY_RESULT = {
       url: string;
     } | null;
     alt: string;
-    caption: string | null;
     hotspot: SanityImageHotspot | null;
     crop: SanityImageCrop | null;
   };
