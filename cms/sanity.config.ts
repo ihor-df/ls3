@@ -8,6 +8,7 @@ import {media} from 'sanity-plugin-media'
 import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
 import {MediaFolderInput} from './components/MediaFolderInput'
+import {StudioLayout} from './components/StudioLayout'
 
 const languages = [
   {id: 'en', title: 'English'},
@@ -27,6 +28,12 @@ export default defineConfig({
 
   projectId: process.env.SANITY_STUDIO_PROJECT_ID!,
   dataset: process.env.SANITY_STUDIO_DATASET!,
+
+  studio: {
+    components: {
+      layout: StudioLayout,
+    },
+  },
 
   plugins: [
     structureTool({structure}),
