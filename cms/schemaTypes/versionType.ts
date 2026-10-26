@@ -49,7 +49,7 @@ export const versionType = defineType({
           {title: 'Minor', value: 'minor'},
         ],
       },
-      initialValue: 'minor',
+      initialValue: 'major',
       validation: (rule) => rule.required(),
     }),
     postBodyField,

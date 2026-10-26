@@ -12,6 +12,7 @@
     "dev-prod": "SANITY_ACTIVE_ENV=production sanity dev",
     "start": "sanity start",
     "copy-prod": "npx sanity datasets copy production development",
+    "test:media": "node --experimental-strip-types --test tests/media-folders.test.mjs",
     "format": "npx prettier . --write"
   },
   "keywords": [
@@ -20,11 +21,13 @@
   "dependencies": {
     "@sanity/document-internationalization": "^6.2.30",
     "@sanity/language-filter": "^5.0.16",
+    "@sanity/ui": "^4.4.10",
     "@sanity/vision": "^6.15.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
     "sanity": "^6.15.0",
     "sanity-plugin-internationalized-array": "^5.1.27",
+    "sanity-plugin-media": "^6.5.0",
     "styled-components": "^6.1.18"
   },
   "devDependencies": {

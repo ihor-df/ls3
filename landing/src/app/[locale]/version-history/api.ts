@@ -1,3 +1,5 @@
+import { sanityTags } from "@/sanity/cache-tags";
+import { sanityFetch } from "@/sanity/client";
 import { defineQuery } from "next-sanity";
 
 export const VERSION_HISTORY_QUERY = defineQuery(`
@@ -35,3 +37,11 @@ export const VERSION_HISTORY_QUERY = defineQuery(`
     }
   }
 `);
+
+export const getVersionsAndPage = async (locale: string) => {
+  return sanityFetch({
+    query: VERSION_HISTORY_QUERY,
+    params: { locale },
+    tags: [sanityTags.versionHistory(locale), sanityTags.page(locale, "version-history")],
+  });
+};

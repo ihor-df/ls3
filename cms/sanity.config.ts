@@ -1,10 +1,13 @@
 import {defineConfig, defineField} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
-import {schemaTypes} from './schemaTypes'
 import {documentInternationalization} from '@sanity/document-internationalization'
 import {internationalizedArray} from 'sanity-plugin-internationalized-array'
+import {media} from 'sanity-plugin-media'
+
+import {schemaTypes} from './schemaTypes'
 import {structure} from './structure'
+import {MediaFolderInput} from './components/MediaFolderInput'
 
 const languages = [
   {id: 'en', title: 'English'},
@@ -27,6 +30,7 @@ export default defineConfig({
 
   plugins: [
     structureTool({structure}),
+    media(),
     visionTool(),
     documentInternationalization({
       supportedLanguages: languages,
@@ -52,11 +56,20 @@ export default defineConfig({
 
   document: {
     newDocumentOptions: (previousOptions) =>
-      previousOptions.filter((option) => option.templateId !== 'siteSettings'),
+      previousOptions.filter(
+        (option) => !['siteSettings', 'media.folder', 'media.tag'].includes(option.templateId),
+      ),
   },
 
   form: {
+    image: {
+      assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),
+    },
+    file: {
+      assetSources: (sources) => sources.filter((source) => source.name !== 'sanity-default'),
+    },
     components: {
+      input: MediaFolderInput,
       portableText: {
         plugins: (props) =>
           props.renderDefault({

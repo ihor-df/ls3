@@ -8,6 +8,8 @@ Now you can do the following things:
 - [Join the Sanity community](https://www.sanity.io/community/join?utm_source=readme)
 - [Extend and build plugins](https://www.sanity.io/docs/content-studio/extending?utm_source=readme)
 
+Media setup and folder conventions: [Media in LS3 Studio](docs/media-library.md).
+
 ## Generate types
 
 Сначала изменяем схему в cms, потом запрос в defineQuery, после этого выполняем генерацию типов:
