@@ -42,7 +42,7 @@ export async function BlogListing({ locale, page, categorySlug, title, descripti
         title={category?.title ?? title}
       >
         {/* server components */}
-        <CtaLg variant="get-started" />
+        <CtaLg animated variant="get-started" />
       </BlogPage>
     </>
   );

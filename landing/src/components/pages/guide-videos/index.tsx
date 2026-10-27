@@ -67,7 +67,7 @@ const GuideVideosPage = ({ categories, videos, title }: GuideVideosPageProps) =>
         ))}
       </ul>
 
-      <CtaLg variant="help" />
+      <CtaLg animated variant="help" />
       <VideoModal video={activeVideo} closeLabel={t("closeVideo")} onClose={() => setActiveVideo(null)} />
     </Container>
   );

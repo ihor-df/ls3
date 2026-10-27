@@ -39,7 +39,7 @@ const Publications = async ({ publications, currentPage, hasMore, title }: Publi
 
       {hasMore && <LoadMoreButton currentPage={currentPage} />}
 
-      <CtaLg variant="get-started" />
+      <CtaLg animated variant="get-started" />
     </Container>
   );
 };

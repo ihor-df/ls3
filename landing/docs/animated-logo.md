@@ -31,8 +31,9 @@ For an action instead of navigation:
 </button>
 ```
 
-The exported `AnimatedLogoProps` type accepts `className?: string` and
-`playKey?: string | number`. Set one dimension (`w-16` or `h-12`) and leave the
+The exported `AnimatedLogoProps` type accepts `className?: string`,
+`playKey?: string | number`, `loop?: boolean`, `playOnView?: boolean`, and
+`viewportMargin?: string` (default `"0px"`). Set one dimension (`w-16` or `h-12`) and leave the
 other automatic to preserve proportions. Avoid clipping the SVG's glow.
 Multiple instances can share a page: each has an independent controller and
 a unique SVG filter ID. The component can be imported by Server Components;
@@ -51,6 +52,27 @@ This includes initial visits, client navigation, back/forward navigation, and
 language changes. The drawer and other usages without `playKey` remain hover/focus
 only. A request during rotation queues at most one more complete turn, without
 resetting the current pose. Hidden desktop/mobile instances do not autoplay.
+
+For a decorative, continuously rotating logo:
+
+```tsx
+<AnimatedLogo loop className="pointer-events-none w-36 outline-none select-none" />
+```
+
+Loop mode starts automatically, does not attach hover/focus handlers, and pauses
+outside the viewport or in a hidden tab. Reduced-motion preferences still apply.
+Omit `loop` to retain the header's existing behavior.
+
+The large CTA instead plays one turn each time its logo enters the viewport:
+
+```tsx
+<AnimatedLogo playOnView viewportMargin="-40px 0px" className="pointer-events-none w-36 outline-none select-none" />
+```
+
+The negative margin insets the activation area by 40px at the top and bottom,
+so rotation starts after the logo has moved slightly inside the visible screen.
+It stays idle after the turn, and replays on a new entry after scrolling away.
+This mode also ignores hover/focus and honors reduced-motion preferences.
 
 ## Behavior
 

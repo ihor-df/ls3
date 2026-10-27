@@ -17,27 +17,39 @@ export type AnimatedLogoProps = {
   className?: string;
   /** Play once on mount and whenever this value changes; omit for hover/focus only. */
   playKey?: string | number;
+  /** Continuously rotate while visible, without hover or focus interaction. */
+  loop?: boolean;
+  /** Play one turn each time the logo enters the viewport. */
+  playOnView?: boolean;
+  /** IntersectionObserver root margin; negative values inset the viewport. */
+  viewportMargin?: string;
 };
 
 /** Decorative logo; wrap in a labeled link or button for hover and keyboard activation. */
-const AnimatedLogo = ({ className, playKey }: AnimatedLogoProps) => {
+const AnimatedLogo = ({
+  className,
+  playKey,
+  loop = false,
+  playOnView = false,
+  viewportMargin = "0px",
+}: AnimatedLogoProps) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const motionRef = useRef<LogoMotionController | null>(null);
   const glowId = `logo-glow-${useId().replace(/:/g, "")}`;
 
   useEffect(() => {
     if (!svgRef.current) return;
-    const motion = createLogoMotion(svgRef.current);
+    const motion = createLogoMotion(svgRef.current, { loop, playOnView, viewportMargin });
     motionRef.current = motion;
     return () => {
       motionRef.current = null;
       motion.destroy();
     };
-  }, []);
+  }, [loop, playOnView, viewportMargin]);
 
   useEffect(() => {
     if (playKey !== undefined) motionRef.current?.playOnce();
-  }, [playKey]);
+  }, [playKey, loop, playOnView, viewportMargin]);
 
   return (
     <svg

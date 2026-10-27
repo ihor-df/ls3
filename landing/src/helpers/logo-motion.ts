@@ -73,7 +73,14 @@ export type LogoMotionController = {
   destroy: () => void;
 };
 
-export function createLogoMotion(svg: SVGSVGElement): LogoMotionController {
+export function createLogoMotion(
+  svg: SVGSVGElement,
+  {
+    loop = false,
+    playOnView = false,
+    viewportMargin = "0px",
+  }: { loop?: boolean; playOnView?: boolean; viewportMargin?: string } = {},
+): LogoMotionController {
   const inner = svg.querySelector<SVGPathElement>("[data-logo-inner]");
   const trigger = svg.closest("a, button") ?? svg;
   if (!inner) return { playOnce() {}, destroy() {} };
@@ -86,6 +93,8 @@ export function createLogoMotion(svg: SVGSVGElement): LogoMotionController {
   let focused = false;
   let playRequested = false;
   let destroyed = false;
+  const observeViewport = loop || playOnView;
+  let inView = !observeViewport || typeof IntersectionObserver === "undefined";
 
   const reset = () => {
     cancelAnimationFrame(frame);
@@ -103,7 +112,7 @@ export function createLogoMotion(svg: SVGSVGElement): LogoMotionController {
     const progress = Math.min(elapsed / TURN_DURATION, 1);
     if (progress === 1) {
       // Finish the current turn after leave/blur, so there is no snap or frozen pose.
-      const continuePlaying = hovered || focused || playRequested;
+      const continuePlaying = loop || hovered || focused || playRequested;
       reset();
       if (continuePlaying) start();
       return;
@@ -117,7 +126,7 @@ export function createLogoMotion(svg: SVGSVGElement): LogoMotionController {
   };
 
   const start = () => {
-    if (destroyed || frame || reducedMotion.matches || document.hidden || svg.getClientRects().length === 0)
+    if (destroyed || frame || !inView || reducedMotion.matches || document.hidden || svg.getClientRects().length === 0)
       return false;
     frame = requestAnimationFrame(tick);
     return true;
@@ -146,24 +155,45 @@ export function createLogoMotion(svg: SVGSVGElement): LogoMotionController {
     if (document.hidden) {
       hovered = false;
       reset();
-    } else if (focused || playRequested) {
+    } else if (loop || focused || playRequested) {
       if (start()) playRequested = false;
     }
   };
   const motionChange = () => {
     if (reducedMotion.matches) reset();
-    else if (hovered || focused) start();
+    else if (loop || hovered || focused) start();
   };
 
-  trigger.addEventListener("pointerenter", pointerEnter);
-  trigger.addEventListener("pointerleave", pointerLeave);
-  trigger.addEventListener("focus", focus);
-  trigger.addEventListener("blur", blur);
+  // Viewport-activated logos are decorative and do not need focus or pointer handlers.
+  if (!observeViewport) {
+    trigger.addEventListener("pointerenter", pointerEnter);
+    trigger.addEventListener("pointerleave", pointerLeave);
+    trigger.addEventListener("focus", focus);
+    trigger.addEventListener("blur", blur);
+  }
   document.addEventListener("visibilitychange", visibilityChange);
   reducedMotion.addEventListener("change", motionChange);
 
+  const viewportObserver =
+    observeViewport && typeof IntersectionObserver !== "undefined"
+      ? new IntersectionObserver(
+          ([entry]) => {
+            if (destroyed || !entry) return;
+            const wasInView = inView;
+            inView = entry.isIntersecting;
+            if (!inView) reset();
+            else if (loop) start();
+            else if (!wasInView) playOnce();
+          },
+          { rootMargin: viewportMargin },
+        )
+      : null;
+  viewportObserver?.observe(svg);
+  if (observeViewport && !viewportObserver) start();
+
   const destroy = () => {
     destroyed = true;
+    viewportObserver?.disconnect();
     reset();
     trigger.removeEventListener("pointerenter", pointerEnter);
     trigger.removeEventListener("pointerleave", pointerLeave);

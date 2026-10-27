@@ -14,6 +14,21 @@ function createHarness(t, { reducedMotion = false } = {}) {
   const globals = {
     document,
     window: { matchMedia: () => media },
+    IntersectionObserver: class {
+      constructor(callback, options) {
+        this.callback = callback;
+        this.options = options;
+      }
+      observe(svg) {
+        this.svg = svg;
+        svg.intersectionOptions = this.options;
+        svg.intersect = (isIntersecting) => this.callback([{ target: svg, isIntersecting }]);
+        svg.intersect(svg.inViewport);
+      }
+      disconnect() {
+        delete this.svg.intersect;
+      }
+    },
     requestAnimationFrame: (callback) => {
       frames.set(++frameId, callback);
       return frameId;
@@ -58,7 +73,16 @@ function createHarness(t, { reducedMotion = false } = {}) {
       document.hidden = hidden;
       emit(document, "visibilitychange");
     },
-    logo({ wrapped = true, visible = true, hasInner = true, controlled = false } = {}) {
+    logo({
+      wrapped = true,
+      visible = true,
+      hasInner = true,
+      controlled = false,
+      loop = false,
+      playOnView = false,
+      viewportMargin = "0px",
+      inViewport = true,
+    } = {}) {
       const attributes = new Map([
         ["d", LOGO_INNER_PATH],
         ["stroke-width", "0"],
@@ -68,15 +92,19 @@ function createHarness(t, { reducedMotion = false } = {}) {
         querySelector: () => (hasInner ? inner : null),
         closest: () => (wrapped ? parent : null),
         getClientRects: () => (visible ? [{}] : []),
+        inViewport,
       });
       const parent = new EventTarget();
       const trigger = wrapped ? parent : svg;
-      const controller = controlled ? createLogoMotion(svg) : null;
+      const controller =
+        controlled || loop || playOnView ? createLogoMotion(svg, { loop, playOnView, viewportMargin }) : null;
       const cleanup = controller ? controller.destroy : attachLogoMotion(svg);
       cleanups.push(cleanup);
       return {
         cleanup,
         playOnce: controller?.playOnce,
+        setInView: (value) => svg.intersect?.(value),
+        viewportMargin: () => svg.intersectionOptions?.rootMargin,
         path: () => attributes.get("d"),
         stroke: () => attributes.get("stroke-width"),
         listenerCount: () =>
@@ -387,4 +415,107 @@ test("destroying a controller cancels motion and prevents future automatic reque
   clock.advance(5000);
   assert.equal(clock.pending(), 0);
   assert.equal(logo.path(), LOGO_INNER_PATH);
+});
+
+test("loop mode starts automatically and keeps rotating without hover or focus", (t) => {
+  const clock = createHarness(t);
+  const logo = clock.logo({ loop: true, wrapped: false });
+  assert.equal(clock.pending(), 1);
+  clock.advance(5000);
+  assert.equal(clock.pending(), 1);
+  assert.notEqual(logo.path(), LOGO_INNER_PATH);
+  logo.leave();
+  logo.blur();
+  clock.advance(2500);
+  assert.equal(clock.pending(), 1);
+  logo.cleanup();
+  assert.equal(clock.pending(), 0);
+  assert.equal(logo.listenerCount(), 0);
+  logo.setInView(true);
+  assert.equal(clock.pending(), 0);
+});
+
+test("loop mode pauses offscreen and in hidden tabs, then resumes when visible", (t) => {
+  const clock = createHarness(t);
+  const logo = clock.logo({ loop: true, inViewport: false });
+  assert.equal(clock.pending(), 0);
+  logo.setInView(true);
+  clock.advance(500);
+  assert.notEqual(logo.path(), LOGO_INNER_PATH);
+  logo.setInView(false);
+  assert.equal(clock.pending(), 0);
+  assert.equal(logo.path(), LOGO_INNER_PATH);
+  clock.setHidden(true);
+  logo.setInView(true);
+  assert.equal(clock.pending(), 0);
+  clock.setHidden(false);
+  assert.equal(clock.pending(), 1);
+  clock.advance(500);
+  clock.setHidden(true);
+  assert.equal(clock.pending(), 0);
+  assert.equal(logo.path(), LOGO_INNER_PATH);
+  clock.setHidden(false);
+  assert.equal(clock.pending(), 1);
+});
+
+test("loop mode honors reduced motion and resumes only while onscreen", (t) => {
+  const clock = createHarness(t, { reducedMotion: true });
+  const logo = clock.logo({ loop: true });
+  assert.equal(clock.pending(), 0);
+  clock.setReducedMotion(false);
+  clock.advance(500);
+  assert.notEqual(logo.path(), LOGO_INNER_PATH);
+  clock.setReducedMotion(true);
+  assert.equal(clock.pending(), 0);
+  assert.equal(logo.path(), LOGO_INNER_PATH);
+  logo.setInView(false);
+  clock.setReducedMotion(false);
+  assert.equal(clock.pending(), 0);
+  logo.setInView(true);
+  assert.equal(clock.pending(), 1);
+});
+
+test("viewport mode plays a single turn per entry with the configured margin", (t) => {
+  const clock = createHarness(t);
+  const logo = clock.logo({ playOnView: true, viewportMargin: "-40px 0px", inViewport: false });
+  assert.equal(logo.viewportMargin(), "-40px 0px");
+  assert.equal(clock.pending(), 0);
+  logo.setInView(true);
+  clock.advance(500);
+  assert.notEqual(logo.path(), LOGO_INNER_PATH);
+  clock.advance(2500);
+  assert.equal(clock.pending(), 0);
+  assert.equal(logo.path(), LOGO_INNER_PATH);
+
+  logo.setInView(true);
+  logo.enter();
+  logo.focus();
+  clock.advance(2500);
+  assert.equal(clock.pending(), 0, "staying in view or clicking must not repeat the turn");
+
+  logo.setInView(false);
+  logo.setInView(true);
+  clock.advance(500);
+  assert.notEqual(logo.path(), LOGO_INNER_PATH, "a new entry starts one new turn");
+  clock.advance(2500);
+  assert.equal(clock.pending(), 0);
+});
+
+test("viewport mode respects reduced motion and stops when the logo leaves the viewport", (t) => {
+  const clock = createHarness(t, { reducedMotion: true });
+  const logo = clock.logo({ playOnView: true });
+  clock.advance(500);
+  assert.equal(clock.pending(), 0);
+  clock.setReducedMotion(false);
+  assert.equal(clock.pending(), 0);
+  logo.setInView(false);
+  logo.setInView(true);
+  clock.advance(500);
+  assert.notEqual(logo.path(), LOGO_INNER_PATH);
+  logo.setInView(false);
+  assert.equal(clock.pending(), 0);
+  assert.equal(logo.path(), LOGO_INNER_PATH);
+  logo.cleanup();
+  logo.setInView(true);
+  assert.equal(clock.pending(), 0);
 });

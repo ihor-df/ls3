@@ -1,3 +1,4 @@
+import Animated from "@/components/atoms/animated-logo";
 import { cn } from "@/lib/utils";
 import GlassButton from "@components/atoms/glass-button";
 import Button from "@components/atoms/main-button";
@@ -14,9 +15,10 @@ type CloudObj = { title: ReactNode; description: ReactNode; buttonText: string }
 type CtaProps = {
   className?: string;
   variant: Variant;
+  animated?: boolean;
 };
 
-const Cta = ({ variant, className }: CtaProps) => {
+const Cta = ({ variant, className, animated }: CtaProps) => {
   const t = useTranslations("common.cta");
   const becomePartner = variant === "become-partner";
 
@@ -47,11 +49,22 @@ const Cta = ({ variant, className }: CtaProps) => {
           "relative z-10 h-full items-center justify-start p-5 text-center leading-[1.2] text-white md:flex md:flex-col md:gap-0 md:p-10",
         )}
       >
-        <Image
-          src={becomePartner ? news : logo}
-          alt="Linken Sphere logo"
-          className={cn("h-auto w-18 max-md:mx-auto md:w-37.5", becomePartner && "md:w-37")}
-        />
+        {animated ? (
+          <Animated
+            playOnView
+            viewportMargin="-40px 0px"
+            className={cn(
+              "pointer-events-none h-auto w-18 outline-none select-none max-md:mx-auto md:w-37.5",
+              becomePartner && "md:w-37",
+            )}
+          />
+        ) : (
+          <Image
+            src={becomePartner ? news : logo}
+            alt="Linken Sphere logo"
+            className={cn("h-auto w-18 max-md:mx-auto md:w-37.5", becomePartner && "md:w-37")}
+          />
+        )}
 
         <strong
           className={cn(
