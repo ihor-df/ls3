@@ -1739,7 +1739,7 @@
               "value": {
                 "type": "string"
               },
-              "optional": false
+              "optional": true
             },
             "_type": {
               "type": "objectAttribute",
@@ -2336,13 +2336,6 @@
                 "type": "string"
               },
               "optional": false
-            },
-            "caption": {
-              "type": "objectAttribute",
-              "value": {
-                "type": "string"
-              },
-              "optional": true
             },
             "_type": {
               "type": "objectAttribute",

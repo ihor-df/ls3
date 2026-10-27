@@ -42,7 +42,8 @@ export const publicationType = defineType({
           name: 'alt',
           title: 'Alt text',
           type: 'string',
-          validation: (rule) => rule.required().warning('Alt text is important for SEO'),
+          description:
+            'Leave empty for decorative covers. Describe information that is not already in the linked title.',
         }),
       ],
       validation: (rule) => rule.required(),

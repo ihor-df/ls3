@@ -70,6 +70,15 @@ test('all releases and nine locales share the root folder; articles keep their o
   assert.equal(getDocumentMediaFolder({_type: 'version', version: 'v2.21.0'}), 'version-history')
   assert.equal(getDocumentMediaFolder({_type: 'version'}), 'version-history')
   assert.equal(
+    getDocumentMediaFolder({_type: 'publication', slug: {current: 'one'}}),
+    'publications',
+  )
+  assert.equal(
+    getDocumentMediaFolder({_type: 'publication', slug: {current: 'two'}}),
+    'publications',
+  )
+  assert.equal(getDocumentMediaFolder({_type: 'publication'}), 'publications')
+  assert.equal(
     getDocumentMediaFolder({_type: 'article', slug: {current: 'article-name'}}),
     'blog/article-name',
   )

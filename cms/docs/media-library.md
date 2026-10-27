@@ -12,7 +12,7 @@ browser and keep the plugin's **Edit Media** action. Direct uploads remain avail
 | Article     | `blog/<slug>`                                            |
 | Version     | `version-history`                                        |
 | Partner     | `partners/<slug>`                                        |
-| Publication | `publications/<slug>`                                    |
+| Publication | `publications`                                           |
 | Page        | `<slug>`; `/` maps to `home`                             |
 | Author      | `authors/<name>` (lowercase, spaces replaced by hyphens) |
 
@@ -50,6 +50,11 @@ of global asset metadata and requires a separate existing-asset migration.
 All translations with the same version or slug share one folder and can reuse the
 same asset. Localized articles with different slugs use their respective paths.
 
+Publications share the `publications` folder, including covers reused by different
+publications. A publication card combines its image and title in one link, so its
+decorative cover can have empty alt text. The editable `cover.alt` field remains
+available for images that convey additional information.
+
 ## Verify locally
 
 Run `npm run dev-prod` to review the production dataset in the local Studio.
@@ -66,11 +71,9 @@ The configuration itself does not create folders or change existing assets.
 
 Automated checks: `npm run test:media`, `npx tsc --noEmit`, and `npm run build`.
 
-## Next: version-history migration
+## Completed migrations
 
-Agreed scope: published entries in all nine locales, directly into `production`;
-all releases use `major`. Update existing matching documents while preserving IDs,
-then add missing releases/locales and translation links. Skip `sortOrder` and SEO;
-no redirects. Upload one shared cover per release as
-`version-history-<version>.jpg` into `version-history`.
-The migration starts after the Studio configuration is reviewed and pushed.
+Version history, publications, and Pages SEO have been imported into production.
+See [version history](version-history-migration.md),
+[publications](publications-migration.md), and [Pages SEO](pages-seo-migration.md)
+for results and local backup locations.

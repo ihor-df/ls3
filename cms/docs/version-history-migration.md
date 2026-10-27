@@ -54,9 +54,11 @@
 
 ## Резервная копия и воспроизводимость
 
-Локальный снимок:
-`cms/migrations/version-history/data/2026-10-26T15-10-37.961Z/`.
-Каталог исключён из Git и содержит оригиналы обложек, исходные данные,
+Скрипты, тесты и снимки завершённой миграции убраны из рабочего дерева.
+Локальная резервная копия: `cms/backups/completed-migrations-2026-10-27.tar.gz`
+(исключена из Git). Содержимое архива сверено с оригиналами по SHA-256.
+Снимок внутри архива: `migrations/version-history/data/2026-10-26T15-10-37.961Z/`.
+Он содержит оригиналы обложек, исходные данные,
 `sanity-before.json`, план, журнал транзакций и итоговые отчёты
 `verification.json`, `html-checks.json`, `schema-validation.ndjson`.
 Пустой `schema-validation.ndjson` означает отсутствие замечаний валидатора.
@@ -64,8 +66,15 @@
 Перед переносом обложек сохранён `media-before-flatten-2026-10-26T16-09-27.561Z.json`;
 результат сверки находится в `media-flatten-verification.json`.
 
-Скрипты и порядок запуска:
-[`cms/migrations/version-history/README.md`](../migrations/version-history/README.md).
+Скрипты и порядок запуска сохранены внутри архива в
+`migrations/version-history/README.md`. Для восстановления из каталога `cms/`:
+
+```sh
+tar -xzf backups/completed-migrations-2026-10-27.tar.gz migrations/version-history
+```
+
+Для повторного запуска скриптов потребуется вернуть dev-зависимость
+`@portabletext/markdown@^2.7.1`, удалённую после завершения миграции.
 
 При ошибках CLI выводит только сообщение: полные объекты ошибок SDK могут содержать
 заголовки авторизации. Sanity токен, попавший в диагностику сетевой ошибки во время

@@ -29,7 +29,7 @@ const Publications = async ({ publications, currentPage, hasMore, title }: Publi
             return (
               <li key={p._id}>
                 <Link href={p.url} target="_blanc">
-                  <PostCard page="publications" title={p.title} imageSrc={pLogoUrl ?? ""} alt={p.cover.alt} />
+                  <PostCard page="publications" title={p.title} imageSrc={pLogoUrl ?? ""} alt={p.cover.alt ?? ""} />
                 </Link>
               </li>
             );

@@ -4,7 +4,7 @@ export const DEFAULT_OG_IMAGE_URL = "https://ls.app/images/thumbnail-for-sharing
 
 export const ARTICLES_PER_PAGE = 1;
 export const PARTNERS_PER_PAGE = 1;
-export const PUBLICATIONS_PER_PAGE = 1;
+export const PUBLICATIONS_PER_PAGE = 12;
 
 export const INDEX_FOLLOW_ROBOTS = {
   index: true,

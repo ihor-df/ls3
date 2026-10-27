@@ -46,7 +46,7 @@ export function getDocumentMediaFolder(value: unknown): string | undefined {
       path = slug ? `partners/${slug}` : undefined
       break
     case 'publication':
-      path = slug ? `publications/${slug}` : undefined
+      path = 'publications'
       break
     case 'page':
       path = slug === '/' ? 'home' : slug
