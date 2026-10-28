@@ -28,6 +28,9 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   trailingSlash: false,
+  outputFileTracingIncludes: {
+    "/api/geo": ["./data/geoip/*.mmdb"],
+  },
   async headers() {
     return [
       {

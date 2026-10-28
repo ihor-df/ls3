@@ -264,5 +264,37 @@
         "description": "Evet, tüm önerilere ve dileklere çok dikkat ediyoruz ve yeni fikirlerden memnun olacağız."
       }
     }
+  },
+  "cookieConsent": {
+    "notice": {
+      "title": "Çerezler",
+      "description": "Bu site, düzgün çalışmak ve deneyiminizi iyileştirmek için çerezler kullanır. Çerezleri kabul edin veya tercihlerinizi düzenleyin.",
+      "settings": "Ayarlar",
+      "acceptAll": "Tümünü kabul et"
+    },
+    "settings": {
+      "title": "Çerez ayarları",
+      "description": "Linken Sphere uygulamasının hangi isteğe bağlı çerezleri kullanabileceğini seçin. Güvenlik ve sitenin temel işlevleri için gerekli olan zorunlu çerezler her zaman açık kalır.",
+      "close": "Çerez ayarlarını kapat",
+      "essential": {
+        "title": "Zorunlu çerezler",
+        "description": "Sayfa yönlendirmesi, güvenlik önlemleri, oturum bütünlüğü, kötüye kullanımın önlenmesi ve sitenin temel işlevleri için gereklidir",
+        "alwaysOn": "Her zaman açık"
+      },
+      "functional": {
+        "title": "İşlevsel çerezler",
+        "description": "Bu araçlar etkin olduğunda dil, arayüz tercihleri ve destek sohbetinin durumu gibi seçimlerinizi hatırlar"
+      },
+      "analytics": {
+        "title": "Analiz çerezleri",
+        "description": "Sınırlı analiz verileriyle trafiği ölçmemize ve site performansını iyileştirmemize yardımcı olur"
+      },
+      "advertising": {
+        "title": "Reklam çerezleri",
+        "description": "Kampanya ilişkilendirmesi, dönüşüm ölçümü, yeniden pazarlama ve kişiselleştirilmiş reklamlar için kullanılır"
+      },
+      "rejectAll": "Tümünü reddet",
+      "accept": "Kabul et"
+    }
   }
 }

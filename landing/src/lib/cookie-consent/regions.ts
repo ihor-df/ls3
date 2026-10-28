@@ -1,0 +1,38 @@
+const GDPR_COUNTRIES = new Set([
+  "AT",
+  "BE",
+  "BG",
+  "HR",
+  "CY",
+  "CZ",
+  "DK",
+  "EE",
+  "FI",
+  "FR",
+  "DE",
+  "GR",
+  "HU",
+  "IE",
+  "IT",
+  "LV",
+  "LT",
+  "LU",
+  "MT",
+  "NL",
+  "PL",
+  "PT",
+  "RO",
+  "SK",
+  "SI",
+  "ES",
+  "SE",
+  "NO",
+  "IS",
+  "LI",
+  "GB",
+  "CH",
+]);
+
+export const requiresCookieConsentBanner = (countryCode?: string | null) => {
+  return !countryCode || GDPR_COUNTRIES.has(countryCode);
+};

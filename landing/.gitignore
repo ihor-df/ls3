@@ -42,3 +42,6 @@ next-env.d.ts
 
 # ide
 .vscode
+
+# GeoIP databases are deployed and replaced manually outside Git.
+/data/geoip/*.mmdb

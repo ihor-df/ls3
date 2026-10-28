@@ -264,5 +264,37 @@
         "description": "Ja, wir sind sehr aufmerksam auf alle Vorschläge und Wünsche, und wir freuen uns über neue Ideen."
       }
     }
+  },
+  "cookieConsent": {
+    "notice": {
+      "title": "Cookies",
+      "description": "Diese Website verwendet Cookies, damit sie richtig funktioniert und Sie sie besser nutzen können. Akzeptieren Sie die Cookies oder passen Sie Ihre Einstellungen an.",
+      "settings": "Einstellungen",
+      "acceptAll": "Alle akzeptieren"
+    },
+    "settings": {
+      "title": "Cookie-Einstellungen",
+      "description": "Wählen Sie, welche optionalen Cookies Linken Sphere verwenden darf. Erforderliche Cookies bleiben aktiviert, da sie für die Sicherheit und die grundlegenden Funktionen der Website benötigt werden.",
+      "close": "Cookie-Einstellungen schließen",
+      "essential": {
+        "title": "Erforderliche Cookies",
+        "description": "Erforderlich für die Seitennavigation, Sicherheitsmaßnahmen, die Integrität von Sitzungen, den Schutz vor Missbrauch und grundlegende Website-Funktionen",
+        "alwaysOn": "Immer aktiviert"
+      },
+      "functional": {
+        "title": "Funktionale Cookies",
+        "description": "Speichern Ihre Auswahl, etwa Sprache, Einstellungen der Benutzeroberfläche und den Status des Support-Chats, sofern diese Funktionen aktiviert sind"
+      },
+      "analytics": {
+        "title": "Analyse-Cookies",
+        "description": "Helfen uns, mit begrenzten Analysedaten den Datenverkehr zu messen und die Leistung der Website zu verbessern"
+      },
+      "advertising": {
+        "title": "Werbe-Cookies",
+        "description": "Ermöglichen die Zuordnung von Kampagnen, die Messung von Conversions, Remarketing und personalisierte Werbung"
+      },
+      "rejectAll": "Alle ablehnen",
+      "accept": "Akzeptieren"
+    }
   }
 }

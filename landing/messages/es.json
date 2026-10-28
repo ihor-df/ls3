@@ -264,5 +264,37 @@
       "license": "Licencia",
       "problem-solving": "Resolución de problemas"
     }
+  },
+  "cookieConsent": {
+    "notice": {
+      "title": "Cookies",
+      "description": "Este sitio utiliza cookies para funcionar correctamente y mejorar su experiencia. Acepte las cookies o ajuste su configuración.",
+      "settings": "Configuración",
+      "acceptAll": "Aceptar todas"
+    },
+    "settings": {
+      "title": "Configuración de cookies",
+      "description": "Elija qué cookies opcionales puede usar Linken Sphere. Las cookies esenciales permanecen activadas porque son necesarias para la seguridad y el funcionamiento básico del sitio.",
+      "close": "Cerrar la configuración de cookies",
+      "essential": {
+        "title": "Cookies esenciales",
+        "description": "Necesarias para el enrutamiento de páginas, las protecciones de seguridad, la integridad de la sesión, la prevención de abusos y el funcionamiento básico del sitio",
+        "alwaysOn": "Siempre activas"
+      },
+      "functional": {
+        "title": "Cookies funcionales",
+        "description": "Recuerdan opciones como el idioma, las preferencias de interfaz y el estado del chat de soporte cuando estas herramientas están habilitadas"
+      },
+      "analytics": {
+        "title": "Cookies analíticas",
+        "description": "Nos ayudan a medir el tráfico y mejorar el rendimiento del sitio con analítica limitada"
+      },
+      "advertising": {
+        "title": "Cookies publicitarias",
+        "description": "Permiten la atribución de campañas, la medición de conversiones, el remarketing y la publicidad personalizada"
+      },
+      "rejectAll": "Rechazar todas",
+      "accept": "Aceptar"
+    }
   }
 }

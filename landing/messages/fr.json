@@ -264,5 +264,37 @@
         "description": "Oui, nous sommes très attentifs à toutes les suggestions et souhaits, et nous serons heureux de nouvelles idées."
       }
     }
+  },
+  "cookieConsent": {
+    "notice": {
+      "title": "Cookies",
+      "description": "Ce site utilise des cookies pour fonctionner correctement et améliorer votre expérience. Veuillez les accepter ou ajuster vos paramètres.",
+      "settings": "Paramètres",
+      "acceptAll": "Tout accepter"
+    },
+    "settings": {
+      "title": "Paramètres des cookies",
+      "description": "Choisissez quels cookies facultatifs Linken Sphere peut utiliser. Les cookies essentiels restent activés, car ils sont nécessaires à la sécurité et au fonctionnement de base du site.",
+      "close": "Fermer les paramètres des cookies",
+      "essential": {
+        "title": "Cookies essentiels",
+        "description": "Nécessaires au routage des pages, aux protections de sécurité, à l’intégrité de la session, à la prévention des abus et au fonctionnement de base du site",
+        "alwaysOn": "Toujours activés"
+      },
+      "functional": {
+        "title": "Cookies fonctionnels",
+        "description": "Mémorisent les choix comme la langue, les préférences d’interface et l’état du chat d’assistance lorsque ces outils sont activés"
+      },
+      "analytics": {
+        "title": "Cookies analytiques",
+        "description": "Nous aident à mesurer le trafic et à améliorer les performances du site grâce à une analytique limitée"
+      },
+      "advertising": {
+        "title": "Cookies publicitaires",
+        "description": "Permettent l’attribution des campagnes, la mesure des conversions, le remarketing et la publicité personnalisée"
+      },
+      "rejectAll": "Tout refuser",
+      "accept": "Accepter"
+    }
   }
 }

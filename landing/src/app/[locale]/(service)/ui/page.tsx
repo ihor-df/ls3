@@ -1,4 +1,5 @@
 import PaginationExamples from "@/app/[locale]/(service)/ui/pagination-examples";
+import CookieSettingsButton from "@/components/atoms/cookie-settings-button";
 import GlassButton from "@/components/atoms/glass-button";
 import GlassInput from "@/components/atoms/glass-input";
 import Button from "@/components/atoms/main-button";
@@ -19,6 +20,7 @@ export default function Page() {
       <main className="py-32">
         <div className="mt-20 flex flex-col gap-10">
           <SearchInput />
+          <CookieSettingsButton className="self-start rounded-full border border-white/40 px-6 py-3 transition-colors hover:bg-white/10" />
           <GlassInput placeholder="Your email" />
           <GlassButton>Button</GlassButton>
           <Button header>Start for free</Button>

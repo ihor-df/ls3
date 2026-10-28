@@ -264,5 +264,37 @@
         "description": "是的，我们非常注意所有建议和愿望，我们将很高兴对新想法感到高兴。"
       }
     }
+  },
+  "cookieConsent": {
+    "notice": {
+      "title": "Cookies",
+      "description": "本网站使用 cookies 以确保正常运行并改善您的使用体验。请接受 cookies 或调整您的设置。",
+      "settings": "设置",
+      "acceptAll": "全部接受"
+    },
+    "settings": {
+      "title": "Cookie 设置",
+      "description": "请选择 Linken Sphere 可以使用哪些可选 cookies。必要 cookies 会保持开启，因为它们对安全和网站基础功能是必需的。",
+      "close": "关闭 Cookie 设置",
+      "essential": {
+        "title": "必要 cookies",
+        "description": "用于页面路由、安全防护、会话完整性、防止滥用以及网站的基础功能",
+        "alwaysOn": "始终开启"
+      },
+      "functional": {
+        "title": "功能性 cookies",
+        "description": "在这些工具启用时，记住语言、界面偏好以及支持聊天状态等选择"
+      },
+      "analytics": {
+        "title": "分析 cookies",
+        "description": "帮助我们通过有限的分析衡量流量并改进网站性能"
+      },
+      "advertising": {
+        "title": "广告 cookies",
+        "description": "用于广告活动归因、转化衡量、再营销和个性化广告"
+      },
+      "rejectAll": "全部拒绝",
+      "accept": "接受"
+    }
   }
 }

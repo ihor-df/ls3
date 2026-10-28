@@ -1,6 +1,8 @@
 import Header from "@/components/organisms/header-navigation";
 import ContextProviders from "@/context/context-providers";
+import { getGoogleConsentState } from "@/lib/analytics";
 import { DEFAULT_OG_IMAGE_URL, NO_INDEX_NO_FOLLOW_ROBOTS, SITE_NAME } from "@/lib/constants";
+import { ESSENTIAL_COOKIE_PREFERENCES } from "@/lib/cookie-consent/types";
 import { abcDiatype } from "@/lib/fonts";
 import { isProductionDomain } from "@/lib/utils";
 import { SITE_SETTINGS_QUERY } from "./api";
@@ -12,6 +14,7 @@ import type { SITE_SETTINGS_QUERY_RESULT } from "@/sanity/sanity.types";
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getTranslations } from "next-intl/server";
+import Script from "next/script";
 import { ReactNode } from "react";
 import { StructuredData } from "./structured-data";
 
@@ -68,6 +71,8 @@ export async function generateMetadata({ params }: Pick<RootLayoutProps, "params
 
 export default async function RootLayout({ children, params }: RootLayoutProps) {
   const { locale } = await params;
+  const gtmId = isProductionDomain() ? process.env.GTM_ID : undefined;
+  const crispWebsiteId = process.env.CRISP_WEBSITE_ID;
 
   const [languageNavigation, siteMetadata] = await Promise.all([
     getLanguageNavigation(locale), // Map available blog and partners pages locale
@@ -81,12 +86,30 @@ export default async function RootLayout({ children, params }: RootLayoutProps) 
       className={`${abcDiatype.variable} font-diatype h-full antialiased`}
     >
       <head>
+        {gtmId && (
+          <Script
+            id="google-tag-manager"
+            strategy="beforeInteractive"
+            dangerouslySetInnerHTML={{
+              __html: `
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+            window.gtag('consent', 'default', ${JSON.stringify(getGoogleConsentState(ESSENTIAL_COOKIE_PREFERENCES))});
+            window.dataLayer.push({'gtm.start':new Date().getTime(),event:'gtm.js'});
+            var gtmScript=document.createElement('script');
+            gtmScript.async=true;
+            gtmScript.src='https://www.googletagmanager.com/gtm.js?id='+${JSON.stringify(gtmId)};
+            document.head.appendChild(gtmScript);
+          `,
+            }}
+          />
+        )}
         <StructuredData locale={locale} {...siteMetadata} />
       </head>
 
       <body className="relative flex min-h-full flex-col">
         <NextIntlClientProvider>
-          <ContextProviders>
+          <ContextProviders crispWebsiteId={crispWebsiteId}>
             <Header languageNavigation={languageNavigation} />
             {children}
           </ContextProviders>

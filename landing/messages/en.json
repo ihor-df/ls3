@@ -264,5 +264,37 @@
         "description": "Yes, we are very attentive to all suggestions and wishes, and we will be glad to new ideas."
       }
     }
+  },
+  "cookieConsent": {
+    "notice": {
+      "title": "Cookies",
+      "description": "This site uses cookies to function properly and improve your experience. Please accept or adjust your settings.",
+      "settings": "Settings",
+      "acceptAll": "Accept all"
+    },
+    "settings": {
+      "title": "Cookie settings",
+      "description": "Choose which optional cookies Linken Sphere can use. Essential cookies stay on because they are needed for security and basic website operation.",
+      "close": "Close cookie settings",
+      "essential": {
+        "title": "Essential cookies",
+        "description": "Required for page routing, security protections, session integrity, abuse prevention, and basic website functionality",
+        "alwaysOn": "Always on"
+      },
+      "functional": {
+        "title": "Functional cookies",
+        "description": "Remember choices such as language, interface preferences, and support-chat state where these tools are enabled"
+      },
+      "analytics": {
+        "title": "Analytics cookies",
+        "description": "Help us measure traffic and improve site performance with limited analytics"
+      },
+      "advertising": {
+        "title": "Advertising cookies",
+        "description": "Allow campaign attribution, conversion measurement, remarketing, and personalized advertising"
+      },
+      "rejectAll": "Reject all",
+      "accept": "Accept"
+    }
   }
 }
