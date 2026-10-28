@@ -19,8 +19,8 @@ type MonthPickerProps = {
 const getPeriodKey = (period: SelectedPeriod | null) => (period ? `${period.year}:${period.month ?? "all"}` : null);
 
 const MonthPicker = ({ periods, selectedPeriod, initialPeriod, onPeriodChange }: MonthPickerProps) => {
-  const [drawerOpen, setDrawerOpen] = useState(false);
   const selectedPeriodKey = getPeriodKey(selectedPeriod);
+  const [drawerOpen, setDrawerOpen] = useState(false);
   const [mobileAccordion, setMobileAccordion] = useState({
     periodKey: selectedPeriodKey,
     openYear: selectedPeriod?.year ?? null,
@@ -31,9 +31,12 @@ const MonthPicker = ({ periods, selectedPeriod, initialPeriod, onPeriodChange }:
     setMobileAccordion({ periodKey: selectedPeriodKey, openYear: selectedPeriod?.year ?? null });
   }
 
-  const handlePeriodChange = (period: SelectedPeriod) => {
+  const handlePeriodChange = (period: SelectedPeriod, closeDrawer?: boolean) => {
     setMobileAccordion({ periodKey: getPeriodKey(period), openYear: period.year });
     onPeriodChange(period);
+    if (closeDrawer) {
+      setDrawerOpen(false);
+    }
   };
 
   const handleYearToggle = (year: number) => {
@@ -114,7 +117,7 @@ const MonthPicker = ({ periods, selectedPeriod, initialPeriod, onPeriodChange }:
                           <MonthButtonMobile
                             active={fullYear}
                             className="h-full max-md:h-13 md:text-center"
-                            onClick={() => handlePeriodChange({ year: period.year, month: null })}
+                            onClick={() => handlePeriodChange({ year: period.year, month: null }, true)}
                           >
                             {t("allLabel")}{" "}
                             <span className="font-medium text-[rgba(234,245,255,0.30)] max-md:ml-3 md:mt-1 md:block">
@@ -130,7 +133,7 @@ const MonthPicker = ({ periods, selectedPeriod, initialPeriod, onPeriodChange }:
                               <MonthButtonMobile
                                 active={current}
                                 className="px-3 py-4 text-center"
-                                onClick={() => handlePeriodChange({ year: period.year, month: month.value })}
+                                onClick={() => handlePeriodChange({ year: period.year, month: month.value }, true)}
                               >
                                 {month.label}
                                 <span className="mt-1 block font-medium text-[rgba(234,245,255,0.30)]">

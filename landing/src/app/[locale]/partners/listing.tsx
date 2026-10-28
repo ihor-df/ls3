@@ -32,10 +32,13 @@ export async function PartnersListing({ locale, page, categorySlug, title }: Par
       {/* server content as children */}
       <div className="mt-35 grid grid-cols-1 gap-5 md:mt-40 md:gap-10 xl:grid-cols-2">
         <CtaLg
-          className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]"
+          className="mt-0! md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]"
           variant="become-partner"
         />
-        <CtaLg className="md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]" variant="get-started" />
+        <CtaLg
+          className="mt-0! md:[&>div>strong]:text-[2.5rem] md:[&>div>strong]:tracking-[-0.03em]"
+          variant="get-started"
+        />
       </div>
     </PartnersPage>
   );

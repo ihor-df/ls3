@@ -83,9 +83,11 @@ export function createLogoMotion(
 ): LogoMotionController {
   const inner = svg.querySelector<SVGPathElement>("[data-logo-inner]");
   const trigger = svg.closest("a, button") ?? svg;
+
   if (!inner) return { playOnce() {}, destroy() {} };
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
   let frame = 0;
   let previousTime = 0;
   let elapsed = 0;
@@ -93,6 +95,7 @@ export function createLogoMotion(
   let focused = false;
   let playRequested = false;
   let destroyed = false;
+
   const observeViewport = loop || playOnView;
   let inView = !observeViewport || typeof IntersectionObserver === "undefined";
 
@@ -109,7 +112,9 @@ export function createLogoMotion(
   const tick = (time: number) => {
     if (previousTime) elapsed += Math.min(time - previousTime, 50);
     previousTime = time;
+
     const progress = Math.min(elapsed / TURN_DURATION, 1);
+
     if (progress === 1) {
       // Finish the current turn after leave/blur, so there is no snap or frozen pose.
       const continuePlaying = loop || hovered || focused || playRequested;

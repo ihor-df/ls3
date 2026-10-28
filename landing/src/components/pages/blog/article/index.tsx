@@ -86,7 +86,7 @@ const BlogArticle = ({ post, breadcrumbs, locale }: BlogArticleProps) => {
         </div>
 
         <hr className="mt-18 border-white/10 md:mt-40" />
-        <CtaLg variant="get-started" />
+        <CtaLg animated variant="get-started" className="mt-18" />
       </article>
     </Container>
   );

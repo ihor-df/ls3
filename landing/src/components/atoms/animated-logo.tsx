@@ -75,9 +75,11 @@ const AnimatedLogo = ({
         >
           <feFlood floodOpacity="0" result="background" />
           <feColorMatrix in="SourceAlpha" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+
           {LOGO_GLOW_BLURS.map((blur) => (
             <feGaussianBlur key={blur} in="hardAlpha" stdDeviation={blur} result={`blur-${blur}`} />
           ))}
+
           {LOGO_GLOW_LAYERS.map(([blur, opacity], index) => (
             <Fragment key={index}>
               {/* Composite the halo beneath the core to avoid a dark antialiasing fringe. */}
@@ -85,6 +87,7 @@ const AnimatedLogo = ({
               <feBlend in2={index === 0 ? "background" : `glow${index - 1}`} result={`glow${index}`} />
             </Fragment>
           ))}
+
           <feComponentTransfer in={`glow${LOGO_GLOW_LAYERS.length - 1}`} result="adjustedGlow">
             <feFuncA type="linear" slope={LOGO_GLOW_OPACITY} />
           </feComponentTransfer>
@@ -92,6 +95,7 @@ const AnimatedLogo = ({
           <feGaussianBlur stdDeviation=".329" />
         </filter>
       </defs>
+
       <g fill="#fff" filter={`url(#${glowId})`}>
         <path d={LOGO_OUTER_PATH} />
         <path data-logo-inner="" d={LOGO_INNER_PATH} stroke="#fff" strokeWidth="0" strokeLinejoin="round" />
