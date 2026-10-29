@@ -125,7 +125,7 @@ const BottomDrawer = ({
               <button
                 type="button"
                 aria-label={closeLabel}
-                className="ml-auto flex shrink-0 cursor-pointer items-center justify-center rounded-full transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white"
+                className="ml-auto flex shrink-0 cursor-pointer items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-white"
               >
                 <X aria-hidden="true" className="size-7 md:size-9" />
               </button>

@@ -37,27 +37,28 @@ const VideoModal = ({ video, closeLabel, onClose }: VideoModalProps) => {
       onClick={(event) => {
         if (event.target === event.currentTarget) dialogRef.current?.close();
       }}
-      className="rounded-small bg-dark-grey m-auto max-h-[90dvh] w-[min(92vw,960px)] max-w-none overflow-auto border border-white/15 p-4 text-white backdrop:bg-black/80 md:p-6"
+      className="bg-dark-grey/30 custom-scrollbar m-auto max-h-[calc(100dvh-1.5rem)] w-[calc(100%-1.5rem)] max-w-240 overflow-auto overscroll-contain rounded-3xl border border-white/20 p-5 text-white backdrop-blur-3xl backdrop:bg-black/60 md:max-h-[calc(100dvh-3rem)] md:w-[calc(100%-5rem)] lg:p-6"
     >
       {video && (
         <>
-          <div className="mb-4 flex items-center justify-between gap-4">
-            <h2 id={titleId} className="text-lg font-semibold md:text-xl">
+          <div className="mb-5 flex items-center justify-between gap-5 lg:mb-7">
+            <h2 id={titleId} className="text-2xl leading-none md:text-3xl">
               {video.title}
             </h2>
+
             <button
               type="button"
               onClick={() => dialogRef.current?.close()}
               aria-label={closeLabel}
-              className="flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-white"
+              className="flex shrink-0 cursor-pointer items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-white"
             >
-              <X className="size-5" aria-hidden="true" />
+              <X className="size-7 md:size-9" aria-hidden="true" />
             </button>
           </div>
 
           <iframe
             key={video.videoId}
-            className="aspect-video w-full rounded-sm border-0"
+            className="aspect-video w-full rounded-2xl border-0 bg-black"
             src={`https://www.youtube.com/embed/${video.videoId}?autoplay=1`}
             title={video.title}
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

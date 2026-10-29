@@ -28,8 +28,8 @@ const Settings = ({
       aria-describedby="cookie-settings-description"
       className="flex min-h-0 w-full flex-1 flex-col leading-none"
     >
-      <div className="flex min-h-0 flex-1 flex-col py-7 pb-0 pl-5 lg:pl-7">
-        <h2 id="cookie-settings-title" className="text-xl leading-none uppercase lg:text-3xl">
+      <div className="flex min-h-0 flex-1 flex-col py-7 pb-0 pl-5 lg:pl-6">
+        <h2 id="cookie-settings-title" className="text-2xl leading-none md:text-3xl xl:text-4xl">
           {t("title")}
         </h2>
 
@@ -41,9 +41,9 @@ const Settings = ({
           type="button"
           aria-label={t("close")}
           onClick={closeSettings}
-          className="absolute top-3 right-3 flex size-10 shrink-0 cursor-pointer items-center justify-center rounded-full bg-white/15 text-white transition-colors hover:bg-white/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white lg:top-7 lg:right-7 lg:size-13"
+          className="absolute top-3 right-3 flex shrink-0 cursor-pointer items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-white lg:top-7 lg:right-7"
         >
-          <X className="size-6 lg:size-8" />
+          <X className="size-7 md:size-9" aria-hidden="true" />
         </button>
 
         <div

@@ -98,7 +98,7 @@ export default function CookieConsentModal({
           >
             {view === "notice" ? (
               <section
-                className="px-5 py-7 text-center lg:px-7"
+                className="p-5 text-center lg:p-6"
                 role="dialog"
                 aria-labelledby="cookie-consent-title"
                 aria-describedby="cookie-consent-description"
