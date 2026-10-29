@@ -23,7 +23,7 @@ export default function Page() {
           <CookieSettingsButton className="self-start rounded-full border border-white/40 px-6 py-3 transition-colors hover:bg-white/10" />
           <GlassInput placeholder="Your email" />
           <GlassButton>Button</GlassButton>
-          <Button header>Start for free</Button>
+          <Button size="small">Start for free</Button>
           <Button size="large">Button</Button>
           <Button size="large" variant="secondary">
             Button
@@ -34,7 +34,7 @@ export default function Page() {
           <p className="text-2xl">Disabled</p>
 
           <GlassButton disabled>Button</GlassButton>
-          <Button disabled header>
+          <Button disabled size="small">
             Start for free
           </Button>
           <Button disabled size="large">
