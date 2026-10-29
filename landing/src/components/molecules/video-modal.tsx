@@ -52,7 +52,7 @@ const VideoModal = ({ video, closeLabel, onClose }: VideoModalProps) => {
               aria-label={closeLabel}
               className="flex shrink-0 cursor-pointer items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-white"
             >
-              <X className="size-7 md:size-9" aria-hidden="true" />
+              <X className="size-7 md:size-8" aria-hidden="true" />
             </button>
           </div>
 

@@ -44,7 +44,7 @@ export const Toggle = ({
     onClick={() => onChange(!checked)}
     className={cn(
       "relative h-10 w-18 shrink-0 cursor-pointer rounded-full transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
-      checked ? "bg-accent-orange" : "bg-white/30",
+      checked ? "bg-accent-orange/90" : "bg-white/30",
     )}
   >
     <span

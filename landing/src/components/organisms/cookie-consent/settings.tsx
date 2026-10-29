@@ -29,7 +29,7 @@ const Settings = ({
       className="flex min-h-0 w-full flex-1 flex-col leading-none"
     >
       <div className="flex min-h-0 flex-1 flex-col py-7 pb-0 pl-5 lg:pl-6">
-        <h2 id="cookie-settings-title" className="text-2xl leading-none md:text-3xl xl:text-4xl">
+        <h2 id="cookie-settings-title" className="text-2xl leading-none md:text-3xl">
           {t("title")}
         </h2>
 
@@ -43,7 +43,7 @@ const Settings = ({
           onClick={closeSettings}
           className="absolute top-3 right-3 flex shrink-0 cursor-pointer items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-white lg:top-7 lg:right-7"
         >
-          <X className="size-7 md:size-9" aria-hidden="true" />
+          <X className="size-7 md:size-8" aria-hidden="true" />
         </button>
 
         <div
@@ -77,7 +77,7 @@ const Settings = ({
       </div>
 
       <div className="flex shrink-0 items-center gap-5 p-5 max-lg:border-t-[1.5px] max-lg:border-white/20 md:justify-end lg:p-7">
-        <Button variant="secondary" onClick={rejectAll} size="small" className="uppercase">
+        <Button size="small" variant="secondary" onClick={rejectAll} className="uppercase">
           {t("rejectAll")}
         </Button>
 
