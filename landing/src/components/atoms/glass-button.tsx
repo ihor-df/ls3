@@ -8,13 +8,15 @@ type GlassButtonProps = {
   disabled?: boolean;
   linkProps?: ComponentProps<"a">;
   buttonProps?: ComponentProps<"button">;
+  size?: "small" | "base";
 };
 
-const GlassButton = ({ children, className, buttonProps, linkProps, disabled }: GlassButtonProps) => {
+const GlassButton = ({ children, className, buttonProps, linkProps, disabled, size = "base" }: GlassButtonProps) => {
   const styles = cn(
     "glass-border backdrop-blur-xl px-16 py-2 flex items-center justify-center h-17 w-full cursor-pointer rounded-full font-bold text-white transition-colors md:h-18 md:w-auto md:max-w-max md:text-xl",
     "hover:after:bg-[rgba(234,245,255,0.1)] active:after:bg-[rgba(234,245,255,0.2)]",
     "disabled:pointer-events-none disabled:cursor-default disabled:opacity-50",
+    size === "small" && "h-13.5 px-7 md:h-13.5 md:text-base",
   );
 
   if (linkProps && linkProps.href)

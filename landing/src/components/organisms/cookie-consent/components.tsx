@@ -1,29 +1,6 @@
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-type ConsentButtonProps = {
-  children: string;
-  onClick: () => void;
-  variant?: "solid" | "outline";
-  className?: string;
-};
-
-export const ConsentButton = ({ children, onClick, variant = "outline", className }: ConsentButtonProps) => (
-  <button
-    type="button"
-    onClick={onClick}
-    className={cn(
-      "flex h-11 w-full cursor-pointer items-center justify-center rounded-full px-6 text-sm tracking-[-0.42px] uppercase transition-colors md:h-13 md:w-auto md:text-base md:tracking-[-0.32px] lg:min-w-41",
-      "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white",
-      variant === "solid" && "text-background bg-accent-orange hover:bg-accent-orange/90",
-      variant === "outline" && "border-2 border-white bg-transparent text-white hover:bg-white/10",
-      className,
-    )}
-  >
-    {children}
-  </button>
-);
-
 export const CategoryCard = ({
   title,
   description,

@@ -1,11 +1,12 @@
 "use client";
 
+import GlassButton from "@/components/atoms/glass-button";
+import Button from "@/components/atoms/main-button";
 import type { CookieConsentPreferences, OptionalCookieCategory } from "@/lib/cookie-consent/types";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import { ConsentButton } from "./components";
 import Settings from "./settings";
 
 type CookieConsentView = "notice" | "settings";
@@ -82,9 +83,7 @@ export default function CookieConsentModal({
         ref={modalRef}
         transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
         className={cn(
-          "pointer-events-auto relative flex max-h-[calc(100dvh-1.5rem)] flex-col overflow-hidden overscroll-contain rounded-3xl border border-white/20 bg-[#19191a]/80 backdrop-blur-3xl md:max-h-[calc(100dvh-3rem)]",
-          "w-full md:max-w-130",
-          view === "settings" && "lg:max-w-3xl",
+          "bg-dark-grey/30 pointer-events-auto relative flex max-h-[calc(100dvh-1.5rem)] w-full flex-col overflow-hidden overscroll-contain rounded-3xl border border-white/20 backdrop-blur-3xl md:max-h-[calc(100dvh-3rem)] md:max-w-3xl",
         )}
       >
         <AnimatePresence mode="popLayout" initial={false}>
@@ -113,13 +112,21 @@ export default function CookieConsentModal({
                 >
                   {t("description")}
                 </p>
-                <div className="mt-5 flex justify-between gap-5 md:justify-center lg:mt-7">
-                  <ConsentButton onClick={() => setView("settings")} className="md:min-w-0">
+
+                <div className="mt-5 flex items-center justify-between gap-5 md:justify-center lg:mt-7">
+                  <GlassButton
+                    buttonProps={{
+                      onClick: () => setView("settings"),
+                    }}
+                    size="small"
+                    className="uppercase"
+                  >
                     {t("settings")}
-                  </ConsentButton>
-                  <ConsentButton onClick={acceptAll} variant="solid" className="md:min-w-0">
+                  </GlassButton>
+
+                  <Button size="small" onClick={acceptAll} className="uppercase">
                     {t("acceptAll")}
-                  </ConsentButton>
+                  </Button>
                 </div>
               </section>
             ) : (

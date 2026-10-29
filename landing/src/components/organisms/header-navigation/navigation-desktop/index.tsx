@@ -164,7 +164,7 @@ const NavigationDesktop = ({ isPathActive, localeHrefs }: NavigationDesktopProps
             {locale}
           </ButtonRounded>
 
-          <Button header>{tCta("button")}</Button>
+          <Button size="small">{tCta("button")}</Button>
         </div>
       </div>
 

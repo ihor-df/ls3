@@ -1,7 +1,8 @@
+import Button from "@/components/atoms/main-button";
 import type { CookieConsentPreferences, OptionalCookieCategory } from "@/lib/cookie-consent/types";
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { CategoryCard, ConsentButton, Toggle } from "./components";
+import { CategoryCard, Toggle } from "./components";
 
 type SettingsProps = {
   closeSettings: () => void;
@@ -75,11 +76,14 @@ const Settings = ({
         </div>
       </div>
 
-      <div className="flex shrink-0 gap-5 p-5 max-lg:border-t-[1.5px] max-lg:border-white/20 lg:justify-end lg:p-7">
-        <ConsentButton onClick={rejectAll}>{t("rejectAll")}</ConsentButton>
-        <ConsentButton onClick={() => onSavePreferences(draftPreferences)} variant="solid">
+      <div className="flex shrink-0 items-center gap-5 p-5 max-lg:border-t-[1.5px] max-lg:border-white/20 md:justify-end lg:p-7">
+        <Button variant="secondary" onClick={rejectAll} size="small" className="uppercase">
+          {t("rejectAll")}
+        </Button>
+
+        <Button size="small" onClick={() => onSavePreferences(draftPreferences)} className="min-w-45 uppercase">
           {t("accept")}
-        </ConsentButton>
+        </Button>
       </div>
     </section>
   );
