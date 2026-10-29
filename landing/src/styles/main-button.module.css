@@ -80,7 +80,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .primary:not(:disabled):hover {
-    cursor: default;
+    cursor: none; /* cursor: default; */
   }
 
   .primary:not(:disabled):hover::before,
@@ -94,7 +94,6 @@
   .primary::after {
     --main-button-highlight-x: 50%;
     --main-button-highlight-y: 50%;
-
     transition: none;
   }
 }

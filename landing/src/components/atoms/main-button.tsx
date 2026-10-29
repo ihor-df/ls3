@@ -21,14 +21,14 @@ const Button = ({
   className,
   size = "base",
   variant = "primary",
-  animated = true,
+  animated = false,
   disabled,
   onClick,
 }: ButtonProps) => {
   const isAnimated = variant === "primary" && animated;
 
   const updateHighlight = (event: PointerEvent<HTMLButtonElement>) => {
-    if (disabled || event.pointerType === "touch" || !isAnimated) return;
+    if (!isAnimated || disabled || event.pointerType === "touch") return;
 
     const button = event.currentTarget;
     const { left, top, width, height } = button.getBoundingClientRect();
@@ -43,8 +43,8 @@ const Button = ({
   return (
     <button
       className={cn(
-        "flex w-full cursor-pointer items-center justify-center rounded-full border border-transparent px-16 font-bold text-nowrap transition-colors disabled:pointer-events-none disabled:cursor-default disabled:opacity-50 md:w-auto",
-        isAnimated && styles.primary,
+        "flex w-full items-center justify-center rounded-full border border-transparent px-16 font-bold text-nowrap transition-colors disabled:pointer-events-none disabled:cursor-default disabled:opacity-50 md:w-auto",
+        isAnimated ? styles.primary : "cursor-pointer",
         variant === "primary" &&
           "bg-white text-[#1B1B1C] active:bg-transparent active:text-white active:max-md:border-white md:active:bg-white md:active:text-[#1B1B1C]",
         variant === "primary" && !animated && "hover:bg-[#CED0D2]",
@@ -61,8 +61,8 @@ const Button = ({
       )}
       disabled={disabled}
       onClick={onClick}
-      onPointerEnter={isAnimated ? updateHighlight : undefined}
-      onPointerMove={isAnimated ? updateHighlight : undefined}
+      onPointerEnter={updateHighlight}
+      onPointerMove={updateHighlight}
     >
       {children}
     </button>
