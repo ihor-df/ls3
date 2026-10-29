@@ -6,7 +6,7 @@ import CategoryFilters from "@/components/molecules/category-filters";
 import CollectionPageHeader from "@/components/molecules/collection-page-header";
 import VideoModal from "@/components/molecules/video-modal";
 import VideoPostCard from "@/components/molecules/video-post-card";
-import CtaLg from "@/components/organisms/cta/cta-lg";
+import CtaLg from "@/components/organisms/cta-blocks/cta-lg";
 import useHashCategory from "@/hooks/useHashCategory";
 import { useTranslations } from "next-intl";
 import { StaticImageData } from "next/image";

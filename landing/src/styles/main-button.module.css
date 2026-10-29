@@ -1,0 +1,100 @@
+@property --main-button-highlight-x {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+@property --main-button-highlight-y {
+  syntax: "<percentage>";
+  inherits: false;
+  initial-value: 50%;
+}
+
+.primary {
+  position: relative;
+  isolation: isolate;
+}
+
+.primary::before,
+.primary::after {
+  --main-button-highlight-x: var(--pointer-x, 50%);
+  --main-button-highlight-y: var(--pointer-y, 50%);
+
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 220ms ease-out,
+    --main-button-highlight-x 140ms ease-out,
+    --main-button-highlight-y 140ms ease-out;
+}
+
+/* The blurred layer can extend beyond the button's rounded edge. */
+.primary::before {
+  z-index: -2;
+  inset: -2px;
+  background: radial-gradient(
+    ellipse 150px 160% at var(--main-button-highlight-x) var(--main-button-highlight-y),
+    #ff5b28 0%,
+    #ff8049 35%,
+    rgb(255 153 100 / 55%) 55%,
+    rgb(255 153 100 / 0%) 80%
+  );
+  box-shadow: 0 0 16px rgb(255 168 130 / 24%);
+  filter: blur(10px);
+}
+
+/* This opaque layer keeps the glow behind the surface and the label above it. */
+.primary::after {
+  z-index: -1;
+  inset: -1px;
+  background: radial-gradient(
+    ellipse 150px 125% at var(--main-button-highlight-x) var(--main-button-highlight-y),
+    #fffff4 0%,
+    #fffbd4 22%,
+    #ffe1b2 40%,
+    rgb(255 196 155 / 55%) 58%,
+    rgb(255 196 155 / 0%) 82%
+  );
+  background-color: #d2d2d2;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 80%);
+}
+
+.primary:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 5px;
+}
+
+.primary:not(:disabled):focus-visible::before,
+.primary:not(:disabled):focus-visible::after {
+  opacity: 1;
+}
+
+.primary:focus-visible:not(:hover)::before,
+.primary:focus-visible:not(:hover)::after {
+  --main-button-highlight-x: 50%;
+  --main-button-highlight-y: 50%;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primary:not(:disabled):hover {
+    cursor: default;
+  }
+
+  .primary:not(:disabled):hover::before,
+  .primary:not(:disabled):hover::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .primary::before,
+  .primary::after {
+    --main-button-highlight-x: 50%;
+    --main-button-highlight-y: 50%;
+
+    transition: none;
+  }
+}

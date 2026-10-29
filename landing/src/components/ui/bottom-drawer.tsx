@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { useRef, useState, type ReactElement, type ReactNode, type TouchEvent } from "react";
-import styles from "./bottom-drawer.module.css";
+import styles from "../../styles/bottom-drawer.module.css";
 
 type BottomDrawerProps = {
   trigger: ReactElement;

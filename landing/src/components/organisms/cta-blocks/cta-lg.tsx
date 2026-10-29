@@ -82,7 +82,7 @@ const Cta = ({ variant, className, animated }: CtaProps) => {
               {CONTENT_MAPPER[variant].buttonText}
             </GlassButton>
           ) : (
-            <Button className={cn("mx-auto w-auto text-nowrap max-md:mt-5 md:mt-10")}>
+            <Button animated={false} className={cn("mx-auto w-auto text-nowrap max-md:mt-5 md:mt-10")}>
               {CONTENT_MAPPER[variant].buttonText}
             </Button>
           )}

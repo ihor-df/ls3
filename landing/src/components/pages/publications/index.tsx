@@ -3,7 +3,7 @@ import CollectionPageHeader from "@/components/molecules/collection-page-header"
 import CollectionPageList from "@/components/molecules/collection-page-list";
 import LoadMoreButton from "@/components/molecules/load-more-button";
 import PostCard from "@/components/molecules/post-card";
-import CtaLg from "@/components/organisms/cta/cta-lg";
+import CtaLg from "@/components/organisms/cta-blocks/cta-lg";
 import { Link } from "@/i18n/navigation";
 import { imageBuilder } from "@/sanity/helpers";
 import type { PUBLICATIONS_QUERY_RESULT } from "@/sanity/sanity.types";

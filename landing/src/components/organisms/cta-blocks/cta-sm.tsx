@@ -29,7 +29,9 @@ const Cta = ({ hasDiscount, className }: CtaProps) => {
             {t("main")}
           </strong>
 
-          <Button className={cn("w-auto text-nowrap max-md:mx-auto max-md:mt-5 md:ml-auto")}>{t("button")}</Button>
+          <Button animated={false} className={cn("w-auto text-nowrap max-md:mx-auto max-md:mt-5 md:ml-auto")}>
+            {t("button")}
+          </Button>
         </div>
       </div>
 

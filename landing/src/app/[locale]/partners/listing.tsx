@@ -1,4 +1,4 @@
-import CtaLg from "@/components/organisms/cta/cta-lg";
+import CtaLg from "@/components/organisms/cta-blocks/cta-lg";
 import PartnersPage from "@/components/pages/partners";
 import type { Locale } from "next-intl";
 import { notFound } from "next/navigation";
